@@ -1,0 +1,42 @@
+import System
+#import os
+import time
+import clr
+import math
+from System.IO import Directory, File
+clr.AddReference('System.Windows.Forms')
+from System.Windows.Forms import OpenFileDialog, FolderBrowserDialog
+
+
+def openspeosfile(str_path, str_speos_application):
+    # str_path is variable containing string to the speos file to open
+    # str_speos_application is Variable containing the string to the registered application
+    # Virtual Photometric Lab - XMPViewer.Application
+    # Virtual 3D Photometric Lab - Xm3Viewer.Application
+    # Virtual Human Vision Lab - VisionLabViewer.Application
+    # Virtual Reality Lab - HDRIViewer.Application
+    # Eulumdat Viewer - EulumdatViewer.Application
+    # IESNA L-63 viewer - IESViewer.Application
+    # OPTIS Intensity Viewer - OptisIntensityViewer.Application
+    # Photometric Calc - VPLab.Application
+    # User Material Editor - UserMaterialViewer.Application
+    # Ray File Editor - RayEditor.Application
+    # BSDF-BRDF Anisotropic Surface Viewer - SimpleBSDFViewer.Application
+    speos_type = System.Type.GetTypeFromProgID(str_speos_application)
+    speos=System.Activator.CreateInstance(speos_type)
+    test = speos.OpenFile(str_path)
+    return (speos)
+
+def get_file_name(extension):
+    #extension to open format: Name |*.extension
+    fileDialog = OpenFileDialog()
+    fileDialog.Filter= extension
+    fileDialog.ShowDialog()
+    file_path=fileDialog.FileName
+    return(file_path)
+
+def get_folder_name():
+    fileDialog = FolderBrowserDialog()
+    fileDialog.ShowDialog()
+    file_path=fileDialog.SelectedPath
+    return(file_path)

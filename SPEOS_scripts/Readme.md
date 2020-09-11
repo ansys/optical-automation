@@ -1,0 +1,1 @@
+This folder Contains script relying on only SpeosAPI
