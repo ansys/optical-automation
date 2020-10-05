@@ -40,3 +40,28 @@ def get_folder_name():
     fileDialog.ShowDialog()
     file_path=fileDialog.SelectedPath
     return(file_path)
+
+def tunr_on_layer(int_layer,speosvr):
+    error = speosvs.SetSourceRatioById(int_layer,0)
+    return(error)
+
+def tunr_off_layer(int_layer,speosvr):
+    error = speosvs.SetSourceRatioById(int_layer, 100)
+    return(error)
+
+def turn_indicator(int_startlayer,int_endlayer, int_time, speosvr):
+    t=int_startlayer
+    while t <= int_endlayer:
+        error = tunr_on_layer(t, speosvr)
+        if error == 0:
+            t=int_endlayer
+        t = t+1
+        time.sleep(int_time)
+    while t >= int_startlayer:
+        error = tunr_on_layer(t, speosvr)
+        if error == 0:
+            t = int_startlayer
+        t = t - 1
+        time.sleep(int_time)
+
+
