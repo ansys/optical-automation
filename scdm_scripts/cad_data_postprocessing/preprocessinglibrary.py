@@ -4,10 +4,7 @@
 
 import sys
 import os
-lib_path = os.path.abspath(os.path.join('../../SPEOS_scripts/ASP_start_Library'))
-sys.path.append(lib_path)
-print sys.path
-from ASPcontrol import SCDMcontrol
+
 
 class Preprocessing_asp(object):
     """
@@ -25,6 +22,7 @@ class Preprocessing_asp(object):
             if ColorInfo not in Dic:
                 Dic.update({ColorInfo: List[IDesignBody]()})
             Dic[ColorInfo].Add(body)
+        return self
 
     def create_dict_by_Material(self):
         def GetRealOrigianl(item):
@@ -41,6 +39,7 @@ class Preprocessing_asp(object):
             if MaterialName not in Dic:
                 Dic.update({MaterialName: List[IDesignBody]()})
             Dic[MaterialName].Add(body)
+        return self
 
     def stitch(self, Dic):
         for item in Dic:
@@ -48,17 +47,14 @@ class Preprocessing_asp(object):
             result = StitchFaces.FixSpecific(sel)
         return self
 
-
     def check_geometry_update(self):
         return self
+
     def check_volume_conflict(self):
         return self
 
     def resolve_volume_conflict(self):
         return self
-
-    def __create_named_selection(self, selection, str_name):
-
 
     def __get_all_surface_bodies(self, part):
         allbodies = part.GetAllBodies()
@@ -90,7 +86,7 @@ class Preprocessing_asp(object):
                     test = False
         return (geometricalsets)
 
-    def __get_bodies_for_geometrical_sets(self, part)
+    def __get_bodies_for_geometrical_sets(self, part):
         bodylist = []
         testlist = []
         geometricalsets = self.__create_geometricalsetnames_list(part)
@@ -108,17 +104,35 @@ class Preprocessing_asp(object):
                     bodylist[k] = testlist
                 k = k + 1
             t = t + 1
-        return(bodylist, allsurface, geometricalsets)
+        return (bodylist)
 
-        def __convert_bodylist_to_dict(self, list, allsurface):
-            test=1
-            return(dictionary)
+    def __convert_list_to_dict(self, list, part):
+        dictionary = {}
+        geo_list = self.__create_geometricalsetnames_list(part)
+        surfacebodies = self.__get_all_surface_bodies(part)
+        i = 0
+        for item in list:
+            test = item
+            for c in test:
+                if geo_list[i] not in dictionary:
+                    dictionary.update({geo_list[i]: List[IDesignBody]()})
+                dictionary[geo_list[i]].Add(surfacebodies[c])
+            i = i + 1
+        return dictionary
+
+    def geosets_conversion(self, part):
+        bodylist = self.__get_bodies_for_geometrical_sets(part)
+        dic = {}
+        dic = self.__convert_list_to_dict(bodylist, part)
+        self.create_named_selection(dic)
+        return self
 
     def create_named_selection(self, Dic):
         for item in Dic:
             sel = Selection.Create(Dic[item])
-            second = Selection.Empty()
-            Result = NamedSelection.Create(sel, second).CreatedNamedSelection
-            Result.SetName(item)
+            # print Dic[item]
+            if sel != Selection.Empty():
+                second = Selection.Empty()
+                Result = NamedSelection.Create(sel, second).CreatedNamedSelection
+                Result.SetName(item.strip())
         return self
-
