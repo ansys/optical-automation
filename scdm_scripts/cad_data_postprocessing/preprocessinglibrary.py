@@ -4,7 +4,7 @@
 
 import sys
 import os
-
+from os import path
 
 class Preprocessing_asp(object):
     """
