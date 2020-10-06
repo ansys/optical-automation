@@ -110,8 +110,8 @@ class Preprocessing_asp(object):
             t = t + 1
         return(bodylist, allsurface, geometricalsets)
 
-        def __convert_bodylist_to_dict(list, allsurface):
-
+        def __convert_bodylist_to_dict(self, list, allsurface):
+            test=1
             return(dictionary)
 
     def create_named_selection(self, Dic):
