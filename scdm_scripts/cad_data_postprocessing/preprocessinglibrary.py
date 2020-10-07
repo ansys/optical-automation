@@ -1,10 +1,6 @@
-# Copyright (C) 2019 ANSYS, Inc - All Rights Reserved
-# Unauthorized copying of this file, via any medium is strictly prohibited
-# Proprietary and confidential
-
 import sys
 import os
-from os import path
+
 
 class Preprocessing_asp(object):
     """
@@ -22,7 +18,7 @@ class Preprocessing_asp(object):
             if ColorInfo not in Dic:
                 Dic.update({ColorInfo: List[IDesignBody]()})
             Dic[ColorInfo].Add(body)
-        return self
+        return Dic
 
     def create_dict_by_Material(self):
         def GetRealOrigianl(item):
@@ -39,7 +35,7 @@ class Preprocessing_asp(object):
             if MaterialName not in Dic:
                 Dic.update({MaterialName: List[IDesignBody]()})
             Dic[MaterialName].Add(body)
-        return self
+        return Dic
 
     def stitch(self, Dic):
         for item in Dic:
