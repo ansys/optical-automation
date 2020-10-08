@@ -10,6 +10,10 @@ class Preprocessing_asp(object):
     """
 
     def create_dict_by_Color(self):
+        """
+        Create a dictionary for Named selection generation/stitch one element per color
+        :return: Dictionary {color code: List of bodies with color}
+        """
         Dic = {}
         all_body = GetRootPart().GetAllBodies()
         for body in all_body:
@@ -21,12 +25,16 @@ class Preprocessing_asp(object):
         return Dic
 
     def create_dict_by_Material(self):
+        """
+        Create a dictionary for Named selection generation/stitch one element per Catia Material6
+        :return: Dictionary {materialname: List of bodies with mat}
+        """
+
         def GetRealOrigianl(item):
             result = item
             while result.GetOriginal():
                 result = result.GetOriginal()
             return result
-
         Dic = {}
         all_body = GetRootPart().GetAllBodies()
         for body in all_body:
@@ -38,21 +46,37 @@ class Preprocessing_asp(object):
         return Dic
 
     def stitch(self, Dic):
+        """
+        stitch all elemnt per dictionary items-> color/material
+        """
         for item in Dic:
             sel = Selection.Create(Dic[item])
             result = StitchFaces.FixSpecific(sel)
-        return self
 
     def check_geometry_update(self):
+        """
+        Verify weather any part was imported by geometry update
+        """
         return self
 
     def check_volume_conflict(self):
+        """
+        find volume conflict, return two list of conflicting bodies?
+        """
         return self
 
     def resolve_volume_conflict(self):
+        """
+        resolve volume Conflict based on material definition
+        """
         return self
 
     def __get_all_surface_bodies(self, part):
+        """
+        Function to seperate solids from surface bodies for Geometrical set named selection conversion
+        :param part:    input Spaceclaim Part
+        :return:        return all surface bdoies from input part
+        """
         allbodies = part.GetAllBodies()
         allsurface = part.GetAllBodies()
         allsurface.Clear()
@@ -62,7 +86,12 @@ class Preprocessing_asp(object):
         return (allsurface)
 
     def __create_geometricalsetnames_list(self, part):
-        bodienames = []
+        """
+        generate List of geometric sets from geometry names
+        :param part:    Spaceclaim Part to get Geometric set names from
+        :return:        List of geometrical sets names
+        """
+
         allbodies = self.__get_all_surface_bodies(part)
         t = 0
         geometricalsets = []
@@ -83,8 +112,12 @@ class Preprocessing_asp(object):
         return (geometricalsets)
 
     def __get_bodies_for_geometrical_sets(self, part):
+        """
+        get bodies for each geometrical set
+        :param part:    Spaceclaim Part to get Geometric set from
+        :return:        List of body IDs in order of geo set names
+        """
         bodylist = []
-        testlist = []
         geometricalsets = self.__create_geometricalsetnames_list(part)
         allsurface = self.__get_all_surface_bodies(part)
         for item in geometricalsets:
@@ -102,12 +135,18 @@ class Preprocessing_asp(object):
             t = t + 1
         return (bodylist)
 
-    def __convert_list_to_dict(self, list, part):
+    def __convert_list_to_dict(self, input_list, part):
+        """
+        Convert the lists to dictionaries
+        :param input_list:  List of Body IDs
+        :param part:        Spaceclaim Part to convert
+        :return:
+        """
         dictionary = {}
         geo_list = self.__create_geometricalsetnames_list(part)
         surfacebodies = self.__get_all_surface_bodies(part)
         i = 0
-        for item in list:
+        for item in input_list:
             test = item
             for c in test:
                 if geo_list[i] not in dictionary:
@@ -117,18 +156,25 @@ class Preprocessing_asp(object):
         return dictionary
 
     def geosets_conversion(self, part):
+        """
+        Get Catia Geometrical set as Named selection
+        :param part:
+        :return:
+        """
         bodylist = self.__get_bodies_for_geometrical_sets(part)
-        dic = {}
         dic = self.__convert_list_to_dict(bodylist, part)
         self.create_named_selection(dic)
-        return self
 
-    def create_named_selection(self, Dic):
+    @staticmethod
+    def create_named_selection(Dic):
+        """
+        Create a Named selection from dictionary
+        :param Dic:  Dictionary{Name of Named selection: LIst of bodies}
+        """
         for item in Dic:
             sel = Selection.Create(Dic[item])
-            # print Dic[item]
             if sel != Selection.Empty():
                 second = Selection.Empty()
                 Result = NamedSelection.Create(sel, second).CreatedNamedSelection
                 Result.SetName(item.strip())
-        return self
+
