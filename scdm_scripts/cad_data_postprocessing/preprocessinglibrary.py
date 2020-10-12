@@ -30,20 +30,20 @@ class Preprocessing_asp(object):
         :return: Dictionary {materialname: List of bodies with mat}
         """
 
-        def GetRealOrigianl(item):
+        def get_real_original(item):
             result = item
             while result.GetOriginal():
                 result = result.GetOriginal()
             return result
-        Dic = {}
+        conversion_dictionary = {}
         all_body = GetRootPart().GetAllBodies()
         for body in all_body:
-            ibody = GetRealOrigianl(body)
+            ibody = get_real_original(body)
             MaterialName = ibody.Material.Name
-            if MaterialName not in Dic:
-                Dic.update({MaterialName: List[IDesignBody]()})
-            Dic[MaterialName].Add(body)
-        return Dic
+            if MaterialName not in conversion_dictionary:
+                conversion_dictionary.update({MaterialName: List[IDesignBody]()})
+            conversion_dictionary[MaterialName].Add(body)
+        return conversion_dictionary
 
     def stitch(self, Dic):
         """
@@ -75,7 +75,7 @@ class Preprocessing_asp(object):
         """
         Function to seperate solids from surface bodies for Geometrical set named selection conversion
         :param part:    input Spaceclaim Part
-        :return:        return all surface bdoies from input part
+        :return:        return all surface bodies from input part
         """
         allbodies = part.GetAllBodies()
         allsurface = part.GetAllBodies()
@@ -101,7 +101,7 @@ class Preprocessing_asp(object):
             while test:
                 geo_set_name_test, content = path.split(str_test)
                 if content != "":
-                    if True != geometricalsets.__contains__(geo_set_name_test) and geo_set_name_test != "":
+                    if not geometricalsets.__contains__(geo_set_name_test) and geo_set_name_test != "":
                         geometricalsets.append(geo_set_name_test)
                     str_test = geo_set_name_test
                 else:

@@ -123,6 +123,5 @@ class SCDMControl(object):
 
 sc = SCDMControl(graphical_mode=True)
 sc.open_spaceclaim_session()
-sc.import_and_save_cad_in_spaceclaim("D:\\Volvo\\#MeetingNote\\10-07-2019_SPEOS\\TrainingPractice\\SPEOS\\OSLON Black Flat 2 Chip\\KW_H2L531_270313.stp", "D:\\", "test_import")
 sc.close_spaceclaim_session()
 

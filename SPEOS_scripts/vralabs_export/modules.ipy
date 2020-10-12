@@ -25,40 +25,40 @@ def openspeosfile(str_path, str_speos_application):
     speos_type = System.Type.GetTypeFromProgID(str_speos_application)
     speos=System.Activator.CreateInstance(speos_type)
     test = speos.OpenFile(str_path)
-    return (speos)
+    return speos
 
 def get_file_name(extension):
     #extension to open format: Name |*.extension
-    fileDialog = OpenFileDialog()
-    fileDialog.Filter = extension
-    fileDialog.ShowDialog()
-    file_path=fileDialog.FileName
-    return(file_path)
+    file_dialog = OpenFileDialog()
+    file_dialog.Filter = extension
+    file_dialog.ShowDialog()
+    file_path = file_dialog.FileName
+    return file_path
 
 def get_folder_name():
-    fileDialog = FolderBrowserDialog()
-    fileDialog.ShowDialog()
-    file_path=fileDialog.SelectedPath
-    return(file_path)
+    file_dialog = FolderBrowserDialog()
+    file_dialog.ShowDialog()
+    file_path = file_dialog.SelectedPath
+    return file_path
 
-def tunr_on_layer(int_layer, speosvr):
-    error = speosvr.SetSourceRatioById(int_layer,0)
-    return(error)
+def turn_on_layer(int_layer, speosvr):
+    error = speosvr.SetSourceRatioById(int_layer,100)
+    return error
 
-def tunr_off_layer(int_layer, speosvr):
-    error = speosvr.SetSourceRatioById(int_layer, 100)
-    return(error)
+def turn_off_layer(int_layer, speosvr):
+    error = speosvr.SetSourceRatioById(int_layer, 0)
+    return error
 
 def turn_indicator(int_startlayer, int_endlayer, int_time, speosvr):
     t = int_startlayer
     while t <= int_endlayer:
-        error = tunr_on_layer(t, speosvr)
+        error = turn_on_layer(t, speosvr)
         if error == 0:
-            t=int_endlayer
+            t = int_endlayer
         t = t+1
         time.sleep(int_time)
     while t >= int_startlayer:
-        error = tunr_on_layer(t, speosvr)
+        error = turn_off_layer(t, speosvr)
         if error == 0:
             t = int_startlayer
         t = t - 1
