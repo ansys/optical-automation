@@ -1,3 +1,7 @@
+# Copyright (C) 2020 ANSYS, Inc - All Rights Reserved
+# Unauthorized copying of this file, via any medium is strictly prohibited
+# Proprietary and confidential
+
 import sys
 import os
 
@@ -14,15 +18,15 @@ class Preprocessing_asp(object):
         Create a dictionary for Named selection generation/stitch one element per color
         :return: Dictionary {color code: List of bodies with color}
         """
-        Dic = {}
+        conversion_dictionary = {}
         all_body = GetRootPart().GetAllBodies()
         for body in all_body:
             sel = Selection.Create(body)
             ColorInfo = ColorHelper.GetColor(sel).ToString()
-            if ColorInfo not in Dic:
-                Dic.update({ColorInfo: List[IDesignBody]()})
-            Dic[ColorInfo].Add(body)
-        return Dic
+            if ColorInfo not in conversion_dictionary:
+                conversion_dictionary.update({ColorInfo: List[IDesignBody]()})
+            conversion_dictionary[ColorInfo].Add(body)
+        return conversion_dictionary
 
     def create_dict_by_Material(self):
         """
@@ -96,20 +100,19 @@ class Preprocessing_asp(object):
         t = 0
         geometricalsets = []
         for body in allbodies:
-            str_test = body.GetName()
-            test = True
-            while test:
-                geo_set_name_test, content = path.split(str_test)
-                if content != "":
-                    if not geometricalsets.__contains__(geo_set_name_test) and geo_set_name_test != "":
+            body_name = body.GetName()
+            while True:
+                geo_set_name_test, content = os.path.split(body_name)
+                if content:
+                    if geo_set_name_test and not geometricalsets.__contains__(geo_set_name_test):
                         geometricalsets.append(geo_set_name_test)
-                    str_test = geo_set_name_test
+                    body_name = geo_set_name_test
                 else:
-                    if geo_set_name_test != "":
-                        if True != geometricalsets.__contains__(content) and content != "":
+                    if geo_set_name_test:
+                        if content and not geometricalsets.__contains__(content):
                             geometricalsets.append(content)
-                    test = False
-        return (geometricalsets)
+                    break
+        return geometricalsets
 
     def __get_bodies_for_geometrical_sets(self, part):
         """
@@ -122,37 +125,31 @@ class Preprocessing_asp(object):
         allsurface = self.__get_all_surface_bodies(part)
         for item in geometricalsets:
             bodylist.append([])
-        t = 0
-        for sbody in allsurface:
-            k = 0
-            for item in geometricalsets:
-                testlist = bodylist[k]
-                str_test = sbody.GetName()
-                if str_test.Contains(item):
-                    testlist.append(t)
-                    bodylist[k] = testlist
-                k = k + 1
-            t = t + 1
-        return (bodylist)
+        for i, sbody in enumerate(allsurface):
+            body_name = sbody.GetName()
+            for k, item in enumerate(geometricalsets):
+                if body_name.Contains(item):
+                    bodylist[k].append(i)
+        return bodylist
 
-    def __convert_list_to_dict(self, input_list, part):
+    def __convert_list_to_dict(self, part):
         """
         Convert the lists to dictionaries
-        :param input_list:  List of Body IDs
+        :param body_list:  List of Body IDs
         :param part:        Spaceclaim Part to convert
         :return:
         """
         dictionary = {}
+        body_list = self.__get_bodies_for_geometrical_sets(part)
         geo_list = self.__create_geometricalsetnames_list(part)
-        surfacebodies = self.__get_all_surface_bodies(part)
-        i = 0
-        for item in input_list:
-            test = item
-            for c in test:
+        surface_bodies = self.__get_all_surface_bodies(part)
+
+        for i, body_ids_list in enumerate(body_list):
+            for body_id in body_ids_list:
                 if geo_list[i] not in dictionary:
-                    dictionary.update({geo_list[i]: List[IDesignBody]()})
-                dictionary[geo_list[i]].Add(surfacebodies[c])
-            i = i + 1
+                    dictionary[geo_list[i]] = List[IDesignBody]()
+                dictionary[geo_list[i]].Add(surface_bodies[body_id])
+
         return dictionary
 
     def geosets_conversion(self, part):
@@ -161,8 +158,7 @@ class Preprocessing_asp(object):
         :param part:
         :return:
         """
-        bodylist = self.__get_bodies_for_geometrical_sets(part)
-        dic = self.__convert_list_to_dict(bodylist, part)
+        dic = self.__convert_list_to_dict(part)
         self.create_named_selection(dic)
 
     @staticmethod

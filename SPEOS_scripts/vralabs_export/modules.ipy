@@ -1,34 +1,44 @@
+# Copyright (C) 2020 ANSYS, Inc - All Rights Reserved
+# Unauthorized copying of this file, via any medium is strictly prohibited
+# Proprietary and confidential
 import System
 #import os
 import time
 import clr
-import math
-from System.IO import Directory, File
+#import math
+#from System.IO import Directory, File
 clr.AddReference('System.Windows.Forms')
 from System.Windows.Forms import OpenFileDialog, FolderBrowserDialog
 
 
 def openspeosfile(str_path, str_speos_application):
-    # str_path is variable containing string to the speos file to open
-    # str_speos_application is Variable containing the string to the registered application
-    # Virtual Photometric Lab - XMPViewer.Application
-    # Virtual 3D Photometric Lab - Xm3Viewer.Application
-    # Virtual Human Vision Lab - VisionLabViewer.Application
-    # Virtual Reality Lab - HDRIViewer.Application
-    # Eulumdat Viewer - EulumdatViewer.Application
-    # IESNA L-63 viewer - IESViewer.Application
-    # OPTIS Intensity Viewer - OptisIntensityViewer.Application
-    # Photometric Calc - VPLab.Application
-    # User Material Editor - UserMaterialViewer.Application
-    # Ray File Editor - RayEditor.Application
-    # BSDF-BRDF Anisotropic Surface Viewer - SimpleBSDFViewer.Application
+    '''
+    :param str_path: is variable containing string to the speos file to open
+    :param str_speos_application: is Variable containing the string to the registered application
+    Virtual Photometric Lab - XMPViewer.Application
+    Virtual 3D Photometric Lab - Xm3Viewer.Application
+    Virtual Human Vision Lab - VisionLabViewer.Application
+    Virtual Reality Lab - HDRIViewer.Application
+    Eulumdat Viewer - EulumdatViewer.Application
+    IESNA L-63 viewer - IESViewer.Application
+    OPTIS Intensity Viewer - OptisIntensityViewer.Application
+    Photometric Calc - VPLab.Application
+    User Material Editor - UserMaterialViewer.Application
+    Ray File Editor - RayEditor.Application
+    BSDF-BRDF Anisotropic Surface Viewer - SimpleBSDFViewer.Application
+    :return:  Speos viewer com object
+    '''
     speos_type = System.Type.GetTypeFromProgID(str_speos_application)
-    speos=System.Activator.CreateInstance(speos_type)
+    speos = System.Activator.CreateInstance(speos_type)
     test = speos.OpenFile(str_path)
     return speos
 
 def get_file_name(extension):
-    #extension to open format: Name |*.extension
+    '''
+    File browser
+    :param extension: extension to open  format: Name |*.extension
+    :return: File path
+    '''
     file_dialog = OpenFileDialog()
     file_dialog.Filter = extension
     file_dialog.ShowDialog()
@@ -36,32 +46,52 @@ def get_file_name(extension):
     return file_path
 
 def get_folder_name():
+    '''
+    Folder browser
+    :return: folder path
+    '''
     file_dialog = FolderBrowserDialog()
     file_dialog.ShowDialog()
     file_path = file_dialog.SelectedPath
     return file_path
 
 def turn_on_layer(int_layer, speosvr):
+    '''
+    sets the power of a layer (int layer) to 100%
+    :param int_layer: Interger defining layer number
+    :param speosvr:   VRlab com object
+    :return:
+    '''
     error = speosvr.SetSourceRatioById(int_layer,100)
     return error
 
 def turn_off_layer(int_layer, speosvr):
+    '''
+    sets the power of a layer (int layer) to 100%
+    :param int_layer: Interger defining layer number
+    :param speosvr:   VRlab com object
+    :return:
+    '''
     error = speosvr.SetSourceRatioById(int_layer, 0)
     return error
 
 def turn_indicator(int_startlayer, int_endlayer, int_time, speosvr):
-    t = int_startlayer
-    while t <= int_endlayer:
-        error = turn_on_layer(t, speosvr)
+    '''
+    turn on and off layers to generate a turnindocator funcionality
+    :param int_startlayer:  layer to start
+    :param int_endlayer:    layer to end
+    :param int_time:        wait time
+    :param speosvr:         VRlabs com object
+    :return:
+    '''
+    for i in range(int_startlayer, int_endlayer+1):
+        error = turn_on_layer(i, speosvr)
         if error == 0:
-            t = int_endlayer
-        t = t+1
-        time.sleep(int_time)
-    while t >= int_startlayer:
-        error = turn_off_layer(t, speosvr)
-        if error == 0:
-            t = int_startlayer
-        t = t - 1
+            break
         time.sleep(int_time)
 
-
+    for i in range(int_endlayer, int_startlayer-1, -1):
+        error = turn_off_layer(i, speosvr)
+        if error == 0:
+            break
+        time.sleep(int_time)
