@@ -2,7 +2,6 @@
 # Unauthorized copying of this file, via any medium is strictly prohibited
 # Proprietary and confidential
 
-import sys
 import os
 
 
@@ -13,49 +12,152 @@ class Preprocessing_asp(object):
     For this reason the class does not support multiple Ansys SPEOS  sessions.
     """
 
-    def create_dict_by_Color(self):
+    @staticmethod
+    def create_dict_by_color():
         """
         Create a dictionary for Named selection generation/stitch one element per color
         :return: Dictionary {color code: List of bodies with color}
         """
-        conversion_dictionary = {}
+        conversion_dict = {}
         all_body = GetRootPart().GetAllBodies()
         for body in all_body:
             sel = Selection.Create(body)
-            ColorInfo = ColorHelper.GetColor(sel).ToString()
-            if ColorInfo not in conversion_dictionary:
-                conversion_dictionary.update({ColorInfo: List[IDesignBody]()})
-            conversion_dictionary[ColorInfo].Add(body)
-        return conversion_dictionary
+            color_info = ColorHelper.GetColor(sel).ToString()
+            if color_info not in conversion_dict:
+                conversion_dict[color_info] = List[IDesignBody]()
+            conversion_dict[color_info].Add(body)
+        return conversion_dict
 
-    def create_dict_by_Material(self):
+    def __get_real_original(self, item):
+        result = item
+        while result.GetOriginal():
+            result = result.GetOriginal()
+        return result
+
+    @staticmethod
+    def create_dict_by_material(self):
         """
         Create a dictionary for Named selection generation/stitch one element per Catia Material6
-        :return: Dictionary {materialname: List of bodies with mat}
+        :return: Dictionary {material name: List of bodies with mat}
         """
 
-        def get_real_original(item):
-            result = item
-            while result.GetOriginal():
-                result = result.GetOriginal()
-            return result
-        conversion_dictionary = {}
+        conversion_dict = {}
         all_body = GetRootPart().GetAllBodies()
         for body in all_body:
-            ibody = get_real_original(body)
-            MaterialName = ibody.Material.Name
-            if MaterialName not in conversion_dictionary:
-                conversion_dictionary.update({MaterialName: List[IDesignBody]()})
-            conversion_dictionary[MaterialName].Add(body)
-        return conversion_dictionary
+            ibody = self.__get_real_original(body)
+            material_name = ibody.Material.Name
+            if material_name not in conversion_dict:
+                conversion_dict[material_name] = List[IDesignBody]()
+            conversion_dict[material_name].Add(body)
+        return conversion_dict
 
-    def stitch(self, Dic):
+
+    def __stitch_group(self, comp, iter, batch):
         """
-        stitch all elemnt per dictionary items-> color/material
+        return a group of bodies from a component, whose number if defined by batch value
+        para comp: given component
+        para iter: the number of group
+        para batch: the size of group
+        e.g. body1 body2 body3 body4 body5 body6 body7 body8 body9
+        para iter = 2 with batch = 2
+        -> [body1, body2] [body3, body4], [body5, body6], [body7, body8], [body9]
+        return [body3, body4]
         """
-        for item in Dic:
-            sel = Selection.Create(Dic[item])
+        Stitch_Group = List[IDesignBody]()
+        count = 0
+        for body in comp.GetBodies():
+            if count >= iter * batch and count < (iter + 1) * batch:
+                Stitch_Group.Add(body)
+            count += 1
+        return Stitch_Group
+
+    def __stitch_group_list(self, comp, total_iter, batch):
+        """
+        return a list group
+        para comp: given component
+        para total_iter: total number of group generated from the component
+        para batch: size of each group
+        e.g. body1 body2 body3 body4 body5 body6 body7 body8 body9
+        return [[body1, body2] [body3, body4], [body5, body6], [body7, body8], [body9]]
+        """
+        Stitch_Group_List = []
+        for iter in range(total_iter):
+            group = self.__stitch_group(comp, iter, batch)
+            print len(group)
+            Stitch_Group_List.append(group)
+        return Stitch_Group_Lis
+
+
+    def stitch_comp(self, comp):
+        """
+        apply stitch according to component structure
+        para comp: given component
+        """
+        print "processing ", comp.GetName()
+        count = len(comp.GetBodies())
+        Batch = 200
+        if count < Batch:
+            sel = Selection.Create(comp.GetBodies())
+            result = StitchFaces.FindAndFix(sel)
+            count_after = len(comp.GetBodies())
+            while count_after != count:
+                print "Start with ", count, " and end with ", count_after
+                print "continue"
+                count = count_after
+                result = StitchFaces.FindAndFix(Selection.Create(comp.GetBodies()))
+                count_after = len(comp.GetBodies())
+            print "next component"
+        else:
+            Total_iter = int(count / Batch) + 1
+            Stitch_Group_List = self.__stitch_group_list(comp, Total_iter, Batch)
+            for group in Stitch_Group_List:
+                print "1st working on one group"
+                sel = Selection.Create(group)
+                result = StitchFaces.FindAndFix(sel)
+            count_after = len(comp.GetBodies())
+            while count_after != count:
+                print "Start with ", count, " and end with ", count_after
+                print "continue"
+                count = count_after
+                Total_iter = int(count / Batch) + 1
+                Stitch_Group_List = self.__stitch_group_list(comp, Total_iter, Batch)
+                for group in Stitch_Group_List:
+                    print "following working on one group"
+                    sel = Selection.Create(group)
+                    result = StitchFaces.FindAndFix(sel)
+                count_after = len(comp.GetBodies())
+            print "next component"
+
+    @staticmethod
+    def stitch(self, conversion_dict):
+        """
+        stitch all element per dictionary items-> color/material
+        """
+        for item in conversion_dict:
+            sel = Selection.Create(conversion_dict[item])
             result = StitchFaces.FixSpecific(sel)
+
+
+
+    def remove_duplicates(self, comp):
+        """
+        Remove dupliacted surfaces
+        param part: input SpaceClaim part
+        :return:
+        """
+        print "processing ", comp.GetName()
+        body = Selection.Create(comp.GetBodies())
+        count = len(comp.GetBodies())
+        result = FixDuplicateFaces.FindAndFix(body)
+        count_after = len(comp.GetBodies())
+        while count != count_after:
+            print "start with ", count, " and end with ", count_after
+            print "continue"
+            count = count_after
+            sel = Selection.Create(comp.GetBodies())
+            result = FixDuplicateFaces.FindAndFix(sel)
+            count_after = len(comp.GetBodies())
+        print "next component"
 
     def check_geometry_update(self):
         """
@@ -75,44 +177,45 @@ class Preprocessing_asp(object):
         """
         return self
 
-    def __get_all_surface_bodies(self, part):
+    @staticmethod
+    def __get_all_surface_bodies(part):
         """
         Function to seperate solids from surface bodies for Geometrical set named selection conversion
         :param part:    input Spaceclaim Part
         :return:        return all surface bodies from input part
         """
-        allbodies = part.GetAllBodies()
-        allsurface = part.GetAllBodies()
-        allsurface.Clear()
-        for body in allbodies:
-            if body.GetMidSurfaceAspect() != None:
-                allsurface.Add(body)
-        return (allsurface)
+        all_bodies = part.GetAllBodies()
+        all_surface = part.GetAllBodies()
+        all_surface.Clear()
+        for body in all_bodies:
+            if body.GetMidSurfaceAspect():
+                all_surface.Add(body)
+        return all_surface
 
-    def __create_geometricalsetnames_list(self, part):
+    def __create_geometrical_set_names_list(self, part):
         """
         generate List of geometric sets from geometry names
         :param part:    Spaceclaim Part to get Geometric set names from
         :return:        List of geometrical sets names
         """
 
-        allbodies = self.__get_all_surface_bodies(part)
+        all_bodies = self.__get_all_surface_bodies(part)
         t = 0
-        geometricalsets = []
-        for body in allbodies:
+        geometrical_sets = []
+        for body in all_bodies:
             body_name = body.GetName()
             while True:
                 geo_set_name_test, content = os.path.split(body_name)
                 if content:
-                    if geo_set_name_test and not geometricalsets.__contains__(geo_set_name_test):
-                        geometricalsets.append(geo_set_name_test)
+                    if geo_set_name_test and not geometrical_sets.__contains__(geo_set_name_test):
+                        geometrical_sets.append(geo_set_name_test)
                     body_name = geo_set_name_test
                 else:
                     if geo_set_name_test:
-                        if content and not geometricalsets.__contains__(content):
-                            geometricalsets.append(content)
+                        if content and not geometrical_sets.__contains__(content):
+                            geometrical_sets.append(content)
                     break
-        return geometricalsets
+        return geometrical_sets
 
     def __get_bodies_for_geometrical_sets(self, part):
         """
@@ -120,17 +223,17 @@ class Preprocessing_asp(object):
         :param part:    Spaceclaim Part to get Geometric set from
         :return:        List of body IDs in order of geo set names
         """
-        bodylist = []
-        geometricalsets = self.__create_geometricalsetnames_list(part)
-        allsurface = self.__get_all_surface_bodies(part)
-        for item in geometricalsets:
-            bodylist.append([])
-        for i, sbody in enumerate(allsurface):
+        body_list = []
+        geometrical_sets = self.__create_geometrical_set_names_list(part)
+        all_surface = self.__get_all_surface_bodies(part)
+        for item in geometrical_sets:
+            body_list.append([])
+        for i, sbody in enumerate(all_surface):
             body_name = sbody.GetName()
-            for k, item in enumerate(geometricalsets):
+            for k, item in enumerate(geometrical_sets):
                 if body_name.Contains(item):
-                    bodylist[k].append(i)
-        return bodylist
+                    body_list[k].append(i)
+        return body_list
 
     def __convert_list_to_dict(self, part):
         """
@@ -141,7 +244,7 @@ class Preprocessing_asp(object):
         """
         dictionary = {}
         body_list = self.__get_bodies_for_geometrical_sets(part)
-        geo_list = self.__create_geometricalsetnames_list(part)
+        geo_list = self.__create_geometrical_set_names_list(part)
         surface_bodies = self.__get_all_surface_bodies(part)
 
         for i, body_ids_list in enumerate(body_list):
@@ -152,25 +255,25 @@ class Preprocessing_asp(object):
 
         return dictionary
 
-    def geosets_conversion(self, part):
+    def geo_sets_conversion(self, part):
         """
         Get Catia Geometrical set as Named selection
         :param part:
         :return:
         """
-        dic = self.__convert_list_to_dict(part)
-        self.create_named_selection(dic)
+        conversion_dict = self.__convert_list_to_dict(part)
+        self.create_named_selection(conversion_dict)
 
     @staticmethod
-    def create_named_selection(Dic):
+    def create_named_selection(conversion_dict):
         """
         Create a Named selection from dictionary
-        :param Dic:  Dictionary{Name of Named selection: LIst of bodies}
+        :param conversion_dict:  Dictionary{Name of Named selection: LIst of bodies}
         """
-        for item in Dic:
-            sel = Selection.Create(Dic[item])
+        for item in conversion_dict:
+            sel = Selection.Create(conversion_dict[item])
             if sel != Selection.Empty():
                 second = Selection.Empty()
-                Result = NamedSelection.Create(sel, second).CreatedNamedSelection
-                Result.SetName(item.strip())
+                result = NamedSelection.Create(sel, second).CreatedNamedSelection
+                result.SetName(item.strip())
 

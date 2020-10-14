@@ -11,7 +11,7 @@ clr.AddReference('System.Windows.Forms')
 from System.Windows.Forms import OpenFileDialog, FolderBrowserDialog
 
 
-def openspeosfile(str_path, str_speos_application):
+def open_speos_file(str_path, str_speos_application):
     '''
     :param str_path: is variable containing string to the speos file to open
     :param str_speos_application: is Variable containing the string to the registered application
@@ -33,6 +33,7 @@ def openspeosfile(str_path, str_speos_application):
     test = speos.OpenFile(str_path)
     return speos
 
+
 def get_file_name(extension):
     '''
     File browser
@@ -45,6 +46,7 @@ def get_file_name(extension):
     file_path = file_dialog.FileName
     return file_path
 
+
 def get_folder_name():
     '''
     Folder browser
@@ -54,6 +56,7 @@ def get_folder_name():
     file_dialog.ShowDialog()
     file_path = file_dialog.SelectedPath
     return file_path
+
 
 def turn_on_layer(int_layer, speosvr):
     '''
@@ -65,6 +68,7 @@ def turn_on_layer(int_layer, speosvr):
     error = speosvr.SetSourceRatioById(int_layer,100)
     return error
 
+
 def turn_off_layer(int_layer, speosvr):
     '''
     sets the power of a layer (int layer) to 100%
@@ -74,6 +78,7 @@ def turn_off_layer(int_layer, speosvr):
     '''
     error = speosvr.SetSourceRatioById(int_layer, 0)
     return error
+
 
 def turn_indicator(int_startlayer, int_endlayer, int_time, speosvr):
     '''
