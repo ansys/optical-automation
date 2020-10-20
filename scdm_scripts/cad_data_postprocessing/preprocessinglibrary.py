@@ -5,7 +5,7 @@
 import os
 
 
-class Preprocessing_asp(object):
+class PreProcessingASP(object):
     """
     This class contains all the methods to Pre-process Ansys SPEOS Geometries
     As per Api limitation only one session at the time can be attached.
@@ -28,50 +28,60 @@ class Preprocessing_asp(object):
             conversion_dict[color_info].Add(body)
         return conversion_dict
 
-    def __get_real_original(self, item):
-        result = item
-        while result.GetOriginal():
-            result = result.GetOriginal()
-        return result
-
     @staticmethod
-    def create_dict_by_material(self):
+    def create_dict_by_material():
         """
         Create a dictionary for Named selection generation/stitch one element per Catia Material6
-        :return: Dictionary {material name: List of bodies with mat}
+        return: Dictionary {material name: List of bodies with mat}
         """
+
+        def get_real_original(item):
+            """
+            get the original body info
+            Args:
+                item: SpaceClaim body item
+
+            Returns: the original SpaceClaim body item
+
+            """
+            result = item
+            while result.GetOriginal():
+                result = result.GetOriginal()
+            return result
 
         conversion_dict = {}
         all_body = GetRootPart().GetAllBodies()
         for body in all_body:
-            ibody = self.__get_real_original(body)
+            ibody = get_real_original(body)
             material_name = ibody.Material.Name
             if material_name not in conversion_dict:
                 conversion_dict[material_name] = List[IDesignBody]()
             conversion_dict[material_name].Add(body)
         return conversion_dict
 
-
-    def __stitch_group(self, comp, iter, batch):
+    @staticmethod
+    def __stitch_group(comp, index, group_size):
         """
-        return a group of bodies from a component, whose number if defined by batch value
-        para comp: given component
-        para iter: the number of group
-        para batch: the size of group
-        e.g. body1 body2 body3 body4 body5 body6 body7 body8 body9
-        para iter = 2 with batch = 2
-        -> [body1, body2] [body3, body4], [body5, body6], [body7, body8], [body9]
-        return [body3, body4]
-        """
-        Stitch_Group = List[IDesignBody]()
-        count = 0
-        for body in comp.GetBodies():
-            if count >= iter * batch and count < (iter + 1) * batch:
-                Stitch_Group.Add(body)
-            count += 1
-        return Stitch_Group
+        split all bodies in component into groups of group_size.
+        Example:
+            In-> [body1, body2] [body3, body4], [body5, body6], [body7, body8], [body9]
+            Out-> return [body3, body4]
+        Args:
+            comp:  given component
+            index: index of the group to return
+            group_size: the size of group
 
-    def __stitch_group_list(self, comp, total_iter, batch):
+        Returns: list of bodies defined by index
+
+        """
+
+        stitch_group = List[IDesignBody]()
+        for i, body in enumerate(comp.GetBodies()):
+            if index * group_size <= i < (index + 1) * group_size:
+                stitch_group.Add(body)
+        return stitch_group
+
+    def __stitch_group_list(self, comp, total_iter, group_size):
         """
         return a list group
         para comp: given component
@@ -80,13 +90,12 @@ class Preprocessing_asp(object):
         e.g. body1 body2 body3 body4 body5 body6 body7 body8 body9
         return [[body1, body2] [body3, body4], [body5, body6], [body7, body8], [body9]]
         """
-        Stitch_Group_List = []
-        for iter in range(total_iter):
-            group = self.__stitch_group(comp, iter, batch)
+        stitch_group_list = []
+        for i in range(total_iter):
+            group = self.__stitch_group(comp, i, group_size)
             print len(group)
-            Stitch_Group_List.append(group)
-        return Stitch_Group_Lis
-
+            stitch_group_list.append(group)
+        return stitch_group_list
 
     def stitch_comp(self, comp):
         """
@@ -94,42 +103,24 @@ class Preprocessing_asp(object):
         para comp: given component
         """
         print "processing ", comp.GetName()
-        count = len(comp.GetBodies())
-        Batch = 200
-        if count < Batch:
-            sel = Selection.Create(comp.GetBodies())
-            result = StitchFaces.FindAndFix(sel)
-            count_after = len(comp.GetBodies())
-            while count_after != count:
-                print "Start with ", count, " and end with ", count_after
-                print "continue"
-                count = count_after
-                result = StitchFaces.FindAndFix(Selection.Create(comp.GetBodies()))
-                count_after = len(comp.GetBodies())
-            print "next component"
-        else:
-            Total_iter = int(count / Batch) + 1
-            Stitch_Group_List = self.__stitch_group_list(comp, Total_iter, Batch)
-            for group in Stitch_Group_List:
+        num_bodies = len(comp.GetBodies())
+        max_group_limit = 200
+        while True:
+            total_iter = int(num_bodies / max_group_limit) + 1
+            stitch_group_list = self.__stitch_group_list(comp, total_iter, max_group_limit)
+            for group in stitch_group_list:
                 print "1st working on one group"
                 sel = Selection.Create(group)
                 result = StitchFaces.FindAndFix(sel)
-            count_after = len(comp.GetBodies())
-            while count_after != count:
-                print "Start with ", count, " and end with ", count_after
-                print "continue"
-                count = count_after
-                Total_iter = int(count / Batch) + 1
-                Stitch_Group_List = self.__stitch_group_list(comp, Total_iter, Batch)
-                for group in Stitch_Group_List:
-                    print "following working on one group"
-                    sel = Selection.Create(group)
-                    result = StitchFaces.FindAndFix(sel)
-                count_after = len(comp.GetBodies())
-            print "next component"
+            num_bodies_after_stitch = len(comp.GetBodies())
+            print "Start with ", num_bodies, " and end with ", num_bodies_after_stitch
+            print "continue"
+            if num_bodies_after_stitch == num_bodies:
+                break
+        print "next component"
 
     @staticmethod
-    def stitch(self, conversion_dict):
+    def stitch(conversion_dict):
         """
         stitch all element per dictionary items-> color/material
         """
@@ -137,26 +128,24 @@ class Preprocessing_asp(object):
             sel = Selection.Create(conversion_dict[item])
             result = StitchFaces.FixSpecific(sel)
 
-
-
-    def remove_duplicates(self, comp):
+    @staticmethod
+    def remove_duplicates(comp):
         """
-        Remove dupliacted surfaces
+        Remove duplicated surfaces
         param part: input SpaceClaim part
         :return:
         """
         print "processing ", comp.GetName()
-        body = Selection.Create(comp.GetBodies())
-        count = len(comp.GetBodies())
-        result = FixDuplicateFaces.FindAndFix(body)
-        count_after = len(comp.GetBodies())
-        while count != count_after:
-            print "start with ", count, " and end with ", count_after
-            print "continue"
-            count = count_after
+        while True:
             sel = Selection.Create(comp.GetBodies())
+            num_bodies = len(comp.GetBodies())
             result = FixDuplicateFaces.FindAndFix(sel)
-            count_after = len(comp.GetBodies())
+            num_bodies_after_duplicates = len(comp.GetBodies())
+            print "start with ", num_bodies, " and end with ", num_bodies_after_duplicates
+            print "continue"
+            if num_bodies == num_bodies_after_duplicates:
+                # number of surfaces before and after Duplicates become the same, no more duplicates found
+                break
         print "next component"
 
     def check_geometry_update(self):
@@ -200,8 +189,8 @@ class Preprocessing_asp(object):
         """
 
         all_bodies = self.__get_all_surface_bodies(part)
-        t = 0
         geometrical_sets = []
+
         for body in all_bodies:
             body_name = body.GetName()
             while True:
@@ -238,7 +227,6 @@ class Preprocessing_asp(object):
     def __convert_list_to_dict(self, part):
         """
         Convert the lists to dictionaries
-        :param body_list:  List of Body IDs
         :param part:        Spaceclaim Part to convert
         :return:
         """
