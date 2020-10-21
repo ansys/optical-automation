@@ -123,6 +123,5 @@ class SCDMControl(object):
 
 sc = SCDMControl(graphical_mode=True)
 sc.open_spaceclaim_session()
-#sc.import_and_save_cad_in_spaceclaim("D:\\Ansys_filter_2poles.step", "D:\\", "test_import")
-#sc.close_spaceclaim_session()
+sc.close_spaceclaim_session()
 
