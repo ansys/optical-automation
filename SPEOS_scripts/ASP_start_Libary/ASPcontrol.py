@@ -120,8 +120,8 @@ class SCDMControl(object):
 
 
 
-
-sc = SCDMControl(graphical_mode=True)
-sc.open_spaceclaim_session()
-sc.close_spaceclaim_session()
+if __name__ == "__main__":
+    sc = SCDMControl(graphical_mode=True)
+    sc.open_spaceclaim_session()
+    sc.close_spaceclaim_session()
 
