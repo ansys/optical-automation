@@ -3,8 +3,14 @@
 # Proprietary and confidential
 
 import os
+import sys
+import pytest
+sys.path.append(r"D:\Git\AnsysAutomation\SCLib")  # temp paths until updates not in SCLib package
+sys.path.append(r"C:\git\ansys_automation\SCLib")
+from SCDMControl import SCDMControl, perform_imports
+scdm_install_dir, scdm_api = perform_imports(211, "v20")
 
-
+from api.Scripting.Helpers import ColorHelper
 class PreProcessingASP(object):
     """
     This class contains all the methods to Pre-process Ansys SPEOS Geometries
@@ -19,14 +25,15 @@ class PreProcessingASP(object):
         :return: Dictionary {color code: List of bodies with color}
         """
         conversion_dict = {}
-        all_body = GetRootPart().GetAllBodies()
+        all_body = scdm_api.Scripting.Helpers.DocumentHelper.GetRootPart().Bodies
         for body in all_body:
-            sel = Selection.Create(body)
-            color_info = ColorHelper.GetColor(sel).ToString()
-            if color_info not in conversion_dict:
-                conversion_dict[color_info] = List[IDesignBody]()
-            conversion_dict[color_info].Add(body)
-        return conversion_dict
+            sel = scdm_api.Scripting.Selection.Selection.Create(body)
+            color_info = scdm_api.Scripting.Helpers.ColorHelper.GetColor(sel).ToString()
+            print(type(color_info))
+            # if color_info not in conversion_dict:
+            #     conversion_dict[color_info] = [] #List[IDesignBody]()
+            # conversion_dict[color_info].Add(body)
+        return conversion_dict # todo color code: names of bodies
 
     @staticmethod
     def create_dict_by_material():
@@ -57,7 +64,7 @@ class PreProcessingASP(object):
             if material_name not in conversion_dict:
                 conversion_dict[material_name] = List[IDesignBody]()
             conversion_dict[material_name].Add(body)
-        return conversion_dict
+        return conversion_dict # todo material_name: names of bodies
 
     @staticmethod
     def __stitch_group(comp, index, group_size):
@@ -79,7 +86,7 @@ class PreProcessingASP(object):
         for i, body in enumerate(comp.GetBodies()):
             if index * group_size <= i < (index + 1) * group_size:
                 stitch_group.Add(body)
-        return stitch_group
+        return stitch_group  # todo skip since tested in __stitch_group_list
 
     def __stitch_group_list(self, comp, total_iter, group_size):
         """
@@ -93,31 +100,33 @@ class PreProcessingASP(object):
         stitch_group_list = []
         for i in range(total_iter):
             group = self.__stitch_group(comp, i, group_size)
-            print len(group)
+            # print len(group)
             stitch_group_list.append(group)
-        return stitch_group_list
+        return stitch_group_list # todo list of lists with names of bodies (make only as separate test)
 
     def stitch_comp(self, comp):
         """
         apply stitch according to component structure
         para comp: given component
         """
-        print "processing ", comp.GetName()
+        # print "processing ", comp.GetName()
         num_bodies = len(comp.GetBodies())
         max_group_limit = 200
         while True:
             total_iter = int(num_bodies / max_group_limit) + 1
             stitch_group_list = self.__stitch_group_list(comp, total_iter, max_group_limit)
             for group in stitch_group_list:
-                print "1st working on one group"
+                # print "1st working on one group"
                 sel = Selection.Create(group)
                 result = StitchFaces.FindAndFix(sel)
             num_bodies_after_stitch = len(comp.GetBodies())
-            print "Start with ", num_bodies, " and end with ", num_bodies_after_stitch
-            print "continue"
+            # print "Start with ", num_bodies, " and end with ", num_bodies_after_stitch
+            # print "continue"
             if num_bodies_after_stitch == num_bodies:
                 break
-        print "next component"
+        # print "next component"
+        # todo run function and get all faces center position (center of mass)
+        #  before stich_comp and after and compare X,Y,Z to reference
 
     @staticmethod
     def stitch(conversion_dict):
@@ -128,6 +137,9 @@ class PreProcessingASP(object):
             sel = Selection.Create(conversion_dict[item])
             result = StitchFaces.FixSpecific(sel)
 
+        # todo run function and get all faces center position (center of mass)
+        #  before stich_comp and after and compare X,Y,Z to reference
+
     @staticmethod
     def remove_duplicates(comp):
         """
@@ -135,18 +147,20 @@ class PreProcessingASP(object):
         param part: input SpaceClaim part
         :return:
         """
-        print "processing ", comp.GetName()
+        # print "processing ", comp.GetName()
         while True:
             sel = Selection.Create(comp.GetBodies())
             num_bodies = len(comp.GetBodies())
             result = FixDuplicateFaces.FindAndFix(sel)
             num_bodies_after_duplicates = len(comp.GetBodies())
-            print "start with ", num_bodies, " and end with ", num_bodies_after_duplicates
-            print "continue"
+            # print "start with ", num_bodies, " and end with ", num_bodies_after_duplicates
+            # print "continue"
             if num_bodies == num_bodies_after_duplicates:
                 # number of surfaces before and after Duplicates become the same, no more duplicates found
                 break
-        print "next component"
+        # print "next component"
+        # todo run function and get all faces center position (center of mass)
+        #  before stich_comp and after and compare X,Y,Z to reference
 
     def check_geometry_update(self):
         """
