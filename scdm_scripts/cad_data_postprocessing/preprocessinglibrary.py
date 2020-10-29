@@ -7,10 +7,12 @@ import sys
 import pytest
 sys.path.append(r"D:\Git\AnsysAutomation\SCLib")  # temp paths until updates not in SCLib package
 sys.path.append(r"C:\git\ansys_automation\SCLib")
-from SCDMControl import SCDMControl, perform_imports
-scdm_install_dir, scdm_api = perform_imports(211, "v20")
+import scdm_api
 
-from api.Scripting.Helpers import ColorHelper
+scdm_api.perform_imports(211, "V20")
+from scdm_api import *
+
+
 class PreProcessingASP(object):
     """
     This class contains all the methods to Pre-process Ansys SPEOS Geometries
@@ -25,14 +27,14 @@ class PreProcessingASP(object):
         :return: Dictionary {color code: List of bodies with color}
         """
         conversion_dict = {}
-        all_body = scdm_api.Scripting.Helpers.DocumentHelper.GetRootPart().Bodies
+        root = GetRootPart()
+        all_body = GetAllBodies(root)
         for body in all_body:
-            sel = scdm_api.Scripting.Selection.Selection.Create(body)
+            sel = Selection.Create(body)
             color_info = scdm_api.Scripting.Helpers.ColorHelper.GetColor(sel).ToString()
-            print(type(color_info))
-            # if color_info not in conversion_dict:
-            #     conversion_dict[color_info] = [] #List[IDesignBody]()
-            # conversion_dict[color_info].Add(body)
+            if color_info not in conversion_dict:
+                conversion_dict[color_info] = List[IDesignBody]()
+            conversion_dict[color_info].Add(body)
         return conversion_dict # todo color code: names of bodies
 
     @staticmethod
@@ -51,16 +53,21 @@ class PreProcessingASP(object):
             Returns: the original SpaceClaim body item
 
             """
-            result = item
-            while result.GetOriginal():
-                result = result.GetOriginal()
-            return result
+            while GetOriginal(item):
+                item = GetOriginal(item)
+            original = item
+            return original
 
         conversion_dict = {}
-        all_body = GetRootPart().GetAllBodies()
+        root = GetRootPart()
+        all_body = GetAllBodies(root)
         for body in all_body:
             ibody = get_real_original(body)
-            material_name = ibody.Material.Name
+            try:
+                material_name = ibody.Material.Name
+            except:
+                continue
+
             if material_name not in conversion_dict:
                 conversion_dict[material_name] = List[IDesignBody]()
             conversion_dict[material_name].Add(body)
