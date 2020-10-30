@@ -4,13 +4,13 @@
 
 import os
 import sys
-import pytest
 sys.path.append(r"D:\Git\AnsysAutomation\SCLib")  # temp paths until updates not in SCLib package
 sys.path.append(r"C:\git\ansys_automation\SCLib")
-import scdm_api
 
-scdm_api.perform_imports(211, "V20")
-from scdm_api import *
+
+import scdm_api_import
+scdm_api_import.perform_imports(211, "V20")
+from scdm_api_import import *
 
 
 class PreProcessingASP(object):
@@ -27,8 +27,7 @@ class PreProcessingASP(object):
         :return: Dictionary {color code: List of bodies with color}
         """
         conversion_dict = {}
-        root = GetRootPart()
-        all_body = GetAllBodies(root)
+        all_body = GetRootPart().GetAllBodies()
         for body in all_body:
             sel = Selection.Create(body)
             color_info = scdm_api.Scripting.Helpers.ColorHelper.GetColor(sel).ToString()
@@ -284,5 +283,4 @@ class PreProcessingASP(object):
             if sel != Selection.Empty():
                 second = Selection.Empty()
                 result = NamedSelection.Create(sel, second).CreatedNamedSelection
-                result.SetName(item.strip())
-
+                result.Name = item.strip()
