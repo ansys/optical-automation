@@ -27,7 +27,8 @@ class PreProcessingASP(object):
         :return: Dictionary {color code: List of bodies with color}
         """
         conversion_dict = {}
-        all_body = GetRootPart().GetAllBodies()
+        root = GetRootPart()
+        all_body = GetAllBodies(root)
         for body in all_body:
             sel = Selection.Create(body)
             color_info = scdm_api.Scripting.Helpers.ColorHelper.GetColor(sel).ToString()
@@ -89,7 +90,7 @@ class PreProcessingASP(object):
         """
 
         stitch_group = List[IDesignBody]()
-        for i, body in enumerate(comp.GetBodies()):
+        for i, body in enumerate(GetBodies(comp)):
             if index * group_size <= i < (index + 1) * group_size:
                 stitch_group.Add(body)
         return stitch_group  # todo skip since tested in __stitch_group_list
@@ -116,16 +117,19 @@ class PreProcessingASP(object):
         para comp: given component
         """
         # print "processing ", comp.GetName()
-        num_bodies = len(comp.GetBodies())
+        all_bodies = GetBodies(comp)
         max_group_limit = 200
         while True:
+            num_bodies = len(all_bodies)
             total_iter = int(num_bodies / max_group_limit) + 1
             stitch_group_list = self.__stitch_group_list(comp, total_iter, max_group_limit)
             for group in stitch_group_list:
                 # print "1st working on one group"
                 sel = Selection.Create(group)
                 result = StitchFaces.FindAndFix(sel)
-            num_bodies_after_stitch = len(comp.GetBodies())
+
+            all_bodies = GetBodies(comp)
+            num_bodies_after_stitch = len(all_bodies)
             # print "Start with ", num_bodies, " and end with ", num_bodies_after_stitch
             # print "continue"
             if num_bodies_after_stitch == num_bodies:
@@ -154,16 +158,20 @@ class PreProcessingASP(object):
         :return:
         """
         # print "processing ", comp.GetName()
+        all_bodies = GetBodies(comp)
         while True:
-            sel = Selection.Create(comp.GetBodies())
-            num_bodies = len(comp.GetBodies())
+            sel = Selection.Create(all_bodies)
+            num_bodies = len(all_bodies)
             result = FixDuplicateFaces.FindAndFix(sel)
-            num_bodies_after_duplicates = len(comp.GetBodies())
+
+            all_bodies = GetBodies(comp)
+            num_bodies_after_duplicates = len(all_bodies)
             # print "start with ", num_bodies, " and end with ", num_bodies_after_duplicates
             # print "continue"
             if num_bodies == num_bodies_after_duplicates:
                 # number of surfaces before and after Duplicates become the same, no more duplicates found
                 break
+
         # print "next component"
         # todo run function and get all faces center position (center of mass)
         #  before stich_comp and after and compare X,Y,Z to reference
