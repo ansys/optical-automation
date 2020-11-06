@@ -35,7 +35,7 @@ class PreProcessingASP(object):
             if color_info not in conversion_dict:
                 conversion_dict[color_info] = List[IDesignBody]()
             conversion_dict[color_info].Add(body)
-        return conversion_dict # todo color code: names of bodies
+        return conversion_dict
 
     @staticmethod
     def create_dict_by_material():
@@ -71,7 +71,7 @@ class PreProcessingASP(object):
             if material_name not in conversion_dict:
                 conversion_dict[material_name] = List[IDesignBody]()
             conversion_dict[material_name].Add(body)
-        return conversion_dict # todo material_name: names of bodies
+        return conversion_dict
 
     @staticmethod
     def __stitch_group(comp, index, group_size):
@@ -93,7 +93,7 @@ class PreProcessingASP(object):
         for i, body in enumerate(GetBodies(comp)):
             if index * group_size <= i < (index + 1) * group_size:
                 stitch_group.Add(body)
-        return stitch_group  # todo skip since tested in __stitch_group_list
+        return stitch_group
 
     def __stitch_group_list(self, comp, total_iter, group_size):
         """
@@ -107,16 +107,14 @@ class PreProcessingASP(object):
         stitch_group_list = []
         for i in range(total_iter):
             group = self.__stitch_group(comp, i, group_size)
-            # print len(group)
             stitch_group_list.append(group)
-        return stitch_group_list # todo list of lists with names of bodies (make only as separate test)
+        return stitch_group_list
 
     def stitch_comp(self, comp):
         """
         apply stitch according to component structure
         para comp: given component
         """
-        # print "processing ", comp.GetName()
         all_bodies = GetBodies(comp)
         max_group_limit = 200
         while True:
@@ -124,19 +122,13 @@ class PreProcessingASP(object):
             total_iter = int(num_bodies / max_group_limit) + 1
             stitch_group_list = self.__stitch_group_list(comp, total_iter, max_group_limit)
             for group in stitch_group_list:
-                # print "1st working on one group"
                 sel = Selection.Create(group)
                 result = StitchFaces.FindAndFix(sel)
 
             all_bodies = GetBodies(comp)
             num_bodies_after_stitch = len(all_bodies)
-            # print "Start with ", num_bodies, " and end with ", num_bodies_after_stitch
-            # print "continue"
             if num_bodies_after_stitch == num_bodies:
                 break
-        # print "next component"
-        # todo run function and get all faces center position (center of mass)
-        #  before stich_comp and after and compare X,Y,Z to reference
 
     @staticmethod
     def stitch(conversion_dict):
@@ -147,9 +139,6 @@ class PreProcessingASP(object):
             sel = Selection.Create(conversion_dict[item])
             result = StitchFaces.FixSpecific(sel)
 
-        # todo run function and get all faces center position (center of mass)
-        #  before stich_comp and after and compare X,Y,Z to reference
-
     @staticmethod
     def remove_duplicates(comp):
         """
@@ -157,7 +146,6 @@ class PreProcessingASP(object):
         param part: input SpaceClaim part
         :return:
         """
-        # print "processing ", comp.GetName()
         all_bodies = GetBodies(comp)
         while True:
             sel = Selection.Create(all_bodies)
@@ -166,15 +154,9 @@ class PreProcessingASP(object):
 
             all_bodies = GetBodies(comp)
             num_bodies_after_duplicates = len(all_bodies)
-            # print "start with ", num_bodies, " and end with ", num_bodies_after_duplicates
-            # print "continue"
             if num_bodies == num_bodies_after_duplicates:
                 # number of surfaces before and after Duplicates become the same, no more duplicates found
                 break
-
-        # print "next component"
-        # todo run function and get all faces center position (center of mass)
-        #  before stich_comp and after and compare X,Y,Z to reference
 
     def check_geometry_update(self):
         """

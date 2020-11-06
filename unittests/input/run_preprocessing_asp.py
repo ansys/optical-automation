@@ -1,4 +1,5 @@
 # Python Script, API Version = V20 Beta
+# Python Script, API Version = V20 Beta
 import json
 import os
 import sys
@@ -25,13 +26,12 @@ def extract_name_for_dict(objects_dict):
 
     """
     names_dict = {}
-    for index in objects_dict:
-        for item in range(len(objects_dict[index])):
-            name = index.replace("®", " ")
-            if name in names_dict:
-                names_dict[name].append(objects_dict[index][item].Name)
-            else:
-                names_dict.update({name: [objects_dict[index][item].Name]})
+    for key in objects_dict:
+        for item in objects_dict[key]:
+            name = key.encode("utf-8")
+            if name not in names_dict:
+                names_dict[name] = []
+            names_dict[name].append(item.Name)
     return names_dict
 
 
@@ -62,9 +62,10 @@ results_dict["materials"] = extract_name_for_dict(material_dict)
 color_dict = preproc_asp.create_dict_by_color()
 results_dict["colors"] = extract_name_for_dict(color_dict)
 
+
 preproc_asp.create_named_selection(color_dict)
 preproc_asp.create_named_selection(material_dict)
-# todo validate if NS was created, return list of all NSs
+results_dict["name_selection"] = [group.Name.encode("utf-8") for group in  GetActiveWindow().Groups]
 
 results_dict["center_coord"] = {}
 for comp in GetRootPart().GetAllComponents():
