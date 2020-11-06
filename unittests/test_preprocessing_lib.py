@@ -2,13 +2,12 @@ import json
 import subprocess
 import sys
 import os
-import pytest
+
 sys.path.append(r"D:\Git\AnsysAutomation\SCLib")  # temp paths until updates not in SCLib package
 sys.path.append(r"C:\git\ansys_automation\SCLib")
 
 import scdm_api_import
-scdm_api_import.perform_imports(211, "V20")
-from scdm_api_import import scdm_install_dir
+scdm_install_dir = scdm_api_import.get_scdm_location(211)
 
 
 class TestPreprocessing:
@@ -25,7 +24,8 @@ class TestPreprocessing:
         scdm_script_path = os.path.join(self.local_path, "input", "run_preprocessing_asp.py")
         print("Start SCDM to generate JSON file for tests")
         command = [scdm_exe, r'/RunScript={}'.format(scdm_script_path),
-                   r"/Headless=True", r"/Splash=False", r"/Welcome=False", r"/ExitAfterScript=True"]
+                   r"/Headless=True", r"/Splash=False", r"/Welcome=False", r"/ExitAfterScript=True",
+                   r"/ScriptAPI=20 Beta"]
         subprocess.call(command)
 
         self.results_file = os.path.join(self.local_path, "input", "results.json")

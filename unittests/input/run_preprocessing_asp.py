@@ -1,12 +1,8 @@
-# Python Script, API Version = V20 Beta
-# Python Script, API Version = V20 Beta
 import json
 import os
 import sys
 
 unittest_path = os.path.dirname(os.path.realpath(__file__))
-# unittest_path = r"C:\git\speos_migration\unittests"
-unittest_path = r"D:\#ANSYS SPEOS_Concept Proof\ACT\SPEOS_Migration\unittests"
 lib_path = os.path.dirname(unittest_path)
 sys.path.append(lib_path)
 
@@ -65,7 +61,7 @@ results_dict["colors"] = extract_name_for_dict(color_dict)
 
 preproc_asp.create_named_selection(color_dict)
 preproc_asp.create_named_selection(material_dict)
-results_dict["name_selection"] = [group.Name.encode("utf-8") for group in  GetActiveWindow().Groups]
+results_dict["name_selection"] = [group.Name.encode("utf-8") for group in GetActiveWindow().Groups]
 
 results_dict["center_coord"] = {}
 for comp in GetRootPart().GetAllComponents():

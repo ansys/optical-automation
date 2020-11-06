@@ -10,7 +10,8 @@ sys.path.append(r"C:\git\ansys_automation\SCLib")
 
 import scdm_api_import
 scdm_api_import.perform_imports(211, "V20")
-from scdm_api_import import *
+from scdm_api_import import ColorHelper, ComponentExtensions, FixDuplicateFaces, GetOriginal, GetRootPart, IDesignBody
+from scdm_api_import import NamedSelection, PartExtensions, Selection, StitchFaces, List
 
 
 class PreProcessingASP(object):
@@ -28,10 +29,10 @@ class PreProcessingASP(object):
         """
         conversion_dict = {}
         root = GetRootPart()
-        all_body = GetAllBodies(root)
+        all_body = PartExtensions.GetAllBodies(root)
         for body in all_body:
             sel = Selection.Create(body)
-            color_info = scdm_api.Scripting.Helpers.ColorHelper.GetColor(sel).ToString()
+            color_info = ColorHelper.GetColor(sel).ToString()
             if color_info not in conversion_dict:
                 conversion_dict[color_info] = List[IDesignBody]()
             conversion_dict[color_info].Add(body)
@@ -60,12 +61,12 @@ class PreProcessingASP(object):
 
         conversion_dict = {}
         root = GetRootPart()
-        all_body = GetAllBodies(root)
+        all_body = PartExtensions.GetAllBodies(root)
         for body in all_body:
             ibody = get_real_original(body)
             try:
                 material_name = ibody.Material.Name
-            except:
+            except AttributeError:
                 continue
 
             if material_name not in conversion_dict:
@@ -90,7 +91,7 @@ class PreProcessingASP(object):
         """
 
         stitch_group = List[IDesignBody]()
-        for i, body in enumerate(GetBodies(comp)):
+        for i, body in enumerate(ComponentExtensions.GetBodies(comp)):
             if index * group_size <= i < (index + 1) * group_size:
                 stitch_group.Add(body)
         return stitch_group
@@ -115,7 +116,7 @@ class PreProcessingASP(object):
         apply stitch according to component structure
         para comp: given component
         """
-        all_bodies = GetBodies(comp)
+        all_bodies = ComponentExtensions.GetBodies(comp)
         max_group_limit = 200
         while True:
             num_bodies = len(all_bodies)
@@ -123,9 +124,9 @@ class PreProcessingASP(object):
             stitch_group_list = self.__stitch_group_list(comp, total_iter, max_group_limit)
             for group in stitch_group_list:
                 sel = Selection.Create(group)
-                result = StitchFaces.FindAndFix(sel)
+                StitchFaces.FindAndFix(sel)
 
-            all_bodies = GetBodies(comp)
+            all_bodies = ComponentExtensions.GetBodies(comp)
             num_bodies_after_stitch = len(all_bodies)
             if num_bodies_after_stitch == num_bodies:
                 break
@@ -137,7 +138,7 @@ class PreProcessingASP(object):
         """
         for item in conversion_dict:
             sel = Selection.Create(conversion_dict[item])
-            result = StitchFaces.FixSpecific(sel)
+            StitchFaces.FixSpecific(sel)
 
     @staticmethod
     def remove_duplicates(comp):
@@ -146,13 +147,13 @@ class PreProcessingASP(object):
         param part: input SpaceClaim part
         :return:
         """
-        all_bodies = GetBodies(comp)
+        all_bodies = ComponentExtensions.GetBodies(comp)
         while True:
             sel = Selection.Create(all_bodies)
             num_bodies = len(all_bodies)
-            result = FixDuplicateFaces.FindAndFix(sel)
+            FixDuplicateFaces.FindAndFix(sel)
 
-            all_bodies = GetBodies(comp)
+            all_bodies = ComponentExtensions.GetBodies(comp)
             num_bodies_after_duplicates = len(all_bodies)
             if num_bodies == num_bodies_after_duplicates:
                 # number of surfaces before and after Duplicates become the same, no more duplicates found
@@ -183,8 +184,8 @@ class PreProcessingASP(object):
         :param part:    input Spaceclaim Part
         :return:        return all surface bodies from input part
         """
-        all_bodies = part.GetAllBodies()
-        all_surface = part.GetAllBodies()
+        all_bodies = part.PartExtensions.GetAllBodies()
+        all_surface = part.PartExtensions.GetAllBodies()
         all_surface.Clear()
         for body in all_bodies:
             if body.GetMidSurfaceAspect():
@@ -222,11 +223,11 @@ class PreProcessingASP(object):
         :param part:    Spaceclaim Part to get Geometric set from
         :return:        List of body IDs in order of geo set names
         """
-        body_list = []
+
         geometrical_sets = self.__create_geometrical_set_names_list(part)
         all_surface = self.__get_all_surface_bodies(part)
-        for item in geometrical_sets:
-            body_list.append([])
+        body_list = [[] for _i in range(len(geometrical_sets))]
+
         for i, sbody in enumerate(all_surface):
             body_name = sbody.GetName()
             for k, item in enumerate(geometrical_sets):
