@@ -1,6 +1,7 @@
 import json
 import os
 import sys
+import traceback
 
 unittest_path = os.path.dirname(os.path.realpath(__file__))
 lib_path = os.path.dirname(unittest_path)
@@ -48,27 +49,34 @@ def extract_centre_for_dict(component):
         centre_list.append((x, y, z))
     return centre_list
 
+def main():
+    DocumentOpen.Execute(scdm_file)
+
+    preproc_asp = PreProcessingASP(211, "V20")
+
+    material_dict = preproc_asp.create_dict_by_material()
+    results_dict["materials"] = extract_name_for_dict(material_dict)
+
+    color_dict = preproc_asp.create_dict_by_color()
+    results_dict["colors"] = extract_name_for_dict(color_dict)
+
+    preproc_asp.create_named_selection(color_dict)
+    preproc_asp.create_named_selection(material_dict)
+    results_dict["name_selection"] = [group.Name.encode("utf-8") for group in GetActiveWindow().Groups]
+
+    results_dict["center_coord"] = {}
+    for comp in GetRootPart().GetAllComponents():
+        comp_name = comp.GetName()
+        preproc_asp.remove_duplicates(comp)
+        preproc_asp.stitch_comp(comp)
+        results_dict["center_coord"][comp_name] = extract_centre_for_dict(comp)
+
 
 results_dict = {}
-DocumentOpen.Execute(scdm_file)
-
-preproc_asp = PreProcessingASP()
-material_dict = preproc_asp.create_dict_by_material()
-results_dict["materials"] = extract_name_for_dict(material_dict)
-color_dict = preproc_asp.create_dict_by_color()
-results_dict["colors"] = extract_name_for_dict(color_dict)
-
-
-preproc_asp.create_named_selection(color_dict)
-preproc_asp.create_named_selection(material_dict)
-results_dict["name_selection"] = [group.Name.encode("utf-8") for group in GetActiveWindow().Groups]
-
-results_dict["center_coord"] = {}
-for comp in GetRootPart().GetAllComponents():
-    comp_name = comp.GetName()
-    preproc_asp.remove_duplicates(comp)
-    preproc_asp.stitch_comp(comp)
-    results_dict["center_coord"][comp_name] = extract_centre_for_dict(comp)
+try:
+    main()
+except Exception:
+    results_dict["error"] = traceback.format_exc()
 
 with open(results_json, "w") as file:
     json.dump(results_dict, file, indent=4)
