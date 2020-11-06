@@ -74,8 +74,5 @@ for comp in GetRootPart().GetAllComponents():
     preproc_asp.stitch_comp(comp)
     results_dict["center_coord"][comp_name] = extract_centre_for_dict(comp)
 
-scdm_file = os.path.join(unittest_path, "input", "poor_geom_updated.scdoc")
-DocumentSave.Execute(scdm_file)
-
 with open(results_json, "w") as file:
     json.dump(results_dict, file, indent=4)

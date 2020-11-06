@@ -1,3 +1,4 @@
+import json
 import subprocess
 import sys
 import os
@@ -27,23 +28,49 @@ class TestPreprocessing:
                    r"/Headless=True", r"/Splash=False", r"/Welcome=False", r"/ExitAfterScript=True"]
         subprocess.call(command)
 
-        self.json_file = os.path.join(self.local_path, "input", "results.json")
+        self.results_file = os.path.join(self.local_path, "input", "results.json")
+        reference_file = os.path.join(self.local_path, "input", "reference_results.json")
+
+        with open(self.results_file) as file:
+            self.results = json.load(file)
+
+        with open(reference_file) as file:
+            self.reference_results = json.load(file)
 
     def teardown_class(self):
         """
         Called after all tests are completed to clean up SCDM session
         Returns:
         """
-        if os.path.isfile(self.json_file):
-            os.remove(self.json_file)
+        if os.path.isfile(self.results_file):
+            os.remove(self.results_file)
 
-    def test_01_check_json(self):
-        assert os.path.isfile(self.json_file), "results.json file does not exist"
-
-    def test_02_check_color(self):
+    def test_01_check_color(self):
         """
-        Function to run flow of test in SCDM
+        Function to compare the results of reate_dict_by_color()
         Returns: None
         """
+        assert self.results["colors"] == self.reference_results["colors"]
+
+    def test_02_duplicates_and_stitch(self):
+        """
+        Function to compare the results of remove_duplicates() and stitch_comp()
+        Returns: None
+        """
+        assert self.results["center_coord"] == self.reference_results["center_coord"]
+
+    def test_03_check_mateirals(self):
+        """
+        Function to compare the results of create_dict_by_material()
+        Returns: None
+        """
+        assert self.results["materials"] == self.reference_results["materials"]
+
+    def test_04_check_name_selection(self):
+        """
+        Function to compare the results of create_named_selection()
+        Returns: None
+        """
+        assert self.results["name_selection"] == self.reference_results["name_selection"]
 
 
