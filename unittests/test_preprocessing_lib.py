@@ -8,7 +8,7 @@ sys.path.append(r"C:\git\ansys_automation\SCLib")
 
 import scdm_api_import
 scdm_api_import.perform_imports(211, "V20")
-from scdm_api_import import *
+from scdm_api_import import scdm_install_dir
 
 
 class TestPreprocessing:
