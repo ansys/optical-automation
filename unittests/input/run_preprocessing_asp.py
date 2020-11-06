@@ -15,21 +15,37 @@ scdm_file = os.path.join(unittest_path, "input", "poor_geom.scdoc")
 results_json = os.path.join(unittest_path, "input", "results.json")
 
 
-def extract_name_for_dict(dict):
-    results_dict = {}
-    for index in dict:
-        for item in range(len(dict[index])):
+def extract_name_for_dict(objects_dict):
+    """
+    function to extract names of objects from dict of SCDM bodies
+    Args:
+        objects_dict: dict with values equal to list of SCDM bodies
+
+    Returns: dictionary with body names instead of objects
+
+    """
+    names_dict = {}
+    for index in objects_dict:
+        for item in range(len(objects_dict[index])):
             name = index.replace("®", " ")
-            if name in results_dict:
-                results_dict[name].append(dict[index][item].Name)
+            if name in names_dict:
+                names_dict[name].append(objects_dict[index][item].Name)
             else:
-                results_dict.update({name: [dict[index][item].Name]})
-    return results_dict
+                names_dict.update({name: [objects_dict[index][item].Name]})
+    return names_dict
 
 
-def extract_centre_for_dict(comp):
+def extract_centre_for_dict(component):
+    """
+    Extract centre point of a body
+    Args:
+        component: SCDM component object
+
+    Returns: list of X,Y,Z center coordinates
+
+    """
     centre_list = []
-    for body in comp.GetBodies():
+    for body in component.GetBodies():
         x = body.Shape.GetBoundingBox(Matrix.Identity, True).Center.X
         y = body.Shape.GetBoundingBox(Matrix.Identity, True).Center.Y
         z = body.Shape.GetBoundingBox(Matrix.Identity, True).Center.Z
@@ -42,20 +58,20 @@ DocumentOpen.Execute(scdm_file)
 
 preproc_asp = PreProcessingASP()
 material_dict = preproc_asp.create_dict_by_material()
-results_dict.update(extract_name_for_dict(material_dict))
+results_dict["materials"] = extract_name_for_dict(material_dict)
 color_dict = preproc_asp.create_dict_by_color()
-results_dict.update(extract_name_for_dict(color_dict))
+results_dict["colors"] = extract_name_for_dict(color_dict)
 
 preproc_asp.create_named_selection(color_dict)
 preproc_asp.create_named_selection(material_dict)
+# todo validate if NS was created, return list of all NSs
 
-centre_results_dict = {}
+results_dict["center_coord"] = {}
 for comp in GetRootPart().GetAllComponents():
     comp_name = comp.GetName()
     preproc_asp.remove_duplicates(comp)
     preproc_asp.stitch_comp(comp)
-    centre_results_dict.update({comp_name: extract_centre_for_dict(comp)})
-results_dict.update(centre_results_dict)
+    results_dict["center_coord"][comp_name] = extract_centre_for_dict(comp)
 
 scdm_file = os.path.join(unittest_path, "input", "poor_geom_updated.scdoc")
 DocumentSave.Execute(scdm_file)
