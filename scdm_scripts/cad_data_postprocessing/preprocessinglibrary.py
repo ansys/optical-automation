@@ -3,12 +3,8 @@
 # Proprietary and confidential
 
 import os
-import sys
-sys.path.append(r"D:\Git\AnsysAutomation\SCLib")  # temp paths until updates not in SCLib package
-sys.path.append(r"C:\git\ansys_automation\SCLib")
+from SPEOS_scripts.SCLib import scdm_api_import as sc  # keep sc on global level
 
-# keep sc on global level
-import scdm_api_import as sc
 
 class PreProcessingASP(object):
     """

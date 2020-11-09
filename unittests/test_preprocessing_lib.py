@@ -1,13 +1,13 @@
 import json
 import subprocess
-import sys
 import os
+from SPEOS_scripts.SCLib import scdm_api_import
 
-sys.path.append(r"D:\Git\AnsysAutomation\SCLib")  # temp paths until updates not in SCLib package
-sys.path.append(r"C:\git\ansys_automation\SCLib")
+# User Input
+SCDM_VERSION = 211  # version of SCDM you want to test
 
-import scdm_api_import
-scdm_install_dir = scdm_api_import.get_scdm_location(211)
+# Code
+scdm_install_dir = scdm_api_import.get_scdm_location(SCDM_VERSION)
 
 
 class TestPreprocessing:
@@ -30,7 +30,7 @@ class TestPreprocessing:
         print("Start SCDM to generate JSON file for tests")
         command = [scdm_exe, r'/RunScript={}'.format(scdm_script_path),
                    r"/Headless=True", r"/Splash=False", r"/Welcome=False", r"/ExitAfterScript=True",
-                   r"/ScriptAPI=20"]
+                   r"/ScriptAPI=20", r"/ScriptArgs={}".format(SCDM_VERSION)]
         subprocess.call(command)
 
         with open(self.results_file) as file:
