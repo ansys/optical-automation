@@ -1,13 +1,13 @@
 import json
 import subprocess
 import os
-from SPEOS_scripts.SCLib import scdm_api_import
+from SPEOS_scripts.SpaceClaimCore.base import get_scdm_install_location
 
 # User Input
 SCDM_VERSION = 211  # version of SCDM you want to test
 
 # Code
-scdm_install_dir = scdm_api_import.get_scdm_location(SCDM_VERSION)
+scdm_install_dir = get_scdm_install_location(SCDM_VERSION)
 
 
 class TestPreprocessing:
@@ -30,7 +30,7 @@ class TestPreprocessing:
         print("Start SCDM to generate JSON file for tests")
         command = [scdm_exe, r'/RunScript={}'.format(scdm_script_path),
                    r"/Headless=True", r"/Splash=False", r"/Welcome=False", r"/ExitAfterScript=True",
-                   r"/ScriptAPI=20", r"/ScriptArgs={}".format(SCDM_VERSION)]
+                   r"/ScriptAPI=20"]
         subprocess.call(command)
 
         with open(self.results_file) as file:

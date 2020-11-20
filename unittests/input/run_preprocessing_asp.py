@@ -9,8 +9,6 @@ sys.path.append(lib_path)
 
 from scdm_scripts.cad_data_postprocessing.preprocessinglibrary import PreProcessingASP
 
-SCDM_VERSION = args[0]  # read scdm arguments
-
 scdm_file = os.path.join(unittest_path, "input", "poor_geom.scdoc")
 results_json = os.path.join(unittest_path, "input", "results.json")
 
@@ -54,7 +52,7 @@ def extract_centre_for_dict(component):
 def main():
     DocumentOpen.Execute(scdm_file)
 
-    preproc_asp = PreProcessingASP(SCDM_VERSION, "V20")
+    preproc_asp = PreProcessingASP(SpaceClaim.Api.V20)
 
     material_dict = preproc_asp.create_dict_by_material()
     results_dict["materials"] = extract_name_for_dict(material_dict)
