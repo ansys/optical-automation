@@ -1,16 +1,28 @@
 import clr
 import os
+import re
 
 clr.AddReference('System.Collections')
 from System.Collections.Generic import List
 
 class BaseSCDM(object):
-    def __init__(self, scdm_api):
+    def __init__(self, SpaceClaim):
         """
         Base class that contains all common used objects. This class serves more as an abstract class
         Args:
-            scdm_api: SpaceClaim.Api.V<API version> object
+            SpaceClaim: SpaceClaim.Api.V<API version> object
         """
+        api = getattr(SpaceClaim, "Api")
+        for obj in dir(api):
+            try:
+                api_version = re.match(r"V(\d+)", obj).group(0)
+                scdm_api = getattr(api, api_version)
+                break
+            except AttributeError:
+                continue
+        else:
+            raise AttributeError("No Api version found under SpaceClaim object")
+
         self.List = List
         self.scdm_api = scdm_api
 

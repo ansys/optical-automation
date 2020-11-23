@@ -52,7 +52,7 @@ def extract_centre_for_dict(component):
 def main():
     DocumentOpen.Execute(scdm_file)
 
-    preproc_asp = PreProcessingASP(SpaceClaim.Api.V20)
+    preproc_asp = PreProcessingASP(SpaceClaim)
 
     material_dict = preproc_asp.create_dict_by_material()
     results_dict["materials"] = extract_name_for_dict(material_dict)

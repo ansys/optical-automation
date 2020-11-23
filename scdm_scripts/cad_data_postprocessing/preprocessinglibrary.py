@@ -15,7 +15,7 @@ class PreProcessingASP(BaseSCDM):
     def __init__(self, scdm_api):
         """
         Args:
-            scdm_api: SpaceClaim.Api.V<API version> object
+            scdm_api: SpaceClaim object
         """
         super(PreProcessingASP, self).__init__(scdm_api)
 
