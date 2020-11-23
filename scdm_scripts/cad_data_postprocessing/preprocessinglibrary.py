@@ -12,12 +12,12 @@ class PreProcessingASP(BaseSCDM):
     As per Api limitation only one session at the time can be attached.
     For this reason the class does not support multiple Ansys SPEOS  sessions.
     """
-    def __init__(self, scdm_api):
+    def __init__(self, SpaceClaim):
         """
         Args:
-            scdm_api: SpaceClaim object
+            SpaceClaim: SpaceClaim object
         """
-        super(PreProcessingASP, self).__init__(scdm_api)
+        super(PreProcessingASP, self).__init__(SpaceClaim, ["V19", "V20"])
 
     def create_dict_by_color(self):
         """

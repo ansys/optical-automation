@@ -5,17 +5,30 @@ import re
 clr.AddReference('System.Collections')
 from System.Collections.Generic import List
 
+class VersionError(KeyError):
+    """
+    Used to raise API version error
+    """
+
 class BaseSCDM(object):
-    def __init__(self, SpaceClaim):
+    def __init__(self, SpaceClaim, supported_versions=None):
         """
-        Base class that contains all common used objects. This class serves more as an abstract class
+        Base class that contains all common used objects. This class serves more as an abstract class.
+        Optionally performs validation that API used by user is supported.
         Args:
-            SpaceClaim: SpaceClaim.Api.V<API version> object
+            SpaceClaim: SpaceClaim object
+            supported_versions (list/tuple): list of supported API versions
         """
         api = getattr(SpaceClaim, "Api")
         for obj in dir(api):
             try:
-                api_version = re.match(r"V(\d+)", obj).group(0)
+                api_version = re.match(r"V(\d+)$", obj).group(0)
+                if supported_versions:
+                    if api_version not in supported_versions:
+                        msg = "SpaceClaim API {} is not supported. ".format(api_version)
+                        msg += "Please use one of the following {}".format(", ".join(supported_versions))
+                        raise VersionError(msg)
+
                 scdm_api = getattr(api, api_version)
                 break
             except AttributeError:
