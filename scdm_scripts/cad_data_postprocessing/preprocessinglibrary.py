@@ -3,43 +3,39 @@
 # Proprietary and confidential
 
 import os
-from SPEOS_scripts.SCLib import scdm_api_import as sc  # keep sc on global level
+from SPEOS_scripts.SpaceClaimCore.base import BaseSCDM
 
 
-class PreProcessingASP(object):
+class PreProcessingASP(BaseSCDM):
     """
     This class contains all the methods to Pre-process Ansys SPEOS Geometries
     As per Api limitation only one session at the time can be attached.
     For this reason the class does not support multiple Ansys SPEOS  sessions.
     """
-    def __init__(self, scdm_version, api_version):
+    def __init__(self, SpaceClaim):
         """
-        Init class with proper API version. API version must match API version selected in SCDM console or batch call
         Args:
-            scdm_version: version of scdm. Used to connect to API files in installation directory
-            api_version: used to select to which version of API we want to connect
+            SpaceClaim: SpaceClaim object
         """
-        sc.perform_imports(scdm_version, api_version)
+        super(PreProcessingASP, self).__init__(SpaceClaim, ["V19", "V20"])
 
-    @staticmethod
-    def create_dict_by_color():
+    def create_dict_by_color(self):
         """
         Create a dictionary for Named selection generation/stitch one element per color
         :return: Dictionary {color code: List of bodies with color}
         """
         conversion_dict = {}
-        root = sc.GetRootPart()
-        all_body = sc.PartExtensions.GetAllBodies(root)
+        root = self.GetRootPart()
+        all_body = self.PartExtensions.GetAllBodies(root)
         for body in all_body:
-            sel = sc.Selection.Create(body)
-            color_info = sc.ColorHelper.GetColor(sel).ToString()
+            sel = self.Selection.Create(body)
+            color_info = self.ColorHelper.GetColor(sel).ToString()
             if color_info not in conversion_dict:
-                conversion_dict[color_info] = sc.List[sc.IDesignBody]()
+                conversion_dict[color_info] = self.List[self.IDesignBody]()
             conversion_dict[color_info].Add(body)
         return conversion_dict
 
-    @staticmethod
-    def create_dict_by_material():
+    def create_dict_by_material(self):
         """
         Create a dictionary for Named selection generation/stitch one element per Catia Material6
         return: Dictionary {material name: List of bodies with mat}
@@ -54,14 +50,14 @@ class PreProcessingASP(object):
             Returns: the original SpaceClaim body item
 
             """
-            while sc.GetOriginal(item):
-                item = sc.GetOriginal(item)
+            while self.GetOriginal(item):
+                item = self.GetOriginal(item)
             original = item
             return original
 
         conversion_dict = {}
-        root = sc.GetRootPart()
-        all_body = sc.PartExtensions.GetAllBodies(root)
+        root = self.GetRootPart()
+        all_body = self.PartExtensions.GetAllBodies(root)
         for body in all_body:
             ibody = get_real_original(body)
             try:
@@ -70,12 +66,11 @@ class PreProcessingASP(object):
                 continue
 
             if material_name not in conversion_dict:
-                conversion_dict[material_name] = sc.List[sc.IDesignBody]()
+                conversion_dict[material_name] = self.List[self.IDesignBody]()
             conversion_dict[material_name].Add(body)
         return conversion_dict
 
-    @staticmethod
-    def __stitch_group(comp, index, group_size):
+    def __stitch_group(self, comp, index, group_size):
         """
         split all bodies in component into groups of group_size.
         Example:
@@ -90,8 +85,8 @@ class PreProcessingASP(object):
 
         """
 
-        stitch_group = sc.List[sc.IDesignBody]()
-        for i, body in enumerate(sc.ComponentExtensions.GetBodies(comp)):
+        stitch_group = self.List[self.IDesignBody]()
+        for i, body in enumerate(self.ComponentExtensions.GetBodies(comp)):
             if index * group_size <= i < (index + 1) * group_size:
                 stitch_group.Add(body)
         return stitch_group
@@ -116,44 +111,42 @@ class PreProcessingASP(object):
         apply stitch according to component structure
         para comp: given component
         """
-        all_bodies = sc.ComponentExtensions.GetBodies(comp)
+        all_bodies = self.ComponentExtensions.GetBodies(comp)
         max_group_limit = 200
         while True:
             num_bodies = len(all_bodies)
             total_iter = int(num_bodies / max_group_limit) + 1
             stitch_group_list = self.__stitch_group_list(comp, total_iter, max_group_limit)
             for group in stitch_group_list:
-                sel = sc.Selection.Create(group)
-                sc.StitchFaces.FindAndFix(sel)
+                sel = self.Selection.Create(group)
+                self.StitchFaces.FindAndFix(sel)
 
-            all_bodies = sc.ComponentExtensions.GetBodies(comp)
+            all_bodies = self.ComponentExtensions.GetBodies(comp)
             num_bodies_after_stitch = len(all_bodies)
             if num_bodies_after_stitch == num_bodies:
                 break
 
-    @staticmethod
-    def stitch(conversion_dict):
+    def stitch(self, conversion_dict):
         """
         stitch all element per dictionary items-> color/material
         """
         for item in conversion_dict:
-            sel = sc.Selection.Create(conversion_dict[item])
-            sc.StitchFaces.FixSpecific(sel)
+            sel = self.Selection.Create(conversion_dict[item])
+            self.StitchFaces.FixSpecific(sel)
 
-    @staticmethod
-    def remove_duplicates(comp):
+    def remove_duplicates(self, comp):
         """
         Remove duplicated surfaces
         param part: input SpaceClaim part
         :return:
         """
-        all_bodies = sc.ComponentExtensions.GetBodies(comp)
+        all_bodies = self.ComponentExtensions.GetBodies(comp)
         while True:
-            sel = sc.Selection.Create(all_bodies)
+            sel = self.Selection.Create(all_bodies)
             num_bodies = len(all_bodies)
-            sc.FixDuplicateFaces.FindAndFix(sel)
+            self.FixDuplicateFaces.FindAndFix(sel)
 
-            all_bodies = sc.ComponentExtensions.GetBodies(comp)
+            all_bodies = self.ComponentExtensions.GetBodies(comp)
             num_bodies_after_duplicates = len(all_bodies)
             if num_bodies == num_bodies_after_duplicates:
                 # number of surfaces before and after Duplicates become the same, no more duplicates found
@@ -177,15 +170,14 @@ class PreProcessingASP(object):
         """
         return self
 
-    @staticmethod
-    def __get_all_surface_bodies(part):
+    def __get_all_surface_bodies(self, part):
         """
         Function to seperate solids from surface bodies for Geometrical set named selection conversion
         :param part:    input Spaceclaim Part
         :return:        return all surface bodies from input part
         """
-        all_bodies = part.sc.PartExtensions.GetAllBodies()
-        all_surface = part.sc.PartExtensions.GetAllBodies()
+        all_bodies = self.PartExtensions.GetAllBodies(part)
+        all_surface = self.PartExtensions.GetAllBodies(part)
         all_surface.Clear()
         for body in all_bodies:
             if body.GetMidSurfaceAspect():
@@ -249,7 +241,7 @@ class PreProcessingASP(object):
         for i, body_ids_list in enumerate(body_list):
             for body_id in body_ids_list:
                 if geo_list[i] not in dictionary:
-                    dictionary[geo_list[i]] = sc.List[sc.IDesignBody]()
+                    dictionary[geo_list[i]] = self.List[self.IDesignBody]()
                 dictionary[geo_list[i]].Add(surface_bodies[body_id])
 
         return dictionary
@@ -263,15 +255,14 @@ class PreProcessingASP(object):
         conversion_dict = self.__convert_list_to_dict(part)
         self.create_named_selection(conversion_dict)
 
-    @staticmethod
-    def create_named_selection(conversion_dict):
+    def create_named_selection(self, conversion_dict):
         """
         Create a Named selection from dictionary
         :param conversion_dict:  Dictionary{Name of Named selection: LIst of bodies}
         """
         for item in conversion_dict:
-            sel = sc.Selection.Create(conversion_dict[item])
-            if sel != sc.Selection.Empty():
-                second = sc.Selection.Empty()
-                result = sc.NamedSelection.Create(sel, second).CreatedNamedSelection
+            sel = self.Selection.Create(conversion_dict[item])
+            if sel != self.Selection.Empty():
+                second = self.Selection.Empty()
+                result = self.NamedSelection.Create(sel, second).CreatedNamedSelection
                 result.Name = item.strip()
