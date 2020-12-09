@@ -39,12 +39,16 @@ class BaseSCDM(object):
         self.List = List
         self.scdm_api = scdm_api
 
+        self.BodySelection = scdm_api.Scripting.Selection.BodySelection
         self.ColorHelper = scdm_api.Scripting.Helpers.ColorHelper
         self.ComponentExtensions = scdm_api.Scripting.Extensions.ComponentExtensions
+        self.DesignBodyExtensions = scdm_api.Scripting.Extensions.DesignBodyExtensions
         self.FixDuplicateFaces = scdm_api.Scripting.Commands.FixDuplicateFaces
         self.GetOriginal = scdm_api.Scripting.Extensions.DocObjectExtensions.GetOriginal
         self.GetRootPart = scdm_api.Scripting.Helpers.DocumentHelper.GetRootPart
+        self.IComponent = scdm_api.IComponent
         self.IDesignBody = scdm_api.IDesignBody
+        self.IPart = scdm_api.IPart
         self.NamedSelection = scdm_api.Scripting.Commands.NamedSelection
         self.PartExtensions = scdm_api.Scripting.Extensions.PartExtensions
         self.Selection = scdm_api.Scripting.Selection.Selection
