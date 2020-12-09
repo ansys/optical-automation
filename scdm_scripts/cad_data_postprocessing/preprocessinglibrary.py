@@ -178,9 +178,10 @@ class PreProcessingASP(BaseSCDM):
         """
         all_bodies = self.PartExtensions.GetAllBodies(part)
         all_surface = self.PartExtensions.GetAllBodies(part)
-        all_surface.Clear()
+        if len(all_surface):
+            all_surface.Clear()
         for body in all_bodies:
-            if body.GetMidSurfaceAspect():
+            if self.DesignBodyExtensions.GetMidSurfaceAspect(body):
                 all_surface.Add(body)
         return all_surface
 
@@ -195,7 +196,7 @@ class PreProcessingASP(BaseSCDM):
         geometrical_sets = []
 
         for body in all_bodies:
-            body_name = body.GetName()
+            body_name = body.Name
             while True:
                 geo_set_name_test, content = os.path.split(body_name)
                 if content:
@@ -221,9 +222,9 @@ class PreProcessingASP(BaseSCDM):
         body_list = [[] for _i in range(len(geometrical_sets))]
 
         for i, sbody in enumerate(all_surface):
-            body_name = sbody.GetName()
+            body_name = sbody.Name
             for k, item in enumerate(geometrical_sets):
-                if body_name.Contains(item):
+                if item in body_name:
                     body_list[k].append(i)
         return body_list
 
