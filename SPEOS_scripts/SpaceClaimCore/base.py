@@ -4,6 +4,7 @@ import re
 
 clr.AddReference('System.Collections')
 from System.Collections.Generic import List
+from System.Drawing import Color
 
 class VersionError(KeyError):
     """
@@ -36,6 +37,7 @@ class BaseSCDM(object):
         else:
             raise AttributeError("No Api version found under SpaceClaim object")
 
+        self.Color = Color
         self.List = List
         self.scdm_api = scdm_api
 
@@ -44,11 +46,13 @@ class BaseSCDM(object):
         self.ComponentExtensions = scdm_api.Scripting.Extensions.ComponentExtensions
         self.DesignBodyExtensions = scdm_api.Scripting.Extensions.DesignBodyExtensions
         self.FixDuplicateFaces = scdm_api.Scripting.Commands.FixDuplicateFaces
+        self.GetActiveDocument = scdm_api.Scripting.Helpers.DocumentHelper.GetActiveDocument
         self.GetOriginal = scdm_api.Scripting.Extensions.DocObjectExtensions.GetOriginal
         self.GetRootPart = scdm_api.Scripting.Helpers.DocumentHelper.GetRootPart
         self.IComponent = scdm_api.IComponent
         self.IDesignBody = scdm_api.IDesignBody
         self.IPart = scdm_api.IPart
+        self.Layers = scdm_api.Scripting.Commands.Layers
         self.NamedSelection = scdm_api.Scripting.Commands.NamedSelection
         self.PartExtensions = scdm_api.Scripting.Extensions.PartExtensions
         self.Selection = scdm_api.Scripting.Selection.Selection
