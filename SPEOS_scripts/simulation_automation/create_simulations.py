@@ -61,11 +61,12 @@ class Simulation(BaseSCDM):
      :return:
      """
         self.component_list = component_list
+        #print(component_list)
         root = self.GetRootPart()
         all_components = root.GetDescendants[self.IComponent]()
-        print(all_components)
+        #print(all_components)
         for component in all_components:
-            if component.Name in self.component_list:
+            if component.Content.Master.DisplayName in self.component_list:
                 bodies = component.GetDescendants[self.IDesignBody]()
                 self.my_bodies.extend(bodies)        
         return self
