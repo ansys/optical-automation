@@ -6,8 +6,6 @@
 # Use API V20 Beta !!!
 
 import sys
-SCDM_VERSION = 211
-API_VERSION = "V20"
 
 from scdm_scripts.cad_data_postprocessing.preprocessinglibrary import PreProcessingASP
 from SPEOS_scripts.SpaceClaimCore.base import BaseSCDM
@@ -16,11 +14,11 @@ from SPEOS_scripts.SpaceClaimCore.base import BaseSCDM
 class Simulation(BaseSCDM):
     def __init__(self, name, SpeosSim, SpaceClaim, kind="inverse"):
         """
-     Initialize Simulation class. Takes name as input and searches for an 
-     existing simulation with this name.
-     param name: name of the simulation to look for.
-     param kind: kind/type of the simulation: either "inverse" or "direct"
-     """
+        Initialize Simulation class. Takes name as input and searches for an
+        existing simulation with this name.
+        param name: name of the simulation to look for.
+        param kind: kind/type of the simulation: either "inverse" or "direct"
+        """
         super(Simulation, self).__init__(SpaceClaim, ["V19", "V20"])
         self.PreProcASP = PreProcessingASP(SpaceClaim)
         self.speos_sim = SpeosSim
@@ -56,15 +54,13 @@ class Simulation(BaseSCDM):
 
     def select_geometries(self, component_list):
         """
-     adds all geometries from components provided in component_list to the simulation's bodies list
-     param component_list: list with component names, e.g. ["part1", "part2"]
-     :return:
-     """
+        adds all geometries from components provided in component_list to the simulation's bodies list
+        param component_list: list with component names, e.g. ["part1", "part2"]
+        :return:
+        """
         self.component_list = component_list
-        #print(component_list)
         root = self.GetRootPart()
         all_components = root.GetDescendants[self.IComponent]()
-        #print(all_components)
         for component in all_components:
             if component.Content.Master.DisplayName in self.component_list:
                 bodies = component.GetDescendants[self.IDesignBody]()
@@ -73,12 +69,12 @@ class Simulation(BaseSCDM):
 
     def select_geometrical_sets(self, geosets_list):
         """
-     adds all geometries from geometrical sets provided in geosets_list to 
-     the simulation's bodies list
-     param component_geosets_listlist: list with names of geometrical sets to add, 
-     e.g. ["geo_set1", "geo_set2"]
-     :return:
-     """
+        adds all geometries from geometrical sets provided in geosets_list to
+        the simulation's bodies list
+        param component_geosets_listlist: list with names of geometrical sets to add,
+        e.g. ["geo_set1", "geo_set2"]
+        :return:
+        """
         all_parts = self.GetRootPart().GetDescendants[self.IPart]()
 
         for one_part in all_parts:
@@ -92,11 +88,11 @@ class Simulation(BaseSCDM):
 
     def define_geometries(self):
         """
-     Adds all bodies from the simulation's bodies list (self.my_bodies) to the 
-     simulation geometries.
-     param:
-     :return:
-     """
+        Adds all bodies from the simulation's bodies list (self.my_bodies) to the
+        simulation geometries.
+        param:
+        :return:
+        """
         selection = self.BodySelection.Create(self.my_bodies)
         self.object.Geometries.Set(selection)
         return self
@@ -111,7 +107,6 @@ class Simulation(BaseSCDM):
         self.rays = rays
         if self.kind == "direct":  # direct simulation
             self.object.NbRays = rays
-            pass
         elif self.kind == "inverse":  # inverse simulation
             self.object.NbPassesLimit = rays
         elif self.kind == "interactive":  # interactive simulation
@@ -120,6 +115,6 @@ class Simulation(BaseSCDM):
     
     def run_simulation(self):     
         """
-     Computes simulation
-     """
+        Computes simulation
+        """
         self.object.Compute()
