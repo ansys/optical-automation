@@ -17,7 +17,7 @@ class PreProcessingASP(BaseSCDM):
         Args:
             SpaceClaim: SpaceClaim object
         """
-        super(PreProcessingASP, self).__init__(SpaceClaim, ["V19", "V20"])
+        super(PreProcessingASP, self).__init__(SpaceClaim, ["V19", "V20", "V21"])
 
     def create_dict_by_color(self):
         """
@@ -185,14 +185,16 @@ class PreProcessingASP(BaseSCDM):
                 all_surface.Add(body)
         return all_surface
 
-    def __create_geometrical_set_names_list(self, part):
+    def __create_geometrical_set_names_list(self, part, bodies_only=True):
         """
         generate List of geometric sets from geometry names
         :param part:    Spaceclaim Part to get Geometric set names from
         :return:        List of geometrical sets names
         """
-
-        all_bodies = self.__get_all_surface_bodies(part)
+        if bodies_only:
+            all_bodies = self.__get_all_surface_bodies(part)
+        else:
+            all_bodies = self.PartExtensions.GetAllBodies(part)
         geometrical_sets = []
 
         for body in all_bodies:
@@ -210,15 +212,18 @@ class PreProcessingASP(BaseSCDM):
                     break
         return geometrical_sets
 
-    def __get_bodies_for_geometrical_sets(self, part):
+    def __get_bodies_for_geometrical_sets(self, part, bodies_only=True):
         """
         get bodies for each geometrical set
         :param part:    Spaceclaim Part to get Geometric set from
         :return:        List of body IDs in order of geo set names
         """
 
-        geometrical_sets = self.__create_geometrical_set_names_list(part)
-        all_surface = self.__get_all_surface_bodies(part)
+        geometrical_sets = self.__create_geometrical_set_names_list(part, bodies_only)
+        if bodies_only:
+            all_surface = self.__get_all_surface_bodies(part)
+        else:
+            all_surface = self.PartExtensions.GetAllBodies(part)
         body_list = [[] for _i in range(len(geometrical_sets))]
 
         for i, sbody in enumerate(all_surface):
@@ -228,16 +233,19 @@ class PreProcessingASP(BaseSCDM):
                     body_list[k].append(i)
         return body_list
 
-    def __convert_list_to_dict(self, part):
+    def __convert_list_to_dict(self, part, bodies_only=True):
         """
         Convert the lists to dictionaries
         :param part:        Spaceclaim Part to convert
         :return:
         """
         dictionary = {}
-        body_list = self.__get_bodies_for_geometrical_sets(part)
-        geo_list = self.__create_geometrical_set_names_list(part)
-        surface_bodies = self.__get_all_surface_bodies(part)
+        body_list = self.__get_bodies_for_geometrical_sets(part, bodies_only)
+        geo_list = self.__create_geometrical_set_names_list(part, bodies_only)
+        if bodies_only:
+            surface_bodies = self.__get_all_surface_bodies(part)
+        else:
+            surface_bodies = self.PartExtensions.GetAllBodies(part)
 
         for i, body_ids_list in enumerate(body_list):
             for body_id in body_ids_list:
@@ -267,3 +275,12 @@ class PreProcessingASP(BaseSCDM):
                 second = self.Selection.Empty()
                 result = self.NamedSelection.Create(sel, second).CreatedNamedSelection
                 result.Name = item.strip()
+
+    def find_component(self, component_name):
+        root = self.GetRootPart()
+        all_components = root.GetDescendants[self.IComponent]()
+        found_components = []
+        for component in all_components:
+            if component_name in component.Content.Master.DisplayName:
+                found_components.append(component)
+        return found_components

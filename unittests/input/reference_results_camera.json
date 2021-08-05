@@ -1,0 +1,11 @@
+{
+    "camera_exists": true, 
+    "camera_x_reverse_true": true, 
+    "camera_x_axis": "AxisY", 
+    "camera_y_reverse_false": false, 
+    "camera_y_reverse_true": true, 
+    "camera_origin": "cam_origin", 
+    "camera_origin_axsys": "cam_axes", 
+    "camera_x_reverse_false": false, 
+    "camera_y_axis": "AxisX"
+}

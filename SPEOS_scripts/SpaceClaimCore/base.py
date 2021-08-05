@@ -42,22 +42,30 @@ class BaseSCDM(object):
         self.scdm_api = scdm_api
 
         self.BodySelection = scdm_api.Scripting.Selection.BodySelection
+        self.CloseDocument = scdm_api.Scripting.Helpers.DocumentHelper.CloseDocument
         self.ColorHelper = scdm_api.Scripting.Helpers.ColorHelper
         self.ComponentExtensions = scdm_api.Scripting.Extensions.ComponentExtensions
+        self.Copy = scdm_api.Scripting.Commands.Copy
+        self.CreateNewDocument = scdm_api.Scripting.Helpers.DocumentHelper.CreateNewDocument
+        self.Delete = scdm_api.Scripting.Commands.Delete
         self.DesignBodyExtensions = scdm_api.Scripting.Extensions.DesignBodyExtensions
+        self.DocumentSave = scdm_api.Scripting.Commands.DocumentSave
         self.FixDuplicateFaces = scdm_api.Scripting.Commands.FixDuplicateFaces
         self.GetActiveDocument = scdm_api.Scripting.Helpers.DocumentHelper.GetActiveDocument
         self.GetOriginal = scdm_api.Scripting.Extensions.DocObjectExtensions.GetOriginal
         self.GetRootPart = scdm_api.Scripting.Helpers.DocumentHelper.GetRootPart
         self.IComponent = scdm_api.IComponent
+        self.ICoordinateAxis = scdm_api.ICoordinateAxis
+        self.ICoordinateSystem = scdm_api.ICoordinateSystem
         self.IDesignBody = scdm_api.IDesignBody
+        self.IDesignCurve = scdm_api.IDesignCurve
         self.IPart = scdm_api.IPart
         self.Layers = scdm_api.Scripting.Commands.Layers
         self.NamedSelection = scdm_api.Scripting.Commands.NamedSelection
+        self.Paste = scdm_api.Scripting.Commands.Paste
         self.PartExtensions = scdm_api.Scripting.Extensions.PartExtensions
         self.Selection = scdm_api.Scripting.Selection.Selection
         self.StitchFaces = scdm_api.Scripting.Commands.StitchFaces
-
 
 def get_scdm_install_location(version):
     """

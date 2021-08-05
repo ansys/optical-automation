@@ -7,12 +7,13 @@
 
 import csv
 import clr
+import os
 from SPEOS_scripts.SpaceClaimCore.base import BaseSCDM
 
 
 class MaterialsFromCSV(BaseSCDM):
     def __init__(self, SpeosSim, SpaceClaim):
-        super(MaterialsFromCSV, self).__init__(SpaceClaim, ["V19", "V20"])
+        super(MaterialsFromCSV, self).__init__(SpaceClaim, ["V19", "V20", "V21"])
         self.speos_sim = SpeosSim
 
     def __get_real_original(self, item):
@@ -55,18 +56,17 @@ class MaterialsFromCSV(BaseSCDM):
         material_dict = self.__create_material_dictionary()
         for item in material_dict:
             if item in op_list:
-                op = self.Selection.CreateByNames(item).Items[0]
+                op = self.speos_sim.Material.Find(item)
                 try:
-                    op = clr.Convert(op, self.speos_sim.Material)
-                    my_selection = self.Selection.Create(material_dict[item])
-                    op.VolumeGeometries.Set(my_selection)
+                    my_selection = self.BodySelection.Create(material_dict[item])
+                    op.VolumeGeometries.Set(my_selection.Items)
                 except:
                     print("Not an Optical property")
             else:
                 op_created = self.speos_sim.Material.Create()
                 op_created.Name = item
-                sel = self.Selection.Create(material_dict[item])
-                op_created.VolumeGeometries.Set(sel)
+                sel = self.BodySelection.Create(material_dict[item])
+                op_created.VolumeGeometries.Set(sel.Items)
 
     def get_total_layers(self):
         """
@@ -129,7 +129,7 @@ class MaterialsFromCSV(BaseSCDM):
                     material.VOPType = self.speos_sim.Material.EnumVOPType.Optic
                 else:
                     material.VOPType = self.speos_sim.Material.EnumVOPType.Library
-                    material.VOPLibrary = work_directory + "SPEOS input files\\" + vop_name
+                    material.VOPLibrary = os.path.join(work_directory, "SPEOS input files", vop_name)
 
             if "Mirror" in sop_name:
                 material.SOPType = self.speos_sim.Material.EnumSOPType.Mirror
@@ -140,7 +140,7 @@ class MaterialsFromCSV(BaseSCDM):
                 material.SOPType = self.speos_sim.Material.EnumSOPType.OpticalPolished
             else:
                 material.SOPType = self.speos_sim.Material.EnumSOPType.Library
-                material.SOPLibrary = work_directory + "SPEOS input files\\" + sop_name
+                material.SOPLibrary = os.path.join(work_directory, "SPEOS input files", sop_name)
 
     def create_speos_material(self, csv_path, work_directory):
         """
@@ -149,9 +149,9 @@ class MaterialsFromCSV(BaseSCDM):
         # work_directory  = "D:\#ANSYS SPEOS_Concept Proof\API Scripts\ASP_MaterialFromCsv"
         with open(csv_path) as myfile:
             reader = csv.reader(myfile)
-            for line in reader:
+            for line in reader:  # skips the first header line
                 print(line)
-                if ("End" not in line) and ("Materialname " not in line):
+                if ("End" not in line) and ("Materialname " not in line) and ("Catia Material" not in line):
                     op_name = line[0].rstrip()
                     fop_name = line[1]
                     vop_name = line[2]

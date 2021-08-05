@@ -43,9 +43,9 @@ def extract_centre_for_dict(component):
     """
     centre_list = []
     for body in component.GetBodies():
-        x = body.Shape.GetBoundingBox(Matrix.Identity, True).Center.X
-        y = body.Shape.GetBoundingBox(Matrix.Identity, True).Center.Y
-        z = body.Shape.GetBoundingBox(Matrix.Identity, True).Center.Z
+        x = "{:.6f}".format(body.Shape.GetBoundingBox(Matrix.Identity, True).Center.X)
+        y = "{:.6f}".format(body.Shape.GetBoundingBox(Matrix.Identity, True).Center.Y)
+        z = "{:.6f}".format(body.Shape.GetBoundingBox(Matrix.Identity, True).Center.Z)
         centre_list.append((x, y, z))
     return centre_list
 
