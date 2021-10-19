@@ -351,3 +351,7 @@ healthchecksdb
 /unittests/debug_sim_automation.scscript
 /unittests/draft_simulation_automation_test.scscript
 /unittests/repo_debugging.scscript
+/unittests/input/SPEOS output files/
+/unittests/input/SPEOS input files/Tire sidewall 07222020.anisotropicbsdf
+/unittests/input/SPEOS input files/Materials.xlsx
+/unittests/input/SPEOS input files/Blau.spectrum

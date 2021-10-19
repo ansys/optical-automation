@@ -1,35 +1,36 @@
 ##################################################################
-# Sync SPEOS Materials from Layers V1  - Copyright ANSYS. All Rights Reserved.
+# materials_from_layers  - Copyright ANSYS. All Rights Reserved.
 # ##################################################################
-# CREATION:      2021.02.16
-# VERSION:       1.1.0
+# CREATION:      2021.08.17
+# VERSION:       1.0.0
 #
 # OVERVIEW
 # ========
 # This script is generated for showing scripting capabilities purpose.
-# It will perform following action:
-#     1. Synchronizes the geometries that are assigned to layers with the Speos materials list
-#
-# Example usage:
-#       Action = SynchLayersMaterials(SpeosSim, SpaceClaim)
-#       Action.sync_op_from_layers()
+# It contains a class with methods for synchronizing Speos materials with SCDM layers.
 #
 # ##################################################################
-# ANSYS  script is provided as is, without. ANSYS  assumes neither
-# warranty, nor guarantee nor any other liability of any kind for the contents
-# of the provided script.
-# The tool has been prepared for training and demonstration purpose, but may in
-# reality not fulfill entirely to your purpose. User is free to modify by its own
-# the following script.
-
-# Therefore, ANSYS assumes no liability of any kind for the loss of data or
-# any other damage resulting from the usage of the provided data.
-# ANSYS OPTIS reserves the right to undertake technical changes without further
-# notification which could lead to changes in the provided data.
-
+# https://opensource.org/licenses/MIT
+#
+# Copyright 2021 Ansys, Inc.
+#
+# Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated
+# documentation files (the "Software"), to deal in the Software without restriction, including without limitation
+# the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software,
+# and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+#
+# The above copyright notice and this permission notice shall be included in all copies or substantial portions of
+# the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
+# INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+# IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+# DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+#
 # The user agrees to this disclaimer and user agreement with the download or usage
 # of the provided files.
-
+#
 # ##################################################################
 
 # Python Script, API Version = V20 Beta
