@@ -63,7 +63,9 @@ class SynchLayersMaterials(BaseSCDM):
         cs = self.GetRootPart().CustomObjects
         for item in cs:
             if self.speos_sim.Material.Find(item.Name):
-                op_list.append(item.Name)
+                op_type = self.speos_sim.Material.Find(item.Name).OpticalPropertiesType.ToString()
+                if "Surfacic" not in op_type:
+                    op_list.append(item.Name)
         return op_list
 
     def __clean_geo_op_list(self, op_list):
