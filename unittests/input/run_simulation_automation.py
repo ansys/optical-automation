@@ -28,7 +28,8 @@ def main():
     material_api.apply_geo_to_material()
     # Sensor
     cam = Camera("Cam", SpeosSim, SpaceClaim)
-    cam.set_position(x_reverse=True, y_reverse=False, origin="cam_origin")
+    cam.find_axes(origin="cam_origin")
+    cam.set_position(x_reverse=True, y_reverse=True)
     cam.set_distortion("OPTIS_Distortion_150deg.OPTDistortion")
     cam.set_transmittance("perfect_transmitance.spectrum")
     cam.set_sensitivity("red", "sRGB_R.spectrum")
@@ -86,10 +87,10 @@ def main():
     curves_exported = []
     for comp in all_comps:
         if "Projected grid_" in comp.GetName():
-            grid_exported = True
             curves = comp.GetAllCurves()
             for curve in curves:
                 curves_exported.append(curve.GetName())
+            grid_exported = True
     results_dict["grid_exported"] = grid_exported
     results_dict["curves_exported"] = curves_exported
 

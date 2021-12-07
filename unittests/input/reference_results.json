@@ -1,6 +1,7 @@
 {
     "center_coord": {
         "Cam": [], 
+        "IntensityTest": [], 
         "Component1": [
             [
                 "0.112520", 
