@@ -1,1 +1,0 @@
-this folder contains script based on Catia API to prepare data for simulation

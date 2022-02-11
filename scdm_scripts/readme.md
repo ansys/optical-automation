@@ -1,1 +1,0 @@
-This folder contains script solely relying on Spaceclaim API and Speos APi isnide Spaceclaim
