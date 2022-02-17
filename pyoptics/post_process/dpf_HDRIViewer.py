@@ -4,11 +4,19 @@ from pyoptics.post_process.dpf_base import DataProcessingFramework
 
 
 class dpf_HDRIViewer(DataProcessingFramework):
+    """
+    class to launch the Speos postprocessing software Virtual reality lab
+    this framework is used to interact with the software and automatically do analysis and postprocessing on the
+    simulation results
+    """
     def __init__(self):
         DataProcessingFramework.__init__(self)
         self.souce_list = []
 
     def Get_SourceList(self, SpeosVRObject):
+        """
+        function to retrieve the source list stored in the simulation result
+        """
         if SpeosVRObject is not None:
             total_sources = SpeosVRObject.GetNbSources
             for layer in range(total_sources):
@@ -18,10 +26,16 @@ class dpf_HDRIViewer(DataProcessingFramework):
             print("Not valid SpeosVRObject")
 
     def __valid_dir(self, dir):
+        """
+        check if a folder is there if not create it
+        """
         if not os.path.isdir(dir):
             os.makedirs(dir)
 
     def __export_VRview(self, SpeosVRObject, expo_path, phi_angles=None, theta_angles=None):
+        """
+        function to export VR results for defined angles or all angles as jpg pictures
+        """
         if phi_angles == None and theta_angles == None:
             ## Export all angle combinations
             SpeosVRObject.Show(True)
@@ -38,6 +52,9 @@ class dpf_HDRIViewer(DataProcessingFramework):
                     print(e)
 
     def Export_VRViews(self, SpeosVRObject, expo_path, phi_angles=None, theta_angles=None, config_IDs=None):
+        """
+        function to export VR results for all or specific configuration for defined angles or all angles as jpg pictures
+        """
         self.__valid_dir(expo_path)
         expo_path += "\\"
 
