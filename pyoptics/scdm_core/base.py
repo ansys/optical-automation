@@ -45,19 +45,24 @@ class BaseSCDM(object):
         self.List = List
         self.scdm_api = scdm_api
 
+        self.AnchorCondition = scdm_api.AnchorCondition
         self.BodySelection = scdm_api.Scripting.Selection.BodySelection
         self.CloseDocument = scdm_api.Scripting.Helpers.DocumentHelper.CloseDocument
         self.ColorHelper = scdm_api.Scripting.Helpers.ColorHelper
+        self.ComponentHelper = scdm_api.Scripting.Helpers.ComponentHelper
         self.ComponentExtensions = scdm_api.Scripting.Extensions.ComponentExtensions
         self.Copy = scdm_api.Scripting.Commands.Copy
         self.CreateNewDocument = scdm_api.Scripting.Helpers.DocumentHelper.CreateNewDocument
+        self.DEG = scdm_api.Scripting.Helpers.Units.DEG
         self.Delete = scdm_api.Scripting.Commands.Delete
         self.DesignBodyExtensions = scdm_api.Scripting.Extensions.DesignBodyExtensions
         self.DocumentSave = scdm_api.Scripting.Commands.DocumentSave
+        self.DocumentInsert = scdm_api.Scripting.Commands.DocumentInsert
         self.FixDuplicateFaces = scdm_api.Scripting.Commands.FixDuplicateFaces
         self.GetActiveDocument = scdm_api.Scripting.Helpers.DocumentHelper.GetActiveDocument
         self.GetOriginal = scdm_api.Scripting.Extensions.DocObjectExtensions.GetOriginal
         self.GetRootPart = scdm_api.Scripting.Helpers.DocumentHelper.GetRootPart
+        self.HandleAxis = scdm_api.Scripting.Commands.HandleAxis
         self.IComponent = scdm_api.IComponent
         self.ICoordinateAxis = scdm_api.ICoordinateAxis
         self.ICoordinateSystem = scdm_api.ICoordinateSystem
@@ -65,11 +70,17 @@ class BaseSCDM(object):
         self.IDesignCurve = scdm_api.IDesignCurve
         self.IPart = scdm_api.IPart
         self.Layers = scdm_api.Scripting.Commands.Layers
+        self.Line = scdm_api.Geometry.Line
+        self.Move = scdm_api.Scripting.Commands.Move
+        self.MoveOptions = scdm_api.Scripting.Commands.CommandOptions.MoveOptions
         self.NamedSelection = scdm_api.Scripting.Commands.NamedSelection
         self.Paste = scdm_api.Scripting.Commands.Paste
         self.PartExtensions = scdm_api.Scripting.Extensions.PartExtensions
+        self.Point = scdm_api.Geometry.Point
         self.Selection = scdm_api.Scripting.Selection.Selection
+        self.SetName = scdm_api.Scripting.Helpers.ComponentHelper.SetName
         self.StitchFaces = scdm_api.Scripting.Commands.StitchFaces
+        self.ViewHelper = scdm_api.Scripting.Helpers.ViewHelper
 
 
 def get_scdm_install_location(version):
