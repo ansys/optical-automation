@@ -5,12 +5,19 @@ from pyoptics.scdm_core.base import BaseSCDM
 
 
 class Simulation(BaseSCDM):
+    """
+    This class implements methods to create, modify and run Speos simulations.
+    """
+
     def __init__(self, name, SpeosSim, SpaceClaim, kind="inverse"):
         """
-        Initialize Simulation class. Takes name as input and searches for an
+        Initializes the Simulation class. Takes name as input and searches for an
         existing simulation with this name.
-        param name: name of the simulation to look for.
-        param kind: kind/type of the simulation: either "inverse" or "direct"
+
+        Parameters
+        ----------
+        name: str. Name of the simulation to find/create.
+        kind: str. Kind (type) of the simulation: "inverse", "direct", or "interactive".
         """
         super(Simulation, self).__init__(SpaceClaim, ["V19", "V20", "V21"])
         self.PreProcASP = PreProcessingASP(SpaceClaim)
@@ -42,16 +49,19 @@ class Simulation(BaseSCDM):
                 self.object = self.speos_sim.SimulationInteractive.Create()
                 self.object.Name = name
         else:
-            # throw an error: unknown simulation type
+            # TODO throw an error: unknown simulation type
             pass
 
         self.my_bodies = []
+        self.component_list = []
 
     def select_geometries(self, component_list):
         """
-        adds all geometries from components provided in component_list to the simulation's bodies list
-        param component_list: list with component names, e.g. ["part1", "part2"]
-        :return:
+        Adds all geometries from components provided in component_list to the simulation's bodies list
+
+        Parameters
+        ----------
+        component_list: list with component names, e.g. ["part1", "part2"]
         """
         self.component_list = component_list
         root = self.GetRootPart()
@@ -64,11 +74,12 @@ class Simulation(BaseSCDM):
 
     def select_geometrical_sets(self, geosets_list):
         """
-        adds all geometries from geometrical sets provided in geosets_list to
+        Adds all geometries from Catia geometrical sets provided in geosets_list to
         the simulation's bodies list
-        param component_geosets_listlist: list with names of geometrical sets to add,
-        e.g. ["geo_set1", "geo_set2"]
-        :return:
+
+        Parameters
+        ----------
+        geosets_list: list with names of Catia geometrical sets to add, e.g. ["geo_set1", "geo_set2"]
         """
         part_geosets = self.PreProcASP._PreProcessingASP__create_geometrical_set_names_list(self.GetRootPart(),
                                                                                  bodies_only=False)
@@ -83,9 +94,7 @@ class Simulation(BaseSCDM):
     def define_geometries(self):
         """
         Adds all bodies from the simulation's bodies list (self.my_bodies) to the
-        simulation geometries.
-        param:
-        :return:
+        simulation geometries. Like green "validate" button in Speos.
         """
         selection = self.BodySelection.Create(self.my_bodies)
         self.object.Geometries.Set(selection.Items)
@@ -94,9 +103,11 @@ class Simulation(BaseSCDM):
     def set_rays_limit(self, rays):
         """
         Set computation limit by the maximum number of rays (for direct and inverse simulations)
-        or passes (for inverse simulations)
-        param rays: the number of rays/passes to set the limit of simulation to
-        :return:
+        or passes (for inverse simulations).
+
+        Parameters
+        ----------
+        rays: int. Number of rays/passes to set the limit of simulation to.
         """
         self.rays = rays
         if self.kind == "direct":  # direct simulation
@@ -107,8 +118,14 @@ class Simulation(BaseSCDM):
         #    self.object.RayNumber = rays
         return self
 
-    def export_grid(self, sensor_name, save_name):
-        # export projected grid as a component
+    def export_grid(self, sensor_name):
+        """
+        Exports projected grid as a SCDM component.
+
+        Parameters
+        ----------
+        sensor_name: str. Name of the sensor which grid should be imported as geometry.
+        """
         grid_name = ".".join([self.name, sensor_name, "OPTProjectedGrid"])
         print(grid_name)
         if self.kind == "interactive" and self.computed:
@@ -141,6 +158,17 @@ class Simulation(BaseSCDM):
 
     def set_grid_params(self, primary_step=20, secondary_step=4, max_distance=1500,
                         max_incidence=89, min_distance=2):
+        """
+        Sets parameters of the generated camera projected grid.
+
+        Parameters
+        ----------
+        primary_step: int. Primary step of the grid.
+        secondary_step: int. Secondary step of the grid.
+        max_distance: float. Maximum distance between a pixel and the camera, in mm.
+        max_incidence: float. Maximum angle (degree) under which two projected pixels should be connected by a line.
+        min_distance: float/int. The distance tolerance (in mm) for which two adjacent pixels to be connected by a line.
+        """
         sensor_name = self.object.Sensors[0].Name
         grid_name = self.name + "." + sensor_name + ".OPTProjectedGrid"
         print(grid_name)
@@ -156,13 +184,20 @@ class Simulation(BaseSCDM):
     
     def run_simulation(self):     
         """
-        Computes simulation
+        Computes simulation on the local CPU.
         """
         self.object.Compute()
         self.computed = True
         return self
 
     def add_sensor(self, sensor_name):
+        """
+        Adds a sensor to the simulation.
+
+        Parameters
+        ----------
+        sensor_name: str. Name of the sensor.
+        """
         # camera sensor
         sensor_object = self.speos_sim.SensorCamera.Find(sensor_name)
         if sensor_object:

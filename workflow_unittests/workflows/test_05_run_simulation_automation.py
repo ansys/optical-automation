@@ -54,7 +54,7 @@ def main():
     interactive.run_simulation()
     interactive.set_grid_params(primary_step=50, secondary_step=25, max_distance=1500,
                                 max_incidence=89, min_distance=2)
-    interactive.export_grid("Cam", "cam_grid")
+    interactive.export_grid("Cam")
     # test if simulation exists
     sim_object = SpeosSim.SimulationInteractive.Find("Test_simulation")
     sim_exists = bool(sim_object)
