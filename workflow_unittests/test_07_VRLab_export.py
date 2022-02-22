@@ -9,11 +9,11 @@ class TestVRLabExportAPI:
     """
     def setup_class(self):
         self.local_path = os.path.dirname(os.path.realpath(__file__))
-        self.results_file = os.path.join(self.local_path, "workflows", "test_VRLab_results.json")
-        reference_file = os.path.join(self.local_path, "workflows", "test_VRLab_reference_results.json")
+        self.results_file = os.path.join(self.local_path, "workflows", "test_07_VRLab_results.json")
+        reference_file = os.path.join(self.local_path, "workflows", "test_07_VRLab_reference_results.json")
         self.clean_results(self)  # no idea why but you have to pass there self
 
-        script_path = os.path.join(self.local_path, "workflows", "test_run_VRLab_export.py")
+        script_path = os.path.join(self.local_path, "workflows", "test_07_run_VRLab_export.py")
         print("Start VRLab to generate JSON file for tests")
         command = ['python', script_path]
         print(command)
@@ -47,9 +47,9 @@ class TestVRLabExportAPI:
             os.remove(self.results_file)
 
 
-    def test_01_check_exportedImages_name_size(self):
+    def test_01_check_exported_images_name_size(self):
         """
-        Function to compare the results of create_speos_material() and apply_geo_to_material()
+        Function to compare the results of the created images with the expected images
         Returns: None
         """
         res = self.results.get("VRImages", None)

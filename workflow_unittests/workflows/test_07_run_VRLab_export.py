@@ -9,10 +9,10 @@ unittest_path = os.path.dirname(os.path.realpath(__file__))
 lib_path = os.path.dirname(unittest_path)
 sys.path.append(lib_path)
 
-from pyoptics.post_process.dpf_HDRIViewer import dpf_HDRIViewer
+from pyoptics.post_process.dpf_hdri_viewer import DpfHdriViewer
 
-vr_file = os.path.join(unittest_path, "example_models", "test_VRLab_export.OptisVR")
-results_json = os.path.join(unittest_path, "test_VRLab_results.json")
+vr_file = os.path.join(unittest_path, "example_models", "test_07_VRLab_export.OptisVR")
+results_json = os.path.join(unittest_path, "test_07_VRLab_results.json")
 
 work_directory = os.path.join(unittest_path, "VRExport")
 
@@ -27,12 +27,12 @@ def check_images_exported(dir):
 
 
 def main():
-    dpf = dpf_HDRIViewer()
+    dpf = DpfHdriViewer()
     print(vr_file)
-    VR = dpf.OpenFile(vr_file)
-    dpf.Export_VRViews(SpeosVRObject = VR, expo_path = work_directory, config_IDs = 0)
-    VRExported_List = check_images_exported(work_directory)
-    results_dict["VRImages"] = VRExported_List
+    dpf.open_file(vr_file)
+    dpf.export_vr_views(export_path=work_directory, config_ids=0)
+    vr_exported_list = check_images_exported(work_directory)
+    results_dict["VRImages"] = vr_exported_list
 
 
 results_dict = {}
