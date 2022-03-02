@@ -79,12 +79,12 @@ class ScdmIO(BaseSCDM):
 
         Returns
         -------
-        a list speos surface sources
+        a list speos sources
         """
         speos_sources_list = []
         for component in self.ComponentExtensions.GetAllComponents(component_group):
             for speos_object in component.Content.CustomObjects:
-                if "SpeosWrapperSourceSurface" in speos_object.Type:
+                if "Source" in speos_object.Type:
                     speos_sources_list.append(speos_object)
         return speos_sources_list
 
@@ -106,7 +106,7 @@ class ScdmIO(BaseSCDM):
         if name:
             source_selection.CreateAGroup(name)
         else:
-            source_selection.CreateAGroup("Speos_sources_Group")
+            source_selection.CreateAGroup("speos_sources_group")
 
     def __group_components(self, component_list, name, anchor, lock, internalize, speos_source_group):
         """
@@ -201,6 +201,7 @@ class ScdmIO(BaseSCDM):
             return
 
         imported_component_group = []
+        self.ComponentHelper.SetRootActive()
         for axis_system in axis_system_list:
             self.Selection.CreateByObjects(axis_system).SetActive()
             self.DocumentInsert.Execute(external_part)
