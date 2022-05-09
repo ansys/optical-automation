@@ -1,26 +1,26 @@
-OpticalAutomation Library
+optical-automation Library
 ########################
 
 Project Overview
 ----------------
-``OpticalAutomation`` is a library that gathers functionalities and tools for ``Speos``, ``Zemax`` and ``Lumerical``.
+``optical-automation`` is a library that gathers functionalities and tools for ``Speos``, ``Zemax`` and ``Lumerical`` automations and interoperations.
 
-On ``Speos`` side, this is a way to create workflows using module pre and post processing functionalities in python.
+On ``Speos`` side, this is a way to create workflows combining different pre- and post-processing function modules in python.
 
 Installation
 ------------
 
-Install ``OpticalAutomation Library`` with:
+Install ``optical-automation`` Library with:
 
 .. code::
 
-   pip install ansys-OpticalAutomation
+   pip install ansys-optical-automation
 
 Alternatively, clone and install in development mode with:
 
 .. code::
 
-   git clone https://github.com/ansys/OpticalAutomation.git
+   git clone https://github.com/ansys/optical-automation.git
    cd pyoptics
    pip install -r requirements_style.txt
    pre-commit install
