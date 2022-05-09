@@ -1,0 +1,25 @@
+[build-system]
+requires = ["flit_core >=3.2,<4", ]
+build-backend = "flit_core.buildapi"
+
+# description of current module
+[project]
+name = "optical-automation"
+authors = [
+    {name = "Stefan Thoene", email = "stefan.thoene@ansys.com"},
+    {name = "Pengyuan Lu", email = "pengyuan.lu@ansys.com"},
+]
+readme = "README.rst"
+requires-python = ">=3.8"
+classifiers = ["License :: OSI Approved :: MIT License"]
+dynamic = ["version", "description"]
+
+dependencies = [
+    "numpy",
+]
+
+[project.urls]
+Home = "https://github.com/ansys/optical-automation"
+
+[tool.isort]
+profile = "black"
