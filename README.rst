@@ -21,7 +21,7 @@ Alternatively, clone and install in development mode with:
 .. code::
 
    git clone https://github.com/ansys/optical-automation.git
-   cd pyoptics
+   cd optical-automation
    pip install -r requirements_style.txt
    pre-commit install
    pip install -e .
