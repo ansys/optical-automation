@@ -3,6 +3,7 @@ Optical Automation Library
 
 Project Overview
 ----------------
+
 ``ansys-optical-automation`` is a library that gathers functionalities and tools for
 ``Speos``, ``Zemax`` and ``Lumerical`` automations and interoperations.
 
