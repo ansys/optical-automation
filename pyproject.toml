@@ -22,9 +22,6 @@ dependencies = [
 [project.optional-dependencies]
 test = [
     "pre-commit==2.15.0",
-    "mypy==0.910",
-    "pytest==6.2.5",
-    "pytest-cov==3.0.0",
 ]
 
 [project.urls]
