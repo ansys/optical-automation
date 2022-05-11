@@ -4,7 +4,7 @@ build-backend = "flit_core.buildapi"
 
 # description of current module
 [project]
-name = "optical-automation"
+name = "ansys-optical-automation"
 authors = [
     {name = "Stefan Thoene", email = "stefan.thoene@ansys.com"},
     {name = "Pengyuan Lu", email = "pengyuan.lu@ansys.com"},
@@ -16,6 +16,12 @@ dynamic = ["version", "description"]
 
 dependencies = [
     "numpy",
+]
+
+# development dependencies
+[project.optional-dependencies]
+test = [
+    "pre-commit==2.15.0",
 ]
 
 [project.urls]
