@@ -3,27 +3,21 @@ Optical Automation Library
 
 Project Overview
 ----------------
-``ansys-optical-automation`` is a library that gathers functionalities and tools for ``Speos``, ``Zemax`` and ``Lumerical`` automations and interoperations.
 
-On ``Speos`` side, this is a way to create workflows combining different pre- and post-processing function modules in python.
+``ansys-optical-automation`` is a library that gathers functionalities and tools for
+``Speos``, ``Zemax`` and ``Lumerical`` automations and interoperations.
+
+On ``Speos`` side, this is a way to create workflows combining different pre- and post-processing function modules.
 
 Installation
 ------------
 
-Install ``ansys-optical-automation`` Library with:
+download ``ansys-optical-automation`` Library:
 
 .. code::
 
-   pip install ansys-optical-automation
-
-Alternatively, clone and install in development mode with:
-
-.. code::
-
-   git clone https://github.com/ansys/optical-automation.git
-   cd optical-automation
-   pre-commit install
-   pip install -e .
+   Click on the green Code button, then download the repository as a ZIP file
+   Unzip the file under the directory: %AppData%\SpaceClaim\Published Scripts
 
 
 Documentation
@@ -31,12 +25,10 @@ Documentation
 Include a link to the full sphinx documentation.  For example `PyAnsys <https://docs.pyansys.com/>`_
 
 
-Usage
------
-
-
-Testing
--------
+Contribute
+-------------
+Please see the following `document <CONTRIBUTE.rst>`_
+for detailed instructions on how to contribute to this repository.
 
 
 License
