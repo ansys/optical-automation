@@ -25,12 +25,10 @@ Documentation
 Include a link to the full sphinx documentation.  For example `PyAnsys <https://docs.pyansys.com/>`_
 
 
-Usage
------
-
-
-Testing
--------
+Contribute
+-------------
+Please see the following `Document <https://github.com/ansys/optical-automation/blob/main/CONTRIBUTE.rst/>`_
+for detailed instructions on how to to contribute this repository.
 
 
 License

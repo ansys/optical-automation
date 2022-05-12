@@ -1,4 +1,4 @@
-Contributing
+Contribute
 ----------------
 
 We welcome any code contributions and we hope that this
