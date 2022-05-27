@@ -130,7 +130,7 @@ class Camera(Sensor):
         distortion_file_name: str. Name of the OPTDistortion file.
 
         """
-        distortion_path = os.path.join(".", "SPEOS input files", distortion_file_name)
+        distortion_path = os.path.join("", "SPEOS input files", distortion_file_name)
         self.speos_object.DistorsionFile = distortion_path
         return self
 
@@ -140,7 +140,7 @@ class Camera(Sensor):
         ----------
         transmittance_file_name: str. Name of the transmittance spectrum file.
         """
-        transmittance_path = os.path.join(".", "SPEOS input files", transmittance_file_name)
+        transmittance_path = os.path.join("", "SPEOS input files", transmittance_file_name)
         self.speos_object.TransmittanceFile = transmittance_path
         return self
 
@@ -151,7 +151,7 @@ class Camera(Sensor):
         color: str. Channel color: red, green or blue.
         sensitivity_file_name: str. Name of the sensitivity file.
         """
-        sensitivity_path = os.path.join(".", "SPEOS input files", sensitivity_file_name)
+        sensitivity_path = os.path.join("", "SPEOS input files", sensitivity_file_name)
         if color == "red":
             self.speos_object.RedSpectrumFile = sensitivity_path
         elif color == "green":
