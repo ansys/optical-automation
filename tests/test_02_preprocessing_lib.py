@@ -3,7 +3,8 @@ import os
 import subprocess
 
 from pyoptics.scdm_core.base import get_scdm_install_location
-from workflow_unittests.ansys_arm.ansys_arm import write_arm_log
+
+from tests.ansys_arm.ansys_arm import write_arm_log
 
 # User Input
 SCDM_VERSION = 221  # version of SCDM you want to test
