@@ -7,8 +7,8 @@ unittest_path = os.path.dirname(os.path.realpath(__file__))
 lib_path = os.path.dirname(unittest_path)  # get path of speos_migration library
 sys.path.append(lib_path)
 
-from pyoptics.speos_process.speos_sensors import Camera
-from pyoptics.speos_process.speos_sensors import IntensitySensor
+from ansys_optical_automation.speos_process.speos_sensors import Camera
+from ansys_optical_automation.speos_process.speos_sensors import IntensitySensor
 
 scdm_file = os.path.join(unittest_path, "workflows", "example_models", "test_geometry_01.scdoc")
 results_json = os.path.join(unittest_path, "workflows", "test_03_results.json")

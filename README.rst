@@ -4,7 +4,7 @@ Optical Automation Library
 Project Overview
 ----------------
 
-``ansys-optical-automation`` is a library that gathers functionalities and tools for
+``ansys_optical_automation`` is a library that gathers functionalities and tools for
 ``Speos``, ``Zemax`` and ``Lumerical`` automations and interoperations.
 
 On ``Speos`` side, this is a way to create workflows combining different pre- and post-processing function modules.
@@ -12,7 +12,7 @@ On ``Speos`` side, this is a way to create workflows combining different pre- an
 Installation
 ------------
 
-download ``ansys-optical-automation`` Library:
+download ``ansys_optical_automation`` Library:
 
 .. code::
 
@@ -33,6 +33,6 @@ for detailed instructions on how to contribute to this repository.
 
 License
 -------
-``ansys-optical-automation`` is licensed under the MIT license.
+``ansys_optical_automation`` is licensed under the MIT license.
 
 The full license can be found in the root directory of the repository.

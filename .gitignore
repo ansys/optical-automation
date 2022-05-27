@@ -336,22 +336,5 @@ ASALocalRun/
 # Local History for Visual Studio
 .localhistory/
 
-# BeatPulse healthcheck temp database
-healthchecksdb
-/unittests/input/SPEOS input files/Plastic_White.simplescattering
-/unittests/input/SPEOS input files/Materials_short.csv
-/unittests/input/SPEOS input files/Weiss.simplescattering
-/unittests/input/poor_geom_backup.scdoc
-/unittests/input/Pdt_Anisotropic_Demok.scdoc
-/unittests/input/SPEOS input files/Materials_all.csv
-/unittests/input/SPEOS input files/Gruen.scattering
-/unittests/input/SPEOS input files/600-G3.anisotropicbsdf
-/unittests/input/Testpart.CATPart
-/unittests/cam_debug.scscript
-/unittests/debug_sim_automation.scscript
-/unittests/draft_simulation_automation_test.scscript
-/unittests/repo_debugging.scscript
-/unittests/input/SPEOS output files/
-/unittests/input/SPEOS input files/Tire sidewall 07222020.anisotropicbsdf
-/unittests/input/SPEOS input files/Materials.xlsx
-/unittests/input/SPEOS input files/Blau.spectrum
+# Local Virtual Environment
+/venv/
