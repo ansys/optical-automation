@@ -1,8 +1,8 @@
+import csv
 import json
 import os
 import sys
 import traceback
-import csv
 
 unittest_path = os.path.dirname(os.path.realpath(__file__))
 lib_path = os.path.dirname(unittest_path)  # get path of speos_migration library

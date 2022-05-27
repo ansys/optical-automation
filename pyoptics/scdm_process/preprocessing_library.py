@@ -1,6 +1,7 @@
 # Python Script, API Version = V21
 
 import os
+
 from pyoptics.scdm_core.base import BaseSCDM
 
 
@@ -10,6 +11,7 @@ class PreProcessingASP(BaseSCDM):
     As per Api limitation only one session at the time can be attached.
     For this reason the class does not support multiple Ansys SPEOS  sessions.
     """
+
     def __init__(self, SpaceClaim):
         """
         Args:

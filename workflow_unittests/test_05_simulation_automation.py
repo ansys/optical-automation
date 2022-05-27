@@ -1,6 +1,7 @@
 import json
-import subprocess
 import os
+import subprocess
+
 from pyoptics.scdm_core.base import get_scdm_install_location
 
 # User Input
@@ -30,11 +31,16 @@ class TestSimAutomation:
         scdm_exe = os.path.join(scdm_install_dir, "SpaceClaim.exe")
         scdm_script_path = os.path.join(self.local_path, "workflows", "test_05_run_simulation_automation.py")
         print("Start SPEOS to generate JSON file for tests")
-        command = [scdm_exe,
-                   r"/AddInManifestFile={}".format(speos_path),
-                   r'/RunScript={}'.format(scdm_script_path),
-                   r"/Headless=True", r"/Splash=False", r"/Welcome=False", r"/ExitAfterScript=True",
-                   r"/ScriptAPI=21"]
+        command = [
+            scdm_exe,
+            r"/AddInManifestFile={}".format(speos_path),
+            r"/RunScript={}".format(scdm_script_path),
+            r"/Headless=True",
+            r"/Splash=False",
+            r"/Welcome=False",
+            r"/ExitAfterScript=True",
+            r"/ScriptAPI=21",
+        ]
         print(command)
         subprocess.call(command)
 
@@ -86,9 +92,7 @@ class TestSimAutomation:
         ref_green = self.reference_results["green_spectrum"]
         res_blue = self.results.get("blue_spectrum", None)
         ref_blue = self.reference_results["blue_spectrum"]
-        test_passed = (res_red == ref_red and
-                       res_green == ref_green and
-                       res_blue == ref_blue)
+        test_passed = res_red == ref_red and res_green == ref_green and res_blue == ref_blue
         assert test_passed
 
     def test_03_camera_exists(self):

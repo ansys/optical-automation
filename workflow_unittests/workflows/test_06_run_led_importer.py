@@ -56,18 +56,22 @@ def check_if_anchored():
     bool: True if anchor is properly applied, False otherwise
     """
     test_component = GetRootPart().GetComponents()[-1]
-    original_position = [test_component.GetCoordinateSystems()[0].Frame.Origin.X,
-                         test_component.GetCoordinateSystems()[0].Frame.Origin.Y,
-                         test_component.GetCoordinateSystems()[0].Frame.Origin.Z]
+    original_position = [
+        test_component.GetCoordinateSystems()[0].Frame.Origin.X,
+        test_component.GetCoordinateSystems()[0].Frame.Origin.Y,
+        test_component.GetCoordinateSystems()[0].Frame.Origin.Z,
+    ]
 
     selection = Selection.Create(test_component)
     direction = Direction.DirZ
     options = MoveOptions()
     Move.Translate(selection, direction, MM(20), options)
 
-    new_position = [test_component.GetCoordinateSystems()[0].Frame.Origin.X,
-                    test_component.GetCoordinateSystems()[0].Frame.Origin.Y,
-                    test_component.GetCoordinateSystems()[0].Frame.Origin.Z]
+    new_position = [
+        test_component.GetCoordinateSystems()[0].Frame.Origin.X,
+        test_component.GetCoordinateSystems()[0].Frame.Origin.Y,
+        test_component.GetCoordinateSystems()[0].Frame.Origin.Z,
+    ]
     return original_position == new_position
 
 
@@ -82,7 +86,7 @@ def check_if_locked():
     try:
         test_component.Delete()
         return False
-    except Exception as ex:
+    except Exception:
         return True
 
 
@@ -146,7 +150,7 @@ def extract_axis_information(axis_system):
             axis_system_axes[1].Shape.Geometry.Direction[2],
             axis_system_axes[2].Shape.Geometry.Direction[0],
             axis_system_axes[2].Shape.Geometry.Direction[1],
-            axis_system_axes[2].Shape.Geometry.Direction[2]
+            axis_system_axes[2].Shape.Geometry.Direction[2],
         ]
     return axis_system_information
 
@@ -236,8 +240,9 @@ def main():
         initial_axis_system_info_list.extend(axis_system_found)
 
         # pyoptics to import parts
-        led_importer.import_part_at_axis_system(led_file, axis_system_list, name, anchor=True, lock=True,
-                                                internalize=True, speos_source_group=True)
+        led_importer.import_part_at_axis_system(
+            led_file, axis_system_list, name, anchor=True, lock=True, internalize=True, speos_source_group=True
+        )
 
         # extract imported part location information
         grouped_component = GetRootPart().GetComponents()[-1]
@@ -245,11 +250,9 @@ def main():
 
     results_dict["target axis systems location"] = initial_axis_system_info_list
     results_dict["imported parts locations"] = imported_part_location_list
-    results_dict["compare imported with target locations"] = \
-        compare_target_axis_system_with_imported_part_location(
-            initial_axis_system_info_list,
-            imported_part_location_list
-        )
+    results_dict["compare imported with target locations"] = compare_target_axis_system_with_imported_part_location(
+        initial_axis_system_info_list, imported_part_location_list
+    )
     results_dict["check anchor"] = check_if_anchored()
     results_dict["check lock"] = check_if_locked()
     results_dict["check speos sources group"] = extract_number_of_groups()

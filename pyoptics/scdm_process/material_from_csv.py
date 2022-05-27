@@ -1,8 +1,8 @@
 # Python Script, API Version = V21
 
 import csv
-import clr
 import os
+
 from pyoptics.scdm_core.base import BaseSCDM
 
 
@@ -35,7 +35,7 @@ class MaterialsFromCSV(BaseSCDM):
                 if body.Material.Name not in dict:
                     dict[body.Material.Name] = self.List[self.IDesignBody]()
                 dict[body.Material.Name].Add(ibody)
-            except:
+            except Exception:
                 print("Do nothing")
         return dict
 
@@ -55,7 +55,7 @@ class MaterialsFromCSV(BaseSCDM):
                 try:
                     my_selection = self.BodySelection.Create(material_dict[item])
                     op.VolumeGeometries.Set(my_selection.Items)
-                except:
+                except Exception:
                     print("Not an Optical property")
             else:
                 op_created = self.speos_sim.Material.Create()
@@ -100,7 +100,7 @@ class MaterialsFromCSV(BaseSCDM):
         nb_layer = active_doc.Layers.Count
         try:
             active_doc.Layers[nb_layer - 1].Create(active_doc, op_name, self.Color.Empty)
-        except:
+        except Exception:
             print("there is a layer with same name")
 
     def __create_op(self, fop_name, op_name, sop_name, vop_name, work_directory):
@@ -153,4 +153,3 @@ class MaterialsFromCSV(BaseSCDM):
                     sop_name = line[3]
                     self.__create_layer(op_name)
                     self.__create_op(fop_name, op_name, sop_name, vop_name, work_directory)
-

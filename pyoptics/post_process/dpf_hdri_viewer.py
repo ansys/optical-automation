@@ -1,5 +1,5 @@
 import math
-import os
+
 from pyoptics.post_process.dpf_base import DataProcessingFramework
 
 
@@ -11,8 +11,9 @@ class DpfHdriViewer(DataProcessingFramework):
     """
 
     def __init__(self):
-        DataProcessingFramework.__init__(self, application="HDRIViewer.Application", extension=(".speos360", ".optisvr",
-                                                                                                ".xmp"))
+        DataProcessingFramework.__init__(
+            self, application="HDRIViewer.Application", extension=(".speos360", ".optisvr", ".xmp")
+        )
         self.source_list = []
 
     def get_source_list(self):
@@ -58,11 +59,16 @@ class DpfHdriViewer(DataProcessingFramework):
                 try:
                     self.dpf_instance.SetSightDirection(phi_angles[count], theta_angles[count])
                     self.dpf_instance.Show(True)
-                    self.dpf_instance.ExportObserverImage(export_path + str(math.degrees([phi_angles[count]])) + str(
-                        math.degrees([theta_angles[count]])) + ".JPG")
+                    self.dpf_instance.ExportObserverImage(
+                        export_path
+                        + str(math.degrees([phi_angles[count]]))
+                        + str(math.degrees([theta_angles[count]]))
+                        + ".JPG"
+                    )
                 except Exception as e:
-                    raise TypeError(str(phi_angles) + str(theta_angles) + " are not existing iin the file \n Details: "
-                                    + e)
+                    raise TypeError(
+                        str(phi_angles) + str(theta_angles) + " are not existing iin the file \n Details: " + e
+                    )
 
     def export_vr_views(self, export_path, phi_angles=None, theta_angles=None, config_ids=None):
         """

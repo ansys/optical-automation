@@ -7,9 +7,9 @@ unittest_path = os.path.dirname(os.path.realpath(__file__))
 lib_path = os.path.dirname(unittest_path)  # get path of speos_migration library
 sys.path.append(lib_path)
 
-from pyoptics.speos_process.speos_simulations import Simulation
-from pyoptics.speos_process.speos_sensors import Camera
 from pyoptics.scdm_process.material_from_csv import MaterialsFromCSV
+from pyoptics.speos_process.speos_sensors import Camera
+from pyoptics.speos_process.speos_simulations import Simulation
 
 scdm_file = os.path.join(unittest_path, "workflows", "example_models", "test_geometry_01.scdoc")
 results_json = os.path.join(unittest_path, "workflows", "test_05_results.json")
@@ -52,8 +52,7 @@ def main():
     interactive.define_geometries()
     interactive.add_sensor("Cam")
     interactive.run_simulation()
-    interactive.set_grid_params(primary_step=50, secondary_step=25, max_distance=1500,
-                                max_incidence=89, min_distance=2)
+    interactive.set_grid_params(primary_step=50, secondary_step=25, max_distance=1500, max_incidence=89, min_distance=2)
     interactive.export_grid("Cam")
     # test if simulation exists
     sim_object = SpeosSim.SimulationInteractive.Find("Test_simulation")
@@ -68,17 +67,20 @@ def main():
     sim_name = sim_object.Name
     grid_name = sim_name + "." + sensor_name + ".OPTProjectedGrid"
     grid = SpeosSim.ResultProjectedGrid.Find(grid_name)
-    grid_params = {"secondary_step": grid.SecondaryStep,
-                   "primary_step": grid.PrimaryStep,
-                   "max_distance": grid.MaxDistanceFromCamera,
-                   "max_incidence": grid.MaxIncidence,
-                   "min_distance": grid.MinDistanceTolerance}
+    grid_params = {
+        "secondary_step": grid.SecondaryStep,
+        "primary_step": grid.PrimaryStep,
+        "max_distance": grid.MaxDistanceFromCamera,
+        "max_incidence": grid.MaxIncidence,
+        "min_distance": grid.MinDistanceTolerance,
+    }
     results_dict["grid_parameters"] = grid_params
     # Check outputs
     output_exists = {}
     for output_file in output_files:
-        fname = os.path.join(unittest_path, "workflows", "example_models", "SPEOS output files",
-                             "test_geometry_01", output_file)
+        fname = os.path.join(
+            unittest_path, "workflows", "example_models", "SPEOS output files", "test_geometry_01", output_file
+        )
         output_exists[output_file] = os.path.isfile(fname)
         os.remove(fname)
     results_dict["output_exists"] = output_exists

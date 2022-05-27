@@ -1,12 +1,13 @@
 import json
-import subprocess
 import os
+import subprocess
 
 
 class TestVRLabExportAPI:
     """
     Class to define conditions for run of unit tests in PyTest
     """
+
     def setup_class(self):
         self.local_path = os.path.dirname(os.path.realpath(__file__))
         self.results_file = os.path.join(self.local_path, "workflows", "test_07_VRLab_results.json")
@@ -15,7 +16,7 @@ class TestVRLabExportAPI:
 
         script_path = os.path.join(self.local_path, "workflows", "test_07_run_VRLab_export.py")
         print("Start VRLab to generate JSON file for tests")
-        command = ['python', script_path]
+        command = ["python", script_path]
         print(command)
         subprocess.call(command)
 
@@ -45,7 +46,6 @@ class TestVRLabExportAPI:
         """
         if os.path.isfile(self.results_file):
             os.remove(self.results_file)
-
 
     def test_01_check_exported_images_name_size(self):
         """

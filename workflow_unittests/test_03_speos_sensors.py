@@ -1,6 +1,7 @@
 import json
-import subprocess
 import os
+import subprocess
+
 from pyoptics.scdm_core.base import get_scdm_install_location
 
 # User Input
@@ -30,11 +31,16 @@ class TestSensorAPI:
         scdm_exe = os.path.join(scdm_install_dir, "SpaceClaim.exe")
         scdm_script_path = os.path.join(self.local_path, "workflows", "test_03_run_speos_sensors.py")
         print("Start SPEOS to generate JSON file for tests")
-        command = [scdm_exe,
-                   r"/AddInManifestFile={}".format(speos_path),
-                   r'/RunScript={}'.format(scdm_script_path),
-                   r"/Headless=True", r"/Splash=False", r"/Welcome=False", r"/ExitAfterScript=True",
-                   r"/ScriptAPI=21"]
+        command = [
+            scdm_exe,
+            r"/AddInManifestFile={}".format(speos_path),
+            r"/RunScript={}".format(scdm_script_path),
+            r"/Headless=True",
+            r"/Splash=False",
+            r"/Welcome=False",
+            r"/ExitAfterScript=True",
+            r"/ScriptAPI=21",
+        ]
         print(command)
         subprocess.call(command)
 
