@@ -14,3 +14,16 @@ jobs:
       - run: echo $(hostname)
       - name: Check out repository code
         uses: actions/checkout@v3
+
+      - name: Setup Python
+        uses: actions/setup-python@v2
+        with:
+            python-version: 3.8
+
+      - name: Install Dependencies
+        run: |
+          pip install -e .
+
+      - name: Run Tests with pytest
+        run: |
+          pytest
