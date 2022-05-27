@@ -1,0 +1,16 @@
+name: ci
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  simulation-data-test:
+    runs-on: self-hosted
+    steps:
+      - run: echo $(hostname)
+      - name: Check out repository code
+        uses: actions/checkout@v3
