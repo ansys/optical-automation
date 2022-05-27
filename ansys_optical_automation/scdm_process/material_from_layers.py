@@ -1,6 +1,6 @@
 # Python Script, API Version = V21
 
-from pyoptics.scdm_core.base import BaseSCDM
+from ansys_optical_automation.scdm_core.base import BaseSCDM
 
 
 class SynchLayersMaterials(BaseSCDM):

@@ -2,7 +2,7 @@ import json
 import os
 import subprocess
 
-from pyoptics.scdm_core.base import get_scdm_install_location
+from ansys_optical_automation.scdm_core.base import get_scdm_install_location
 
 # User Input
 SCDM_VERSION = 221  # version of SCDM you want to test
@@ -12,7 +12,7 @@ scdm_install_dir = get_scdm_install_location(SCDM_VERSION)
 speos_path = os.path.join(os.path.dirname(scdm_install_dir), "Optical Products", "SPEOS", "Bin", "SpeosSC.Manifest.xml")
 
 
-class TestLEDImporterAPI:
+class TestComponentImporterAPI:
     """
     Class to define conditions for run of unit tests in PyTest
     """
@@ -29,7 +29,7 @@ class TestLEDImporterAPI:
         self.clean_results(self)  # no idea why but you have to pass there self
 
         scdm_exe = os.path.join(scdm_install_dir, "SpaceClaim.exe")
-        scdm_script_path = os.path.join(self.local_path, "workflows", "test_06_run_led_importer.py")
+        scdm_script_path = os.path.join(self.local_path, "workflows", "test_06_run_component_importer.py")
         print("Start SPEOS to generate JSON file for tests")
         command = [
             scdm_exe,

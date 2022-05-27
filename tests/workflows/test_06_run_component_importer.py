@@ -7,7 +7,7 @@ unittest_path = os.path.dirname(os.path.realpath(__file__))
 lib_path = os.path.dirname(unittest_path)  # get path of speos_migration library
 sys.path.append(lib_path)
 
-from pyoptics.scdm_process.scdm_io import ScdmIO
+from ansys_optical_automation.scdm_process.scdm_io import ScdmIO
 
 scdm_file = os.path.join(unittest_path, "workflows", "example_models", "test_06_geometry.scdocx")
 led_file = os.path.join(unittest_path, "workflows", "example_models", "SPEOS input files", "LY.scdocx")
@@ -257,8 +257,6 @@ def main():
     results_dict["check lock"] = check_if_locked()
     results_dict["check speos sources group"] = extract_number_of_groups()
     results_dict["components structure"] = extract_scdm_structure()
-    # options = ExportOptions.Create()
-    # DocumentSave.Execute(r"C:\Users\plu\Desktop\Test2.scdocx", options)
 
 
 results_dict = {}

@@ -7,8 +7,8 @@ import clr
 
 clr.AddReference("System.Collections")
 clr.AddReference("System.Drawing")
-from System.Collections.Generic import List
-from System.Drawing import Color
+from System.Collections.Generic import List  # noqa: E402
+from System.Drawing import Color  # noqa: E402
 
 
 class VersionError(KeyError):
