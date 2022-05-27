@@ -49,6 +49,7 @@ def extract_centre_for_dict(component):
         centre_list.append((x, y, z))
     return centre_list
 
+
 def main():
     DocumentOpen.Execute(scdm_file)
 

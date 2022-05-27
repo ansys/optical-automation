@@ -1,4 +1,5 @@
 import os
+
 from pyoptics.scdm_core.base import BaseSCDM
 
 
@@ -169,8 +170,16 @@ class ScdmIO(BaseSCDM):
                 axis_system_list.append(axis_system)
         return axis_system_list
 
-    def import_part_at_axis_system(self, external_part, axis_system_list, name=None, anchor=False, lock=False,
-                                   internalize=False, speos_source_group=False):
+    def import_part_at_axis_system(
+        self,
+        external_part,
+        axis_system_list,
+        name=None,
+        anchor=False,
+        lock=False,
+        internalize=False,
+        speos_source_group=False,
+    ):
         """
         Parameters
         ----------

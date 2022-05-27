@@ -1,5 +1,5 @@
-import sys
 import os
+import sys
 
 
 class DataProcessingFramework:
@@ -8,6 +8,7 @@ class DataProcessingFramework:
     basic data processing framework class
     the class will contain mainly opening and saving functionalities to allow interacting with any result file
     """
+
     def __init__(self, application=None, extension=""):
         """
         Initializes general properties of the data post-posprocessing framework
@@ -26,6 +27,7 @@ class DataProcessingFramework:
                 self.dpf_instance = System.Activator.CreateInstance(instance_type)
             else:
                 import win32com.client as win32
+
                 self.dpf_instance = win32.Dispatch(self.application)
         else:
             raise ImportError("Application not defined")
@@ -44,8 +46,11 @@ class DataProcessingFramework:
         """
         if os.path.isfile(str_path):
             if not str_path.lower().endswith(self.accepted_extensions):
-                raise TypeError(str_path.lower().split(".")[len(str_path.lower().split("."))-1] + " is not an" +
-                                "accepted extension")
+                raise TypeError(
+                    str_path.lower().split(".")[len(str_path.lower().split(".")) - 1]
+                    + " is not an"
+                    + "accepted extension"
+                )
             if not self.dpf_instance.OpenFile(str_path):
                 raise ImportError("File open failed")
         else:

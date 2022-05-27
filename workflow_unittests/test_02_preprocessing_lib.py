@@ -1,6 +1,7 @@
 import json
-import subprocess
 import os
+import subprocess
+
 from pyoptics.scdm_core.base import get_scdm_install_location
 from workflow_unittests.ansys_arm.ansys_arm import write_arm_log
 
@@ -15,6 +16,7 @@ class TestPreprocessing:
     """
     Class to define conditions for run of unit tests in PyTest
     """
+
     def setup_class(self):
         """
         Called before tests to initialize scdm class and open new SCDM session
@@ -34,9 +36,15 @@ class TestPreprocessing:
         scdm_exe = os.path.join(scdm_install_dir, "SpaceClaim.exe")
         scdm_script_path = os.path.join(self.local_path, "workflows", "test_02_run_preprocessing_lib.py")
         print("Start SCDM to generate JSON file for tests")
-        command = [scdm_exe, r'/RunScript={}'.format(scdm_script_path),
-                   r"/Headless=True", r"/Splash=False", r"/Welcome=False", r"/ExitAfterScript=True",
-                   r"/ScriptAPI=21"]
+        command = [
+            scdm_exe,
+            r"/RunScript={}".format(scdm_script_path),
+            r"/Headless=True",
+            r"/Splash=False",
+            r"/Welcome=False",
+            r"/ExitAfterScript=True",
+            r"/ScriptAPI=21",
+        ]
         subprocess.call(command)
 
         with open(self.results_file) as file:

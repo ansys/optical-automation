@@ -1,6 +1,5 @@
 # Python Script, API Version = V21
 
-import clr
 from pyoptics.scdm_core.base import BaseSCDM
 
 

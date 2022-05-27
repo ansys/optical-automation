@@ -1,6 +1,7 @@
 # Python Script, API Version = V21
 
 import os
+
 from pyoptics.scdm_core.base import BaseSCDM
 
 
@@ -284,7 +285,9 @@ class IntensitySensor(Sensor):
         elif sensor_type == "spectral":
             self.speos_object.SensorType = self.speos_sim.SensorIntensity.EnumSensorType.Spectral
         else:
-            error_message = "Unsupported sensor type. Supported types: photometric, colorimetric, radiometric, spectral."
+            error_message = (
+                "Unsupported sensor type. Supported types: photometric, colorimetric, radiometric, spectral."
+            )
             raise ValueError(error_message)
 
     def set_wavelength(self, w_start=None, w_end=None, w_sampling=None, w_resolution=None):
@@ -321,7 +324,7 @@ class IntensitySensor(Sensor):
         elif layer_type == "sequence":
             self.speos_object.LayerType = self.speos_sim.SensorIntensity.EnumLayerType.Sequence
         elif layer_type == "none":
-            self.speos_object.LayerType = self.speos_sim.SensorIntensity.EnumLayerType.None
+            self.speos_object.LayerType = getattr(self.speos_sim.SensorIntensity.EnumLayerType, "None")
         else:
             error_message = "Unsupported layer type. Supported types: source, face, sequence, none."
             raise ValueError(error_message)

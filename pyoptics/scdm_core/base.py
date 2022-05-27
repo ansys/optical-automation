@@ -1,10 +1,12 @@
 # Python Script, API Version = V21
 
-import clr
 import os
 import re
-clr.AddReference('System.Collections')
-clr.AddReference('System.Drawing')
+
+import clr
+
+clr.AddReference("System.Collections")
+clr.AddReference("System.Drawing")
 from System.Collections.Generic import List
 from System.Drawing import Color
 

@@ -1,7 +1,7 @@
 # Python Script, API Version = V21
 
-from pyoptics.scdm_process.preprocessing_library import PreProcessingASP
 from pyoptics.scdm_core.base import BaseSCDM
+from pyoptics.scdm_process.preprocessing_library import PreProcessingASP
 
 
 class Simulation(BaseSCDM):
@@ -69,7 +69,7 @@ class Simulation(BaseSCDM):
         for component in all_components:
             if component.Content.Master.DisplayName in self.component_list:
                 bodies = component.GetDescendants[self.IDesignBody]()
-                self.my_bodies.extend(bodies)        
+                self.my_bodies.extend(bodies)
         return self
 
     def select_geometrical_sets(self, geosets_list):
@@ -81,12 +81,14 @@ class Simulation(BaseSCDM):
         ----------
         geosets_list: list with names of Catia geometrical sets to add, e.g. ["geo_set1", "geo_set2"]
         """
-        part_geosets = self.PreProcASP._PreProcessingASP__create_geometrical_set_names_list(self.GetRootPart(),
-                                                                                 bodies_only=False)
+        part_geosets = self.PreProcASP._PreProcessingASP__create_geometrical_set_names_list(
+            self.GetRootPart(), bodies_only=False
+        )
         for geoset in geosets_list:
             if geoset in part_geosets:
-                part_geosets_dict = self.PreProcASP._PreProcessingASP__convert_list_to_dict(self.GetRootPart(),
-                                                                                    bodies_only=False)
+                part_geosets_dict = self.PreProcASP._PreProcessingASP__convert_list_to_dict(
+                    self.GetRootPart(), bodies_only=False
+                )
                 bodies = part_geosets_dict[geoset]
                 self.my_bodies.extend(bodies)
         return self
@@ -114,7 +116,7 @@ class Simulation(BaseSCDM):
             self.object.NbRays = rays
         elif self.kind == "inverse":  # inverse simulation
             self.object.NbPassesLimit = rays
-        #elif self.kind == "interactive":  # interactive simulation
+        # elif self.kind == "interactive":  # interactive simulation
         #    self.object.RayNumber = rays
         return self
 
@@ -144,7 +146,7 @@ class Simulation(BaseSCDM):
         component = components[len(components) - 1]
         # save the created component as CATPart
         # grid_name = "Projected grid_"
-        #self.ComponentHelper.ImportComponentGroups(component)
+        # self.ComponentHelper.ImportComponentGroups(component)
         self.Copy.ToClipboard(self.Selection.Create(component))
         self.CreateNewDocument()
         self.Paste.FromClipboard()
@@ -156,8 +158,7 @@ class Simulation(BaseSCDM):
         # result = self.Delete.Execute(self.Selection.Create(component))
         return self
 
-    def set_grid_params(self, primary_step=20, secondary_step=4, max_distance=1500,
-                        max_incidence=89, min_distance=2):
+    def set_grid_params(self, primary_step=20, secondary_step=4, max_distance=1500, max_incidence=89, min_distance=2):
         """
         Sets parameters of the generated camera projected grid.
 
@@ -181,8 +182,8 @@ class Simulation(BaseSCDM):
             grid.MaxIncidence = max_incidence
             grid.MinDistanceTolerance = min_distance
         return self
-    
-    def run_simulation(self):     
+
+    def run_simulation(self):
         """
         Computes simulation on the local CPU.
         """

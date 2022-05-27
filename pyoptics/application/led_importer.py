@@ -1,7 +1,7 @@
-import sys
 import os
+import sys
 
-appdata_path = os.getenv('AppData')
+appdata_path = os.getenv("AppData")
 repo_path = os.path.join(appdata_path, "SpaceClaim", "Published Scripts")
 sys.path.append(repo_path)
 
@@ -77,8 +77,7 @@ def import_by_selection():
                 return
             axis_system_selection = input_return.PrimarySelection
             if len(axis_system_selection.GetItems[ICoordinateSystem]()) == 0:
-                MessageBox.Show(
-                    "The selection must contains at least one axis system to be able to import the part")
+                MessageBox.Show("The selection must contains at least one axis system to be able to import the part")
                 continue
             break
     axis_system_list = axis_system_selection.GetItems[ICoordinateSystem]()
