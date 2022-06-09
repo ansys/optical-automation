@@ -3,7 +3,6 @@ import os
 import subprocess
 
 from ansys_optical_automation.scdm_core.base import get_scdm_install_location
-
 from tests.ansys_arm.ansys_arm import write_arm_log
 
 # User Input
