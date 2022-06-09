@@ -4,7 +4,7 @@ build-backend = "flit_core.buildapi"
 
 # description of current module
 [project]
-name = "ansys-optical-automation"
+name = "ansys_optical_automation"
 authors = [
     {name = "Stefan Thoene", email = "stefan.thoene@ansys.com"},
     {name = "Pengyuan Lu", email = "pengyuan.lu@ansys.com"},
