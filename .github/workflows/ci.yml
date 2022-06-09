@@ -26,5 +26,7 @@ jobs:
           python -m pip install --upgrade pip
           python -m pip install -e .
           
-
+      - name: Unittests
+        run: |
+          pytest -v tests
           
