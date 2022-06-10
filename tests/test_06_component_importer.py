@@ -43,7 +43,9 @@ class TestComponentImporterAPI:
         ]
         print(command)
         subprocess.call(command)
-
+        
+        import time
+        time.sleep(30)
         with open(self.results_file) as file:
             self.results = json.load(file)
 
