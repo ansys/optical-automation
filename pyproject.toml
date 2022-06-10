@@ -17,6 +17,7 @@ dynamic = ["version", "description"]
 dependencies = [
     "pythonnet",
     "pytest",
+    "pywin32",
     "numpy",
 ]
 
