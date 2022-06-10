@@ -28,5 +28,5 @@ jobs:
           
       - name: Unittests
         run: |
-          pytest -v tests/test_07_VRLab_export.py --ignore=tests/workflows
+          pytest -v tests/test_06_component_importer.py --ignore=tests/workflows
           
