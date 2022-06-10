@@ -28,5 +28,5 @@ jobs:
           
       - name: Unittests
         run: |
-          pytest -v tests
+          pytest -v tests --ignore=tests/workflows
           
