@@ -14,12 +14,6 @@ from ansys_optical_automation.scdm_process.material_from_layers import (
     SynchLayersMaterials,
 )
 
-out = open("C:\Test.txt", "w")
-out.write(unittest_path + "\n")
-out.write(lib_path + "\n")
-out.close()
-
-
 scdm_file = os.path.join(lib_path, "tests",  "workflows", "example_models", "test_geometry_01.scdoc")
 results_json = os.path.join(lib_path, "tests",  "workflows", "test01_results.json")
 
@@ -95,6 +89,7 @@ try:
 except Exception:
     print("exception in main")
     results_dict["error"] = traceback.format_exc()
-
+print(results_json)
+print(results_dict)
 with open(results_json, "w") as file:
     json.dump(results_dict, file, indent=4)
