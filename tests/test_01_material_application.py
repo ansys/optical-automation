@@ -42,6 +42,7 @@ class TestMaterialAPI:
             r"/ScriptAPI=21",
         ]
         print(command)
+        os.chdir(os.path.join(self.local_path, "workflows"))
         subprocess.call(command)
 
         with open(self.results_file) as file:
