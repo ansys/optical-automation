@@ -13,7 +13,7 @@ speos_path = os.path.join(os.path.dirname(scdm_install_dir), "Optical Products",
 os.chdir(os.path.dirname(os.path.dirname(os.path.realpath(__file__))))
 
 out = open("D:\Text_D.txt","w")
-out.write("_")
+out.write("from Test")
 out.close()
 
 class TestMaterialAPI:
