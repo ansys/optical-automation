@@ -43,8 +43,9 @@ class TestMaterialAPI:
         ]
         print(command)
         os.chdir(os.path.join(self.local_path, ".."))
+        os.system(" ".join(command))
         print(os.path.join(self.local_path, ".."))
-        subprocess.call(command)
+        #subprocess.call(command)
 
         with open(self.results_file) as file:
             self.results = json.load(file)
