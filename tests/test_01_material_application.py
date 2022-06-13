@@ -42,8 +42,8 @@ class TestMaterialAPI:
             r"/ScriptAPI=21",
         ]
         print(command)
-        os.chdir(os.path.join(self.local_path, ".."))
-        print(os.path.join(self.local_path, ".."))
+        os.chdir(os.path.dirname(self.local_path))
+        print("********" + os.path.dirname(self.local_path))
         p = subprocess.Popen(command, shell=True)
         p.wait()
 
