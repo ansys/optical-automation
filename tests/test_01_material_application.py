@@ -44,7 +44,7 @@ class TestMaterialAPI:
         print(command)
         os.chdir(os.path.join(self.local_path, ".."))
         print(os.path.join(self.local_path, ".."))
-        p = subprocess.Popen(" ".join(command))
+        p = subprocess.Popen(" ".join(command), shell=True)
         p.wait()
 
         with open(self.results_file) as file:
