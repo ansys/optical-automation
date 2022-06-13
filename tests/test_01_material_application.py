@@ -43,6 +43,7 @@ class TestMaterialAPI:
         ]
         print(command)
         os.chdir(os.path.join(self.local_path, ".."))
+        print(os.path.join(self.local_path, ".."))
         subprocess.call(command)
 
         with open(self.results_file) as file:
@@ -58,7 +59,7 @@ class TestMaterialAPI:
 
         On fail will report traceback with lines where code failed
         """
-        self.clean_results(self)
+        # self.clean_results(self)
 
         print("\n\n\n\n\n###############################")
         print(self.results.get("error", "All tests are successful"))
