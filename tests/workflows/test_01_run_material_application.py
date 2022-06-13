@@ -14,11 +14,11 @@ from ansys_optical_automation.scdm_process.material_from_layers import (
     SynchLayersMaterials,
 )
 
-scdm_file = os.path.join(unittest_path, "workflows", "example_models", "test_geometry_01.scdoc")
-results_json = os.path.join(unittest_path, "workflows", "test01_results.json")
+scdm_file = os.path.join(lib_path, "tests",  "workflows", "example_models", "test_geometry_01.scdoc")
+results_json = os.path.join(lib_path, "tests",  "workflows", "test01_results.json")
 
-csv_path = os.path.join(unittest_path, "workflows", "example_models", "SPEOS input files", "Materials.csv")
-work_directory = os.path.join(unittest_path, "workflows")
+csv_path = os.path.join(lib_path, "tests",  "workflows", "example_models", "SPEOS input files", "Materials.csv")
+work_directory = os.path.join(lib_path, "tests",  "workflows")
 
 
 def extract_speos_materials(csv_path):
