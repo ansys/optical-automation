@@ -1,6 +1,7 @@
 import csv
 import json
 import os
+import time
 import sys
 import traceback
 
@@ -74,6 +75,7 @@ def main():
     # check if layers have been created and contain all geos
     bodies_per_layer = extract_speos_layers()
     results_dict["speos_layers"] = bodies_per_layer
+    time.sleep(60)
 
     # move one surface to an empty layer and sync with materials
     sel = BodySelection.CreateByNames("Surface A 1")
