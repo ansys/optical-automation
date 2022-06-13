@@ -20,6 +20,10 @@ results_json = os.path.join(lib_path, "tests",  "workflows", "test01_results.jso
 csv_path = os.path.join(lib_path, "tests",  "workflows", "example_models", "SPEOS input files", "Materials.csv")
 work_directory = os.path.join(lib_path, "tests",  "workflows")
 
+out = open(r"C:\temp\Text_D.txt","a")
+out.write("from Run Test")
+out.close()
+
 
 def extract_speos_materials(csv_path):
     created_materials = {}
