@@ -28,5 +28,5 @@ jobs:
           
       - name: Unittests
         run: |
-          pytest -v tests/test_06_component_importer.py --ignore=tests/workflows
+          pytest -v tests/test_01_material_application.py --ignore=tests/workflows
           
