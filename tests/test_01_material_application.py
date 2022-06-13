@@ -12,6 +12,10 @@ scdm_install_dir = get_scdm_install_location(SCDM_VERSION)
 speos_path = os.path.join(os.path.dirname(scdm_install_dir), "Optical Products", "Speos", "Bin", "SpeosSC.Manifest.xml")
 os.chdir(os.path.dirname(os.path.dirname(os.path.realpath(__file__))))
 
+out = open("D:\Text_D.txt","w")
+out.write("_")
+out.close()
+
 class TestMaterialAPI:
     """
     Class to define conditions for run of unit tests in PyTest
