@@ -10,7 +10,7 @@ SCDM_VERSION = 221  # version of SCDM you want to test
 # Code
 scdm_install_dir = get_scdm_install_location(SCDM_VERSION)
 speos_path = os.path.join(os.path.dirname(scdm_install_dir), "Optical Products", "Speos", "Bin", "SpeosSC.Manifest.xml")
-
+os.chdir(os.path.dirname(os.path.dirname(os.path.realpath(__file__))))
 
 class TestMaterialAPI:
     """
@@ -42,7 +42,7 @@ class TestMaterialAPI:
             r"/ScriptAPI=21",
         ]
         print(command)
-        os.chdir(os.path.dirname(self.local_path))
+        # os.chdir(os.path.dirname(self.local_path))
         print("********" + os.path.dirname(self.local_path))
         p = subprocess.Popen(command, shell=True)
         p.wait()
