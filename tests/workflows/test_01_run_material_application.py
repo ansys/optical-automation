@@ -91,6 +91,5 @@ except Exception:
     results_dict["error"] = traceback.format_exc()
 print(results_json)
 print(results_dict)
-results_json=r'c:\temp\test.json'
 with open(results_json, "w") as file:
     json.dump(results_dict, file, indent=4)
