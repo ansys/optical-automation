@@ -39,7 +39,7 @@ class TestMaterialAPI:
             scdm_exe,
             r"/AddInManifestFile={}".format(speos_path),
             r"/RunScript={}".format(scdm_script_path),
-            r"/Headless=True",
+            r"/Headless=False",
             r"/Splash=False",
             r"/Welcome=False",
             r"/ExitAfterScript=True",
