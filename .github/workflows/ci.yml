@@ -28,4 +28,4 @@ jobs:
           
       - name: Unittests
         run: |
-          "C:\Users\ansys\Downloads\PSTools\psexec" -accepteula -nobanner -i 2 -h "C:\actions-runner\_work\optical-automation\optical-automation\scdm_ci.bat"
+          C:\Users\ansys\Downloads\PSTools\PsExec64.exe -accepteula -nobanner -i 2 -h "C:\actions-runner\_work\optical-automation\optical-automation\scdm_CI.bat"
