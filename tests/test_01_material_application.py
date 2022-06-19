@@ -5,7 +5,7 @@ import subprocess
 from ansys_optical_automation.scdm_core.base import get_scdm_install_location
 
 # User Input
-SCDM_VERSION = 221  # version of SCDM you want to test
+SCDM_VERSION = 222  # version of SCDM you want to test
 
 # Code
 scdm_install_dir = get_scdm_install_location(SCDM_VERSION)
