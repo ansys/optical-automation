@@ -8,7 +8,7 @@ import subprocess
 SCDM_VERSION = 222  # version of SCDM you want to test
 
 # Code
-launcher = r"C:\Program Files\ANSYS Inc\v221\Optical Products\Speos\bin\AnsysSpeosLauncher.exe"
+launcher = r"C:\Program Files\ANSYS Inc\v222\Optical Products\Speos\bin\AnsysSpeosLauncher.exe"
 scdm_install_dir = r"C:\Program Files\ANSYS Inc\v222\scdm" #get_scdm_install_location(SCDM_VERSION)
 speos_path = os.path.join(os.path.dirname(scdm_install_dir), "Optical Products", "Speos", "Bin", "SpeosSC.Manifest.xml")
 os.chdir(os.path.dirname(os.path.dirname(os.path.realpath(__file__))))
