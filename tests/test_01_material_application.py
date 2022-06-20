@@ -36,6 +36,7 @@ class TestMaterialAPI:
         scdm_script_path = os.path.join(self.local_path, "workflows", "test_01_run_material_application.py")
         print("Start SPEOS to generate JSON file for tests")
         command = [
+            r"C:\Program Files\ANSYS Inc\v221\Optical Products\Speos\bin\AnsysSpeosLauncher.exe"
             scdm_exe,
             r"/AddInManifestFile={}".format(speos_path),
             r"/RunScript={}".format(scdm_script_path),
