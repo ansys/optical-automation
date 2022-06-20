@@ -31,7 +31,7 @@ jobs:
         shell: cmd
       
       - name: Unittest_cmd
-        run: "C:\actions-runner\_work\optical-automation\optical-automation\scdm_CI.bat"
+        run: cmd.exe /c "C:\actions-runner\_work\optical-automation\optical-automation\scdm_CI.bat"
         shell: cmd
         
         
