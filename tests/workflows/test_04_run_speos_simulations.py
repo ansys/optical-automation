@@ -4,6 +4,7 @@ import sys
 import traceback
 
 unittest_path = os.path.dirname(os.path.realpath(__file__))
+unittest_path = os.path.join(unittest_path, "tests")
 lib_path = os.path.dirname(unittest_path)  # get path of speos_migration library
 sys.path.append(lib_path)
 

@@ -15,15 +15,11 @@ from ansys_optical_automation.scdm_process.material_from_layers import (
     SynchLayersMaterials,
 )
 
-scdm_file = os.path.join(lib_path, "tests",  "workflows", "example_models", "test_geometry_01.scdoc")
-results_json = os.path.join(lib_path, "tests",  "workflows", "test01_results.json")
+scdm_file = os.path.join(unittest_path,  "workflows", "example_models", "test_geometry_01.scdoc")
+results_json = os.path.join(unittest_path,  "workflows", "test01_results.json")
 
-csv_path = os.path.join(lib_path, "tests",  "workflows", "example_models", "SPEOS input files", "Materials.csv")
-work_directory = os.path.join(lib_path, "tests",  "workflows")
-
-out = open(r"C:\temp\Text_D.txt","a")
-out.write("from Run Test")
-out.close()
+csv_path = os.path.join(unittest_path,  "workflows", "example_models", "SPEOS input files", "Materials.csv")
+work_directory = os.path.join(unittest_path,  "workflows")
 
 
 def extract_speos_materials(csv_path):
@@ -63,14 +59,6 @@ def extract_speos_layers():
 
 def main():
     DocumentOpen.Execute(scdm_file)
-#     # Create Sphere
-#     SphereBody.Create(Point.Create(MM(0), MM(0), MM(0)), Point.Create(MM(5.19300786165375), MM(-5.12295081967212), MM(0.417116059618416)), ExtrudeType.None)
-#     # EndBlock
-
-#     # Save File
-    
-#     DocumentSave.Execute(os.path.join(work_directory, "Design1.scdocx"))
-#     # EndBlock
     material_api = MaterialsFromCSV(SpeosSim, SpaceClaim)
     # create materials from the csv
     material_api.create_speos_material(csv_path, work_directory)

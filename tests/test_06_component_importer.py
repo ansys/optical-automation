@@ -59,7 +59,7 @@ class TestComponentImporterAPI:
 
         On fail will report traceback with lines where code failed
         """
-        # self.clean_results(self)
+        self.clean_results(self)
 
         print("\n\n\n\n\n###############################")
         print(self.results.get("error", "All tests are successful"))

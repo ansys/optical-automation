@@ -27,23 +27,25 @@ def check_images_exported(dir):
 
 
 def main():
+    results_dict = {}
     dpf = DpfHdriViewer()
     print(vr_file)
     dpf.open_file(vr_file)
     dpf.export_vr_views(export_path=work_directory, config_ids=0)
     vr_exported_list = check_images_exported(work_directory)
     results_dict["VRImages"] = vr_exported_list
+    return results_dict
 
+def unittest_run():
+    results_dict = {}
+    try:
+        results_dict = main()
+    except Exception:
+        print("exception in main")
+        results_dict["error"] = traceback.format_exc()
 
-results_dict = {}
-try:
-    main()
-except Exception:
-    print("exception in main")
-    results_dict["error"] = traceback.format_exc()
+    with open(results_json, "w") as file:
+        json.dump(results_dict, file, indent=4)
 
-with open(results_json, "w") as file:
-    json.dump(results_dict, file, indent=4)
-
-if os.path.isdir(work_directory):
-    shutil.rmtree(work_directory)
+    if os.path.isdir(work_directory):
+        shutil.rmtree(work_directory)

@@ -2,20 +2,16 @@ import json
 import os
 import subprocess
 
-# from ansys_optical_automation.scdm_core.base import get_scdm_install_location
+from ansys_optical_automation.scdm_core.base import get_scdm_install_location
 
 # User Input
 SCDM_VERSION = 222  # version of SCDM you want to test
 
 # Code
-launcher = r"C:\Program Files\ANSYS Inc\v222\Optical Products\Speos\bin\AnsysSpeosLauncher.exe"
-scdm_install_dir = r"C:\Program Files\ANSYS Inc\v222\scdm" #get_scdm_install_location(SCDM_VERSION)
+scdm_install_dir = r"C:\Program Files\ANSYS Inc\v222\scdm" # get_scdm_install_location(SCDM_VERSION) #
 speos_path = os.path.join(os.path.dirname(scdm_install_dir), "Optical Products", "Speos", "Bin", "SpeosSC.Manifest.xml")
 os.chdir(os.path.dirname(os.path.dirname(os.path.realpath(__file__))))
 
-out = open(r"C:\temp\Text_D.txt","w")
-out.write("from Test: " + os.path.dirname(os.path.realpath(__file__)))
-out.close()
 
 class TestMaterialAPI:
     """
@@ -37,7 +33,6 @@ class TestMaterialAPI:
         scdm_script_path = os.path.join(self.local_path, "workflows", "test_01_run_material_application.py")
         print("Start SPEOS to generate JSON file for tests")
         command = [
-            launcher,
             scdm_exe,
             r"/AddInManifestFile={}".format(speos_path),
             r"/RunScript={}".format(scdm_script_path),
@@ -48,10 +43,7 @@ class TestMaterialAPI:
             r"/ScriptAPI=21",
         ]
         print(command)
-        # os.chdir(os.path.dirname(self.local_path))
-        print("********" + os.path.dirname(self.local_path))
-        p = subprocess.Popen(command, shell=True)
-        p.wait()
+        subprocess.call(command)
 
         with open(self.results_file) as file:
             self.results = json.load(file)
@@ -66,7 +58,7 @@ class TestMaterialAPI:
 
         On fail will report traceback with lines where code failed
         """
-        # self.clean_results(self)
+        self.clean_results(self)
 
         print("\n\n\n\n\n###############################")
         print(self.results.get("error", "All tests are successful"))
