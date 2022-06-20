@@ -1,8 +1,8 @@
 import json
 import os
-import subprocess
 
 from tests.workflows.test_07_run_VRLab_export import unittest_run
+
 
 class TestVRLabExportAPI:
     """

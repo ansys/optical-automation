@@ -1,7 +1,6 @@
 import csv
 import json
 import os
-import time
 import sys
 import traceback
 
@@ -15,11 +14,11 @@ from ansys_optical_automation.scdm_process.material_from_layers import (
     SynchLayersMaterials,
 )
 
-scdm_file = os.path.join(unittest_path,  "workflows", "example_models", "test_geometry_01.scdoc")
-results_json = os.path.join(unittest_path,  "workflows", "test01_results.json")
+scdm_file = os.path.join(unittest_path, "workflows", "example_models", "test_geometry_01.scdoc")
+results_json = os.path.join(unittest_path, "workflows", "test01_results.json")
 
-csv_path = os.path.join(unittest_path,  "workflows", "example_models", "SPEOS input files", "Materials.csv")
-work_directory = os.path.join(unittest_path,  "workflows")
+csv_path = os.path.join(unittest_path, "workflows", "example_models", "SPEOS input files", "Materials.csv")
+work_directory = os.path.join(unittest_path, "workflows")
 
 
 def extract_speos_materials(csv_path):
@@ -71,7 +70,6 @@ def main():
     # check if layers have been created and contain all geos
     bodies_per_layer = extract_speos_layers()
     results_dict["speos_layers"] = bodies_per_layer
-    time.sleep(60)
 
     # move one surface to an empty layer and sync with materials
     sel = BodySelection.CreateByNames("Surface A 1")
