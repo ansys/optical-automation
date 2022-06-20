@@ -27,12 +27,5 @@ jobs:
           python -m pip install -e .
           
       - name: Unittests
-        run: echo %PATH%
-        shell: cmd
-      
-      - name: Unittest_cmd
-        run: cmd.exe /c "C:\actions-runner\_work\optical-automation\optical-automation\scdm_CI.bat"
-        shell: cmd
-        
-      - name: Unittest_pytest
-        run: pytest -v tests/test_01_material_application.py
+        run: |
+          pytest -v tests/test_06_component_importer.py --ignore=tests/workflows
