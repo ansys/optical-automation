@@ -36,6 +36,7 @@ def main():
     results_dict["VRImages"] = vr_exported_list
     return results_dict
 
+
 def unittest_run():
     results_dict = {}
     try:

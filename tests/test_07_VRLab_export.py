@@ -15,7 +15,6 @@ class TestVRLabExportAPI:
         reference_file = os.path.join(self.local_path, "workflows", "test_07_VRLab_reference_results.json")
         self.clean_results(self)  # no idea why but you have to pass there self
 
-
         print("Start VRLab to generate JSON file for tests")
         unittest_run()
 
