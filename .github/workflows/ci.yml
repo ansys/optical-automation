@@ -34,4 +34,5 @@ jobs:
         run: cmd.exe /c "C:\actions-runner\_work\optical-automation\optical-automation\scdm_CI.bat"
         shell: cmd
         
-        
+      - name: Unittest_pytest
+        run: pytest -v tests/test_01_material_application.py
