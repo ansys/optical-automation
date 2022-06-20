@@ -27,5 +27,7 @@ jobs:
           python -m pip install -e .
           
       - name: Unittests
-        run: |
-          "C:\actions-runner\_work\optical-automation\optical-automation\scdm_ci.bat"
+        run: echo %PATH%
+        shell: cmd
+        
+        
