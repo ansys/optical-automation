@@ -63,35 +63,35 @@ def extract_speos_layers():
 
 def main():
     DocumentOpen.Execute(scdm_file)
-    # Create Sphere
-    SphereBody.Create(Point.Create(MM(0), MM(0), MM(0)), Point.Create(MM(5.19300786165375), MM(-5.12295081967212), MM(0.417116059618416)), ExtrudeType.None)
-    # EndBlock
+#     # Create Sphere
+#     SphereBody.Create(Point.Create(MM(0), MM(0), MM(0)), Point.Create(MM(5.19300786165375), MM(-5.12295081967212), MM(0.417116059618416)), ExtrudeType.None)
+#     # EndBlock
 
-    # Save File
+#     # Save File
     
-    DocumentSave.Execute(os.path.join(work_directory, "Design1.scdocx"))
-    # EndBlock
-#     material_api = MaterialsFromCSV(SpeosSim, SpaceClaim)
-#     # create materials from the csv
-#     material_api.create_speos_material(csv_path, work_directory)
-#     material_api.apply_geo_to_material()
-#     # check what materials have been created
-#     created_materials = extract_speos_materials(csv_path)
-#     results_dict["speos_materials"] = created_materials
-#     # create layers and add geos to them
-#     material_api.apply_geo_to_layer()
-#     # check if layers have been created and contain all geos
-#     bodies_per_layer = extract_speos_layers()
-#     results_dict["speos_layers"] = bodies_per_layer
-#     time.sleep(60)
+#     DocumentSave.Execute(os.path.join(work_directory, "Design1.scdocx"))
+#     # EndBlock
+    material_api = MaterialsFromCSV(SpeosSim, SpaceClaim)
+    # create materials from the csv
+    material_api.create_speos_material(csv_path, work_directory)
+    material_api.apply_geo_to_material()
+    # check what materials have been created
+    created_materials = extract_speos_materials(csv_path)
+    results_dict["speos_materials"] = created_materials
+    # create layers and add geos to them
+    material_api.apply_geo_to_layer()
+    # check if layers have been created and contain all geos
+    bodies_per_layer = extract_speos_layers()
+    results_dict["speos_layers"] = bodies_per_layer
+    time.sleep(60)
 
-#     # move one surface to an empty layer and sync with materials
-#     sel = BodySelection.CreateByNames("Surface A 1")
-#     Layers.MoveTo(sel, "Layer0")
-#     synch_layers_api = SynchLayersMaterials(SpeosSim, SpaceClaim)
-#     synch_layers_api.sync_op_from_layers()
-#     layer_geos = {"Layer0": get_ops_associated_geos("Layer0")}
-#     results_dict["layer_synch_to_material"] = layer_geos
+    # move one surface to an empty layer and sync with materials
+    sel = BodySelection.CreateByNames("Surface A 1")
+    Layers.MoveTo(sel, "Layer0")
+    synch_layers_api = SynchLayersMaterials(SpeosSim, SpaceClaim)
+    synch_layers_api.sync_op_from_layers()
+    layer_geos = {"Layer0": get_ops_associated_geos("Layer0")}
+    results_dict["layer_synch_to_material"] = layer_geos
 
     # check how many materials and layers exist
     # TODO
