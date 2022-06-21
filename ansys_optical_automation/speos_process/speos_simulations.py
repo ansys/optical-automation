@@ -1,7 +1,7 @@
 # Python Script, API Version = V21
 
-from pyoptics.scdm_core.base import BaseSCDM
-from pyoptics.scdm_process.preprocessing_library import PreProcessingASP
+from ansys_optical_automation.scdm_core.base import BaseSCDM
+from ansys_optical_automation.scdm_process.preprocessing_library import PreProcessingASP
 
 
 class Simulation(BaseSCDM):

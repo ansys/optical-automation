@@ -9,7 +9,7 @@ unittest_path = os.path.dirname(os.path.realpath(__file__))
 lib_path = os.path.dirname(unittest_path)
 sys.path.append(lib_path)
 
-from pyoptics.post_process.dpf_hdri_viewer import DpfHdriViewer
+from ansys_optical_automation.post_process.dpf_hdri_viewer import DpfHdriViewer
 
 vr_file = os.path.join(unittest_path, "example_models", "test_07_VRLab_export.OptisVR")
 results_json = os.path.join(unittest_path, "test_07_VRLab_results.json")

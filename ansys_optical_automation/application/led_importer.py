@@ -5,7 +5,7 @@ appdata_path = os.getenv("AppData")
 repo_path = os.path.join(appdata_path, "SpaceClaim", "Published Scripts")
 sys.path.append(repo_path)
 
-from pyoptics.scdm_process.scdm_io import ScdmIO
+from ansys_optical_automation.scdm_process.scdm_io import ScdmIO
 
 
 def selection_dialog_window():

@@ -9,8 +9,10 @@ unittest_path = os.path.join(unittest_path, "tests")
 lib_path = os.path.dirname(unittest_path)  # get path of speos_migration library
 sys.path.append(lib_path)
 
-from pyoptics.scdm_process.material_from_csv import MaterialsFromCSV
-from pyoptics.scdm_process.material_from_layers import SynchLayersMaterials
+from ansys_optical_automation.scdm_process.material_from_csv import MaterialsFromCSV
+from ansys_optical_automation.scdm_process.material_from_layers import (
+    SynchLayersMaterials,
+)
 
 scdm_file = os.path.join(unittest_path, "workflows", "example_models", "test_geometry_01.scdoc")
 results_json = os.path.join(unittest_path, "workflows", "test01_results.json")
