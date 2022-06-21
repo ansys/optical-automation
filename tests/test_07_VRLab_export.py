@@ -10,7 +10,7 @@ Nvidia_GPU = False
 try:
     subprocess.check_output("nvidia-smi")
     Nvidia_GPU = True
-except Exception as e:
+except Exception:
     Nvidia_GPU = False
 
 
