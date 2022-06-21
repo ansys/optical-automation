@@ -1,9 +1,20 @@
 import json
 import os
+import subprocess
+
+import pytest
 
 from tests.workflows.test_07_run_VRLab_export import unittest_run
 
+Nvidia_GPU = False
+try:
+    subprocess.check_output("nvidia-smi")
+    Nvidia_GPU = True
+except Exception as e:
+    Nvidia_GPU = False
 
+
+@pytest.mark.skipif(Nvidia_GPU is False, reason="does not have gpu on runner")
 class TestVRLabExportAPI:
     """
     Class to define conditions for run of unit tests in PyTest
