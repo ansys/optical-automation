@@ -2,11 +2,11 @@ import json
 import os
 import subprocess
 
-# User Input
-SCDM_VERSION = 222  # version of SCDM you want to test
+from ansys_optical_automation.scdm_core.base import get_scdm_install_location
+from tests.config import SCDM_VERSION
 
 # Code
-scdm_install_dir = r"C:\Program Files\ANSYS Inc\v222\scdm"  # get_scdm_install_location(SCDM_VERSION) #
+scdm_install_dir = get_scdm_install_location(SCDM_VERSION)
 speos_path = os.path.join(os.path.dirname(scdm_install_dir), "Optical Products", "Speos", "Bin", "SpeosSC.Manifest.xml")
 os.chdir(os.path.dirname(os.path.dirname(os.path.realpath(__file__))))
 
