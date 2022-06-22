@@ -1,0 +1,31 @@
+name: ci
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  simulation-data-test:
+    runs-on: self-hosted
+    steps:
+      - run: echo $(hostname)
+      - name: Check out repository code
+        uses: actions/checkout@v3
+
+      - name: Setup Python
+        uses: actions/setup-python@v2
+        with:
+            python-version: 3.7
+      
+      - name: Install dependencies
+        run: |
+          python -m ensurepip
+          python -m pip install --upgrade pip
+          python -m pip install -e .
+          
+      - name: Unittests
+        run: |
+          pytest -v tests --ignore=tests/workflows

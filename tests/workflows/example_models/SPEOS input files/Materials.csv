@@ -1,5 +1,5 @@
 ﻿Catia Material,FOP,VOP,SOP
 96% Silica Glass,FALSE,SILICA.material,Optical Polished
-Dark_Glossy_Plastic,FALSE,Opaque,Gruen.scattering
+Dark_Glossy_Plastic,FALSE,Opaque,Black_Paint.scattering
 Aluminum 2024-T4; 2024-T351,FALSE,Opaque,Lambertian_Reflector-R20%.simplescattering
 BASF Terluran® GP-22 ABS,FALSE,BK7.material,Optical Polished

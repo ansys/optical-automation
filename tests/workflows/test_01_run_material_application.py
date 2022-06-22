@@ -89,6 +89,7 @@ try:
 except Exception:
     print("exception in main")
     results_dict["error"] = traceback.format_exc()
-
+print(results_json)
+print(results_dict)
 with open(results_json, "w") as file:
     json.dump(results_dict, file, indent=4)

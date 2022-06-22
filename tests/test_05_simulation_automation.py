@@ -2,14 +2,10 @@ import json
 import os
 import subprocess
 
-from ansys_optical_automation.scdm_core.base import get_scdm_install_location
+from tests.config import SCDM_INSTALL_DIR
 
-# User Input
-SCDM_VERSION = 221  # version of SCDM you want to test
-
-# Code
-scdm_install_dir = get_scdm_install_location(SCDM_VERSION)
-speos_path = os.path.join(os.path.dirname(scdm_install_dir), "Optical Products", "SPEOS", "Bin", "SpeosSC.Manifest.xml")
+speos_path = os.path.join(os.path.dirname(SCDM_INSTALL_DIR), "Optical Products", "Speos", "Bin", "SpeosSC.Manifest.xml")
+os.chdir(os.path.dirname(os.path.dirname(os.path.realpath(__file__))))
 
 
 class TestSimAutomation:
@@ -28,7 +24,7 @@ class TestSimAutomation:
         reference_file = os.path.join(self.local_path, "workflows", "test_05_reference_results.json")
         self.clean_results(self)  # no idea why but you have to pass there self
 
-        scdm_exe = os.path.join(scdm_install_dir, "SpaceClaim.exe")
+        scdm_exe = os.path.join(SCDM_INSTALL_DIR, "SpaceClaim.exe")
         scdm_script_path = os.path.join(self.local_path, "workflows", "test_05_run_simulation_automation.py")
         print("Start SPEOS to generate JSON file for tests")
         command = [
