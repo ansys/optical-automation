@@ -2,13 +2,10 @@ import json
 import os
 import subprocess
 
-from ansys_optical_automation.scdm_core.base import get_scdm_install_location
 from tests.ansys_arm.ansys_arm import write_arm_log
-from tests.config import SCDM_VERSION
+from tests.config import SCDM_INSTALL_DIR
 
-# Code
-scdm_install_dir = get_scdm_install_location(SCDM_VERSION)
-speos_path = os.path.join(os.path.dirname(scdm_install_dir), "Optical Products", "Speos", "Bin", "SpeosSC.Manifest.xml")
+speos_path = os.path.join(os.path.dirname(SCDM_INSTALL_DIR), "Optical Products", "Speos", "Bin", "SpeosSC.Manifest.xml")
 os.chdir(os.path.dirname(os.path.dirname(os.path.realpath(__file__))))
 
 
@@ -33,7 +30,7 @@ class TestPreprocessing:
         if os.path.isfile(self.testlog_file):
             os.remove(self.testlog_file)
 
-        scdm_exe = os.path.join(scdm_install_dir, "SpaceClaim.exe")
+        scdm_exe = os.path.join(SCDM_INSTALL_DIR, "SpaceClaim.exe")
         scdm_script_path = os.path.join(self.local_path, "workflows", "test_02_run_preprocessing_lib.py")
         print("Start SCDM to generate JSON file for tests")
         command = [
