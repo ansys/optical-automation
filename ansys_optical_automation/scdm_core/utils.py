@@ -18,15 +18,16 @@ def get_scdm_install_location(version):
 
 def run_scdm_batch_command(scdm_version, api_version, script_file):
     """
-    Function to get speos batch command to run as subprocess
+    Function to get Speos batch command to run as ``subprocess``.
+    
     Parameters
     ----------
     scdm_version: int
-        scdm version
+        SCDM version.
     api_version: int
-        scdm api version
+        SCDM API version.
     script_file: str
-        scdm script file directory
+        SCDM script file directory.
 
     Returns
     -------
