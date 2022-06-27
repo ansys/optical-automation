@@ -2,7 +2,7 @@ import json
 import os
 import subprocess
 
-from tests.config import SCDM_INSTALL_DIR
+from .config import SCDM_INSTALL_DIR
 
 speos_path = os.path.join(os.path.dirname(SCDM_INSTALL_DIR), "Optical Products", "Speos", "Bin", "SpeosSC.Manifest.xml")
 os.chdir(os.path.dirname(os.path.dirname(os.path.realpath(__file__))))

@@ -1,6 +1,5 @@
 # Python Script, API Version = V21
 
-import os
 import re
 
 import clr
@@ -77,17 +76,3 @@ class BaseSCDM(object):
         self.SetName = scdm_api.Scripting.Helpers.ComponentHelper.SetName
         self.StitchFaces = scdm_api.Scripting.Commands.StitchFaces
         self.ViewHelper = scdm_api.Scripting.Helpers.ViewHelper
-
-
-def get_scdm_install_location(version):
-    """
-    Function to get installation path of SpaceClaim
-    Args:
-        version (int): version in format <XXX> eg 211
-
-    Returns: path of SCDM installation
-    """
-
-    ansys_install_dir = os.environ["AWP_ROOT{}".format(version)]
-    scdm_install_dir = os.path.join(ansys_install_dir, "scdm")
-    return scdm_install_dir
