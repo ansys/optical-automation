@@ -18,7 +18,7 @@ def get_scdm_install_location(version):
 
 def run_scdm_batch_command(scdm_version, api_version, script_file):
     """
-    Function to get Speos batch command to run as ``subprocess``.
+    Function to start Speos script in batch mode via ``subprocess.call()``.
     
     Parameters
     ----------
@@ -29,10 +29,6 @@ def run_scdm_batch_command(scdm_version, api_version, script_file):
     script_file: str
         SCDM script file directory.
 
-    Returns
-    -------
-        str
-            Command to start SCDM.
     """
     scdm_install_dir = get_scdm_install_location(scdm_version)
     scdm_exe = os.path.join(scdm_install_dir, "SpaceClaim.exe")
