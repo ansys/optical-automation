@@ -23,9 +23,12 @@ jobs:
       - name: Install dependencies
         run: |
           python -m ensurepip
+          python -m venv venv
+          venv\Scripts\Activate.ps1
           python -m pip install --upgrade pip
-          python -m pip install -e .
+          python -m pip install .
           
       - name: Unittests
         run: |
+          venv\Scripts\Activate.ps1
           pytest -v tests --ignore=tests/workflows
