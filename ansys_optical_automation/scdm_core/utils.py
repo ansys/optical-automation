@@ -31,7 +31,8 @@ def run_scdm_batch_command(scdm_version, api_version, script_file):
 
     Returns
     -------
-        str: command
+        str
+            Command to start SCDM.
     """
     scdm_install_dir = get_scdm_install_location(scdm_version)
     scdm_exe = os.path.join(scdm_install_dir, "SpaceClaim.exe")
