@@ -1,7 +1,7 @@
 import json
 import os
 
-from ansys_optical_automation.scdm_core.utils import run_scdm_batch_command
+from ansys_optical_automation.scdm_core.utils import run_scdm_batch
 
 from .config import API_VERSION
 from .config import SCDM_VERSION
@@ -25,7 +25,7 @@ class TestSimAutomation:
         reference_file = os.path.join(self.local_path, "workflows", "test_05_reference_results.json")
         self.clean_results(self)  # no idea why but you have to pass there self
         scdm_script_path = os.path.join(self.local_path, "workflows", "test_05_run_simulation_automation.py")
-        run_scdm_batch_command(SCDM_VERSION, API_VERSION, scdm_script_path)
+        run_scdm_batch(SCDM_VERSION, API_VERSION, scdm_script_path)
 
         with open(self.results_file) as file:
             self.results = json.load(file)

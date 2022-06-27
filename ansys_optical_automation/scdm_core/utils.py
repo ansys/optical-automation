@@ -16,10 +16,10 @@ def get_scdm_install_location(version):
     return scdm_install_dir
 
 
-def run_scdm_batch_command(scdm_version, api_version, script_file):
+def run_scdm_batch(scdm_version, api_version, script_file):
     """
     Function to start Speos script in batch mode via ``subprocess.call()``.
-    
+
     Parameters
     ----------
     scdm_version: int
