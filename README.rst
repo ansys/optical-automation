@@ -12,12 +12,14 @@ On ``Speos`` side, this is a way to create workflows combining different pre- an
 Installation
 ------------
 
-download ``ansys_optical_automation`` Library:
+Run following code in Windows command prompt
 
-.. code::
+.. code:: console
 
-   Click on the green Code button, then download the repository as a ZIP file
-   Unzip the file under the directory: %AppData%\SpaceClaim\Published Scripts
+   curl https://github.com/ansys/optical-automation/archive/refs/heads/main.zip -LJ  --output main.zip
+   tar -xf main.zip
+   move optical-automation-main\ansys_optical_automation "%AppData%\SpaceClaim\Published Scripts"
+
 
 
 Documentation
