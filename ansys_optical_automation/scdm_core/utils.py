@@ -1,4 +1,5 @@
 import os
+import subprocess
 
 
 def get_scdm_install_location(version):
@@ -15,7 +16,7 @@ def get_scdm_install_location(version):
     return scdm_install_dir
 
 
-def get_scdm_batch_command(scdm_version, api_version, script_file):
+def run_scdm_batch_command(scdm_version, api_version, script_file):
     """
     Function to get speos batch command to run as subprocess
     Parameters
@@ -46,4 +47,4 @@ def get_scdm_batch_command(scdm_version, api_version, script_file):
         r"/ExitAfterScript=True",
         r"/ScriptAPI={}".format(api_version),
     ]
-    return command
+    subprocess.call(command)

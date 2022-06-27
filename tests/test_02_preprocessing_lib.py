@@ -1,8 +1,7 @@
 import json
 import os
-import subprocess
 
-from ansys_optical_automation.scdm_core.utils import get_scdm_batch_command
+from ansys_optical_automation.scdm_core.utils import run_scdm_batch_command
 
 from .config import API_VERSION
 from .config import SCDM_VERSION
@@ -25,10 +24,8 @@ class TestPreprocessing:
         self.results_file = os.path.join(self.local_path, "workflows", "test_02_results.json")
         reference_file = os.path.join(self.local_path, "workflows", "test_02_reference_results.json")
         self.clean_results(self)  # no idea why but you have to pass there self
-
         scdm_script_path = os.path.join(self.local_path, "workflows", "test_02_run_preprocessing_lib.py")
-        command = get_scdm_batch_command(SCDM_VERSION, API_VERSION, scdm_script_path)
-        subprocess.call(command)
+        run_scdm_batch_command(SCDM_VERSION, API_VERSION, scdm_script_path)
 
         with open(self.results_file) as file:
             self.results = json.load(file)
