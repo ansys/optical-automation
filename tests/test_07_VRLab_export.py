@@ -4,7 +4,7 @@ import subprocess
 
 import pytest
 
-from tests.workflows.test_07_run_VRLab_export import unittest_run
+from .workflows.test_07_run_VRLab_export import unittest_run
 
 Nvidia_GPU = False
 try:
