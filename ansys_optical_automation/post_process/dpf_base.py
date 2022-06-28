@@ -4,10 +4,11 @@ import sys
 
 class DataProcessingFramework:
     """Basic data processing framework class.
-    
+
     The class will contain mainly opening and saving functionalities to allow interacting with any result file.
-    
+
     """
+
     def __init__(self, application=None, extension=""):
         """Initializes general properties of the data post-posprocessing framework.
 
@@ -15,7 +16,7 @@ class DataProcessingFramework:
         ----------
         application:  application object started in the framework
         extension: extension used by the application
-        
+
         """
         self.application = application
         self.accepted_extensions = extension
@@ -32,7 +33,7 @@ class DataProcessingFramework:
 
     def open_file(self, str_path):
         """Opens a file in DPF based on a path.
-        
+
         Parameters
         ----------
         str_path : str
