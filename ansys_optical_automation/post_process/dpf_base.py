@@ -3,21 +3,20 @@ import sys
 
 
 class DataProcessingFramework:
+    """Basic data processing framework class.
 
-    """
-    basic data processing framework class
-    the class will contain mainly opening and saving functionalities to allow interacting with any result file
+    The class will contain mainly opening and saving functionalities to allow interacting with any result file.
+
     """
 
     def __init__(self, application=None, extension=""):
-        """
-        Initializes general properties of the data post-posprocessing framework
-        the object
+        """Initializes general properties of the data post-posprocessing framework.
 
         Parameters
         ----------
         application:  application object started in the framework
         extension: extension used by the application
+
         """
         self.application = application
         self.accepted_extensions = extension
@@ -33,11 +32,11 @@ class DataProcessingFramework:
             raise ImportError("Application not defined")
 
     def open_file(self, str_path):
-        """
-        open file function allows to open a file based on a path
+        """Opens a file in DPF based on a path.
+
         Parameters
         ----------
-        str_path: a string
+        str_path : str
             Path for file to open e.g. r"C:\\temp\\Test.speos360"
 
         Returns
@@ -57,17 +56,13 @@ class DataProcessingFramework:
             raise FileNotFoundError("File not found")
 
     def valid_dir(self, str_path):
-        """
-        check if a folder is there if not create it
+        """Checks if a folder is there if not create it.
 
         Parameters
         ----------
-        str_path: a string
+        str_path : str
             Path for folder to validate e.g. r"C:\\temp\"
 
-        Returns
-        -------
-        None
         """
         if not os.path.isdir(str_path):
             os.makedirs(str_path)
