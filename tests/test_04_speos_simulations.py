@@ -1,10 +1,11 @@
 import json
 import os
-import subprocess
 
-from .config import SCDM_INSTALL_DIR
+from ansys_optical_automation.scdm_core.utils import run_scdm_batch
 
-speos_path = os.path.join(os.path.dirname(SCDM_INSTALL_DIR), "Optical Products", "Speos", "Bin", "SpeosSC.Manifest.xml")
+from .config import API_VERSION
+from .config import SCDM_VERSION
+
 os.chdir(os.path.dirname(os.path.dirname(os.path.realpath(__file__))))
 
 
@@ -23,22 +24,8 @@ class TestSimAPI:
         self.results_file = os.path.join(self.local_path, "workflows", "test_04_results.json")
         reference_file = os.path.join(self.local_path, "workflows", "test_04_reference_results.json")
         self.clean_results(self)  # no idea why but you have to pass there self
-
-        scdm_exe = os.path.join(SCDM_INSTALL_DIR, "SpaceClaim.exe")
         scdm_script_path = os.path.join(self.local_path, "workflows", "test_04_run_speos_simulations.py")
-        print("Start SPEOS to generate JSON file for tests")
-        command = [
-            scdm_exe,
-            r"/AddInManifestFile={}".format(speos_path),
-            r"/RunScript={}".format(scdm_script_path),
-            r"/Headless=True",
-            r"/Splash=False",
-            r"/Welcome=False",
-            r"/ExitAfterScript=True",
-            r"/ScriptAPI=21",
-        ]
-        print(command)
-        subprocess.call(command)
+        run_scdm_batch(SCDM_VERSION, API_VERSION, scdm_script_path)
 
         with open(self.results_file) as file:
             self.results = json.load(file)

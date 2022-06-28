@@ -1,11 +1,11 @@
 import json
 import os
-import subprocess
 
-from .ansys_arm.ansys_arm import write_arm_log
-from .config import SCDM_INSTALL_DIR
+from ansys_optical_automation.scdm_core.utils import run_scdm_batch
 
-speos_path = os.path.join(os.path.dirname(SCDM_INSTALL_DIR), "Optical Products", "Speos", "Bin", "SpeosSC.Manifest.xml")
+from .config import API_VERSION
+from .config import SCDM_VERSION
+
 os.chdir(os.path.dirname(os.path.dirname(os.path.realpath(__file__))))
 
 
@@ -24,25 +24,8 @@ class TestPreprocessing:
         self.results_file = os.path.join(self.local_path, "workflows", "test_02_results.json")
         reference_file = os.path.join(self.local_path, "workflows", "test_02_reference_results.json")
         self.clean_results(self)  # no idea why but you have to pass there self
-        self.testlog_file = os.path.join(self.local_path, "workflows", "testlog.log")
-
-        # remove ARM log file if exists
-        if os.path.isfile(self.testlog_file):
-            os.remove(self.testlog_file)
-
-        scdm_exe = os.path.join(SCDM_INSTALL_DIR, "SpaceClaim.exe")
         scdm_script_path = os.path.join(self.local_path, "workflows", "test_02_run_preprocessing_lib.py")
-        print("Start SCDM to generate JSON file for tests")
-        command = [
-            scdm_exe,
-            r"/RunScript={}".format(scdm_script_path),
-            r"/Headless=True",
-            r"/Splash=False",
-            r"/Welcome=False",
-            r"/ExitAfterScript=True",
-            r"/ScriptAPI=21",
-        ]
-        subprocess.call(command)
+        run_scdm_batch(SCDM_VERSION, API_VERSION, scdm_script_path)
 
         with open(self.results_file) as file:
             self.results = json.load(file)
@@ -80,9 +63,7 @@ class TestPreprocessing:
         # Generate test log for ARM
         res = self.results.get("colors", None)
         ref = self.reference_results["colors"]
-        test_passed = res == ref
-        write_arm_log(self.testlog_file, test_id=1, test_name="check_color", test_passed=test_passed)
-        assert test_passed
+        assert res == ref
 
     def test_02_duplicates_and_stitch(self):
         """
@@ -92,9 +73,7 @@ class TestPreprocessing:
         # Generate test log for ARM
         res = self.results.get("center_coord", None)
         ref = self.reference_results["center_coord"]
-        test_passed = res == ref
-        write_arm_log(self.testlog_file, test_id=2, test_name="duplicates_and_stitch", test_passed=test_passed)
-        assert test_passed
+        assert res == ref
 
     def test_03_check_materials(self):
         """
@@ -104,9 +83,7 @@ class TestPreprocessing:
         # Generate test log for ARM
         res = self.results.get("materials", None)
         ref = self.reference_results["materials"]
-        test_passed = res == ref
-        write_arm_log(self.testlog_file, test_id=3, test_name="check_materials", test_passed=test_passed)
-        assert test_passed
+        assert res == ref
 
     def test_04_check_name_selection(self):
         """
@@ -116,6 +93,4 @@ class TestPreprocessing:
         # Generate test log for ARM
         res = self.results.get("name_selection", None)
         ref = self.reference_results["name_selection"]
-        test_passed = res == ref
-        write_arm_log(self.testlog_file, test_id=4, test_name="check_name_selection", test_passed=test_passed)
-        assert test_passed
+        assert res == ref
