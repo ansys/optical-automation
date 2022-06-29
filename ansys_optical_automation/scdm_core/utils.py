@@ -5,12 +5,18 @@ import subprocess
 def get_scdm_install_location(version):
     """
     Function to get installation path of SpaceClaim
-    Args:
-        version (int): version in format <XXX> eg 211
 
-    Returns: path of SCDM installation
+    Parameters
+    ----------
+    version: int
+        version in format <xxx>, e.g. 211.
+
+    Returns
+    -------
+    str
+        path of SCDM installation
+
     """
-
     ansys_install_dir = os.environ["AWP_ROOT{}".format(version)]
     scdm_install_dir = os.path.join(ansys_install_dir, "scdm")
     return scdm_install_dir
@@ -28,7 +34,6 @@ def run_scdm_batch(scdm_version, api_version, script_file):
         SCDM API version.
     script_file: str
         SCDM script file directory.
-
     """
     scdm_install_dir = get_scdm_install_location(scdm_version)
     scdm_exe = os.path.join(scdm_install_dir, "SpaceClaim.exe")

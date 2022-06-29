@@ -10,8 +10,11 @@ from ansys_optical_automation.scdm_process.scdm_io import ScdmIO
 
 def selection_dialog_window():
     """
-    This function asks user to select the file
-    @return: str
+    This function asks user to select the file.
+
+    Returns
+    -------
+    str
         file directory selected, otherwise False
     """
     open_dialog = OpenFileDialog()
@@ -25,10 +28,12 @@ def selection_dialog_window():
 
 def check_visual_status_dialog():
     """
-    This functions ask user to check the visual parts to be correct for later operation
+    Function asks user to check the visual parts to be correct for later operation.
+
     Returns
     -------
-    Bool: True if user would clicks check to confirm, False otherwise
+    bool
+        True if user would clicks check to confirm, False otherwise
     """
     response = InputHelper.PauseAndGetInput("Please only show coordinates where you would like to import LEDs")
     if not response.Success:
@@ -38,12 +43,7 @@ def check_visual_status_dialog():
 
 
 def import_by_visual_status():
-    """
-    This function will import selected part based on the visual axis systems
-    Returns
-    -------
-    None
-    """
+    """This function will import selected part based on the visual axis systems."""
     if not check_visual_status_dialog():
         return
     led_file = selection_dialog_window()
@@ -59,12 +59,7 @@ def import_by_visual_status():
 
 
 def import_by_selection():
-    """
-    The function will import selected scdm project on the selected axis
-    Returns
-    -------
-    None
-    """
+    """The function will import selected scdm project on the selected axis."""
     led_file = selection_dialog_window()
     if not led_file:
         return

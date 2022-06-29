@@ -1,5 +1,3 @@
-# Python Script, API Version = V21
-
 import re
 
 import clr

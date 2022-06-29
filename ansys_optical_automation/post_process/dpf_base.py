@@ -10,13 +10,14 @@ class DataProcessingFramework:
     """
 
     def __init__(self, application=None, extension=""):
-        """Initializes general properties of the data post-posprocessing framework.
+        """Initializes general properties of the data post-processing framework.
 
         Parameters
         ----------
-        application:  application object started in the framework
-        extension: extension used by the application
-
+        application:  str
+            application object started in the framework.
+        extension: tuple
+            extensions accepted by the application object.
         """
         self.application = application
         self.accepted_extensions = extension
@@ -38,10 +39,6 @@ class DataProcessingFramework:
         ----------
         str_path : str
             Path for file to open e.g. r"C:\\temp\\Test.speos360"
-
-        Returns
-        -------
-        None
         """
         if os.path.isfile(str_path):
             if not str_path.lower().endswith(self.accepted_extensions):
@@ -62,7 +59,6 @@ class DataProcessingFramework:
         ----------
         str_path : str
             Path for folder to validate e.g. r"C:\\temp\"
-
         """
         if not os.path.isdir(str_path):
             os.makedirs(str_path)

@@ -16,8 +16,10 @@ class Simulation(BaseSCDM):
 
         Parameters
         ----------
-        name: str. Name of the simulation to find/create.
-        kind: str. Kind (type) of the simulation: "inverse", "direct", or "interactive".
+        name: str
+            Name of the simulation to find/create.
+        kind: str
+            Kind (type) of the simulation: "inverse", "direct", or "interactive".
         """
         super(Simulation, self).__init__(SpaceClaim, ["V19", "V20", "V21"])
         self.PreProcASP = PreProcessingASP(SpaceClaim)
@@ -57,11 +59,12 @@ class Simulation(BaseSCDM):
 
     def select_geometries(self, component_list):
         """
-        Adds all geometries from components provided in component_list to the simulation's bodies list
+        Adds all geometries from components provided in component_list to the simulation's bodies list.
 
         Parameters
         ----------
-        component_list: list with component names, e.g. ["part1", "part2"]
+        component_list: list
+            a list with component names, e.g. ["part1", "part2"].
         """
         self.component_list = component_list
         root = self.GetRootPart()
@@ -75,11 +78,12 @@ class Simulation(BaseSCDM):
     def select_geometrical_sets(self, geosets_list):
         """
         Adds all geometries from Catia geometrical sets provided in geosets_list to
-        the simulation's bodies list
+        the simulation's bodies list.
 
         Parameters
         ----------
-        geosets_list: list with names of Catia geometrical sets to add, e.g. ["geo_set1", "geo_set2"]
+        geosets_list: list
+            a list with names of Catia geometrical sets to add, e.g. ["geo_set1", "geo_set2"].
         """
         part_geosets = self.PreProcASP._PreProcessingASP__create_geometrical_set_names_list(
             self.GetRootPart(), bodies_only=False
@@ -109,7 +113,8 @@ class Simulation(BaseSCDM):
 
         Parameters
         ----------
-        rays: int. Number of rays/passes to set the limit of simulation to.
+        rays: int
+            Number of rays/passes to set the limit of simulation to.
         """
         self.rays = rays
         if self.kind == "direct":  # direct simulation
@@ -126,7 +131,8 @@ class Simulation(BaseSCDM):
 
         Parameters
         ----------
-        sensor_name: str. Name of the sensor which grid should be imported as geometry.
+        sensor_name: str
+            Name of the sensor which grid should be imported as geometry.
         """
         grid_name = ".".join([self.name, sensor_name, "OPTProjectedGrid"])
         print(grid_name)
@@ -164,11 +170,16 @@ class Simulation(BaseSCDM):
 
         Parameters
         ----------
-        primary_step: int. Primary step of the grid.
-        secondary_step: int. Secondary step of the grid.
-        max_distance: float. Maximum distance between a pixel and the camera, in mm.
-        max_incidence: float. Maximum angle (degree) under which two projected pixels should be connected by a line.
-        min_distance: float/int. The distance tolerance (in mm) for which two adjacent pixels to be connected by a line.
+        primary_step: int
+            Primary step of the grid.
+        secondary_step: int
+            Secondary step of the grid.
+        max_distance: float
+            Maximum distance between a pixel and the camera, in mm.
+        max_incidence: float
+            Maximum angle (degree) under which two projected pixels should be connected by a line.
+        min_distance: float or int
+            The distance tolerance (in mm) for which two adjacent pixels to be connected by a line.
         """
         sensor_name = self.object.Sensors[0].Name
         grid_name = self.name + "." + sensor_name + ".OPTProjectedGrid"
@@ -184,9 +195,7 @@ class Simulation(BaseSCDM):
         return self
 
     def run_simulation(self):
-        """
-        Computes simulation on the local CPU.
-        """
+        """Computes simulation on the local CPU."""
         self.object.Compute()
         self.computed = True
         return self
@@ -197,7 +206,8 @@ class Simulation(BaseSCDM):
 
         Parameters
         ----------
-        sensor_name: str. Name of the sensor.
+        sensor_name: str
+            Name of the sensor.
         """
         # camera sensor
         sensor_object = self.speos_sim.SensorCamera.Find(sensor_name)
