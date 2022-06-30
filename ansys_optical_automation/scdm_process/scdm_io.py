@@ -14,27 +14,27 @@ class ScdmIO(BaseSCDM):
 
     def __valid_file(self, file):
         """
+        Function valid if file is existing or not.
+
         Parameters
         ----------
         file: str
-            string describing the location of a file
+            string describing the location of a file.
 
         Returns
         -------
-        bool: True such file is existing, False otherwise
+        bool
+            True such file is existing, False otherwise
         """
         return os.path.isfile(file)
 
     def __apply_lock(self, component):
         """
-        This function apply lock to the all bodies under provided component
+        This function apply lock to the all bodies under provided component.
+
         Parameters
         ----------
         component: spaceclaim component
-
-        Returns
-        -------
-
         """
         for body in self.ComponentExtensions.GetAllBodies(component):
             body_selection = self.Selection.CreateByObjects(body)
@@ -42,30 +42,22 @@ class ScdmIO(BaseSCDM):
 
     def __apply_internalize(self, component):
         """
-        This function internalize the component provided
+        This function internalize the component provided.
+
         Parameters
         ----------
         component: spaceclaim component
-
-        Returns
-        -------
-        None
-
         """
         group_selection = self.Selection.CreateByObjects(component)
         self.ComponentHelper.InternalizeAll(group_selection, True, None)
 
     def __apply_anchor(self, component):
         """
-        This function add anchor conditions to structure component provided
+        This function add anchor conditions to structure component provided.
+
         Parameters
         ----------
         component: spaceclaim component
-
-        Returns
-        -------
-        None
-
         """
         self.AnchorCondition.Create(component.Parent, component)
         for item in self.ComponentExtensions.GetAllComponents(component):
@@ -74,13 +66,16 @@ class ScdmIO(BaseSCDM):
 
     def __get_speos_source_under_component(self, component_group):
         """
+        Function get speos sources elements defined under component.
+
         Parameters
         ----------
         component_group: spaceclaim group
 
         Returns
         -------
-        a list speos sources
+        list
+            a list speos sources.
         """
         speos_sources_list = []
         for component in self.ComponentExtensions.GetAllComponents(component_group):
@@ -91,16 +86,13 @@ class ScdmIO(BaseSCDM):
 
     def __create_speos_sources_group(self, component, name):
         """
-        This function will create a speos source group for the surface sources defined under component provided
+        This function will create a speos source group for the surface sources defined under component provided.
+
         Parameters
         ----------
         component: spaceclaim group
         name: str
-            a string provided to name to speos source group
-
-        Returns
-        -------
-        None
+            a string provided to name to speos source group.
         """
         speos_source_list = self.__get_speos_source_under_component(component)
         source_selection = self.Selection.CreateByObjects(speos_source_list)
@@ -111,24 +103,27 @@ class ScdmIO(BaseSCDM):
 
     def __group_components(self, component_list, name, anchor, lock, internalize, speos_source_group):
         """
+        Function to a given group component list.
+
         Parameters
         ----------
         component_list: list
-            a list of spaceclaim component
+            a list of spaceclaim component.
         name: str
-            string given to the name of group
+            string given to the name of group.
         anchor: bool
-            True if anchor is required, False otherwise
+            True if anchor is required, False otherwise.
         lock: bool
-            True if lock is required, False otherwise
+            True if lock is required, False otherwise.
         internalize: bool
-            True if internalize is required, False otherwise
+            True if internalize is required, False otherwise.
         speos_source_group: bool
-            True if speos surfaces under imported part needs to be group, False, otherwise
+            True if speos surfaces under imported part needs to be group, False, otherwise.
 
         Returns
         -------
-        True if grouping is successful, False otherwise
+        bool
+            True if grouping is successful, False otherwise.
         """
         selection = self.Selection.CreateByObjects(component_list)
         result = self.ComponentHelper.MoveBodiesToComponent(selection)
@@ -156,13 +151,16 @@ class ScdmIO(BaseSCDM):
 
     def get_axis_systems_under_component(self, component):
         """
+        Function to get axis system under component.
+
         Parameters
         ----------
         component: SpaceClaim component
 
         Returns
         -------
-        a list of axis systems which are under the component provided
+        list
+            a list of axis systems which are under the component provided.
         """
         axis_system_list = []
         for axis_system in self.ComponentExtensions.GetCoordinateSystems(component):
@@ -181,26 +179,24 @@ class ScdmIO(BaseSCDM):
         speos_source_group=False,
     ):
         """
+        Function to import component at given axis system.
+
         Parameters
         ----------
         external_part: a SpaceClaim file
-            a spaceclaim file to be imported
+            a spaceclaim file to be imported.
         axis_system_list: an axis system
-            a list of axis system
+            a list of axis system.
         name: string
-            a name given to the group which grouping the imported parts
+            a name given to the group which grouping the imported parts.
         anchor: bool
-            True if anchor is required, False otherwise
+            True if anchor is required, False otherwise.
         lock: bool
-            True if lock is required, False otherwise
+            True if lock is required, False otherwise.
         internalize: bool
-            True if internalize is required, False otherwise
+            True if internalize is required, False otherwise.
         speos_source_group: bool
-            True if speos surfaces under imported part needs to be group, False, otherwise
-
-        Returns
-        -------
-        None
+            True if speos surfaces under imported part needs to be group, False, otherwise.
         """
         if not self.__valid_file(external_part):
             error_msg = "Invalid project directory, please check"

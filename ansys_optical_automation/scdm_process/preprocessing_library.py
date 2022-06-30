@@ -1,5 +1,3 @@
-# Python Script, API Version = V21
-
 import os
 
 from ansys_optical_automation.scdm_core.base import BaseSCDM
@@ -14,15 +12,23 @@ class PreProcessingASP(BaseSCDM):
 
     def __init__(self, SpaceClaim):
         """
-        Args:
-            SpaceClaim: SpaceClaim object
+        Base class that contains all common used objects. This class serves more as an abstract class.
+
+        Parameters
+        ----------
+        SpaceClaim: SpaceClaim object
+            a SpaceClaim object.
         """
         super(PreProcessingASP, self).__init__(SpaceClaim, ["V19", "V20", "V21"])
 
     def create_dict_by_color(self):
         """
-        Create a dictionary for Named selection generation/stitch one element per color
-        :return: Dictionary {color code: List of bodies with color}
+        Function to create a dictionary for Named selection generation/stitch one element per color
+
+        Returns
+        -------
+        dict
+            a dictionary with index of color code and value of a list of bodies
         """
         conversion_dict = {}
         root = self.GetRootPart()
@@ -37,18 +43,27 @@ class PreProcessingASP(BaseSCDM):
 
     def create_dict_by_material(self):
         """
-        Create a dictionary for Named selection generation/stitch one element per Catia Material6
-        return: Dictionary {material name: List of bodies with mat}
+        Function to create a dictionary for based on materials defined in Catia.
+
+        Returns
+        -------
+        dict
+            a dictionary with index of material name and value of a list of bodies.
         """
 
         def get_real_original(item):
             """
-            get the original body info
-            Args:
-                item: SpaceClaim body item
+            Function to get real original selection in order to get the material info.
 
-            Returns: the original SpaceClaim body item
+            Parameters
+            ----------
+            item: SpaceClaim part
+                a SpaceClaim part.
 
+            Returns
+            -------
+            SpaceClaim part
+                a SpaceClaim part.
             """
             while self.GetOriginal(item):
                 item = self.GetOriginal(item)
@@ -72,19 +87,25 @@ class PreProcessingASP(BaseSCDM):
 
     def __stitch_group(self, comp, index, group_size):
         """
-        split all bodies in component into groups of group_size.
+        Function to stitch all bodies in component into groups of group_size.
         Example:
             In-> [body1, body2] [body3, body4], [body5, body6], [body7, body8], [body9]
             Out-> return [body3, body4]
-        Args:
-            comp:  given component
-            index: index of the group to return
-            group_size: the size of group
 
-        Returns: list of bodies defined by index
+        Parameters
+        ----------
+        comp: SpaceClaim Component
+            a given Spaceclaim component.
+        index: int
+            index of the group to return.
+        group_size: int
+            the size of group.
 
+        Returns
+        -------
+        list
+            list of bodies defined by index.
         """
-
         stitch_group = self.List[self.IDesignBody]()
         for i, body in enumerate(self.ComponentExtensions.GetBodies(comp)):
             if index * group_size <= i < (index + 1) * group_size:
@@ -93,12 +114,25 @@ class PreProcessingASP(BaseSCDM):
 
     def __stitch_group_list(self, comp, total_iter, group_size):
         """
-        return a list group
-        para comp: given component
-        para total_iter: total number of group generated from the component
-        para batch: size of each group
-        e.g. body1 body2 body3 body4 body5 body6 body7 body8 body9
-        return [[body1, body2] [body3, body4], [body5, body6], [body7, body8], [body9]]
+        Function to return a list group.
+        Examples:
+            e.g. body1 body2 body3 body4 body5 body6 body7 body8 body9.
+
+        Parameters
+        ----------
+        comp: SpaceClaim Component
+            a given SpaceClaim component.
+        total_iter: int
+            total number of group generated from the component.
+        group_size: int
+            size of each group.
+
+        Returns
+        -------
+        list
+            list of bodies.
+            examples:
+                [[body1, body2] [body3, body4], [body5, body6], [body7, body8], [body9]]
         """
         stitch_group_list = []
         for i in range(total_iter):
@@ -108,8 +142,12 @@ class PreProcessingASP(BaseSCDM):
 
     def stitch_comp(self, comp):
         """
-        apply stitch according to component structure
-        para comp: given component
+        Function to apply stitch according to component structure.
+
+        Parameters
+        ----------
+        comp: SpaceClaim Component
+            given component.
         """
         all_bodies = self.ComponentExtensions.GetBodies(comp)
         max_group_limit = 200
@@ -128,7 +166,12 @@ class PreProcessingASP(BaseSCDM):
 
     def stitch(self, conversion_dict):
         """
-        stitch all element per dictionary items-> color/material
+        Function to stitch all bodies based on dictionary.
+
+        Parameters
+        ----------
+        conversion_dict: dict
+            a dictionary with value of list of bodies.
         """
         for item in conversion_dict:
             sel = self.Selection.Create(conversion_dict[item])
@@ -136,9 +179,12 @@ class PreProcessingASP(BaseSCDM):
 
     def remove_duplicates(self, comp):
         """
-        Remove duplicated surfaces
-        param part: input SpaceClaim part
-        :return:
+        Function to remove duplicated surfaces with a given component.
+
+        Parameters
+        ----------
+        comp: SpaceClaim Component
+            a given SpaceClaim component.
         """
         all_bodies = self.ComponentExtensions.GetBodies(comp)
         while True:
@@ -153,28 +199,30 @@ class PreProcessingASP(BaseSCDM):
                 break
 
     def check_geometry_update(self):
-        """
-        Verify weather any part was imported by geometry update
-        """
+        """Verify weather any part was imported by geometry update."""
         return self
 
     def check_volume_conflict(self):
-        """
-        find volume conflict, return two list of conflicting bodies?
-        """
+        """Find volume conflict, return two list of conflicting bodies."""
         return self
 
     def resolve_volume_conflict(self):
-        """
-        resolve volume Conflict based on material definition
-        """
+        """Resolve volume Conflict based on material definition."""
         return self
 
     def __get_all_surface_bodies(self, part):
         """
-        Function to seperate solids from surface bodies for Geometrical set named selection conversion
-        :param part:    input Spaceclaim Part
-        :return:        return all surface bodies from input part
+        Function to seperate solids from surface bodies for Geometrical set named selection conversion.
+
+        Parameters
+        ----------
+        part: Spaceclaim Part
+            a given SpaceClaim prt.
+
+        Returns
+        -------
+        Spacelciam Surfaces
+            all surface bodies from input part.
         """
         all_bodies = self.PartExtensions.GetAllBodies(part)
         all_surface = self.PartExtensions.GetAllBodies(part)
@@ -187,9 +235,19 @@ class PreProcessingASP(BaseSCDM):
 
     def __create_geometrical_set_names_list(self, part, bodies_only=True):
         """
-        generate List of geometric sets from geometry names
-        :param part:    Spaceclaim Part to get Geometric set names from
-        :return:        List of geometrical sets names
+        Function to generate List of geometric sets from geometry names.
+
+        Parameters
+        ----------
+        part: Spaceclaim Part
+            a given SpaceClaim part.
+        bodies_only: bool
+            true if only processing volume bodies otherwise false.
+
+        Returns
+        -------
+        list
+            List of geometrical sets names.
         """
         if bodies_only:
             all_bodies = self.__get_all_surface_bodies(part)
@@ -214,11 +272,20 @@ class PreProcessingASP(BaseSCDM):
 
     def __get_bodies_for_geometrical_sets(self, part, bodies_only=True):
         """
-        get bodies for each geometrical set
-        :param part:    Spaceclaim Part to get Geometric set from
-        :return:        List of body IDs in order of geo set names
-        """
+        Function to get bodies for each geometrical set.
 
+        Parameters
+        ----------
+        part: Spaceclaim Part
+            a given SpaceClaim part.
+        bodies_only: bool
+            true if only processing volume bodies otherwise false.
+
+        Returns
+        -------
+        list
+            List of body IDs in order of geo set names.
+        """
         geometrical_sets = self.__create_geometrical_set_names_list(part, bodies_only)
         if bodies_only:
             all_surface = self.__get_all_surface_bodies(part)
@@ -235,9 +302,17 @@ class PreProcessingASP(BaseSCDM):
 
     def __convert_list_to_dict(self, part, bodies_only=True):
         """
-        Convert the lists to dictionaries
-        :param part:        Spaceclaim Part to convert
-        :return:
+        Convert the lists to dictionaries.
+
+        Parameters
+        ----------
+        part: SpaceClaim part
+            a given SpaceClaim part.
+        bodies_only: bool
+
+        Returns
+        -------
+        dict
         """
         dictionary = {}
         body_list = self.__get_bodies_for_geometrical_sets(part, bodies_only)
@@ -257,17 +332,24 @@ class PreProcessingASP(BaseSCDM):
 
     def geo_sets_conversion(self, part):
         """
-        Get Catia Geometrical set as Named selection
-        :param part:
-        :return:
+        Get Catia Geometrical set as Named selection.
+
+        Parameters
+        ----------
+        part: SpaceClaim part
+            a given SpaceClaim part.
         """
         conversion_dict = self.__convert_list_to_dict(part)
         self.create_named_selection(conversion_dict)
 
     def create_named_selection(self, conversion_dict):
         """
-        Create a Named selection from dictionary
-        :param conversion_dict:  Dictionary{Name of Named selection: LIst of bodies}
+        Create a Named selection from dictionary.
+
+        Parameters
+        ----------
+        conversion_dict: dict
+            a Dictionary with index of Name with value of List of bodies.
         """
         for item in conversion_dict:
             sel = self.Selection.Create(conversion_dict[item])
@@ -277,6 +359,19 @@ class PreProcessingASP(BaseSCDM):
                 result.Name = item.strip()
 
     def find_component(self, component_name):
+        """
+        Function to find all components with given name.
+
+        Parameters
+        ----------
+        component_name: str
+            name used for searching components.
+
+        Returns
+        -------
+        list
+            a list of SpaceClaim component with the given name.
+        """
         root = self.GetRootPart()
         all_components = root.GetDescendants[self.IComponent]()
         found_components = []

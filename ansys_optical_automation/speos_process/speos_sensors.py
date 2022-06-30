@@ -1,5 +1,3 @@
-# Python Script, API Version = V21
-
 import os
 
 from ansys_optical_automation.scdm_core.base import BaseSCDM
@@ -22,9 +20,10 @@ class Sensor(BaseSCDM):
 
         Parameters
         ----------
-        name: name of the Sensor to be created or found.
-        SpeosSim
-        SpaceClaim
+        name: str
+            name of the Sensor to be created or found.
+        SpeosSim: SpeosSim
+        SpaceClaim: SpaceClaim object
         """
         super(Sensor, self).__init__(SpaceClaim, ["V19", "V20", "V21"])
         self.name = name
@@ -40,8 +39,9 @@ class Sensor(BaseSCDM):
 
         Parameters
         ----------
-        origin: name of the origin point to be used for sensor positioning. Example: origin="EPP_195". This point must
-        exist under Curves in the Component of the same name as the Sensor.
+        origin: SpaceClaim curve object
+            name of the origin point to be used for sensor positioning. Example: origin="EPP_195".
+            This point must exist under Curves in the Component of the same name as the Sensor.
         """
         origin_point = None
         axes = None
@@ -70,12 +70,15 @@ class Sensor(BaseSCDM):
 
         Parameters
         ----------
-        x_reverse: bool. True of False to reverse direction of the X-axis of the sensor
-        y_reverse: bool. True of False to reverse direction of the Y-axis of the sensor
-        origin: Here a compatible SCDM object can be provided: and axis system or a point.
-        axes: list with [x-axis, y-axis] to define orientation of the axis, where x-axis and y-axis are SCDM axis
-              objects (not an axis system!). In case of IESNA and Elumdat intensity sensors,
-              [polar-axis, and V0/H0-axis] should be provided instead.
+        x_reverse: bool
+            True of False to reverse direction of the X-axis of the sensor
+        y_reverse: bool
+            True of False to reverse direction of the Y-axis of the sensor
+        origin: Spaceclaim axis system or a point.
+        axes: list
+            with [x-axis, y-axis] to define orientation of the axis, where x-axis and y-axis are SCDM axis
+            objects (not an axis system!). In case of IESNA and Elumdat intensity sensors,
+            polar-axis, and V0/H0-axis] should be provided instead.
         """
         if not self.speos_object:  # if self.speos_object (speos sensor speos_object) is not defined
             raise TypeError("No Speos object defined.")
@@ -114,7 +117,8 @@ class Camera(Sensor):
 
         Parameters
         ----------
-        name: str. Name of the sensor to find/create.
+        name: str
+            Name of the sensor to find/create.
         """
         super(Camera, self).__init__(name, SpeosSim, SpaceClaim)
         speos_object = self.speos_sim.SensorCamera.Find(self.name)
@@ -127,8 +131,8 @@ class Camera(Sensor):
         """
         Parameters
         ----------
-        distortion_file_name: str. Name of the OPTDistortion file.
-
+        distortion_file_name: str
+            Name of the OPTDistortion file.
         """
         distortion_path = os.path.join(".", "SPEOS input files", distortion_file_name)
         self.speos_object.DistorsionFile = distortion_path
@@ -138,7 +142,8 @@ class Camera(Sensor):
         """
         Parameters
         ----------
-        transmittance_file_name: str. Name of the transmittance spectrum file.
+        transmittance_file_name: str
+            Name of the transmittance spectrum file.
         """
         transmittance_path = os.path.join(".", "SPEOS input files", transmittance_file_name)
         self.speos_object.TransmittanceFile = transmittance_path
@@ -148,8 +153,10 @@ class Camera(Sensor):
         """
         Parameters
         ----------
-        color: str. Channel color: red, green or blue.
-        sensitivity_file_name: str. Name of the sensitivity file.
+        color: str
+            Channel color: red, green or blue.
+        sensitivity_file_name: str
+            Name of the sensitivity file.
         """
         sensitivity_path = os.path.join(".", "SPEOS input files", sensitivity_file_name)
         if color == "red":
@@ -179,7 +186,8 @@ class IntensitySensor(Sensor):
 
         Parameters
         ----------
-        name: str. Name of the sensor to find/create.
+        name: str
+            Name of the sensor to find/create.
         """
         super(IntensitySensor, self).__init__(name, SpeosSim, SpaceClaim)
         speos_object = self.speos_sim.SensorIntensity.Find(self.name)
@@ -192,7 +200,8 @@ class IntensitySensor(Sensor):
         """
         Parameters
         ----------
-        sensor_format: str. Can be: XMP, IESNATypeA, IESNATypeB, IESNATypeC or Eulumdat.
+        sensor_format: str
+            Can be: XMP, IESNATypeA, IESNATypeB, IESNATypeC or Eulumdat.
         """
         if not sensor_format:
             raise NameError("Format input not provided.")
@@ -216,12 +225,18 @@ class IntensitySensor(Sensor):
 
         Parameters
         ----------
-        x_start: int or float. X size of the sensor in mm. (positive part)
-        x_end: int or float. X size of the sensor in mm. (negative part)
-        y_start: int of float. Y size of the sensor in mm. (positive part)
-        y_end: int or float. Y size of the sensor in mm. (negative part)
-        x_mirrored: bool. Mirrored extend option of the X size of the sensor.
-        y_mirrored: bool. Mirrored extend option of the Y size of the sensor.
+        x_start: int or float
+            X size of the sensor in mm. (positive part)
+        x_end: int or float
+            X size of the sensor in mm. (negative part)
+        y_start: int of float
+            Y size of the sensor in mm. (positive part)
+        y_end: int or float
+            Y size of the sensor in mm. (negative part)
+        x_mirrored: bool
+            Mirrored extend option of the X size of the sensor.
+        y_mirrored: bool
+            Mirrored extend option of the Y size of the sensor.
         """
         if not x_start and not x_end and not y_start and not y_end and not x_mirrored and not y_mirrored:
             raise NameError("No inputs provided.")
@@ -240,11 +255,12 @@ class IntensitySensor(Sensor):
 
     def set_sampling(self, x_sampling=None, y_sampling=None):
         """
-
         Parameters
         ----------
-        x_sampling: int. Number of samples on the x-axis.
-        y_sampling: int. Number of samples on the y-axis.
+        x_sampling: int
+            Number of samples on the x-axis.
+        y_sampling: int
+            Number of samples on the y-axis.
         """
         if not x_sampling and not y_sampling:
             raise NameError("No inputs provided.")
@@ -259,8 +275,10 @@ class IntensitySensor(Sensor):
 
         Parameters
         ----------
-        x_resolution: int. x-resolution in mm.
-        y_resolution: int. y-resolution in mm.
+        x_resolution: int
+            x-resolution in mm.
+        y_resolution: int
+            y-resolution in mm.
         """
         if not x_resolution and not y_resolution:
             raise NameError("No inputs provided.")
@@ -273,7 +291,8 @@ class IntensitySensor(Sensor):
         """
         Parameters
         ----------
-        sensor_type: str. Sensor type can be one of 4: photometric, colorimetric, radiometric or spectral.
+        sensor_type: str
+            Sensor type can be one of 4: photometric, colorimetric, radiometric or spectral.
         """
         sensor_type = sensor_type.lower()
         if sensor_type == "photometric":
@@ -294,10 +313,14 @@ class IntensitySensor(Sensor):
         """
         Parameters
         ----------
-        w_start: int. Start of the wavelength band in nm.
-        w_end: int. End of the wavelength band in nm.
-        w_sampling: int. Number of spectral samples.
-        w_resolution: float. Spectral sampling/resolution (size of one sample), in nm.
+        w_start: int
+            Start of the wavelength band in nm.
+        w_end: int
+            End of the wavelength band in nm.
+        w_sampling: int
+            Number of spectral samples.
+        w_resolution: float
+            Spectral sampling/resolution (size of one sample), in nm.
         """
         if not w_start and not w_end and not w_sampling and not w_resolution:
             raise NameError("No inputs provided.")
@@ -314,7 +337,8 @@ class IntensitySensor(Sensor):
         """
         Parameters
         ----------
-        layer_type: str. Layer option of the sensor, can be on of the 4: source, face, sequence, none.
+        layer_type: str
+            Layer option of the sensor, can be on of the 4: source, face, sequence, none.
         """
         layer_type = layer_type.lower()
         if layer_type == "source":
