@@ -24,7 +24,7 @@ class TestPreprocessing:
         self.results_file = os.path.join(self.local_path, "workflows", "test_02_results.json")
         reference_file = os.path.join(self.local_path, "workflows", "test_02_reference_results.json")
         self.clean_results(self)  # no idea why but you have to pass there self
-        scdm_script_path = os.path.join(self.local_path, "workflows", "test_02_run_preprocessing_lib.py")
+        scdm_script_path = os.path.join(self.local_path, "workflows", "run_test_02_preprocessing_lib.py")
         run_scdm_batch(SCDM_VERSION, API_VERSION, scdm_script_path)
 
         with open(self.results_file) as file:
