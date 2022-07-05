@@ -32,3 +32,7 @@ repos:
             '--max-doc-length', '120',
             '--ignore', 'F821,E402,W503'
         ]
+  - repo: https://github.com/Carreau/velin
+    rev: 0.0.12
+    hooks:
+      - id: velin

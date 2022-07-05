@@ -17,9 +17,9 @@ class MaterialsFromCSV(BaseSCDM):
 
         Parameters
         ----------
-        SpeosSim: SpeosSim object
+        SpeosSim : SpeosSim object
             SpeosSim.
-        SpaceClaim: SpaceClaim object
+        SpaceClaim : SpaceClaim object
             SpaceClaim.
         """
         super(MaterialsFromCSV, self).__init__(SpaceClaim, ["V19", "V20", "V21"])
@@ -31,7 +31,7 @@ class MaterialsFromCSV(BaseSCDM):
 
         Parameters
         ----------
-        item: SpaceClaim part
+        item : SpaceClaim part
             a SpaceClaim part.
 
         Returns
