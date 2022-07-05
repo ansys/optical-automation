@@ -20,10 +20,10 @@ class Sensor(BaseSCDM):
 
         Parameters
         ----------
-        name: str
+        name : str
             name of the Sensor to be created or found.
-        SpeosSim: SpeosSim
-        SpaceClaim: SpaceClaim object
+        SpeosSim : SpeosSim
+        SpaceClaim : SpaceClaim object
         """
         super(Sensor, self).__init__(SpaceClaim, ["V19", "V20", "V21"])
         self.name = name
@@ -39,7 +39,7 @@ class Sensor(BaseSCDM):
 
         Parameters
         ----------
-        origin: SpaceClaim curve object
+        origin : SpaceClaim curve object
             name of the origin point to be used for sensor positioning. Example: origin="EPP_195".
             This point must exist under Curves in the Component of the same name as the Sensor.
         """
@@ -70,12 +70,12 @@ class Sensor(BaseSCDM):
 
         Parameters
         ----------
-        x_reverse: bool
+        x_reverse : bool
             True of False to reverse direction of the X-axis of the sensor
-        y_reverse: bool
+        y_reverse : bool
             True of False to reverse direction of the Y-axis of the sensor
-        origin: Spaceclaim axis system or a point.
-        axes: list
+        origin : Spaceclaim axis system or a point.
+        axes : list
             with [x-axis, y-axis] to define orientation of the axis, where x-axis and y-axis are SCDM axis
             objects (not an axis system!). In case of IESNA and Elumdat intensity sensors,
             polar-axis, and V0/H0-axis] should be provided instead.
@@ -117,7 +117,7 @@ class Camera(Sensor):
 
         Parameters
         ----------
-        name: str
+        name : str
             Name of the sensor to find/create.
         """
         super(Camera, self).__init__(name, SpeosSim, SpaceClaim)
@@ -131,7 +131,7 @@ class Camera(Sensor):
         """
         Parameters
         ----------
-        distortion_file_name: str
+        distortion_file_name : str
             Name of the OPTDistortion file.
         """
         distortion_path = os.path.join(".", "SPEOS input files", distortion_file_name)
@@ -142,7 +142,7 @@ class Camera(Sensor):
         """
         Parameters
         ----------
-        transmittance_file_name: str
+        transmittance_file_name : str
             Name of the transmittance spectrum file.
         """
         transmittance_path = os.path.join(".", "SPEOS input files", transmittance_file_name)
@@ -153,9 +153,9 @@ class Camera(Sensor):
         """
         Parameters
         ----------
-        color: str
+        color : str
             Channel color: red, green or blue.
-        sensitivity_file_name: str
+        sensitivity_file_name : str
             Name of the sensitivity file.
         """
         sensitivity_path = os.path.join(".", "SPEOS input files", sensitivity_file_name)
@@ -186,7 +186,7 @@ class IntensitySensor(Sensor):
 
         Parameters
         ----------
-        name: str
+        name : str
             Name of the sensor to find/create.
         """
         super(IntensitySensor, self).__init__(name, SpeosSim, SpaceClaim)
@@ -200,7 +200,7 @@ class IntensitySensor(Sensor):
         """
         Parameters
         ----------
-        sensor_format: str
+        sensor_format : str
             Can be: XMP, IESNATypeA, IESNATypeB, IESNATypeC or Eulumdat.
         """
         if not sensor_format:
@@ -225,17 +225,17 @@ class IntensitySensor(Sensor):
 
         Parameters
         ----------
-        x_start: int or float
+        x_start : int or float
             X size of the sensor in mm. (positive part)
-        x_end: int or float
+        x_end : int or float
             X size of the sensor in mm. (negative part)
-        y_start: int of float
+        y_start : int of float
             Y size of the sensor in mm. (positive part)
-        y_end: int or float
+        y_end : int or float
             Y size of the sensor in mm. (negative part)
-        x_mirrored: bool
+        x_mirrored : bool
             Mirrored extend option of the X size of the sensor.
-        y_mirrored: bool
+        y_mirrored : bool
             Mirrored extend option of the Y size of the sensor.
         """
         if not x_start and not x_end and not y_start and not y_end and not x_mirrored and not y_mirrored:
@@ -257,9 +257,9 @@ class IntensitySensor(Sensor):
         """
         Parameters
         ----------
-        x_sampling: int
+        x_sampling : int
             Number of samples on the x-axis.
-        y_sampling: int
+        y_sampling : int
             Number of samples on the y-axis.
         """
         if not x_sampling and not y_sampling:
@@ -275,9 +275,9 @@ class IntensitySensor(Sensor):
 
         Parameters
         ----------
-        x_resolution: int
+        x_resolution : int
             x-resolution in mm.
-        y_resolution: int
+        y_resolution : int
             y-resolution in mm.
         """
         if not x_resolution and not y_resolution:
@@ -291,7 +291,7 @@ class IntensitySensor(Sensor):
         """
         Parameters
         ----------
-        sensor_type: str
+        sensor_type : str
             Sensor type can be one of 4: photometric, colorimetric, radiometric or spectral.
         """
         sensor_type = sensor_type.lower()
@@ -313,13 +313,13 @@ class IntensitySensor(Sensor):
         """
         Parameters
         ----------
-        w_start: int
+        w_start : int
             Start of the wavelength band in nm.
-        w_end: int
+        w_end : int
             End of the wavelength band in nm.
-        w_sampling: int
+        w_sampling : int
             Number of spectral samples.
-        w_resolution: float
+        w_resolution : float
             Spectral sampling/resolution (size of one sample), in nm.
         """
         if not w_start and not w_end and not w_sampling and not w_resolution:
@@ -337,7 +337,7 @@ class IntensitySensor(Sensor):
         """
         Parameters
         ----------
-        layer_type: str
+        layer_type : str
             Layer option of the sensor, can be on of the 4: source, face, sequence, none.
         """
         layer_type = layer_type.lower()

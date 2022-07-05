@@ -124,7 +124,7 @@ class MaterialsFromCSV(BaseSCDM):
 
         Parameters
         ----------
-        op_name: str
+        op_name : str
             string given to name a layer to be created
         """
         active_doc = self.GetActiveDocument()
@@ -140,15 +140,15 @@ class MaterialsFromCSV(BaseSCDM):
 
         Parameters
         ----------
-        fop_name: str
+        fop_name : str
             name of FOP from CSV
-        op_name: str
+        op_name : str
             name of op from CSV
-        sop_name: str
+        sop_name : str
             name of SOP from CSV
-        vop_name: str
+        vop_name : str
             name of VOP from CSV
-        work_directory: str
+        work_directory : str
             file directory from CSV
         """
         if self.speos_sim.Material.Find(op_name) is None:

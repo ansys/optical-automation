@@ -8,7 +8,7 @@ def get_scdm_install_location(version):
 
     Parameters
     ----------
-    version: int
+    version : int
         version in format <xxx>, e.g. 211.
 
     Returns
@@ -28,11 +28,11 @@ def run_scdm_batch(scdm_version, api_version, script_file):
 
     Parameters
     ----------
-    scdm_version: int
+    scdm_version : int
         SCDM version.
-    api_version: int
+    api_version : int
         SCDM API version.
-    script_file: str
+    script_file : str
         SCDM script file directory.
     """
     scdm_install_dir = get_scdm_install_location(scdm_version)

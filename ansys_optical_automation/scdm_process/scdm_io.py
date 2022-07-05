@@ -18,7 +18,7 @@ class ScdmIO(BaseSCDM):
 
         Parameters
         ----------
-        file: str
+        file : str
             string describing the location of a file.
 
         Returns
@@ -34,7 +34,7 @@ class ScdmIO(BaseSCDM):
 
         Parameters
         ----------
-        component: spaceclaim component
+        component : spaceclaim component
         """
         for body in self.ComponentExtensions.GetAllBodies(component):
             body_selection = self.Selection.CreateByObjects(body)
@@ -46,7 +46,7 @@ class ScdmIO(BaseSCDM):
 
         Parameters
         ----------
-        component: spaceclaim component
+        component : spaceclaim component
         """
         group_selection = self.Selection.CreateByObjects(component)
         self.ComponentHelper.InternalizeAll(group_selection, True, None)
@@ -57,7 +57,7 @@ class ScdmIO(BaseSCDM):
 
         Parameters
         ----------
-        component: spaceclaim component
+        component : spaceclaim component
         """
         self.AnchorCondition.Create(component.Parent, component)
         for item in self.ComponentExtensions.GetAllComponents(component):
@@ -70,7 +70,7 @@ class ScdmIO(BaseSCDM):
 
         Parameters
         ----------
-        component_group: spaceclaim group
+        component_group : spaceclaim group
 
         Returns
         -------
@@ -90,8 +90,8 @@ class ScdmIO(BaseSCDM):
 
         Parameters
         ----------
-        component: spaceclaim group
-        name: str
+        component : spaceclaim group
+        name : str
             a string provided to name to speos source group.
         """
         speos_source_list = self.__get_speos_source_under_component(component)
@@ -107,17 +107,17 @@ class ScdmIO(BaseSCDM):
 
         Parameters
         ----------
-        component_list: list
+        component_list : list
             a list of spaceclaim component.
-        name: str
+        name : str
             string given to the name of group.
-        anchor: bool
+        anchor : bool
             True if anchor is required, False otherwise.
-        lock: bool
+        lock : bool
             True if lock is required, False otherwise.
-        internalize: bool
+        internalize : bool
             True if internalize is required, False otherwise.
-        speos_source_group: bool
+        speos_source_group : bool
             True if speos surfaces under imported part needs to be group, False, otherwise.
 
         Returns
@@ -155,7 +155,7 @@ class ScdmIO(BaseSCDM):
 
         Parameters
         ----------
-        component: SpaceClaim component
+        component : SpaceClaim component
 
         Returns
         -------
@@ -183,19 +183,19 @@ class ScdmIO(BaseSCDM):
 
         Parameters
         ----------
-        external_part: a SpaceClaim file
+        external_part : a SpaceClaim file
             a spaceclaim file to be imported.
-        axis_system_list: an axis system
+        axis_system_list : an axis system
             a list of axis system.
-        name: string
+        name : string
             a name given to the group which grouping the imported parts.
-        anchor: bool
+        anchor : bool
             True if anchor is required, False otherwise.
-        lock: bool
+        lock : bool
             True if lock is required, False otherwise.
-        internalize: bool
+        internalize : bool
             True if internalize is required, False otherwise.
-        speos_source_group: bool
+        speos_source_group : bool
             True if speos surfaces under imported part needs to be group, False, otherwise.
         """
         if not self.__valid_file(external_part):
