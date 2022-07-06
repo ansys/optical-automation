@@ -19,9 +19,9 @@ def check_align_and_angle(axis1, axis2):
     """
     Parameters
     ----------
-    axis1: list
+    axis1 : list
         a list containing location and orientation information
-    axis2: list
+    axis2 : list
         a list containing location and orientation information
 
     Returns
@@ -95,9 +95,9 @@ def compare_target_axis_system_with_imported_part_location(target_axis_system_li
     """
     Parameters
     ----------
-    target_axis_system_list: list
+    target_axis_system_list : list
         a list containing target axis system information
-    imported_part_location_list: list
+    imported_part_location_list : list
         a list containing import part location information
 
     Returns
@@ -123,7 +123,7 @@ def extract_axis_information(axis_system):
     """
     Parameters
     ----------
-    axis_system: spaceclaim axis system
+    axis_system : spaceclaim axis system
 
     Returns
     -------
@@ -158,10 +158,9 @@ def extract_axis_information(axis_system):
 
 def extract_axis_system_info_under_component(component):
     """
-
     Parameters
     ----------
-    component: spaceclaim component
+    component : spaceclaim component
 
     Returns
     -------
@@ -181,7 +180,7 @@ def extract_imported_part_location_info_under_component(group):
     """
     Parameters
     ----------
-    group: spaceclaim component
+    group : spaceclaim component
 
     Returns
     -------
@@ -200,7 +199,6 @@ def extract_imported_part_location_info_under_component(group):
 
 def extract_number_of_groups():
     """
-
     Returns
     -------
     a dictionary which describe the group created in the project

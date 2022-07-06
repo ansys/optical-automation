@@ -14,9 +14,9 @@ class SynchLayersMaterials(BaseSCDM):
 
         Parameters
         ----------
-        SpeosSim: SpeosSim object
+        SpeosSim : SpeosSim object
             SpeosSim.
-        SpaceClaim: SpaceClaim object
+        SpaceClaim : SpaceClaim object
             SpaceClaim.
         """
         super(SynchLayersMaterials, self).__init__(SpaceClaim, ["V19", "V20", "V21"])
@@ -68,7 +68,7 @@ class SynchLayersMaterials(BaseSCDM):
 
         Parameters
         ----------
-        op_list: list
+        op_list : list
             a list of name of volume optical materials.
         """
         for item in op_list:

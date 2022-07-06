@@ -16,7 +16,7 @@ class PreProcessingASP(BaseSCDM):
 
         Parameters
         ----------
-        SpaceClaim: SpaceClaim object
+        SpaceClaim : SpaceClaim object
             a SpaceClaim object.
         """
         super(PreProcessingASP, self).__init__(SpaceClaim, ["V19", "V20", "V21"])
@@ -57,7 +57,7 @@ class PreProcessingASP(BaseSCDM):
 
             Parameters
             ----------
-            item: SpaceClaim part
+            item : SpaceClaim part
                 a SpaceClaim part.
 
             Returns
@@ -94,11 +94,11 @@ class PreProcessingASP(BaseSCDM):
 
         Parameters
         ----------
-        comp: SpaceClaim Component
+        comp : SpaceClaim Component
             a given Spaceclaim component.
-        index: int
+        index : int
             index of the group to return.
-        group_size: int
+        group_size : int
             the size of group.
 
         Returns
@@ -120,11 +120,11 @@ class PreProcessingASP(BaseSCDM):
 
         Parameters
         ----------
-        comp: SpaceClaim Component
+        comp : SpaceClaim Component
             a given SpaceClaim component.
-        total_iter: int
+        total_iter : int
             total number of group generated from the component.
-        group_size: int
+        group_size : int
             size of each group.
 
         Returns
@@ -146,7 +146,7 @@ class PreProcessingASP(BaseSCDM):
 
         Parameters
         ----------
-        comp: SpaceClaim Component
+        comp : SpaceClaim Component
             given component.
         """
         all_bodies = self.ComponentExtensions.GetBodies(comp)
@@ -170,7 +170,7 @@ class PreProcessingASP(BaseSCDM):
 
         Parameters
         ----------
-        conversion_dict: dict
+        conversion_dict : dict
             a dictionary with value of list of bodies.
         """
         for item in conversion_dict:
@@ -183,7 +183,7 @@ class PreProcessingASP(BaseSCDM):
 
         Parameters
         ----------
-        comp: SpaceClaim Component
+        comp : SpaceClaim Component
             a given SpaceClaim component.
         """
         all_bodies = self.ComponentExtensions.GetBodies(comp)
@@ -216,7 +216,7 @@ class PreProcessingASP(BaseSCDM):
 
         Parameters
         ----------
-        part: Spaceclaim Part
+        part : Spaceclaim Part
             a given SpaceClaim prt.
 
         Returns
@@ -239,9 +239,9 @@ class PreProcessingASP(BaseSCDM):
 
         Parameters
         ----------
-        part: Spaceclaim Part
+        part : Spaceclaim Part
             a given SpaceClaim part.
-        bodies_only: bool
+        bodies_only : bool
             true if only processing volume bodies otherwise false.
 
         Returns
@@ -276,9 +276,9 @@ class PreProcessingASP(BaseSCDM):
 
         Parameters
         ----------
-        part: Spaceclaim Part
+        part : Spaceclaim Part
             a given SpaceClaim part.
-        bodies_only: bool
+        bodies_only : bool
             true if only processing volume bodies otherwise false.
 
         Returns
@@ -306,9 +306,9 @@ class PreProcessingASP(BaseSCDM):
 
         Parameters
         ----------
-        part: SpaceClaim part
+        part : SpaceClaim part
             a given SpaceClaim part.
-        bodies_only: bool
+        bodies_only : bool
 
         Returns
         -------
@@ -336,7 +336,7 @@ class PreProcessingASP(BaseSCDM):
 
         Parameters
         ----------
-        part: SpaceClaim part
+        part : SpaceClaim part
             a given SpaceClaim part.
         """
         conversion_dict = self.__convert_list_to_dict(part)
@@ -348,7 +348,7 @@ class PreProcessingASP(BaseSCDM):
 
         Parameters
         ----------
-        conversion_dict: dict
+        conversion_dict : dict
             a Dictionary with index of Name with value of List of bodies.
         """
         for item in conversion_dict:
@@ -364,7 +364,7 @@ class PreProcessingASP(BaseSCDM):
 
         Parameters
         ----------
-        component_name: str
+        component_name : str
             name used for searching components.
 
         Returns

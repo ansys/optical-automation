@@ -14,9 +14,9 @@ class DataProcessingFramework:
 
         Parameters
         ----------
-        application:  str
+        application : str
             application object started in the framework.
-        extension: tuple
+        extension : tuple
             extensions accepted by the application object.
         """
         self.application = application
