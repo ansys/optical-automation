@@ -1,9 +1,10 @@
 # -- Project information -----------------------------------------------------
 
 from datetime import datetime
+from ansys_optical_automation.post_process.dpf_base import DataProcessingFramework
 
 copyright = f"(c) {datetime.now().year} ANSYS, Inc. All rights reserved"
-project = 'Ansys Optical Automation Framework'
+project = 'ansys_optical_automation'
 author = "Ansys Inc."
 
 
@@ -16,7 +17,25 @@ extensions = [
     "sphinx_copybutton",
     "sphinx_panels",
     "sphinx.ext.graphviz",
+    "numpydoc",
+    "sphinx.ext.autodoc",
 ]
+
+# extensions = [
+#     "sphinx.ext.intersphinx",
+#     "sphinx.ext.autodoc",
+#     "sphinx.ext.todo",
+#     "sphinx.ext.viewcode",
+#     "sphinx.ext.autosummary",
+#     "sphinx.ext.intersphinx",
+#     "sphinx.ext.coverage",
+#     "sphinx_copybutton",
+#     "recommonmark",
+#     "sphinx.ext.graphviz",
+#     "sphinx.ext.mathjax",
+#     "sphinx.ext.inheritance_diagram",
+#     "numpydoc",
+# ]
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']

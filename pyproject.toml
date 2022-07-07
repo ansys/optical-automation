@@ -30,6 +30,7 @@ docs = [
     "sphinx-book-theme",
     "sphinx-copybutton",
     "sphinx-panels",
+    "numpydoc",
 ]
 
 [project.urls]
