@@ -15,7 +15,7 @@ class ScdmIO(BaseSCDM):
 
     def __valid_file(self, file):
         """
-        Check whether the file exists and is valid.
+        Check whether a file exists and is valid.
 
         Parameters
         ----------
