@@ -69,7 +69,7 @@ class TestComponentImporterAPI:
 
     def test_02_check_imported_part_location(self):
         """
-        Check parts are imported correctly.
+        Check that parts are imported correctly.
         Returns:
         -------
         None
