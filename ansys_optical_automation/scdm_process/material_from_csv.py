@@ -69,7 +69,7 @@ class MaterialsFromCSV(BaseSCDM):
         return dict
 
     def apply_geo_to_material(self):
-        """Function to apply material according to the material definition."""
+        """Apply material according to the material definition."""
         op_list = {}
         all_op = self.GetRootPart().CustomObjects
         for item in all_op:
@@ -122,7 +122,7 @@ class MaterialsFromCSV(BaseSCDM):
 
     def __create_layer(self, op_name):
         """
-        Create a layer with a given name.
+        Create a layer.
 
         Parameters
         ----------
