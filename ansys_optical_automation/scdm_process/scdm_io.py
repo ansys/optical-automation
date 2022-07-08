@@ -120,7 +120,7 @@ class ScdmIO(BaseSCDM):
         lock : bool
             Whether a lock is required.
         internalize : bool
-            Whether to interalize. 
+            Whether to internalize. 
         speos_source_group : bool
             Whether to group Speos surfaces under the imported part.
 

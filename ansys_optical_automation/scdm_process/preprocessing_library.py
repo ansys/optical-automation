@@ -222,7 +222,7 @@ class PreProcessingASP(BaseSCDM):
 
     def __get_all_surface_bodies(self, part):
         """
-       Seperate solids from surface bodies for a geometrical set named selection conversion.
+        Seperate solids from surface bodies for a geometrical set named selection conversion.
 
         Parameters
         ----------
@@ -282,7 +282,7 @@ class PreProcessingASP(BaseSCDM):
 
     def __get_bodies_for_geometrical_sets(self, part, bodies_only=True):
         """
-       Get bodies for each geometrical set.
+        Get bodies for each geometrical set.
 
         Parameters
         ----------

@@ -184,8 +184,8 @@ class Simulation(BaseSCDM):
             Maximum angle (degree) under which two projected pixels are to be connected by a line.
             The default is ``89``.
         min_distance : float or int, optional
-           Distance tolerance in millimeters for which two adjacent pixels are to be connected
-           by a line. The default is ``2``.
+            Distance tolerance in millimeters for which two adjacent pixels are to be connected
+            by a line. The default is ``2``.
         """
         sensor_name = self.object.Sensors[0].Name
         grid_name = self.name + "." + sensor_name + ".OPTProjectedGrid"

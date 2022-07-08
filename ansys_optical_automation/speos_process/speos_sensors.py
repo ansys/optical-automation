@@ -72,7 +72,7 @@ class Sensor(BaseSCDM):
         """
         Set the origin and x and y directions of the sensor.
 
-        For some intesity sensors, set the origin and polar and H0 axes. 
+        For some intensity sensors, set the origin and polar and H0 axes. 
 
         Parameters
         ----------
