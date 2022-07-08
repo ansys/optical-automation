@@ -17,7 +17,7 @@ except Exception:
 @pytest.mark.skipif(Nvidia_GPU is False, reason="does not have gpu on runner")
 class TestVRLabExportAPI:
     """
-    Class to define conditions for run of unit tests in PyTest
+    Defines conditions for running unit tests in PyTest.
     """
 
     def setup_class(self):
@@ -26,7 +26,7 @@ class TestVRLabExportAPI:
         reference_file = os.path.join(self.local_path, "workflows", "test_07_VRLab_reference_results.json")
         self.clean_results(self)  # no idea why but you have to pass there self
 
-        print("Start VRLab to generate JSON file for tests")
+        print("Start VRLab to generate the JSON file for tests.")
         unittest_run()
 
         with open(self.results_file) as file:
@@ -37,20 +37,20 @@ class TestVRLabExportAPI:
 
     def teardown_class(self):
         """
-        Called after all tests are completed to clean up SCDM session
-        clean results file.
+        Called after all tests are completed to clean up the SCDM session
+        and clean the results file.
 
-        On fail will report traceback with lines where code failed
+        On fail will report traceback with lines where the code failed.
         """
         self.clean_results(self)
 
         print("\n\n\n\n\n###############################")
-        print(self.results.get("error", "All tests are successful"))
+        print(self.results.get("error", "All tests are successful."))
         print("###############################\n\n\n\n\n")
 
     def clean_results(self):
         """
-        Delete results file to avoid confusion
+        Delete results file to avoid confusion.
         Returns:
         """
         if os.path.isfile(self.results_file):
@@ -58,7 +58,7 @@ class TestVRLabExportAPI:
 
     def test_01_check_exported_images_name_size(self):
         """
-        Function to compare the results of the created images with the expected images
+        Compare the results of created images with expected images.
         Returns: None
         """
         res = self.results.get("VRImages", None)

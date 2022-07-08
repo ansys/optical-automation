@@ -11,12 +11,12 @@ os.chdir(os.path.dirname(os.path.dirname(os.path.realpath(__file__))))
 
 class TestSimAPI:
     """
-    Class to define conditions for run of unit tests in PyTest
+    Defines conditions for running unit tests in PyTest.
     """
 
     def setup_class(self):
         """
-        Called before tests to initialize scdm class and open new SCDM session
+        Called before tests to initialize the ``scdm`` class and open a new SCDM session.
         Returns:
         """
 
@@ -35,10 +35,10 @@ class TestSimAPI:
 
     def teardown_class(self):
         """
-        Called after all tests are completed to clean up SCDM session
-        clean results file.
+        Called after all tests are completed to clean up the SCDM session
+        and clean the results file.
 
-        On fail will report traceback with lines where code failed
+        On fail will report traceback with lines where the code failed.
         """
         self.clean_results(self)
 
@@ -48,7 +48,7 @@ class TestSimAPI:
 
     def clean_results(self):
         """
-        Delete results file to avoid confusion
+        Delete results file to avoid confusion.
         Returns:
         """
         if os.path.isfile(self.results_file):
@@ -56,7 +56,7 @@ class TestSimAPI:
 
     def test_01_check_sim_created(self):
         """
-        Function to compare the results of Simulation class init method
+        Compare the results of the ``Simulation`` class initialization method.
         Returns: None
         """
         res = self.results.get("simulation_created", None)
@@ -65,7 +65,7 @@ class TestSimAPI:
 
     def test_02_test_select_geometrical_sets(self):
         """
-        Function to compare the results of select_geometrical_sets()
+        Compare the results of the ``select_geometrical_sets`` method.
         Returns: None
         """
         res = self.results.get("number_of_selected_bodies_in_geoset", None)
@@ -74,7 +74,7 @@ class TestSimAPI:
 
     def test_03_test_select_geometries(self):
         """
-        Function to compare the results of select_geometries()
+        Compare the results of the ``select_geometries`` method.
         Returns: None
         """
         res = self.results.get("number_of_selected_bodies_in_component", None)
@@ -83,7 +83,7 @@ class TestSimAPI:
 
     def test_04_test_define_geometries(self):
         """
-        Function to compare the results of define_geometries()
+        Compare the results of the ``define_geometries`` method.
         Returns: None
         """
         res = self.results.get("number_of_geos_defined", None)
@@ -92,7 +92,7 @@ class TestSimAPI:
 
     def test_05_test_rays_limit(self):
         """
-        Function to compare the results of set_rays_limit()
+        Compare the results of the ``set_rays_limit`` method.
         Returns: None
         """
         res = self.results.get("number_of_passes", None)

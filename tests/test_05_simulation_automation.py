@@ -11,12 +11,12 @@ os.chdir(os.path.dirname(os.path.dirname(os.path.realpath(__file__))))
 
 class TestSimAutomation:
     """
-    Class to define conditions for run of unit tests in PyTest
+    Defines conditions for running unit tests in PyTest.
     """
 
     def setup_class(self):
         """
-        Called before tests to initialize scdm class and open new SCDM session
+        Called before tests to initialize the ``scdm`` class and open a new SCDM session.
         Returns:
         """
 
@@ -35,10 +35,10 @@ class TestSimAutomation:
 
     def teardown_class(self):
         """
-        Called after all tests are completed to clean up SCDM session
-        clean results file.
+        Called after all tests are completed to clean up the SCDM session
+        and clean the results file.
 
-        On fail will report traceback with lines where code failed
+        On fail will report traceback with lines where the code failed.
         """
         self.clean_results(self)
 
@@ -48,7 +48,7 @@ class TestSimAutomation:
 
     def clean_results(self):
         """
-        Delete results file to avoid confusion
+        Delete results file to avoid confusion.
         Returns:
         """
         if os.path.isfile(self.results_file):
@@ -56,7 +56,7 @@ class TestSimAutomation:
 
     def test_01_sim_created(self):
         """
-        Function to compare the result of Simulation class init method
+        Compare the result of the ``Simulation`` class initialization method.
         Returns: None
         """
 
@@ -66,7 +66,7 @@ class TestSimAutomation:
 
     def test_02_camera_spectra(self):
         """
-        Function to compare the result of Camera.set_sensitivity()
+        Compare the result of the ``Camera.set_sensitivity`` method.
         Returns: None
         """
         res_red = self.results.get("red_spectrum", None)
@@ -80,7 +80,7 @@ class TestSimAutomation:
 
     def test_03_camera_exists(self):
         """
-        Function to compare the result of Camera class init method
+        Compare the result of the ``Camera`` class initialization method.
         Returns: None
         """
         res = self.results.get("camera_exists", None)
@@ -89,7 +89,7 @@ class TestSimAutomation:
 
     def test_04_grid_exported(self):
         """
-        Function to compare the result of Simulation.export_grid()
+        Compare the result of the ``Simulation.export_grid`` method.
         Returns: None
         """
         res = self.results.get("grid_exported", None)
@@ -98,7 +98,7 @@ class TestSimAutomation:
 
     def test_05_camera_distortion(self):
         """
-        Function to compare the result of Camera.set_distortion()
+        Compare the result of the ``Camera.set_distortion`` method.
         Returns: None
         """
         res = self.results.get("distortion", None)
@@ -107,7 +107,7 @@ class TestSimAutomation:
 
     def test_06_check_output(self):
         """
-        Function to compare the result of Simulation.run_simulation()
+        Compare the result of the ``Simulation.run_simulation`` method.
         Returns: None
         """
         res = self.results.get("output_exists", None)
@@ -116,7 +116,7 @@ class TestSimAutomation:
 
     def test_07_grid_parameters(self):
         """
-        Function to compare the result of Simulation.set_grid_params()
+        Compare the result of the ``Simulation.set_grid_params`` method.
         Returns: None
         """
         res = self.results.get("grid_parameters", None)
@@ -125,7 +125,7 @@ class TestSimAutomation:
 
     def test_08_camera_transmittance(self):
         """
-        Function to compare the result of Camera.set_transmittance()
+        Compare the result of ``Camera.set_transmittance`` method.
         Returns: None
         """
         res = self.results.get("transmittance", None)
@@ -134,7 +134,7 @@ class TestSimAutomation:
 
     def test_09_curves_exported(self):
         """
-        Function to compare the result of Simulation.export_grid()
+        Compare the result of the ``Simulation.export_grid`` method.
         Returns: None
         """
         res = self.results.get("curves_exported", None)
@@ -143,7 +143,7 @@ class TestSimAutomation:
 
     def test_10_sensor_added(self):
         """
-        Function to compare the result of Simulation.add_sensor()
+        Compare the result of the ``Simulation.add_sensor`` method.
         Returns: None
         """
         res = self.results.get("sensor_added", None)
@@ -152,7 +152,7 @@ class TestSimAutomation:
 
     def test_11_sensor_name(self):
         """
-        Function to compare the result of Simulation.add_sensor()
+        Compare the result of the ``Simulation.add_sensor`` method.
         Returns: None
         """
         res = self.results.get("sensor_name", None)

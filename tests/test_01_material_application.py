@@ -11,12 +11,12 @@ os.chdir(os.path.dirname(os.path.dirname(os.path.realpath(__file__))))
 
 class TestMaterialAPI:
     """
-    Class to define conditions for run of unit tests in PyTest
+    Defines conditions for running unit tests in PyTest.
     """
 
     def setup_class(self):
         """
-        Called before tests to initialize scdm class and open new SCDM session
+        Called before tests to initialize the ``scdm`` class and open a new SCDM session.
         Returns:
         """
 
@@ -35,20 +35,20 @@ class TestMaterialAPI:
 
     def teardown_class(self):
         """
-        Called after all tests are completed to clean up SCDM session
-        clean results file.
+        Called after all tests are completed to clean up the SCDM session
+        and clean the results file.
 
-        On fail will report traceback with lines where code failed
+        On fail will report traceback with lines where the code failed.
         """
         self.clean_results(self)
 
         print("\n\n\n\n\n###############################")
-        print(self.results.get("error", "All tests are successful"))
+        print(self.results.get("error", "All tests are successful."))
         print("###############################\n\n\n\n\n")
 
     def clean_results(self):
         """
-        Delete results file to avoid confusion
+        Delete results file to avoid confusion.
         Returns:
         """
         if os.path.isfile(self.results_file):
@@ -56,7 +56,7 @@ class TestMaterialAPI:
 
     def test_01_check_optical_props(self):
         """
-        Function to compare the results of create_speos_material() and apply_geo_to_material()
+        Compare the results of the ``create_speos_material`` and ``apply_geo_to_material`` methods.
         Returns: None
         """
         res = self.results.get("speos_materials", None)
@@ -65,7 +65,7 @@ class TestMaterialAPI:
 
     def test_02_check_layers(self):
         """
-        Function to compare the results of apply_geo_to_layer()
+        Compare the results of the ``apply_geo_to_layer`` method.
         Returns: None
         """
         res = self.results.get("speos_layers", None)
@@ -74,7 +74,7 @@ class TestMaterialAPI:
 
     def test_03_check_layer_material_synch(self):
         """
-        Function to compare the results of SynchLayersMaterials.sync_op_from_layers()
+        Compare the results of the ``SynchLayersMaterials.sync_op_from_layers`` method.
         Returns: None
         """
         res = self.results.get("layer_synch_to_material", None)

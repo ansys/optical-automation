@@ -1,17 +1,20 @@
 Contribute
 ----------
-We welcome any code contributions and we hope that this
-guide will facilitate an understanding of the ansys-optical-automation code
-repository. It is important to note that while the ansys-optical-automation
-is maintained by Ansys and any submissions will be reviewed
-thoroughly before merging, we still seek to foster a community that can
-support user questions and develop new features to make this library
-a useful tool for all users.  As such, we welcome and encourage any
-questions or submissions to this repository.
+We welcome any code contributions and hope that the documentation for the
+Optical Automation library helps to facilitate your understanding of the
+``optical-automation`` repository.
+
+.. note::
+    While Ansys maintains the Optical Automation library and thoroughly
+    reviews all submissions before merging them, its goal is to foster
+    a community that can support user questions and develop new features
+    to make this library useful for all users. As such, questions or
+    submissions to this repository are welcomed and encouraged.
 
 Installation
 ------------
-Clone and install in development mode with:
+Clone and install the Optimation Automation library in development
+mode with:
 
 .. code::
 
@@ -20,27 +23,26 @@ Clone and install in development mode with:
    pre-commit install
    pip install -e .
 
+
 Testing
 -------
-Tests are in `tests <tests>`_ directory. A configuration file allows to choose the version
-of Ansys SPEOS and script API for tests. Running tests requires pytest as test runner. 
+Tests are in the `tests <tests>`_ directory. A configuration file allows you
+to choose the version of Ansys SPEOS and script API for tests. Running tests requires pytest as test runner. 
 
 Test configuration file
 ~~~~~~~~~~~~~~~~~~~~~~~
 The configuration file  `tests/config.py <tests/config.py>`_ located in tests folder 
-contains version of Ansys SPEOS and script API used for running tests. The version 
-parameters can be changed according to your test needs. Example:
+contains version of Ansys SPEOS and the script API to use for running tests. You can
+change the version parameters according to your test needs. For example:
 
-- **SCDM_VERSION** (integer): Speos version as 222 for 2022R2.
-- **API_VERSION** (integer): API version as 21 for V21. 
+- **SCDM_VERSION** (integer): Speos version is  ``222`` for 2022 R2.
+- **API_VERSION** (integer): API version is ``21`` for V21. 
  
 Launch unit tests
 ~~~~~~~~~~~~~~~~~
-To run all the tests defined under tests folder.
+Run all tests defined in the ``tests`` folder with:
 
 .. code::
 
    pytest -v tests
-
-
 

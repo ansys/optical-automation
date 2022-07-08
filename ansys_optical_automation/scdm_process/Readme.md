@@ -1,12 +1,13 @@
 ### Functionality
-Class MaterialsFromCSV has methods to:
- 1) create SPEOS materials specified in the csv file Materials.csv
- 2) create SCDM layers with the same names as SPEOS materials
- 2) assign created materials to the geometries, if the geometry "property" field is equal to the material name.
- 3) assign geometries to the SCDM layers based on the SPEOS material name.
+The class ``MaterialsFromCSV`` has methods to:
+ 
+ - Create Speos materials specified in the CSV file ``Materials.csv``
+ - Create SpaceClaim layers with the same names as the Speos material
+ - Assign created materials to the geometries, if the geometry ``property`` field is equal to the material name.
+ - Aassign geometries to the SpaceClaim layers based on the Speos material name.
 
 ### Example usage:
-Your script should import the MaterialsFromCSV class: 
+Your script should import the ``MaterialsFromCSV`` class: 
 
     import sys
     sys.path.append("D:\\#PyOptics")
