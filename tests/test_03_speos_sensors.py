@@ -128,7 +128,7 @@ class TestSensorAPI:
 
     def test_09_check_y_reverse_false(self):
         """
-       Compare the results of Camera.set_position() - Y Direction.
+        Compare the results of Camera.set_position() - Y Direction.
         Returns: None
         """
         res = self.results.get("camera_y_reverse_false", None)
@@ -164,7 +164,7 @@ class TestSensorAPI:
 
     def test_13_check_y_axis(self):
         """
-       Compare the results of IntensitySensor.set_position() - Y Direction.
+        Compare the results of IntensitySensor.set_position() - Y Direction.
         Returns: None
         """
         res = self.results.get("intensity_y_axis_type", None)
