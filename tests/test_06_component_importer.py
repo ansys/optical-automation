@@ -58,7 +58,7 @@ class TestComponentImporterAPI:
 
     def test_01_check_target_axis_system_information(self):
         """
-        Check axis system information is extracted correctly.
+        Check that axis system information is extracted correctly.
         Returns:
         -------
         None
@@ -80,7 +80,7 @@ class TestComponentImporterAPI:
 
     def test_03_compared_target_and_imported_locations(self):
         """
-        Compare target and imported part location.
+        Compare target and imported part locations.
         Returns
         -------
         None
@@ -90,7 +90,7 @@ class TestComponentImporterAPI:
 
     def test_04_check_anchor_operation(self):
         """
-        Check if anchor is applied correctly.
+        Check if the anchor is applied correctly.
         Returns:
         -------
         None
@@ -100,7 +100,7 @@ class TestComponentImporterAPI:
 
     def test_05_check_anchor_operation(self):
         """
-        Check if lock is applied correctly.
+        Check if the lock is applied correctly.
         Returns:
         -------
         None

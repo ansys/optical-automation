@@ -9,7 +9,7 @@ def get_scdm_install_location(version):
     Parameters
     ----------
     version : int
-        Version in numerical format. For example, ``211`` for 2021 R1.
+        Version of SpaceClaim in numerical format. For example, ``211`` for 2021 R1.
 
     Returns
     -------
@@ -24,7 +24,7 @@ def get_scdm_install_location(version):
 
 def run_scdm_batch(scdm_version, api_version, script_file):
     """
-    Start a Speos script in batch mode via ``subprocess.call()``.
+    Start a Speos script in batch mode via the ``subprocess.call`` method.
 
     Parameters
     ----------

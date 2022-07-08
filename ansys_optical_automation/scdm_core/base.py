@@ -18,7 +18,7 @@ class BaseSCDM(object):
     def __init__(self, SpaceClaim, supported_versions=None):
         """
         Base class that contains all commonly used objects. This class serves more as an abstract class.
-        Optionally performs validation that the API specified by a user is supported.
+        It optionally validates that the user-specified API is supported.
         Args:
             SpaceClaim: SpaceClaim object
             supported_versions (list/tuple): list of supported API versions

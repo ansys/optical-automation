@@ -2,9 +2,9 @@ from ansys_optical_automation.scdm_core.base import BaseSCDM
 
 
 class SynchLayersMaterials(BaseSCDM):
-    """Provides for syncing information between the Spos material and CAD layer.
+    """Provides for syncing information between the Speos material and CAD layer.
 
-    The class contains mainly methods to sync information.
+    The class contains methods to sync information.
 
     """
 
@@ -29,7 +29,7 @@ class SynchLayersMaterials(BaseSCDM):
         Returns
         -------
         dict:
-            Dictionary with an index of layer names and values of geometries of layers.
+            Dictionary with an index of layer names and values for geometries of layers.
         """
         dic = {}
         root_part = self.GetRootPart()
@@ -51,7 +51,7 @@ class SynchLayersMaterials(BaseSCDM):
         Returns
         -------
         list:
-            List of names of Speos volume optical materials.
+            List of names for Speos volume optical materials.
         """
         op_list = []
         cs = self.GetRootPart().CustomObjects
@@ -69,7 +69,7 @@ class SynchLayersMaterials(BaseSCDM):
         Parameters
         ----------
         op_list : list
-            List of names of volume optical materials.
+            List of names for volume optical materials.
         """
         for item in op_list:
             op = self.speos_sim.Material.Find(item)

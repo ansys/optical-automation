@@ -7,7 +7,8 @@ from ansys_optical_automation.scdm_core.base import BaseSCDM
 class MaterialsFromCSV(BaseSCDM):
     """Provides for creating Speos materials from material CSV files.
 
-    This base class contains methods to read a material CSV file and create Speos materials.
+    This base class contains methods for reading a material CSV file and creating
+    Speos materials.
 
     """
 
@@ -46,7 +47,8 @@ class MaterialsFromCSV(BaseSCDM):
 
     def __create_material_dictionary(self):
         """
-        Create a dictionary with an index of material name and value of the SpaceClaim part list.
+        Create a dictionary with an index of material names and values for the SpaceClaim
+        part list.
 
         Returns
         -------
@@ -125,7 +127,7 @@ class MaterialsFromCSV(BaseSCDM):
         Parameters
         ----------
         op_name : str
-            Name to give the new layer.
+            Name for the new layer.
         """
         active_doc = self.GetActiveDocument()
         nb_layer = active_doc.Layers.Count
@@ -136,7 +138,7 @@ class MaterialsFromCSV(BaseSCDM):
 
     def __create_op(self, fop_name, op_name, sop_name, vop_name, work_directory):
         """
-        Create Speos optical material according to given parameters.
+        Create a Speos optical material based on given parameter values.
 
         Parameters
         ----------
@@ -179,14 +181,14 @@ class MaterialsFromCSV(BaseSCDM):
 
     def create_speos_material(self, csv_path, work_directory):
         """
-        Read a given CSV file and create an OP accordingly.
+        Read a CSV file and create an OP.
 
         Parameters
         ----------
         csv_path: str
             Full path to the CSV file.
         work_directory: str
-            Full path to the input material folder. FOr example ``"D:\\ASP_MaterialFromCsv"``.
+            Full path to the input material folder. For example ``"D:\\ASP_MaterialFromCsv"``.
         """
         with open(csv_path) as myfile:
             reader = csv.reader(myfile)

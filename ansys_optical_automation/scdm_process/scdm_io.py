@@ -7,7 +7,7 @@ class ScdmIO(BaseSCDM):
     """
     Provides all methods for importing and exporting a SpaceClaim or Speos project.
     
-    This class does not support multiple Speos  sessions.
+    This class does not support multiple Speos sessions.
     """
 
     def __init__(self, SpaceClaim):
@@ -155,7 +155,7 @@ class ScdmIO(BaseSCDM):
 
     def get_axis_systems_under_component(self, component):
         """
-        Get axis system under a component.
+        Get the axis system under a component.
 
         Parameters
         ----------
@@ -193,7 +193,7 @@ class ScdmIO(BaseSCDM):
         axis_system_list : list
             List of axis systems.
         name : string, optional
-            Name for the group for grouping the imported parts. The default is ``None``.
+            Name for the group to use for grouping imported parts. The default is ``None``.
         anchor : bool, optional
             Whether an anchor is required. The default is ``False``.
         lock : bool, optional

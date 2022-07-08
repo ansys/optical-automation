@@ -81,8 +81,8 @@ class Simulation(BaseSCDM):
 
     def select_geometrical_sets(self, geosets_list):
         """
-        Add all geometries from Catia geometrical sets provided in a list to
-        the simulation's list of bodies.
+        Add all geometries from a list of Catia geometrical sets to the simulation's list
+        of bodies.
 
         Parameters
         ----------
@@ -112,13 +112,13 @@ class Simulation(BaseSCDM):
 
     def set_rays_limit(self, rays):
         """
-        Set the computation limit by either the maximum number of rays (for direct and inverse simulations)
-        or the number passes (for inverse simulations).
+        Set the computation limit either by a maximum number of rays (for direct and
+        inverse simulations) or by a maximum number passes (for inverse simulations).
 
         Parameters
         ----------
         rays : int
-            Number of rays or passes to set the limit of the simulation to.
+            Number of rays or passes for limiting the simulation.
         """
         self.rays = rays
         if self.kind == "direct":  # direct simulation
@@ -148,7 +148,7 @@ class Simulation(BaseSCDM):
 
     def save_grid(self, sensor_name, save_name):
         """
-        # TODO Save components in the main script in SpaceClaim
+        # TODO Save components in the main script in SpaceClaim.
         """
         grid_name = ".".join([self.name, sensor_name, "OPTProjectedGrid", "CATPart"])
         # find the created component
@@ -201,7 +201,7 @@ class Simulation(BaseSCDM):
         return self
 
     def run_simulation(self):
-        """Run simulation on the local CPU."""
+        """Run a simulation on the local CPU."""
         self.object.Compute()
         self.computed = True
         return self

@@ -1,7 +1,7 @@
 ### Example usage:
 
 Associate a camera named ``Front`` with the 
-references in the part named ``Front``:
+references in a part named ``Front``:
 
 .. code:: python
 

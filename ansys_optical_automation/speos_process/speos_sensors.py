@@ -7,7 +7,7 @@ class Sensor(BaseSCDM):
     """
     Provides the parent class for all Speos sensor types.
     
-    This class contains methods and properties that are mutual for all sensor types.
+    This class contains methods and properties that are common to all sensor types.
     It shouldn't be used by itself. Subclasses should be used instead.
     """
 
@@ -15,7 +15,7 @@ class Sensor(BaseSCDM):
         """
         Initialize the base sensor object.
         
-        The base sensor object has a name and some other attributes that are mutual for all
+        The base sensor object has a name and some other attributes that are common to all
         Speos sensors. It does not have a Speos sensor object and cannot be used by
         simulations as is.
 
@@ -39,8 +39,8 @@ class Sensor(BaseSCDM):
 
     def find_axes(self, origin=None):
         """
-        Find a component with the same name as the sensor itself and look for an axis system and
-        an origin point (if available) in it, and save them as properties in self.
+        Find a component with the same name as the sensor, look in it for an axis system and
+        an origin point (if available), and save them as properties in self.
 
         Parameters
         ----------
@@ -72,7 +72,7 @@ class Sensor(BaseSCDM):
         """
         Set the origin and x and y directions of the sensor.
 
-        For some intensity sensors, set the origin and polar and H0 axes. 
+        For some intensity sensors, set the origin and polar-axis and V0/H0-axis. 
 
         Parameters
         ----------
@@ -91,7 +91,7 @@ class Sensor(BaseSCDM):
             raise TypeError("No Speos object is defined.")
 
         if not (self.axes and self.origin) and not (axes and origin):  # if axes and/or origin not defined/provided
-            raise NameError("Axes or origin are not defined. Use the find_axes method or provide axes and origin as inputs.")
+            raise NameError("Axes or origin are not defined. Use the find_axes method or provide axes or origin as input.")
 
         if not (axes and origin):  # If no inputs provided, use self.axes and self.origin
             axes = self.axes
@@ -114,13 +114,13 @@ class Sensor(BaseSCDM):
 
 class Camera(Sensor):
     """
-    Provides methods for the Speos camera sensor definition.
+    Provides methods for defining the Speos camera sensor.
     """
 
     def __init__(self, name, SpeosSim, SpaceClaim):
         """
-        Searches for a Speos camera sensor with the specified name in the simulation tree. If it is not found, a new
-        Speos camera sensor is created with the specified name.
+        Searches for a Speos camera sensor in the simulation tree. If the specified name is not found, a new
+        Speos camera sensor is created with this name.
 
         Parameters
         ----------
@@ -188,8 +188,8 @@ class IntensitySensor(Sensor):
 
     def __init__(self, name, SpeosSim, SpaceClaim):
         """
-        Searches for a Speos intensity sensor with the specified name in the simulation tree. If it is not found, a new
-        Speos intensity sensor is created with the specified name.
+        Searches for a Speos intensity sensor in the simulation tree. If the specified name is
+        not found, a new Speos intensity sensor is created with this name.
 
         Parameters
         ----------
@@ -205,7 +205,7 @@ class IntensitySensor(Sensor):
 
     def set_format(self, sensor_format=None):
         """
-        Set the format of the sensor.
+        Set the sensor format.
 
         Parameters
         ----------
@@ -231,7 +231,7 @@ class IntensitySensor(Sensor):
 
     def set_range(self, x_start=None, x_end=None, y_start=None, y_end=None, x_mirrored=None, y_mirrored=None):
         """
-        Set the size of the sensor.
+        Set the sensor size.
 
         Parameters
         ----------
@@ -305,7 +305,7 @@ class IntensitySensor(Sensor):
             self.speos_object.YResolution = y_resolution
 
     def set_type(self, sensor_type):
-        """Set the type of the sensor.
+        """Set the sensor type.
 
         Parameters
         ----------

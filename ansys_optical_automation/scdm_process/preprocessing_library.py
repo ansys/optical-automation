@@ -30,7 +30,7 @@ class PreProcessingASP(BaseSCDM):
         Returns
         -------
         dict
-            Dictionary with an index of color codes and values of a list of bodies.
+            Dictionary with an index of color codes and values for a list of bodies.
         """
         conversion_dict = {}
         root = self.GetRootPart()
@@ -50,7 +50,7 @@ class PreProcessingASP(BaseSCDM):
         Returns
         -------
         dict
-            Dictionary with an index of material names and values of a list of bodies.
+            Dictionary with an index of material names and values for a list of bodies.
         """
 
         def get_real_original(item):
@@ -140,7 +140,7 @@ class PreProcessingASP(BaseSCDM):
 
         >>>body1 body2 body3 body4 body5 body6 body7 body8 body9
 
-        If the group size was set to ``2``, the list returned would look like this:
+        If the group size is set to ``2``, the list that is returned would look like this:
 
         >>>[[body1, body2] [body3, body4], [body5, body6], [body7, body8], [body9]]
         """
@@ -181,7 +181,7 @@ class PreProcessingASP(BaseSCDM):
         Parameters
         ----------
         conversion_dict : dict
-            Dictionary with values of a list of bodies.
+            Dictionary with values for a list of bodies.
         """
         for item in conversion_dict:
             sel = self.Selection.Create(conversion_dict[item])
@@ -245,7 +245,7 @@ class PreProcessingASP(BaseSCDM):
 
     def __create_geometrical_set_names_list(self, part, bodies_only=True):
         """
-        Generate a list of geometrical set anmes from geometry names.
+        Generate a list of geometrical set names from geometry names.
 
         Parameters
         ----------

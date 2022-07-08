@@ -125,7 +125,7 @@ class TestSimAutomation:
 
     def test_08_camera_transmittance(self):
         """
-        Compare the result of ``Camera.set_transmittance`` method.
+        Compare the result of the ``Camera.set_transmittance`` method.
         Returns: None
         """
         res = self.results.get("transmittance", None)
