@@ -1,7 +1,7 @@
 Contribute
 ----------
-We welcome any code contributions and hope that the documentation for the
-Optical Automation library helps to facilitate your understanding of the
+We welcome any code contributions and hope that the documentation for this
+library facilitates your understanding of the
 ``optical-automation`` repository.
 
 .. note::

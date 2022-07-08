@@ -3,19 +3,19 @@ import sys
 
 
 class DataProcessingFramework:
-    """Provides the basic data processing framework.
+    """Provides DPF (Data Processing Framework).
 
-    The class contains mainly opening and saving functionalities to allow interacting with any result file.
+    The class contains opening and saving functionalities to allow interacting with any results file.
 
     """
 
     def __init__(self, application=None, extension=""):
-        """Initialize general properties of the data postprocessing framework.
+        """Initialize general properties of DPF.
 
         Parameters
         ----------
         application : str, optional
-            Application object started in the framework. The default is ``None``.
+            Application object started in DPF. The default is ``None``.
         extension : tuple, optional
             Extensions accepted by the application object. The default is ``""``.
         """
@@ -33,7 +33,7 @@ class DataProcessingFramework:
             raise ImportError("Application is not defined.")
 
     def open_file(self, str_path):
-        """Opens a file in DPF based on a path.
+        """Open a file in DPF.
 
         Parameters
         ----------
@@ -48,7 +48,7 @@ class DataProcessingFramework:
                     + "accepted extension"
                 )
             if not self.dpf_instance.OpenFile(str_path):
-                raise ImportError("File could not be opened.")
+                raise ImportError("Opening the file failed.")
         else:
             raise FileNotFoundError("File is not found.")
 
@@ -58,7 +58,7 @@ class DataProcessingFramework:
         Parameters
         ----------
         str_path : str
-            Path for the folder to validate. For example, ``r"C:\\temp\"``.
+            Path for the folder to validate or create. For example, ``r"C:\\temp\"``.
         """
         if not os.path.isdir(str_path):
             os.makedirs(str_path)

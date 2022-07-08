@@ -12,7 +12,7 @@ class DpfHdriViewer(DataProcessingFramework):
     """
 
     def __init__(self):
-        """Initialize the data postprocessing framework as HDRIViewer."""
+        """Initialize DPF as HDRIViewer."""
         DataProcessingFramework.__init__(
             self, application="HDRIViewer.Application", extension=(".speos360", ".optisvr", ".xmp")
         )
@@ -79,7 +79,7 @@ class DpfHdriViewer(DataProcessingFramework):
         Parameters
         ----------
         export_path : string
-            Path for exporting the set of JPG files. If this path does not exist,
+            Path for exporting the JPG files. If this path does not exist,
             it is created.
         phi_angles : list of floats, optional
             List of phi angles to export. The default is ``None``, in which case
@@ -87,8 +87,8 @@ class DpfHdriViewer(DataProcessingFramework):
         theta_angles : list of floats, optional
             List of theta angles to export. The default is ``None``, in which case
             all theta angles are exported.      
-        config_ids : list of positive integers or list of strings or a string or and an integer, optional
-            List of configurations IDS to export. The default is ``None``, in which case all configuration
+        config_ids : list of positive integers or list of strings or a string or an integer, optional
+            List of configurations IDs to export. The default is ``None``, in which case all configuration
             IDs are exported.
         """
         self.valid_dir(export_path)

@@ -10,12 +10,12 @@ from ansys_optical_automation.scdm_process.scdm_io import ScdmIO
 
 def selection_dialog_window():
     """
-    Select the file.
+    Asks for a file selection.
 
     Returns
     -------
     str
-        File directory selected, otherwise ```False``
+        File directory selected, otherwise ```False``.
     """
     open_dialog = OpenFileDialog()
     open_dialog.Filter = "ANSYS SPEOS files (*.scdoc;*.scdocx)|*.scdoc;*scdocx|All Files (*.*)|*.*"
@@ -33,7 +33,7 @@ def check_visual_status_dialog():
     Returns
     -------
     bool
-        ``True`` if successful, ``False`` otherwise
+        ``True`` if successful, ``False`` otherwise.
     """
     response = InputHelper.PauseAndGetInput("Only show coordinates where you would like to import LEDs.")
     if not response.Success:
@@ -43,7 +43,7 @@ def check_visual_status_dialog():
 
 
 def import_by_visual_status():
-    """Import a selected part based on the visual axis systems."""
+    """Import a part based on the visual axis systems."""
     if not check_visual_status_dialog():
         return
     led_file = selection_dialog_window()
@@ -59,7 +59,7 @@ def import_by_visual_status():
 
 
 def import_by_selection():
-    """Import a selected SCDM project on the selected axis."""
+    """Import a SCDM project on the selected axis."""
     led_file = selection_dialog_window()
     if not led_file:
         return
@@ -72,7 +72,7 @@ def import_by_selection():
                 return
             axis_system_selection = input_return.PrimarySelection
             if len(axis_system_selection.GetItems[ICoordinateSystem]()) == 0:
-                MessageBox.Show("The selection must contains at least one axis system to be able to import the part.")
+                MessageBox.Show("To import the part, the selection must contain at least one axis system.")
                 continue
             break
     axis_system_list = axis_system_selection.GetItems[ICoordinateSystem]()

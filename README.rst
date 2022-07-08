@@ -8,7 +8,7 @@ The Optical Automation library gathers functionalities and tools for Ansys Speos
 and Lumerical automations and interoperations.
 
 For Speos, this library allows you to create workflows combining different preprocessing
-and postprocessing function modules.
+and postprocessing modules.
 
 Installation
 ------------
@@ -30,7 +30,7 @@ Include a link to the full Sphinx documentation.  For example, `PyAnsys <https:/
 
 Contribution
 ------------
-Contributions to this library are welomce. To learn how to contribute, see the
+Contributions to this library are welcome. To learn how to contribute, see the
 `Contribute <CONTRIBUTE.rst>`_ document.
 
 License
