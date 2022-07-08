@@ -78,10 +78,10 @@ class Sensor(BaseSCDM):
         ----------
         x_reverse : bool, optional
             Whether to reverse the direction of the X-axis of the sensor. The default is ``False``.
-        y_reverse : bool, bool
+        y_reverse : bool, optional
             Whether to reverse the direction of the Y-axis of the sensor. The default is ``False``.
         origin : text or integer, optional
-            Spaceclaim axis system or a point. The default is ``None``.
+            SpaceClaim axis system or a point. The default is ``None``.
         axes : list, optional
             List in the format ``[x-axis, y-axis]`` that defines the orientation of the axis, where
             ``x-axis`` and ``y-axis`` are SCDM axis objects (not an axis system). For IESNA and
