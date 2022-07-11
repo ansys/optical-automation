@@ -6,6 +6,7 @@ on:
     paths:
       - ansys_optical_automation/**
       - tests/**
+      - .github/**
 
 jobs:
   simulation-data-test:
