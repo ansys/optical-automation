@@ -1,0 +1,46 @@
+name:  doc
+
+on: [workflow_dispatch]
+
+jobs:
+  documentation:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Check out repository code
+      uses: actions/checkout@v3
+
+    - name: Setup Python
+      uses: actions/setup-python@v2
+      with:
+            python-version: 3.7
+
+    - name: Install dependencies
+      run: |
+          python -m ensurepip
+          python -m venv venv
+          venv\Scripts\Activate.ps1
+          python -m pip install --upgrade pip
+          python -m pip install  .[docs]
+
+    - name: Sphinx documentation
+      run: |
+          cd doc
+          sphinx-apidoc -o api ..\ansys_optical_automation
+          make.bat html
+          touch build/html/.nojekyll
+    
+    - name: Update HTML Documentation
+      uses: actions/upload-artifact@v2
+      with:
+          name: HTML-Documentation
+          path: doc/_build/html
+          retention-days: 7
+      
+    - name: Deploy
+      uses: JamesIves/github-pages-deploy-action@4.1.5
+      with:
+          branch: gh-pages
+          folder: doc/_build/html
+          clean: true
