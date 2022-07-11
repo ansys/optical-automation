@@ -2,15 +2,15 @@ from ansys_optical_automation.scdm_core.base import BaseSCDM
 
 
 class SynchLayersMaterials(BaseSCDM):
-    """Basic that sync information between speos material and CAD layer.
+    """Provides for syncing information between the Speos material and CAD layer.
 
-    The class will contain mainly methods to sync information.
+    The class contains methods to sync information.
 
     """
 
     def __init__(self, SpeosSim, SpaceClaim):
         """
-        Base class that contains all common used objects. This class serves more as an abstract class.
+        Base class that contains all commonly used objects. This class serves more as an abstract class.
 
         Parameters
         ----------
@@ -24,12 +24,12 @@ class SynchLayersMaterials(BaseSCDM):
 
     def __create_dictionary_from_layers(self):
         """
-        Function to create a dictionary from information of layers.
+        Create a dictionary from information of layers.
 
         Returns
         -------
         dict:
-            a dictionary with index of layer name and value of geometries of that layer.
+            Dictionary with an index of layer names and values for geometries of layers.
         """
         dic = {}
         root_part = self.GetRootPart()
@@ -46,12 +46,12 @@ class SynchLayersMaterials(BaseSCDM):
 
     def __get_op_list(self):
         """
-        Function to get a list of speos volume optical materials in project.
+        Get all Speos volume optical materials in the project.
 
         Returns
         -------
         list:
-            a list of name of volume optical materials.
+            List of names for Speos volume optical materials.
         """
         op_list = []
         cs = self.GetRootPart().CustomObjects
@@ -64,19 +64,19 @@ class SynchLayersMaterials(BaseSCDM):
 
     def __clean_geo_op_list(self, op_list):
         """
-        Function to remove all the CAD linked to the speos optical materials.
+        Remove all CAD files linked to Speos optical materials.
 
         Parameters
         ----------
         op_list : list
-            a list of name of volume optical materials.
+            List of names for volume optical materials.
         """
         for item in op_list:
             op = self.speos_sim.Material.Find(item)
             op.VolumeGeometries.Clear()
 
     def sync_op_from_layers(self):
-        """Function to sync speos volume optical material based on the information of layers."""
+        """Sync Speos volume optical materials based on the information of layers."""
         op_list = self.__get_op_list()
         dic = self.__create_dictionary_from_layers()
         self.__clean_geo_op_list(op_list)

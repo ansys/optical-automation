@@ -1,5 +1,5 @@
 """
-Prepare the log file for Ansys ARM environment
+Prepare the log file for the Ansys ARM environment.
 """
 
 

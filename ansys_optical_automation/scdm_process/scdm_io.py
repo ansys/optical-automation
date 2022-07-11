@@ -5,8 +5,9 @@ from ansys_optical_automation.scdm_core.base import BaseSCDM
 
 class ScdmIO(BaseSCDM):
     """
-    This class contains all the methods to import and output SpaceClaim/Ansys SPEOS project.
-    For this reason the class does not support multiple Ansys SPEOS  sessions.
+    Provides all methods for importing and exporting a SpaceClaim or Speos project.
+
+    This class does not support multiple Speos sessions.
     """
 
     def __init__(self, SpaceClaim):
@@ -14,27 +15,28 @@ class ScdmIO(BaseSCDM):
 
     def __valid_file(self, file):
         """
-        Function valid if file is existing or not.
+        Check whether a file exists and is valid.
 
         Parameters
         ----------
         file : str
-            string describing the location of a file.
+            Full path to the file.
 
         Returns
         -------
         bool
-            True such file is existing, False otherwise
+            ``True`` when successful, ``False`` when failed.
         """
         return os.path.isfile(file)
 
     def __apply_lock(self, component):
         """
-        This function apply lock to the all bodies under provided component.
+        Apply lock to all bodies under a component.
 
         Parameters
         ----------
-        component : spaceclaim component
+        component : SpaceClaim component
+            SpaceClaim component.
         """
         for body in self.ComponentExtensions.GetAllBodies(component):
             body_selection = self.Selection.CreateByObjects(body)
@@ -42,22 +44,23 @@ class ScdmIO(BaseSCDM):
 
     def __apply_internalize(self, component):
         """
-        This function internalize the component provided.
+        Internalize a component.
 
         Parameters
         ----------
-        component : spaceclaim component
+        component : SpaceClaim component
+            SpaceClaim component.
         """
         group_selection = self.Selection.CreateByObjects(component)
         self.ComponentHelper.InternalizeAll(group_selection, True, None)
 
     def __apply_anchor(self, component):
         """
-        This function add anchor conditions to structure component provided.
+        Add anchor conditions to a structure component.
 
         Parameters
         ----------
-        component : spaceclaim component
+        component : SpaceClaim component
         """
         self.AnchorCondition.Create(component.Parent, component)
         for item in self.ComponentExtensions.GetAllComponents(component):
@@ -66,16 +69,16 @@ class ScdmIO(BaseSCDM):
 
     def __get_speos_source_under_component(self, component_group):
         """
-        Function get speos sources elements defined under component.
+        Get Speos source elements defined under a component.
 
         Parameters
         ----------
-        component_group : spaceclaim group
+        component_group : SpaceClaim group
 
         Returns
         -------
         list
-            a list speos sources.
+            List of Speos sources.
         """
         speos_sources_list = []
         for component in self.ComponentExtensions.GetAllComponents(component_group):
@@ -86,13 +89,14 @@ class ScdmIO(BaseSCDM):
 
     def __create_speos_sources_group(self, component, name):
         """
-        This function will create a speos source group for the surface sources defined under component provided.
+        Create a Speos source group for the surface sources defined under a component.
 
         Parameters
         ----------
-        component : spaceclaim group
+        component : SpaceClaim component
+            SpaceClaim component.
         name : str
-            a string provided to name to speos source group.
+            Name for the Speos source group.
         """
         speos_source_list = self.__get_speos_source_under_component(component)
         source_selection = self.Selection.CreateByObjects(speos_source_list)
@@ -103,27 +107,27 @@ class ScdmIO(BaseSCDM):
 
     def __group_components(self, component_list, name, anchor, lock, internalize, speos_source_group):
         """
-        Function to a given group component list.
+        Group a list of components.
 
         Parameters
         ----------
         component_list : list
-            a list of spaceclaim component.
+            List of SpaceClaim components.
         name : str
-            string given to the name of group.
+            Name for the group.
         anchor : bool
-            True if anchor is required, False otherwise.
+            Whether an anchor is required.
         lock : bool
-            True if lock is required, False otherwise.
+            Whether a lock is required.
         internalize : bool
-            True if internalize is required, False otherwise.
+            Whether to internalize.
         speos_source_group : bool
-            True if speos surfaces under imported part needs to be group, False, otherwise.
+            Whether to group Speos surfaces under the imported part.
 
         Returns
         -------
         bool
-            True if grouping is successful, False otherwise.
+            ``True`` when succcessful, ``False`` when failed.
         """
         selection = self.Selection.CreateByObjects(component_list)
         result = self.ComponentHelper.MoveBodiesToComponent(selection)
@@ -151,16 +155,17 @@ class ScdmIO(BaseSCDM):
 
     def get_axis_systems_under_component(self, component):
         """
-        Function to get axis system under component.
+        Get the axis system under a component.
 
         Parameters
         ----------
         component : SpaceClaim component
+            SpaceClaim component.
 
         Returns
         -------
         list
-            a list of axis systems which are under the component provided.
+            List of axis systems that are under the component.
         """
         axis_system_list = []
         for axis_system in self.ComponentExtensions.GetCoordinateSystems(component):
@@ -179,27 +184,27 @@ class ScdmIO(BaseSCDM):
         speos_source_group=False,
     ):
         """
-        Function to import component at given axis system.
+        Import component at a given axis system.
 
         Parameters
         ----------
-        external_part : a SpaceClaim file
-            a spaceclaim file to be imported.
-        axis_system_list : an axis system
-            a list of axis system.
-        name : string
-            a name given to the group which grouping the imported parts.
-        anchor : bool
-            True if anchor is required, False otherwise.
-        lock : bool
-            True if lock is required, False otherwise.
-        internalize : bool
-            True if internalize is required, False otherwise.
-        speos_source_group : bool
-            True if speos surfaces under imported part needs to be group, False, otherwise.
+        external_part : SpaceClaim file
+            SpaceClaim file to import.
+        axis_system_list : list
+            List of axis systems.
+        name : string, optional
+            Name for the group to use for grouping imported parts. The default is ``None``.
+        anchor : bool, optional
+            Whether an anchor is required. The default is ``False``.
+        lock : bool, optional
+            Whether a lock is required. The default is ``False``.
+        internalize : bool, optional
+            Whether to internalize. The default is ``False``.
+        speos_source_group : bool, optional
+            Whether to group Speos surfaces under the imported part. The default is ``False``.
         """
         if not self.__valid_file(external_part):
-            error_msg = "Invalid project directory, please check"
+            error_msg = "Invalid project directory."
             raise ValueError(error_msg)
 
         if len(axis_system_list) == 0:

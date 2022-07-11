@@ -5,25 +5,30 @@ from ansys_optical_automation.scdm_core.base import BaseSCDM
 
 class Sensor(BaseSCDM):
     """
-    This is the parent class for all Speos sensor types.
-    It contains methods and properties that are mutual for all sensor types.
+    Provides the parent class for all Speos sensor types.
 
-    This class shouldn't be used by itself, instead subclasses should be used!
+    This class contains methods and properties that are common to all sensor types.
+    It shouldn't be used by itself. Subclasses should be used instead.
     """
 
     def __init__(self, name, SpeosSim, SpaceClaim):
         """
-        Initializes the base Sensor object. This object has a name and some other attributes that are mutual for all
-        Speos sensors, but doesn't have a Speos Sensor object and can't be used by simulations as is.
+        Initialize the base sensor object.
+
+        The base sensor object has a name and some other attributes that are common to all
+        Speos sensors. It does not have a Speos sensor object and cannot be used by
+        simulations as is.
 
         This is an abstract class.
 
         Parameters
         ----------
         name : str
-            name of the Sensor to be created or found.
+            Name of the sensor to create or find.
         SpeosSim : SpeosSim
+            SpeosSim.
         SpaceClaim : SpaceClaim object
+            SpaceClaim object.
         """
         super(Sensor, self).__init__(SpaceClaim, ["V19", "V20", "V21"])
         self.name = name
@@ -34,14 +39,14 @@ class Sensor(BaseSCDM):
 
     def find_axes(self, origin=None):
         """
-        This method finds a component with the same name as the sensor itself and looks for an axis system and
-        an origin point (if available) in it, and saves them as properties in self.
+        Find a component with the same name as the sensor, look in it for an axis system and
+        an origin point (if available), and save them as properties in self.
 
         Parameters
         ----------
-        origin : SpaceClaim curve object
-            name of the origin point to be used for sensor positioning. Example: origin="EPP_195".
-            This point must exist under Curves in the Component of the same name as the Sensor.
+        origin : SpaceClaim curve object, optional
+            Name of the origin point to use for sensor positioning. For example, ``origin="EPP_195"``.
+            This point must exist under ``Curves`` in the component of the same name as the sensor.
         """
         origin_point = None
         axes = None
@@ -65,26 +70,30 @@ class Sensor(BaseSCDM):
 
     def set_position(self, x_reverse=False, y_reverse=False, origin=None, axes=None):
         """
-        This method sets the origin and x and y directions (polar and H0 axes for some intensity sensors) of
-        the sensor.
+        Set the origin and x and y directions of the sensor.
+
+        For some intensity sensors, set the origin and polar-axis and V0/H0-axis.
 
         Parameters
         ----------
-        x_reverse : bool
-            True of False to reverse direction of the X-axis of the sensor
-        y_reverse : bool
-            True of False to reverse direction of the Y-axis of the sensor
-        origin : Spaceclaim axis system or a point.
-        axes : list
-            with [x-axis, y-axis] to define orientation of the axis, where x-axis and y-axis are SCDM axis
-            objects (not an axis system!). In case of IESNA and Elumdat intensity sensors,
-            polar-axis, and V0/H0-axis] should be provided instead.
+        x_reverse : bool, optional
+            Whether to reverse the direction of the X-axis of the sensor. The default is ``False``.
+        y_reverse : bool, optional
+            Whether to reverse the direction of the Y-axis of the sensor. The default is ``False``.
+        origin : text or integer, optional
+            SpaceClaim axis system or a point. The default is ``None``.
+        axes : list, optional
+            List in the format ``[x-axis, y-axis]`` that defines the orientation of the axis, where
+            ``x-axis`` and ``y-axis`` are SCDM axis objects (not an axis system). For IESNA and
+            Elumdat intensity sensors, provide the polar-axis and V0/H0-axis instead.
         """
         if not self.speos_object:  # if self.speos_object (speos sensor speos_object) is not defined
-            raise TypeError("No Speos object defined.")
+            raise TypeError("No Speos object is defined.")
 
         if not (self.axes and self.origin) and not (axes and origin):  # if axes and/or origin not defined/provided
-            raise NameError("Axes or origin not defined. Use find_axes method or provide axes and origin as input.")
+            raise NameError(
+                "Axes or origin are not defined. Use the find_axes method or provide axes or origin as input."
+            )
 
         if not (axes and origin):  # If no inputs provided, use self.axes and self.origin
             axes = self.axes
@@ -107,18 +116,18 @@ class Sensor(BaseSCDM):
 
 class Camera(Sensor):
     """
-    This class implements methods for the Speos camera sensor definition.
+    Provides methods for defining the Speos camera sensor.
     """
 
     def __init__(self, name, SpeosSim, SpaceClaim):
         """
-        Searches for a Speos Camera sensor with the specified name in the simulation tree. If it is not found, a new
-        Speos Camera is created with the specified name.
+        Searches for a Speos camera sensor in the simulation tree. If the specified name is not found, a new
+        Speos camera sensor is created with this name.
 
         Parameters
         ----------
         name : str
-            Name of the sensor to find/create.
+            Name of the sensor to find or create.
         """
         super(Camera, self).__init__(name, SpeosSim, SpaceClaim)
         speos_object = self.speos_sim.SensorCamera.Find(self.name)
@@ -132,7 +141,7 @@ class Camera(Sensor):
         Parameters
         ----------
         distortion_file_name : str
-            Name of the OPTDistortion file.
+            Name of the OPT distortion file.
         """
         distortion_path = os.path.join(".", "SPEOS input files", distortion_file_name)
         self.speos_object.DistorsionFile = distortion_path
@@ -154,7 +163,7 @@ class Camera(Sensor):
         Parameters
         ----------
         color : str
-            Channel color: red, green or blue.
+            Channel color. Options are ``"red"``, ``"green"``, and ``"blue"``.
         sensitivity_file_name : str
             Name of the sensitivity file.
         """
@@ -176,18 +185,22 @@ class Camera(Sensor):
 
 class IntensitySensor(Sensor):
     """
-    This class implements methods for the Speos intensity sensor.
+    Provides methods for the Speos intensity sensor.
     """
 
     def __init__(self, name, SpeosSim, SpaceClaim):
         """
-        Searches for a Speos Intensity sensor with the specified name in the simulation tree. If it is not found, a new
-        Speos Intensity sensor is created with the specified name.
+        Searches for a Speos intensity sensor in the simulation tree. If the specified name is
+        not found, a new Speos intensity sensor is created with this name.
 
         Parameters
         ----------
         name : str
-            Name of the sensor to find/create.
+            Name of the sensor to find or create.
+        SpeosSim : SpeosSim
+            SpeosSim.
+        SpaceClaim : SpaceClaim object
+            SpaceClaim object.
         """
         super(IntensitySensor, self).__init__(name, SpeosSim, SpaceClaim)
         speos_object = self.speos_sim.SensorIntensity.Find(self.name)
@@ -198,10 +211,13 @@ class IntensitySensor(Sensor):
 
     def set_format(self, sensor_format=None):
         """
+        Set the sensor format.
+
         Parameters
         ----------
         sensor_format : str
-            Can be: XMP, IESNATypeA, IESNATypeB, IESNATypeC or Eulumdat.
+            Format of the sensor. Options are ``"XMP"``, ``"IESNATypeA"``, ``"IESNATypeB"``,
+            ``"IESNATypeC"``, and ``"Eulumdat"``.
         """
         if not sensor_format:
             raise NameError("Format input not provided.")
@@ -219,24 +235,30 @@ class IntensitySensor(Sensor):
         else:
             raise ValueError("Wrong input value. Choose from XMP, IESNATypeA, IESNATypeB, IESNATypeC or Eulumdat.")
 
-    def set_range(self, x_start=None, x_end=None, y_start=None, y_end=None, x_mirrored=None, y_mirrored=None):
+    def set_range(self, x_start=None, x_end=None, y_start=None, y_end=None, x_mirrored=False, y_mirrored=False):
         """
-        Sets the size of the sensor.
+        Set the sensor size.
 
         Parameters
         ----------
-        x_start : int or float
-            X size of the sensor in mm. (positive part)
-        x_end : int or float
-            X size of the sensor in mm. (negative part)
-        y_start : int of float
-            Y size of the sensor in mm. (positive part)
-        y_end : int or float
-            Y size of the sensor in mm. (negative part)
-        x_mirrored : bool
+        x_start : int or float, optional
+            X size of the sensor in millimeters for the positive part.
+            The default is ``None``.
+        x_end : int or float, optional
+            X size of the sensor in millimeters for the negative part.
+            The default is ``None``.
+        y_start : int of float, optional
+            Y size of the sensor in millimeters for the positive part.
+            The default is ``None``.
+        y_end : int or float, optional
+            Y size of the sensor in millimeters for the negative part.
+            The default is ``None``.
+        x_mirrored : bool, optional
             Mirrored extend option of the X size of the sensor.
-        y_mirrored : bool
+            The default is ``False``.
+        y_mirrored : bool, optional
             Mirrored extend option of the Y size of the sensor.
+            The default is ``False``.
         """
         if not x_start and not x_end and not y_start and not y_end and not x_mirrored and not y_mirrored:
             raise NameError("No inputs provided.")
@@ -254,13 +276,14 @@ class IntensitySensor(Sensor):
             self.speos_object.YEnd = y_end
 
     def set_sampling(self, x_sampling=None, y_sampling=None):
-        """
+        """Set the number of samples on the axes.
+
         Parameters
         ----------
-        x_sampling : int
-            Number of samples on the x-axis.
+        x_sampling : int, optionl
+            Number of samples on the X-axis. The default is ``None``.
         y_sampling : int
-            Number of samples on the y-axis.
+            Number of samples on the Y-axis. The default is ``None``.
         """
         if not x_sampling and not y_sampling:
             raise NameError("No inputs provided.")
@@ -271,28 +294,30 @@ class IntensitySensor(Sensor):
 
     def set_resolution(self, x_resolution=None, y_resolution=None):
         """
-        Sets resolution of the sensor.
+        Set the resolution of the sensor.
 
         Parameters
         ----------
-        x_resolution : int
-            x-resolution in mm.
-        y_resolution : int
-            y-resolution in mm.
+        x_resolution : int, optional
+            X resolution of the sensor in millimeters. The default is ``None``.
+        y_resolution : int, optional
+            Y resolution of the sensor in millimeters. The default is ``None``.
         """
         if not x_resolution and not y_resolution:
-            raise NameError("No inputs provided.")
+            raise NameError("No inputs are provided.")
         if x_resolution:
             self.speos_object.XResolution = x_resolution
         if y_resolution:
             self.speos_object.YResolution = y_resolution
 
     def set_type(self, sensor_type):
-        """
+        """Set the sensor type.
+
         Parameters
         ----------
         sensor_type : str
-            Sensor type can be one of 4: photometric, colorimetric, radiometric or spectral.
+            Type of the sensor. Options are ``"photometric"``, ``"colorimetric"``, ``"radiometric"``
+            and ``"spectral"``.
         """
         sensor_type = sensor_type.lower()
         if sensor_type == "photometric":
@@ -310,17 +335,19 @@ class IntensitySensor(Sensor):
             raise ValueError(error_message)
 
     def set_wavelength(self, w_start=None, w_end=None, w_sampling=None, w_resolution=None):
-        """
+        """Set the wavelength of the sensor.
+
         Parameters
         ----------
-        w_start : int
-            Start of the wavelength band in nm.
-        w_end : int
-            End of the wavelength band in nm.
-        w_sampling : int
-            Number of spectral samples.
-        w_resolution : float
-            Spectral sampling/resolution (size of one sample), in nm.
+        w_start : int, optional
+            Start of the wavelength band in nanometers. The default is ``None``.
+        w_end : int, optional
+            End of the wavelength band in nanometers. The default is ``None``.
+        w_sampling : int, optional
+            Number of spectral samples. The default is ``None``.
+        w_resolution : float, optional
+            Spectral sampling or resolution (size of one sample) in nanometers.
+            The default is ``None``.
         """
         if not w_start and not w_end and not w_sampling and not w_resolution:
             raise NameError("No inputs provided.")
@@ -334,11 +361,12 @@ class IntensitySensor(Sensor):
             self.speos_object.WavelengthResolution = w_resolution
 
     def set_layer(self, layer_type):
-        """
+        """Set the layer type of the sensor.
         Parameters
         ----------
         layer_type : str
-            Layer option of the sensor, can be on of the 4: source, face, sequence, none.
+            Layer type of the sensor. Options are ``"source"``, ``"face"``, ``"sequence"``,
+            and ``"none"``.
         """
         layer_type = layer_type.lower()
         if layer_type == "source":

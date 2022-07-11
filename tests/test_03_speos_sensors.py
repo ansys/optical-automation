@@ -11,12 +11,12 @@ os.chdir(os.path.dirname(os.path.dirname(os.path.realpath(__file__))))
 
 class TestSensorAPI:
     """
-    Class to define conditions for run of unit tests in PyTest
+    Define conditions for running unit tests in PyTest.
     """
 
     def setup_class(self):
         """
-        Called before tests to initialize scdm class and open new SCDM session
+        Called before tests to initialize the ``scdm`` class and open a new SCDM session.
         Returns:
         """
 
@@ -35,10 +35,10 @@ class TestSensorAPI:
 
     def teardown_class(self):
         """
-        Called after all tests are completed to clean up SCDM session
-        clean results file.
+        Called after all tests are completed to clean up the SCDM session
+        and clean the results file.
 
-        On fail will report traceback with lines where code failed
+        On fail will report traceback with lines where the code failed.
         """
         self.clean_results(self)
 
@@ -48,7 +48,7 @@ class TestSensorAPI:
 
     def clean_results(self):
         """
-        Delete results file to avoid confusion
+        Delete results file to avoid confusion.
         Returns:
         """
         if os.path.isfile(self.results_file):
@@ -56,7 +56,7 @@ class TestSensorAPI:
 
     def test_01_check_camera_created(self):
         """
-        Function to compare the results of the camera class initialization
+        Compare the results of the ``camera`` class initialization.
         Returns: None
         """
         res = self.results.get("camera_exists", None)
@@ -65,7 +65,7 @@ class TestSensorAPI:
 
     def test_02_check_origin(self):
         """
-        Function to compare the results of Camera.set_position() - Camera origin
+        Compare the results of Camera.set_position() - Camera origin.
         Returns: None
         """
         res = self.results.get("camera_origin", None)
@@ -74,7 +74,7 @@ class TestSensorAPI:
 
     def test_03_check_x_axis(self):
         """
-        Function to compare the results of Camera.set_position() - X Direction
+        Compare the results of Camera.set_position() - X Direction.
         Returns: None
         """
         res = self.results.get("camera_x_axis", None)
@@ -83,7 +83,7 @@ class TestSensorAPI:
 
     def test_04_check_y_axis(self):
         """
-        Function to compare the results of Camera.set_position() - Y Direction
+        Compare the results of Camera.set_position() - Y Direction.
         Returns: None
         """
         res = self.results.get("camera_y_axis", None)
@@ -92,7 +92,7 @@ class TestSensorAPI:
 
     def test_05_check_x_reverse_true(self):
         """
-        Function to compare the results of Camera.set_position() - Y Direction
+        Compare the results of Camera.set_position() - Y Direction.
         Returns: None
         """
         res = self.results.get("camera_x_reverse_true", None)
@@ -101,7 +101,7 @@ class TestSensorAPI:
 
     def test_06_check_y_reverse_true(self):
         """
-        Function to compare the results of Camera.set_position() - Y Direction
+        Compare the results of Camera.set_position() - Y Direction.
         Returns: None
         """
         res = self.results.get("camera_y_reverse_true", None)
@@ -110,7 +110,7 @@ class TestSensorAPI:
 
     def test_07_check_origin_axsys(self):
         """
-        Function to compare the results of Camera.set_position() - Y Direction
+        Compare the results of Camera.set_position() - Y Direction.
         Returns: None
         """
         res = self.results.get("camera_origin_axsys", None)
@@ -119,7 +119,7 @@ class TestSensorAPI:
 
     def test_08_check_x_reverse_false(self):
         """
-        Function to compare the results of Camera.set_position() - Y Direction
+        Compare the results of Camera.set_position() - Y Direction.
         Returns: None
         """
         res = self.results.get("camera_x_reverse_false", None)
@@ -128,7 +128,7 @@ class TestSensorAPI:
 
     def test_09_check_y_reverse_false(self):
         """
-        Function to compare the results of Camera.set_position() - Y Direction
+        Compare the results of Camera.set_position() - Y Direction.
         Returns: None
         """
         res = self.results.get("camera_y_reverse_false", None)
@@ -137,7 +137,7 @@ class TestSensorAPI:
 
     def test_10_intensity_created(self):
         """
-        Function to compare the results of IntensitySensor class initialization method
+        Compare the results of the ``IntensitySensor`` class initialization method.
         Returns: None
         """
         res = self.results.get("intensity_exists", None)
@@ -146,7 +146,7 @@ class TestSensorAPI:
 
     def test_11_intensity_origin(self):
         """
-        Function to compare the results of IntensitySensor.set_position() - origin
+        Compare the results of the IntensitySensor.set_position() - origin.
         Returns: None
         """
         res = self.results.get("intensity_origin", None)
@@ -155,7 +155,7 @@ class TestSensorAPI:
 
     def test_12_check_x_axis(self):
         """
-        Function to compare the results of IntensitySensor.set_position() - X Direction
+        Compare the results of IntensitySensor.set_position() - X Direction.
         Returns: None
         """
         res = self.results.get("intensity_x_axis_type", None)
@@ -164,7 +164,7 @@ class TestSensorAPI:
 
     def test_13_check_y_axis(self):
         """
-        Function to compare the results of IntensitySensor.set_position() - Y Direction
+        Compare the results of IntensitySensor.set_position() - Y Direction.
         Returns: None
         """
         res = self.results.get("intensity_y_axis_type", None)
@@ -173,7 +173,7 @@ class TestSensorAPI:
 
     def test_14_intensity_format_a(self):
         """
-        Function to compare the results of IntensitySensor.set_format() - "iesnatypeA"
+        Compare the results of IntensitySensor.set_format() - "iesnatypeA".
         Returns: None
         """
         res = self.results.get("intensity_format_A", None)
@@ -182,7 +182,7 @@ class TestSensorAPI:
 
     def test_15_intensity_format_b(self):
         """
-        Function to compare the results of IntensitySensor.set_format() - "iesnatypeB"
+        Compare the results of IntensitySensor.set_format() - "iesnatypeB".
         Returns: None
         """
         res = self.results.get("intensity_format_B", None)
@@ -191,7 +191,7 @@ class TestSensorAPI:
 
     def test_16_intensity_format_c(self):
         """
-        Function to compare the results of IntensitySensor.set_format() - "iesnatypeC"
+        Compare the results of IntensitySensor.set_format() - "iesnatypeC".
         Returns: None
         """
         res = self.results.get("intensity_format_C", None)
@@ -200,7 +200,7 @@ class TestSensorAPI:
 
     def test_17_intensity_format_eulumdat(self):
         """
-        Function to compare the results of IntensitySensor.set_format() - "eulumdat"
+        Compare the results of IntensitySensor.set_format() - "eulumdat".
         Returns: None
         """
         res = self.results.get("intensity_format_eulumdat", None)
@@ -209,7 +209,7 @@ class TestSensorAPI:
 
     def test_18_intensity_format_xmp(self):
         """
-        Function to compare the results of IntensitySensor.set_format() - "xmp"
+        Compare the results of IntensitySensor.set_format() - "xmp".
         Returns: None
         """
         res = self.results.get("intensity_format_xmp", None)
@@ -218,7 +218,7 @@ class TestSensorAPI:
 
     def test_19_wavelength_start(self):
         """
-        Function to compare the results of IntensitySensor.set_wavelength() - w_start
+        Compare the results of IntensitySensor.set_wavelength() - w_start.
         Returns: None
         """
         res = self.results.get("wavelength_start", None)
@@ -227,7 +227,7 @@ class TestSensorAPI:
 
     def test_20_wavelength_end(self):
         """
-        Function to compare the results of IntensitySensor.set_wavelength() - w_end
+        Compare the results of IntensitySensor.set_wavelength() - w_end.
         Returns: None
         """
         res = self.results.get("wavelength_end", None)
@@ -236,7 +236,7 @@ class TestSensorAPI:
 
     def test_21_wavelength_sampling(self):
         """
-        Function to compare the results of IntensitySensor.set_wavelength() - w_sampling
+        Compare the results of IntensitySensor.set_wavelength() - w_sampling.
         Returns: None
         """
         res = self.results.get("wavelength_sampling", None)
@@ -245,7 +245,7 @@ class TestSensorAPI:
 
     def test_22_wavelength_resolution(self):
         """
-        Function to compare the results of IntensitySensor.set_wavelength() - w_resolution
+        Compare the results of IntensitySensor.set_wavelength() - w_resolution.
         Returns: None
         """
         res = self.results.get("wavelength_resolution", None)
@@ -254,7 +254,7 @@ class TestSensorAPI:
 
     def test_23_layer_source(self):
         """
-        Function to compare the results of IntensitySensor.set_layer() - source
+        Compare the results of IntensitySensor.set_layer() - source.
         Returns: None
         """
         res = self.results.get("layer_source", None)
@@ -263,7 +263,7 @@ class TestSensorAPI:
 
     def test_24_layer_none(self):
         """
-        Function to compare the results of IntensitySensor.set_layer() - none
+        Compare the results of IntensitySensor.set_layer() - none.
         Returns: None
         """
         res = self.results.get("layer_none", None)
@@ -272,7 +272,7 @@ class TestSensorAPI:
 
     def test_25_layer_face(self):
         """
-        Function to compare the results of IntensitySensor.set_layer() - face
+        Compare the results of IntensitySensor.set_layer() - face.
         Returns: None
         """
         res = self.results.get("layer_face", None)
@@ -281,7 +281,7 @@ class TestSensorAPI:
 
     def test_26_layer_sequence(self):
         """
-        Function to compare the results of IntensitySensor.set_layer() - sequence
+        Compare the results of IntensitySensor.set_layer() - sequence.
         Returns: None
         """
         res = self.results.get("layer_sequence", None)
@@ -290,7 +290,7 @@ class TestSensorAPI:
 
     def test_27_range_x_start(self):
         """
-        Function to compare the results of IntensitySensor.set_range() - x_start
+        Compare the results of IntensitySensor.set_range() - x_start.
         Returns: None
         """
         res = self.results.get("x_start", None)
@@ -299,7 +299,7 @@ class TestSensorAPI:
 
     def test_28_range_x_end(self):
         """
-        Function to compare the results of IntensitySensor.set_range() - x_end
+        Compare the results of IntensitySensor.set_range() - x_end.
         Returns: None
         """
         res = self.results.get("x_end", None)
@@ -308,7 +308,7 @@ class TestSensorAPI:
 
     def test_29_range_y_start(self):
         """
-        Function to compare the results of IntensitySensor.set_range() - y_start
+        Compare the results of IntensitySensor.set_range() - y_start.
         Returns: None
         """
         res = self.results.get("y_start", None)
@@ -317,7 +317,7 @@ class TestSensorAPI:
 
     def test_30_range_y_end(self):
         """
-        Function to compare the results of IntensitySensor.set_range() - y_end
+        Compare the results of IntensitySensor.set_range() - y_end.
         Returns: None
         """
         res = self.results.get("y_end", None)
@@ -326,7 +326,7 @@ class TestSensorAPI:
 
     def test_31_range_x_mirrored(self):
         """
-        Function to compare the results of IntensitySensor.set_range() - x_mirrored
+        Compare the results of IntensitySensor.set_range() - x_mirrored.
         Returns: None
         """
         res = self.results.get("x_mirrored", None)
@@ -335,7 +335,7 @@ class TestSensorAPI:
 
     def test_32_range_x_start_mirrored(self):
         """
-        Function to compare the results of IntensitySensor.set_range() - x_mirrored
+        Compare the results of IntensitySensor.set_range() - x_mirrored.
         Returns: None
         """
         res = self.results.get("x_start_mirrored", None)
@@ -344,7 +344,7 @@ class TestSensorAPI:
 
     def test_33_range_y_mirrored(self):
         """
-        Function to compare the results of IntensitySensor.set_range() - y_mirrored
+        Compare the results of IntensitySensor.set_range() - y_mirrored.
         Returns: None
         """
         res = self.results.get("y_mirrored", None)
@@ -353,7 +353,7 @@ class TestSensorAPI:
 
     def test_34_range_y_start_mirrored(self):
         """
-        Function to compare the results of IntensitySensor.set_range() - y_mirrored
+        Compare the results of IntensitySensor.set_range() - y_mirrored.
         Returns: None
         """
         res = self.results.get("y_start_mirrored", None)
@@ -362,7 +362,7 @@ class TestSensorAPI:
 
     def test_35_sampling_x(self):
         """
-        Function to compare the results of IntensitySensor.set_sampling() - x_sampling
+        Compare the results of IntensitySensor.set_sampling() - x_sampling.
         Returns: None
         """
         res = self.results.get("x_sampling", None)
@@ -371,7 +371,7 @@ class TestSensorAPI:
 
     def test_36_sampling_y(self):
         """
-        Function to compare the results of IntensitySensor.set_sampling() - y_sampling
+        Compare the results of IntensitySensor.set_sampling() - y_sampling.
         Returns: None
         """
         res = self.results.get("y_sampling", None)
@@ -380,7 +380,7 @@ class TestSensorAPI:
 
     def test_37_resolution_x(self):
         """
-        Function to compare the results of IntensitySensor.set_resolution() - x_resolution
+        Compare the results of IntensitySensor.set_resolution() - x_resolution.
         Returns: None
         """
         res = self.results.get("x_resolution", None)
@@ -389,7 +389,7 @@ class TestSensorAPI:
 
     def test_38_resolution_y(self):
         """
-        Function to compare the results of IntensitySensor.set_resolution() - y_resolution
+        Compare the results of IntensitySensor.set_resolution() - y_resolution.
         Returns: None
         """
         res = self.results.get("y_resolution", None)
@@ -398,7 +398,7 @@ class TestSensorAPI:
 
     def test_39_type_photometric(self):
         """
-        Function to compare the results of IntensitySensor.set_type() - photometric
+        Compare the results of IntensitySensor.set_type() - photometric.
         Returns: None
         """
         res = self.results.get("type_photometric", None)
@@ -407,7 +407,7 @@ class TestSensorAPI:
 
     def test_40_type_colorimetric(self):
         """
-        Function to compare the results of IntensitySensor.set_type() - colorimetric
+        Compare the results of IntensitySensor.set_type() - colorimetric.
         Returns: None
         """
         res = self.results.get("type_colorimetric", None)
@@ -416,7 +416,7 @@ class TestSensorAPI:
 
     def test_41_type_radiometric(self):
         """
-        Function to compare the results of IntensitySensor.set_type() - radiometric
+        Compare the results of IntensitySensor.set_type() - radiometric.
         Returns: None
         """
         res = self.results.get("type_radiometric", None)
@@ -425,7 +425,7 @@ class TestSensorAPI:
 
     def test_42_type_spectral(self):
         """
-        Function to compare the results of IntensitySensor.set_type() - spectral
+        Compare the results of IntensitySensor.set_type() - spectral.
         Returns: None
         """
         res = self.results.get("type_spectral", None)

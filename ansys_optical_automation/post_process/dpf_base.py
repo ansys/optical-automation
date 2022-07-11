@@ -3,21 +3,21 @@ import sys
 
 
 class DataProcessingFramework:
-    """Basic data processing framework class.
+    """Provides DPF (Data Processing Framework).
 
-    The class will contain mainly opening and saving functionalities to allow interacting with any result file.
+    The class contains opening and saving functionalities to allow interacting with any results file.
 
     """
 
     def __init__(self, application=None, extension=""):
-        """Initializes general properties of the data post-processing framework.
+        """Initialize general properties of DPF.
 
         Parameters
         ----------
         application : str
-            application object started in the framework.
+            Application object started in DPF. The default is ``None``.
         extension : tuple
-            extensions accepted by the application object.
+            Extensions accepted by the application object. The default is ``""``.
         """
         self.application = application
         self.accepted_extensions = extension
@@ -30,15 +30,15 @@ class DataProcessingFramework:
 
                 self.dpf_instance = win32.Dispatch(self.application)
         else:
-            raise ImportError("Application not defined")
+            raise ImportError("Application is not defined.")
 
     def open_file(self, str_path):
-        """Opens a file in DPF based on a path.
+        """Open a file in DPF.
 
         Parameters
         ----------
         str_path : str
-            Path for file to open e.g. r"C:\\temp\\Test.speos360"
+            Path for the file to open. For example, ``r"C:\\temp\\Test.speos360"``.
         """
         if os.path.isfile(str_path):
             if not str_path.lower().endswith(self.accepted_extensions):
@@ -48,17 +48,17 @@ class DataProcessingFramework:
                     + "accepted extension"
                 )
             if not self.dpf_instance.OpenFile(str_path):
-                raise ImportError("File open failed")
+                raise ImportError("Opening the file failed.")
         else:
-            raise FileNotFoundError("File not found")
+            raise FileNotFoundError("File is not found.")
 
     def valid_dir(self, str_path):
-        """Checks if a folder is there if not create it.
+        """Check if a folder is present and, if not, create it.
 
         Parameters
         ----------
         str_path : str
-            Path for folder to validate e.g. r"C:\\temp\"
+            Path for the folder to validate or create. For example, ``r"C:\\temp\"``.
         """
         if not os.path.isdir(str_path):
             os.makedirs(str_path)

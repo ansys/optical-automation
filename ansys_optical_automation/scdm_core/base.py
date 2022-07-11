@@ -10,15 +10,15 @@ from System.Drawing import Color  # noqa: E402
 
 class VersionError(KeyError):
     """
-    Used to raise API version error
+    Raises API version error.
     """
 
 
 class BaseSCDM(object):
     def __init__(self, SpaceClaim, supported_versions=None):
         """
-        Base class that contains all common used objects. This class serves more as an abstract class.
-        Optionally performs validation that API used by user is supported.
+        Base class that contains all commonly used objects. This class serves more as an abstract class.
+        It optionally validates that the user-specified API is supported.
         Args:
             SpaceClaim: SpaceClaim object
             supported_versions (list/tuple): list of supported API versions
@@ -30,7 +30,7 @@ class BaseSCDM(object):
                 if supported_versions:
                     if api_version not in supported_versions:
                         msg = "SpaceClaim API {} is not supported. ".format(api_version)
-                        msg += "Please use one of the following {}".format(", ".join(supported_versions))
+                        msg += "Use one of the following {}".format(", ".join(supported_versions))
                         raise VersionError(msg)
 
                 scdm_api = getattr(api, api_version)
@@ -38,7 +38,7 @@ class BaseSCDM(object):
             except AttributeError:
                 continue
         else:
-            raise AttributeError("No Api version found under SpaceClaim object")
+            raise AttributeError("No API version is found under the SpaceClaim object.")
 
         self.Color = Color
         self.List = List

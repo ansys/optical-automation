@@ -5,15 +5,16 @@ from ansys_optical_automation.scdm_core.base import BaseSCDM
 
 
 class MaterialsFromCSV(BaseSCDM):
-    """Basic class that create material from CSV class.
+    """Provides for creating Speos materials from material CSV files.
 
-    The class will contain mainly methods to read a material CSV file and create speos materials.
+    This base class contains methods for reading a material CSV file and creating
+    Speos materials.
 
     """
 
     def __init__(self, SpeosSim, SpaceClaim):
         """
-        Base class that contains all common used objects. This class serves more as an abstract class.
+        Base class that contains all commonly used objects. This class serves more as an abstract class.
 
         Parameters
         ----------
@@ -27,17 +28,17 @@ class MaterialsFromCSV(BaseSCDM):
 
     def __get_real_original(self, item):
         """
-        Function to get real original selection in order to get the material info.
+        Get real original selection to obtain material information.
 
         Parameters
         ----------
         item : SpaceClaim part
-            a SpaceClaim part.
+            SpaceClaim part.
 
         Returns
         -------
         SpaceClaim part
-            a SpaceClaim part.
+            SpaceClaim part.
         """
         result = item
         while self.GetOriginal(result):
@@ -46,12 +47,13 @@ class MaterialsFromCSV(BaseSCDM):
 
     def __create_material_dictionary(self):
         """
-        Function to create a dictionary with index of material name and value of SpaceClaim Part list.
+        Create a dictionary with an index of material names and values for the SpaceClaim
+        part list.
 
         Returns
         -------
         dict
-            a dictionary of material information
+            Dictionary of material information.
         """
         dict = {}
         root_part = self.GetRootPart()
@@ -67,7 +69,7 @@ class MaterialsFromCSV(BaseSCDM):
         return dict
 
     def apply_geo_to_material(self):
-        """Function to apply material according to the material definition."""
+        """Apply material according to the material definition."""
         op_list = {}
         all_op = self.GetRootPart().CustomObjects
         for item in all_op:
@@ -90,12 +92,12 @@ class MaterialsFromCSV(BaseSCDM):
 
     def get_total_layers(self):
         """
-        Function to get the total layers as a list from the whole project
+        Get the names of all layers in the project.
 
         Returns
         -------
         list
-            a list of layers' name
+            List of all layer names.
         """
         layer_list = []
         active_doc = self.GetActiveDocument()
@@ -105,7 +107,7 @@ class MaterialsFromCSV(BaseSCDM):
         return layer_list
 
     def apply_geo_to_layer(self):
-        """Function apply geometries to corresponding layers"""
+        """Apply geometries to corresponding layers."""
         layer_list = self.get_total_layers()
         geo_dic = self.__create_material_dictionary()
 
@@ -120,36 +122,36 @@ class MaterialsFromCSV(BaseSCDM):
 
     def __create_layer(self, op_name):
         """
-        Function to create a new layer with a given name
+        Create a layer.
 
         Parameters
         ----------
         op_name : str
-            string given to name a layer to be created
+            Name for the new layer.
         """
         active_doc = self.GetActiveDocument()
         nb_layer = active_doc.Layers.Count
         try:
             active_doc.Layers[nb_layer - 1].Create(active_doc, op_name, self.Color.Empty)
         except Exception:
-            print("there is a layer with same name")
+            print("A layer with this name already exists.")
 
     def __create_op(self, fop_name, op_name, sop_name, vop_name, work_directory):
         """
-        Function to create speos optical material according to the given parameters
+        Create a Speos optical material based on given parameter values.
 
         Parameters
         ----------
         fop_name : str
-            name of FOP from CSV
+            Name of the FOP from the CSV file.
         op_name : str
-            name of op from CSV
+            Name of the OP from the CSV file.
         sop_name : str
-            name of SOP from CSV
+            Name of the SOP from CSV file.
         vop_name : str
-            name of VOP from CSV
+            Name of the VOP from the CSV file.
         work_directory : str
-            file directory from CSV
+            File directory from the CSV file.
         """
         if self.speos_sim.Material.Find(op_name) is None:
             material = self.speos_sim.Material.Create()
@@ -179,14 +181,14 @@ class MaterialsFromCSV(BaseSCDM):
 
     def create_speos_material(self, csv_path, work_directory):
         """
-        Function to read a given CSV, and create OP according
+        Read a CSV file and create an OP.
 
         Parameters
         ----------
         csv_path: str
-            directory of csv file
+            Full path to the CSV file.
         work_directory: str
-            directory of input material folder, e.g. "D:\\ASP_MaterialFromCsv"
+            Full path to the input material folder. For example ``"D:\\ASP_MaterialFromCsv"``.
         """
         with open(csv_path) as myfile:
             reader = csv.reader(myfile)

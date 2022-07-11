@@ -11,12 +11,12 @@ os.chdir(os.path.dirname(os.path.dirname(os.path.realpath(__file__))))
 
 class TestComponentImporterAPI:
     """
-    Class to define conditions for run of unit tests in PyTest
+    Defines conditions for running unit tests in PyTest.
     """
 
     def setup_class(self):
         """
-        Called before tests to initialize scdm class and open new SCDM session
+        Called before tests to initialize the ``scdm`` class and open a new SCDM session.
         Returns:
         """
 
@@ -35,20 +35,20 @@ class TestComponentImporterAPI:
 
     def teardown_class(self):
         """
-        Called after all tests are completed to clean up SCDM session
-        clean results file.
+        Called after all tests are completed to clean up the SCDM session
+        and clean the results file.
 
-        On fail will report traceback with lines where code failed
+        On fail will report traceback with lines where the code failed.
         """
         self.clean_results(self)
 
         print("\n\n\n\n\n###############################")
-        print(self.results.get("error", "All tests are successful"))
+        print(self.results.get("error", "All tests are successful."))
         print("###############################\n\n\n\n\n")
 
     def clean_results(self):
         """
-        Delete results file to avoid confusion
+        Delete results file to avoid confusion.
         Returns:
         -------
         None
@@ -58,7 +58,7 @@ class TestComponentImporterAPI:
 
     def test_01_check_target_axis_system_information(self):
         """
-        Function to check axis system information is extracted correctly
+        Check that axis system information is extracted correctly.
         Returns:
         -------
         None
@@ -69,7 +69,7 @@ class TestComponentImporterAPI:
 
     def test_02_check_imported_part_location(self):
         """
-        Function to check parts are imported correctly
+        Check that parts are imported correctly.
         Returns:
         -------
         None
@@ -80,7 +80,7 @@ class TestComponentImporterAPI:
 
     def test_03_compared_target_and_imported_locations(self):
         """
-        Function to compare target and imported part location
+        Compare target and imported part locations.
         Returns
         -------
         None
@@ -90,7 +90,7 @@ class TestComponentImporterAPI:
 
     def test_04_check_anchor_operation(self):
         """
-        Function to check if anchor is applied correctly
+        Check if the anchor is applied correctly.
         Returns:
         -------
         None
@@ -100,7 +100,7 @@ class TestComponentImporterAPI:
 
     def test_05_check_anchor_operation(self):
         """
-        Function to check if lock is applied correctly
+        Check if the lock is applied correctly.
         Returns:
         -------
         None
@@ -110,7 +110,7 @@ class TestComponentImporterAPI:
 
     def test_06_check_imported_structure(self):
         """
-        Function to compare the structure results after the LED class imported
+        Compare the structure results after the ``LED`` class is imported.
         Returns:
         -------
         None
@@ -121,7 +121,7 @@ class TestComponentImporterAPI:
 
     def test_07_check_source_group_created(self):
         """
-        Function to check if groups of speos surface sources have been created
+        Check if groups of Speos surface sources have been created.
         Returns
         -------
         None

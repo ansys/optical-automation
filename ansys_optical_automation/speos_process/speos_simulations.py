@@ -6,20 +6,24 @@ from ansys_optical_automation.scdm_process.preprocessing_library import PreProce
 
 class Simulation(BaseSCDM):
     """
-    This class implements methods to create, modify and run Speos simulations.
+    Provides methods for creating, modifying, and running Speos simulations.
     """
 
     def __init__(self, name, SpeosSim, SpaceClaim, kind="inverse"):
         """
-        Initializes the Simulation class. Takes name as input and searches for an
+        Initialize the ``Simulation`` class. Takes name as the input and searches for an
         existing simulation with this name.
 
         Parameters
         ----------
         name : str
-            Name of the simulation to find/create.
-        kind : str
-            Kind (type) of the simulation: "inverse", "direct", or "interactive".
+            Name of the simulation to find or create.
+        SpeosSim : SpeosSim
+            SpeosSim.
+        SpaceClaim : SpaceClaim
+            SpaceClaim
+        kind : str, optional
+            Type of the simulation. Options are ``"inverse"``, ``"direct"``, and ``"interactive"``.
         """
         super(Simulation, self).__init__(SpaceClaim, ["V19", "V20", "V21"])
         self.PreProcASP = PreProcessingASP(SpaceClaim)
@@ -59,12 +63,12 @@ class Simulation(BaseSCDM):
 
     def select_geometries(self, component_list):
         """
-        Adds all geometries from components provided in component_list to the simulation's bodies list.
+        Add all geometries from components provided in a component list to the simulation's list of bodies.
 
         Parameters
         ----------
         component_list : list
-            a list with component names, e.g. ["part1", "part2"].
+            List with component names. For example, ``["part1", "part2"]``.
         """
         self.component_list = component_list
         root = self.GetRootPart()
@@ -77,13 +81,13 @@ class Simulation(BaseSCDM):
 
     def select_geometrical_sets(self, geosets_list):
         """
-        Adds all geometries from Catia geometrical sets provided in geosets_list to
-        the simulation's bodies list.
+        Add all geometries from a list of Catia geometrical sets to the simulation's list
+        of bodies.
 
         Parameters
         ----------
         geosets_list : list
-            a list with names of Catia geometrical sets to add, e.g. ["geo_set1", "geo_set2"].
+            List with the names of Catia geometrical sets to add. For example, ``["geo_set1", "geo_set2"]``.
         """
         part_geosets = self.PreProcASP._PreProcessingASP__create_geometrical_set_names_list(
             self.GetRootPart(), bodies_only=False
@@ -99,8 +103,8 @@ class Simulation(BaseSCDM):
 
     def define_geometries(self):
         """
-        Adds all bodies from the simulation's bodies list (self.my_bodies) to the
-        simulation geometries. Like green "validate" button in Speos.
+        Add all bodies from the simulation's list of bodies (self.my_bodies) to the
+        simulation geometries. This works Like the green ``validate`` button in Speos.
         """
         selection = self.BodySelection.Create(self.my_bodies)
         self.object.Geometries.Set(selection.Items)
@@ -108,13 +112,13 @@ class Simulation(BaseSCDM):
 
     def set_rays_limit(self, rays):
         """
-        Set computation limit by the maximum number of rays (for direct and inverse simulations)
-        or passes (for inverse simulations).
+        Set the computation limit either by a maximum number of rays (for direct and
+        inverse simulations) or by a maximum number passes (for inverse simulations).
 
         Parameters
         ----------
         rays : int
-            Number of rays/passes to set the limit of simulation to.
+            Number of rays or passes for limiting the simulation.
         """
         self.rays = rays
         if self.kind == "direct":  # direct simulation
@@ -127,12 +131,12 @@ class Simulation(BaseSCDM):
 
     def export_grid(self, sensor_name):
         """
-        Exports projected grid as a SCDM component.
+        Export the projected grid as a SpaceClaim component.
 
         Parameters
         ----------
         sensor_name : str
-            Name of the sensor which grid should be imported as geometry.
+            Name of the sensor with the grid to import as a geometry.
         """
         grid_name = ".".join([self.name, sensor_name, "OPTProjectedGrid"])
         print(grid_name)
@@ -144,7 +148,7 @@ class Simulation(BaseSCDM):
 
     def save_grid(self, sensor_name, save_name):
         """
-        # TODO save components in the main script in spaceclaim
+        # TODO Save components in the main script in SpaceClaim.
         """
         grid_name = ".".join([self.name, sensor_name, "OPTProjectedGrid", "CATPart"])
         # find the created component
@@ -166,20 +170,22 @@ class Simulation(BaseSCDM):
 
     def set_grid_params(self, primary_step=20, secondary_step=4, max_distance=1500, max_incidence=89, min_distance=2):
         """
-        Sets parameters of the generated camera projected grid.
+        Set the parameters of the projected grid for the generated camera.
 
         Parameters
         ----------
-        primary_step : int
-            Primary step of the grid.
-        secondary_step : int
-            Secondary step of the grid.
-        max_distance : float
-            Maximum distance between a pixel and the camera, in mm.
-        max_incidence : float
-            Maximum angle (degree) under which two projected pixels should be connected by a line.
-        min_distance : float or int
-            The distance tolerance (in mm) for which two adjacent pixels to be connected by a line.
+        primary_step : int, optional
+            Primary step of the grid. The default is ``20``.
+        secondary_step : int, optional
+            Secondary step of the grid. The default is ``4``.
+        max_distance : float, optional
+            Maximum distance between a pixel and the camera in millimeters. The default is ``1500``.
+        max_incidence : float, optional
+            Maximum angle (degree) under which two projected pixels are to be connected by a line.
+            The default is ``89``.
+        min_distance : float or int, optional
+            Distance tolerance in millimeters for which two adjacent pixels are to be connected
+            by a line. The default is ``2``.
         """
         sensor_name = self.object.Sensors[0].Name
         grid_name = self.name + "." + sensor_name + ".OPTProjectedGrid"
@@ -195,14 +201,14 @@ class Simulation(BaseSCDM):
         return self
 
     def run_simulation(self):
-        """Computes simulation on the local CPU."""
+        """Run a simulation on the local CPU."""
         self.object.Compute()
         self.computed = True
         return self
 
     def add_sensor(self, sensor_name):
         """
-        Adds a sensor to the simulation.
+        Add a sensor to the simulation.
 
         Parameters
         ----------

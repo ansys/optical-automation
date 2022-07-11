@@ -11,12 +11,12 @@ os.chdir(os.path.dirname(os.path.dirname(os.path.realpath(__file__))))
 
 class TestPreprocessing:
     """
-    Class to define conditions for run of unit tests in PyTest
+    Defines conditions for running unit tests in PyTest.
     """
 
     def setup_class(self):
         """
-        Called before tests to initialize scdm class and open new SCDM session
+        Called before tests to initialize the ``scdm`` class and open a new SCDM session.
         Returns:
         """
 
@@ -35,20 +35,20 @@ class TestPreprocessing:
 
     def teardown_class(self):
         """
-        Called after all tests are completed to clean up SCDM session
-        clean results file.
+        Called after all tests are completed to clean up the SCDM session
+        and clean the results file.
 
-        On fail will report traceback with lines where code failed
+        On fail will report traceback with lines where the code failed.
         """
         self.clean_results(self)
 
         print("\n\n\n\n\n###############################")
-        print(self.results.get("error", "All tests are successful"))
+        print(self.results.get("error", "All tests are successful."))
         print("###############################\n\n\n\n\n")
 
     def clean_results(self):
         """
-        Delete results file to avoid confusion
+        Delete results file to avoid confusion.
         Returns:
 
         """
@@ -57,7 +57,7 @@ class TestPreprocessing:
 
     def test_01_check_color(self):
         """
-        Function to compare the results of create_dict_by_color()
+        Compare the results of the ``create_dict_by_color`` method.
         Returns: None
         """
         # Generate test log for ARM
@@ -67,7 +67,7 @@ class TestPreprocessing:
 
     def test_02_duplicates_and_stitch(self):
         """
-        Function to compare the results of remove_duplicates() and stitch_comp()
+        Compare the results of the ``remove_duplicates`` and ``stitch_comp`` methods.
         Returns: None
         """
         # Generate test log for ARM
@@ -77,7 +77,7 @@ class TestPreprocessing:
 
     def test_03_check_materials(self):
         """
-        Function to compare the results of create_dict_by_material()
+        Compare the results of the ``create_dict_by_material`` method.
         Returns: None
         """
         # Generate test log for ARM
@@ -87,7 +87,7 @@ class TestPreprocessing:
 
     def test_04_check_name_selection(self):
         """
-        Function to compare the results of create_named_selection()
+        Compare the results of the ``create_named_selection`` method.
         Returns: None
         """
         # Generate test log for ARM

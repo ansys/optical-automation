@@ -4,17 +4,17 @@ import subprocess
 
 def get_scdm_install_location(version):
     """
-    Function to get installation path of SpaceClaim
+    Get the SpaceClaim installation path.
 
     Parameters
     ----------
     version : int
-        version in format <xxx>, e.g. 211.
+        Version of SpaceClaim in numerical format. For example, ``211`` for 2021 R1.
 
     Returns
     -------
     str
-        path of SCDM installation
+        Path of the SpaceClaim installation.
 
     """
     ansys_install_dir = os.environ["AWP_ROOT{}".format(version)]
@@ -24,16 +24,16 @@ def get_scdm_install_location(version):
 
 def run_scdm_batch(scdm_version, api_version, script_file):
     """
-    Function to start Speos script in batch mode via ``subprocess.call()``.
+    Start a Speos script in batch mode via the ``subprocess.call`` method.
 
     Parameters
     ----------
     scdm_version : int
-        SCDM version.
+        SpaceClaim version.
     api_version : int
-        SCDM API version.
+        SpaceClaim API version.
     script_file : str
-        SCDM script file directory.
+        Full path to the script file.
     """
     scdm_install_dir = get_scdm_install_location(scdm_version)
     scdm_exe = os.path.join(scdm_install_dir, "SpaceClaim.exe")
