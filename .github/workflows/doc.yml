@@ -35,12 +35,12 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
           name: HTML-Documentation
-          path: doc/build/html
+          path: doc/_build/html
           retention-days: 7
       
     - name: Deploy
       uses: JamesIves/github-pages-deploy-action@4.1.5
       with:
           branch: gh-pages
-          folder: doc/build/html
+          folder: doc/_build/html
           clean: true
