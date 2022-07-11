@@ -1,10 +1,3 @@
-import os
-import sys
-
-appdata_path = os.getenv("AppData")
-repo_path = os.path.join(appdata_path, "SpaceClaim", "Published Scripts")
-sys.path.append(repo_path)
-
 from ansys_optical_automation.scdm_process.scdm_io import ScdmIO
 
 
@@ -78,8 +71,3 @@ def import_by_selection():
     axis_system_list = axis_system_selection.GetItems[ICoordinateSystem]()
     led_importer = ScdmIO(SpaceClaim)
     led_importer.import_part_at_axis_system(led_file, axis_system_list, anchor=True, lock=True, internalize=True)
-
-
-# Select one of the following methods preferred for import
-# import_by_selection()
-# import_by_visual_status()
