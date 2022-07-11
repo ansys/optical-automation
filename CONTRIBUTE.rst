@@ -27,7 +27,7 @@ mode with:
 Testing
 -------
 Tests are in the `tests <tests>`_ directory. A configuration file allows you
-to choose the version of Ansys SPEOS and script API for tests. Running tests requires pytest as test runner. 
+to choose the version of Ansys SPEOS and script API for tests. Running tests requires pytest as test runner.
 
 Test configuration file
 ~~~~~~~~~~~~~~~~~~~~~~~
@@ -36,7 +36,7 @@ contains version of Ansys SPEOS and the script API to use for running tests. You
 change the version parameters according to your test needs. For example:
 
 - **SCDM_VERSION** (integer): Speos version is  ``222`` for 2022 R2.
-- **API_VERSION** (integer): API version is ``21`` for V21. 
+- **API_VERSION** (integer): API version is ``21`` for V21.
  
 Launch unit tests
 ~~~~~~~~~~~~~~~~~
@@ -46,3 +46,13 @@ Run all tests defined in the ``tests`` folder with:
 
    pytest -v tests
 
+
+Building Documentation
+~~~~~~~~~~~~~~~~~~~~~~
+
+.. code::
+
+   pip install -e .[docs]
+   cd doc
+   sphinx-apidoc -o api ..\ansys_optical_automation
+   make.bat html
