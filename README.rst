@@ -24,7 +24,7 @@ To install the Optical Automation library, run this code in the Windows command 
 
 Documentation
 -------------
-Include a link to the full Sphinx documentation.  For example, `PyAnsys <https://docs.pyansys.com/>`_.
+You can read API documentation here: `Ansys Optical Automation <https://ansys.github.io/optical-automation/>`_.
 
 Contribution
 ------------
