@@ -47,7 +47,7 @@ Building Documentation
 
 .. code::
 
-   pip install .[docs]
+   pip install -e .[docs]
    cd doc
    sphinx-apidoc -o api ..\ansys_optical_automation
    make.bat html

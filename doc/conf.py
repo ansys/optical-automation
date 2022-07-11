@@ -33,6 +33,9 @@ templates_path = ["_templates"]
 # This pattern also affects html_static_path and html_extra_path.
 exclude_patterns = ["_build", "Thumbs.db", ".DS_Store"]
 
+# exclude modules that available only in IPY from API docs build
+autodoc_mock_imports = ["clr", "System"]
+
 
 # -- Options for HTML output -------------------------------------------------
 
