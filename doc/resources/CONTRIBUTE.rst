@@ -1,5 +1,5 @@
 Contribute
-----------
+==========
 We welcome any code contributions and hope that the documentation for this
 library facilitates your understanding of the
 ``optical-automation`` repository.
@@ -11,8 +11,8 @@ library facilitates your understanding of the
     to make this library useful for all users. As such, questions or
     submissions to this repository are welcomed and encouraged.
 
-Installation
-------------
+Development Installation
+------------------------
 Clone and install the Optimation Automation library in development
 mode with:
 
