@@ -42,5 +42,12 @@ To run all the tests defined under tests folder.
 
    pytest -v tests
 
+Building Documentation
+~~~~~~~~~~~~~~~~~~~~~~
 
+.. code::
+
+   cd doc
+   sphinx-apidoc -o api ..\ansys_optical_automation
+   make.bat html
 
