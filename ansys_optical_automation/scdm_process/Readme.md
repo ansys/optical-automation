@@ -10,9 +10,9 @@ The class ``MaterialsFromCSV`` has methods to:
 Your script should import the ``MaterialsFromCSV`` class: 
 
     import sys
-    sys.path.append("D:\\#PyOptics")
+    sys.path.append("D:\\optical-automation")
     
-    from scdm_scripts.materialapi_script_migration_2021r1.MaterialFroCSV_v4 import MaterialsFromCSV
+    from ansys_optical_automation.scdm_process.materal_from_csv import MaterialsFromCSV
     
     csv_path = "D:\\#ANSYS SPEOS_Concept Proof\\API Scripts\\ASP_MaterialFromCsv\\Materials.csv"
     work_directory = "D:\\#ANSYS SPEOS_Concept Proof\\API Scripts\\ASP_MaterialFromCsv\\"

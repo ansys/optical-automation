@@ -6,7 +6,7 @@ from ansys_optical_automation.scdm_core.base import BaseSCDM
 class Sensor(BaseSCDM):
     """
     Provides the parent class for all Speos sensor types.
-    
+
     This class contains methods and properties that are common to all sensor types.
     It shouldn't be used by itself. Subclasses should be used instead.
     """
@@ -14,7 +14,7 @@ class Sensor(BaseSCDM):
     def __init__(self, name, SpeosSim, SpaceClaim):
         """
         Initialize the base sensor object.
-        
+
         The base sensor object has a name and some other attributes that are common to all
         Speos sensors. It does not have a Speos sensor object and cannot be used by
         simulations as is.
@@ -72,7 +72,7 @@ class Sensor(BaseSCDM):
         """
         Set the origin and x and y directions of the sensor.
 
-        For some intensity sensors, set the origin and polar-axis and V0/H0-axis. 
+        For some intensity sensors, set the origin and polar-axis and V0/H0-axis.
 
         Parameters
         ----------
@@ -91,7 +91,9 @@ class Sensor(BaseSCDM):
             raise TypeError("No Speos object is defined.")
 
         if not (self.axes and self.origin) and not (axes and origin):  # if axes and/or origin not defined/provided
-            raise NameError("Axes or origin are not defined. Use the find_axes method or provide axes or origin as input.")
+            raise NameError(
+                "Axes or origin are not defined. Use the find_axes method or provide axes or origin as input."
+            )
 
         if not (axes and origin):  # If no inputs provided, use self.axes and self.origin
             axes = self.axes
@@ -195,6 +197,10 @@ class IntensitySensor(Sensor):
         ----------
         name : str
             Name of the sensor to find or create.
+        SpeosSim : SpeosSim
+            SpeosSim.
+        SpaceClaim : SpaceClaim object
+            SpaceClaim object.
         """
         super(IntensitySensor, self).__init__(name, SpeosSim, SpaceClaim)
         speos_object = self.speos_sim.SensorIntensity.Find(self.name)

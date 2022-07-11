@@ -89,8 +89,8 @@ class PreProcessingASP(BaseSCDM):
 
     def __stitch_group(self, comp, index, group_size):
         """
-        Stitch all bodies in a component into groups by group size.
-        
+         Stitch all bodies in a component into groups by group size.
+
         Parameters
         ----------
         comp : SpaceClaim Component
@@ -100,15 +100,15 @@ class PreProcessingASP(BaseSCDM):
         group_size : int
             Size of the group.
 
-       Returns
-       -------
-       list
-           List of bodies defined by the index.
-        
-       Examples
-       --------
-       >>>In-> [body1, body2] [body3, body4], [body5, body6], [body7, body8], [body9]
-       Out-> return [body3, body4]
+        Returns
+        -------
+        list
+            List of bodies defined by the index.
+
+        Examples
+        --------
+        >>>In-> [body1, body2] [body3, body4], [body5, body6], [body7, body8], [body9]
+        Out-> return [body3, body4]
         """
         stitch_group = self.List[self.IDesignBody]()
         for i, body in enumerate(self.ComponentExtensions.GetBodies(comp)):
@@ -119,7 +119,7 @@ class PreProcessingASP(BaseSCDM):
     def __stitch_group_list(self, comp, total_iter, group_size):
         """
         Get a list of bodies by group.
-        
+
         Parameters
         ----------
         comp : SpaceClaim Component
@@ -132,8 +132,8 @@ class PreProcessingASP(BaseSCDM):
         Returns
         -------
         list
-            List of bodies by group. 
-        
+            List of bodies by group.
+
         Examples
         --------
         Assume that the SpaceClaim component has these groups:

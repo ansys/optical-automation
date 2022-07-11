@@ -86,7 +86,7 @@ class DpfHdriViewer(DataProcessingFramework):
             all phi angles are exported.
         theta_angles : list of floats, optional
             List of theta angles to export. The default is ``None``, in which case
-            all theta angles are exported.      
+            all theta angles are exported.
         config_ids : list of positive integers or list of strings or a string or an integer, optional
             List of configurations IDs to export. The default is ``None``, in which case all configuration
             IDs are exported.

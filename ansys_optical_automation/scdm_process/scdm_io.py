@@ -6,7 +6,7 @@ from ansys_optical_automation.scdm_core.base import BaseSCDM
 class ScdmIO(BaseSCDM):
     """
     Provides all methods for importing and exporting a SpaceClaim or Speos project.
-    
+
     This class does not support multiple Speos sessions.
     """
 
@@ -116,11 +116,11 @@ class ScdmIO(BaseSCDM):
         name : str
             Name for the group.
         anchor : bool
-            Whether an anchor is required. 
+            Whether an anchor is required.
         lock : bool
             Whether a lock is required.
         internalize : bool
-            Whether to internalize. 
+            Whether to internalize.
         speos_source_group : bool
             Whether to group Speos surfaces under the imported part.
 
