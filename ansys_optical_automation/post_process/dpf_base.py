@@ -9,7 +9,7 @@ class DataProcessingFramework:
 
     """
 
-    def __init__(self, application=None, extension=""):
+    def __init__(self, application, extension):
         """Initialize general properties of DPF.
 
         Parameters
