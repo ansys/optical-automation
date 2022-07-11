@@ -260,7 +260,7 @@ class IntensitySensor(Sensor):
             Mirrored extend option of the Y size of the sensor.
             The default is ``False``.
         """
-        if not x_start and not x_end and not y_start and not y_end:
+        if not all([x_start, x_end, y_start, y_end]):
             raise NameError("No inputs are provided.")
         if x_mirrored:
             self.speos_object.XIsMirrored = x_mirrored
