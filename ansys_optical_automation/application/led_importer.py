@@ -15,7 +15,7 @@ def selection_dialog_window():
     Returns
     -------
     str
-        File directory selected, otherwise ```False``.
+        File directory selected, otherwise ``False``.
     """
     open_dialog = OpenFileDialog()
     open_dialog.Filter = "ANSYS SPEOS files (*.scdoc;*.scdocx)|*.scdoc;*scdocx|All Files (*.*)|*.*"
