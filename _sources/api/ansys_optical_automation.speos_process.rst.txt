@@ -1,0 +1,29 @@
+ansys\_optical\_automation.speos\_process package
+=================================================
+
+Submodules
+----------
+
+ansys\_optical\_automation.speos\_process.speos\_sensors module
+---------------------------------------------------------------
+
+.. automodule:: ansys_optical_automation.speos_process.speos_sensors
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+ansys\_optical\_automation.speos\_process.speos\_simulations module
+-------------------------------------------------------------------
+
+.. automodule:: ansys_optical_automation.speos_process.speos_simulations
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Module contents
+---------------
+
+.. automodule:: ansys_optical_automation.speos_process
+   :members:
+   :undoc-members:
+   :show-inheritance:

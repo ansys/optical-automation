@@ -1,0 +1,45 @@
+ansys\_optical\_automation.scdm\_process package
+================================================
+
+Submodules
+----------
+
+ansys\_optical\_automation.scdm\_process.material\_from\_csv module
+-------------------------------------------------------------------
+
+.. automodule:: ansys_optical_automation.scdm_process.material_from_csv
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+ansys\_optical\_automation.scdm\_process.material\_from\_layers module
+----------------------------------------------------------------------
+
+.. automodule:: ansys_optical_automation.scdm_process.material_from_layers
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+ansys\_optical\_automation.scdm\_process.preprocessing\_library module
+----------------------------------------------------------------------
+
+.. automodule:: ansys_optical_automation.scdm_process.preprocessing_library
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+ansys\_optical\_automation.scdm\_process.scdm\_io module
+--------------------------------------------------------
+
+.. automodule:: ansys_optical_automation.scdm_process.scdm_io
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Module contents
+---------------
+
+.. automodule:: ansys_optical_automation.scdm_process
+   :members:
+   :undoc-members:
+   :show-inheritance:

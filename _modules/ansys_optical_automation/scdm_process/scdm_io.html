@@ -1,0 +1,483 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ansys_optical_automation.scdm_process.scdm_io &#8212; Ansys Optical Automation  documentation</title>
+    
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="../../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css" />
+    <link rel="stylesheet" href="../../../_static/styles/sphinx-book-theme.css?digest=62ba249389abaaa9ffc34bf36a076bdc1d65ee18" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css" />
+    
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
+
+    <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+    <script src="../../../_static/jquery.js"></script>
+    <script src="../../../_static/underscore.js"></script>
+    <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/clipboard.min.js"></script>
+    <script src="../../../_static/copybutton.js"></script>
+    <script src="../../../_static/scripts/sphinx-book-theme.js?digest=f31d14ad54b65d19161ba51d4ffff3a77ae00456"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
+<!-- Checkboxes to toggle the left sidebar -->
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle navigation sidebar">
+<label class="overlay overlay-navbar" for="__navigation">
+    <div class="visually-hidden">Toggle navigation sidebar</div>
+</label>
+<!-- Checkboxes to toggle the in-page toc -->
+<input type="checkbox" class="sidebar-toggle" name="__page-toc" id="__page-toc" aria-label="Toggle in-page Table of Contents">
+<label class="overlay overlay-pagetoc" for="__page-toc">
+    <div class="visually-hidden">Toggle in-page Table of Contents</div>
+</label>
+<!-- Headers at the top -->
+<div class="announcement header-item noprint"></div>
+<div class="header header-item noprint"></div>
+
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<!-- Sidebar -->
+<div class="bd-sidebar noprint" id="site-navigation">
+    <div class="bd-sidebar__content">
+        <div class="bd-sidebar__top"><div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="../../../index.html">
+      
+      
+      
+      <h1 class="site-logo" id="site-title">Ansys Optical Automation  documentation</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="../../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        <p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Contents:
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../../../api/modules.html">
+   ansys_optical_automation
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
+  <label for="toctree-checkbox-1">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../../api/ansys_optical_automation.html">
+     ansys_optical_automation package
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/>
+    <label for="toctree-checkbox-2">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../api/ansys_optical_automation.application.html">
+       ansys_optical_automation.application package
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../api/ansys_optical_automation.post_process.html">
+       ansys_optical_automation.post_process package
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../api/ansys_optical_automation.scdm_core.html">
+       ansys_optical_automation.scdm_core package
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../api/ansys_optical_automation.scdm_process.html">
+       ansys_optical_automation.scdm_process package
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../api/ansys_optical_automation.speos_process.html">
+       ansys_optical_automation.speos_process package
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+    </div>
+</nav></div>
+        <div class="bd-sidebar__bottom">
+             <!-- To handle the deprecated key -->
+            
+            <div class="navbar_extra_footer">
+            Theme by the <a href="https://ebp.jupyterbook.org">Executable Book Project</a>
+            </div>
+            
+        </div>
+    </div>
+    <div id="rtd-footer-container"></div>
+</div>
+
+
+          
+
+
+          
+<!-- A tiny helper pixel to detect if we've scrolled -->
+<div class="sbt-scroll-pixel-helper"></div>
+<!-- Main content -->
+<div class="col py-0 content-container">
+    
+    <div class="header-article row sticky-top noprint">
+        
+
+
+
+<div class="col py-1 d-flex header-article-main">
+    <div class="header-article__left">
+        
+        <label for="__navigation"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="right"
+title="Toggle navigation"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-bars"></i>
+  </span>
+
+</label>
+
+        
+    </div>
+    <div class="header-article__right">
+<button onclick="toggleFullScreen()"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="bottom"
+title="Fullscreen mode"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+    </div>
+</div>
+
+<!-- Table of contents -->
+<div class="col-md-3 bd-toc show noprint">
+</div>
+    </div>
+    <div class="article row">
+        <div class="col pl-md-3 pl-lg-5 content-container">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1></h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                    </div>
+                </div>
+            </div>
+            <main id="main-content" role="main">
+                
+              <div>
+                
+  <h1>Source code for ansys_optical_automation.scdm_process.scdm_io</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">os</span>
+
+<span class="kn">from</span> <span class="nn">ansys_optical_automation.scdm_core.base</span> <span class="kn">import</span> <span class="n">BaseSCDM</span>
+
+
+<div class="viewcode-block" id="ScdmIO"><a class="viewcode-back" href="../../../api/ansys_optical_automation.scdm_process.html#ansys_optical_automation.scdm_process.scdm_io.ScdmIO">[docs]</a><span class="k">class</span> <span class="nc">ScdmIO</span><span class="p">(</span><span class="n">BaseSCDM</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Provides all methods for importing and exporting a SpaceClaim or Speos project.</span>
+
+<span class="sd">    This class does not support multiple Speos sessions.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">SpaceClaim</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">ScdmIO</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">SpaceClaim</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;V19&quot;</span><span class="p">,</span> <span class="s2">&quot;V20&quot;</span><span class="p">,</span> <span class="s2">&quot;V21&quot;</span><span class="p">])</span>
+
+    <span class="k">def</span> <span class="nf">__valid_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">file</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Check whether a file exists and is valid.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        file : str</span>
+<span class="sd">            Full path to the file.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        bool</span>
+<span class="sd">            ``True`` when successful, ``False`` when failed.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__apply_lock</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">component</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Apply lock to all bodies under a component.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        component : SpaceClaim component</span>
+<span class="sd">            SpaceClaim component.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">body</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">ComponentExtensions</span><span class="o">.</span><span class="n">GetAllBodies</span><span class="p">(</span><span class="n">component</span><span class="p">):</span>
+            <span class="n">body_selection</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">Selection</span><span class="o">.</span><span class="n">CreateByObjects</span><span class="p">(</span><span class="n">body</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">ViewHelper</span><span class="o">.</span><span class="n">LockBodies</span><span class="p">(</span><span class="n">body_selection</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__apply_internalize</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">component</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Internalize a component.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        component : SpaceClaim component</span>
+<span class="sd">            SpaceClaim component.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">group_selection</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">Selection</span><span class="o">.</span><span class="n">CreateByObjects</span><span class="p">(</span><span class="n">component</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ComponentHelper</span><span class="o">.</span><span class="n">InternalizeAll</span><span class="p">(</span><span class="n">group_selection</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__apply_anchor</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">component</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Add anchor conditions to a structure component.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        component : SpaceClaim component</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">AnchorCondition</span><span class="o">.</span><span class="n">Create</span><span class="p">(</span><span class="n">component</span><span class="o">.</span><span class="n">Parent</span><span class="p">,</span> <span class="n">component</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">ComponentExtensions</span><span class="o">.</span><span class="n">GetAllComponents</span><span class="p">(</span><span class="n">component</span><span class="p">):</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">ComponentExtensions</span><span class="o">.</span><span class="n">GetAllComponents</span><span class="p">(</span><span class="n">item</span><span class="p">)</span><span class="o">.</span><span class="n">Count</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">AnchorCondition</span><span class="o">.</span><span class="n">Create</span><span class="p">(</span><span class="n">item</span><span class="o">.</span><span class="n">Parent</span><span class="p">,</span> <span class="n">item</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__get_speos_source_under_component</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">component_group</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get Speos source elements defined under a component.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        component_group : SpaceClaim group</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        list</span>
+<span class="sd">            List of Speos sources.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">speos_sources_list</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">component</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">ComponentExtensions</span><span class="o">.</span><span class="n">GetAllComponents</span><span class="p">(</span><span class="n">component_group</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">speos_object</span> <span class="ow">in</span> <span class="n">component</span><span class="o">.</span><span class="n">Content</span><span class="o">.</span><span class="n">CustomObjects</span><span class="p">:</span>
+                <span class="k">if</span> <span class="s2">&quot;Source&quot;</span> <span class="ow">in</span> <span class="n">speos_object</span><span class="o">.</span><span class="n">Type</span><span class="p">:</span>
+                    <span class="n">speos_sources_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">speos_object</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">speos_sources_list</span>
+
+    <span class="k">def</span> <span class="nf">__create_speos_sources_group</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">component</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Create a Speos source group for the surface sources defined under a component.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        component : SpaceClaim component</span>
+<span class="sd">            SpaceClaim component.</span>
+<span class="sd">        name : str</span>
+<span class="sd">            Name for the Speos source group.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">speos_source_list</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__get_speos_source_under_component</span><span class="p">(</span><span class="n">component</span><span class="p">)</span>
+        <span class="n">source_selection</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">Selection</span><span class="o">.</span><span class="n">CreateByObjects</span><span class="p">(</span><span class="n">speos_source_list</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">name</span><span class="p">:</span>
+            <span class="n">source_selection</span><span class="o">.</span><span class="n">CreateAGroup</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">source_selection</span><span class="o">.</span><span class="n">CreateAGroup</span><span class="p">(</span><span class="s2">&quot;speos_sources_group&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__group_components</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">component_list</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">anchor</span><span class="p">,</span> <span class="n">lock</span><span class="p">,</span> <span class="n">internalize</span><span class="p">,</span> <span class="n">speos_source_group</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Group a list of components.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        component_list : list</span>
+<span class="sd">            List of SpaceClaim components.</span>
+<span class="sd">        name : str</span>
+<span class="sd">            Name for the group.</span>
+<span class="sd">        anchor : bool</span>
+<span class="sd">            Whether an anchor is required.</span>
+<span class="sd">        lock : bool</span>
+<span class="sd">            Whether a lock is required.</span>
+<span class="sd">        internalize : bool</span>
+<span class="sd">            Whether to internalize.</span>
+<span class="sd">        speos_source_group : bool</span>
+<span class="sd">            Whether to group Speos surfaces under the imported part.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        bool</span>
+<span class="sd">            ``True`` when succcessful, ``False`` when failed.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">selection</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">Selection</span><span class="o">.</span><span class="n">CreateByObjects</span><span class="p">(</span><span class="n">component_list</span><span class="p">)</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ComponentHelper</span><span class="o">.</span><span class="n">MoveBodiesToComponent</span><span class="p">(</span><span class="n">selection</span><span class="p">)</span>
+
+        <span class="n">grouped_group</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">PartExtensions</span><span class="o">.</span><span class="n">GetComponents</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">GetRootPart</span><span class="p">())[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">name</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">SetName</span><span class="p">(</span><span class="n">grouped_group</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">anchor</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__apply_anchor</span><span class="p">(</span><span class="n">grouped_group</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">internalize</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">__apply_internalize</span><span class="p">(</span><span class="n">grouped_group</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;Selected file has been locked. Details: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">error</span><span class="p">))</span>
+
+        <span class="k">if</span> <span class="n">lock</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__apply_lock</span><span class="p">(</span><span class="n">grouped_group</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">speos_source_group</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__create_speos_sources_group</span><span class="p">(</span><span class="n">grouped_group</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">result</span>
+
+<div class="viewcode-block" id="ScdmIO.get_axis_systems_under_component"><a class="viewcode-back" href="../../../api/ansys_optical_automation.scdm_process.html#ansys_optical_automation.scdm_process.scdm_io.ScdmIO.get_axis_systems_under_component">[docs]</a>    <span class="k">def</span> <span class="nf">get_axis_systems_under_component</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">component</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get the axis system under a component.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        component : SpaceClaim component</span>
+<span class="sd">            SpaceClaim component.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        list</span>
+<span class="sd">            List of axis systems that are under the component.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">axis_system_list</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">axis_system</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">ComponentExtensions</span><span class="o">.</span><span class="n">GetCoordinateSystems</span><span class="p">(</span><span class="n">component</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">axis_system</span><span class="o">.</span><span class="n">Master</span><span class="o">.</span><span class="n">Name</span> <span class="o">!=</span> <span class="s2">&quot;&quot;</span> <span class="ow">and</span> <span class="n">axis_system</span><span class="o">.</span><span class="n">IsVisible</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+                <span class="n">axis_system_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">axis_system</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">axis_system_list</span></div>
+
+<div class="viewcode-block" id="ScdmIO.import_part_at_axis_system"><a class="viewcode-back" href="../../../api/ansys_optical_automation.scdm_process.html#ansys_optical_automation.scdm_process.scdm_io.ScdmIO.import_part_at_axis_system">[docs]</a>    <span class="k">def</span> <span class="nf">import_part_at_axis_system</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">external_part</span><span class="p">,</span>
+        <span class="n">axis_system_list</span><span class="p">,</span>
+        <span class="n">name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">anchor</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="n">lock</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="n">internalize</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="n">speos_source_group</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Import component at a given axis system.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        external_part : SpaceClaim file</span>
+<span class="sd">            SpaceClaim file to import.</span>
+<span class="sd">        axis_system_list : list</span>
+<span class="sd">            List of axis systems.</span>
+<span class="sd">        name : string, optional</span>
+<span class="sd">            Name for the group to use for grouping imported parts. The default is ``None``.</span>
+<span class="sd">        anchor : bool, optional</span>
+<span class="sd">            Whether an anchor is required. The default is ``False``.</span>
+<span class="sd">        lock : bool, optional</span>
+<span class="sd">            Whether a lock is required. The default is ``False``.</span>
+<span class="sd">        internalize : bool, optional</span>
+<span class="sd">            Whether to internalize. The default is ``False``.</span>
+<span class="sd">        speos_source_group : bool, optional</span>
+<span class="sd">            Whether to group Speos surfaces under the imported part. The default is ``False``.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">__valid_file</span><span class="p">(</span><span class="n">external_part</span><span class="p">):</span>
+            <span class="n">error_msg</span> <span class="o">=</span> <span class="s2">&quot;Invalid project directory.&quot;</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">error_msg</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">axis_system_list</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span>
+
+        <span class="n">imported_component_group</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ComponentHelper</span><span class="o">.</span><span class="n">SetRootActive</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">axis_system</span> <span class="ow">in</span> <span class="n">axis_system_list</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">Selection</span><span class="o">.</span><span class="n">CreateByObjects</span><span class="p">(</span><span class="n">axis_system</span><span class="p">)</span><span class="o">.</span><span class="n">SetActive</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">DocumentInsert</span><span class="o">.</span><span class="n">Execute</span><span class="p">(</span><span class="n">external_part</span><span class="p">)</span>
+            <span class="n">component_imported</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">PartExtensions</span><span class="o">.</span><span class="n">GetComponents</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">GetRootPart</span><span class="p">())[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+            <span class="n">imported_component_group</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">component_imported</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__group_components</span><span class="p">(</span><span class="n">imported_component_group</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">anchor</span><span class="p">,</span> <span class="n">lock</span><span class="p">,</span> <span class="n">internalize</span><span class="p">,</span> <span class="n">speos_source_group</span><span class="p">)</span></div></div>
+</pre></div>
+
+              </div>
+              
+            </main>
+            <footer class="footer-article noprint">
+                
+    <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+</div>
+            </footer>
+        </div>
+    </div>
+    <div class="footer-content row">
+        <footer class="col footer"><p>
+  
+    By Ansys Inc.<br/>
+  
+      &copy; Copyright (c) 2022 ANSYS, Inc. All rights reserved.<br/>
+</p>
+        </footer>
+    </div>
+    
+</div>
+
+
+      </div>
+    </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+
+
+  </body>
+</html>

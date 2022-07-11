@@ -1,0 +1,22 @@
+ansys\_optical\_automation package
+==================================
+
+Subpackages
+-----------
+
+.. toctree::
+   :maxdepth: 4
+
+   ansys_optical_automation.application
+   ansys_optical_automation.post_process
+   ansys_optical_automation.scdm_core
+   ansys_optical_automation.scdm_process
+   ansys_optical_automation.speos_process
+
+Module contents
+---------------
+
+.. automodule:: ansys_optical_automation
+   :members:
+   :undoc-members:
+   :show-inheritance:

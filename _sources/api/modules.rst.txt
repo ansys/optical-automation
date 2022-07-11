@@ -1,0 +1,7 @@
+ansys_optical_automation
+========================
+
+.. toctree::
+   :maxdepth: 4
+
+   ansys_optical_automation

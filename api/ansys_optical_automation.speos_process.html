@@ -1,0 +1,873 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>ansys_optical_automation.speos_process package &#8212; Ansys Optical Automation  documentation</title>
+    
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=62ba249389abaaa9ffc34bf36a076bdc1d65ee18" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/graphviz.css" />
+    
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=f31d14ad54b65d19161ba51d4ffff3a77ae00456"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="prev" title="ansys_optical_automation.scdm_process package" href="ansys_optical_automation.scdm_process.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
+<!-- Checkboxes to toggle the left sidebar -->
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle navigation sidebar">
+<label class="overlay overlay-navbar" for="__navigation">
+    <div class="visually-hidden">Toggle navigation sidebar</div>
+</label>
+<!-- Checkboxes to toggle the in-page toc -->
+<input type="checkbox" class="sidebar-toggle" name="__page-toc" id="__page-toc" aria-label="Toggle in-page Table of Contents">
+<label class="overlay overlay-pagetoc" for="__page-toc">
+    <div class="visually-hidden">Toggle in-page Table of Contents</div>
+</label>
+<!-- Headers at the top -->
+<div class="announcement header-item noprint"></div>
+<div class="header header-item noprint"></div>
+
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<!-- Sidebar -->
+<div class="bd-sidebar noprint" id="site-navigation">
+    <div class="bd-sidebar__content">
+        <div class="bd-sidebar__top"><div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="../index.html">
+      
+      
+      
+      <h1 class="site-logo" id="site-title">Ansys Optical Automation  documentation</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        <p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Contents:
+ </span>
+</p>
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1 current active has-children">
+  <a class="reference internal" href="modules.html">
+   ansys_optical_automation
+  </a>
+  <input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
+  <label for="toctree-checkbox-1">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul class="current">
+   <li class="toctree-l2 current active has-children">
+    <a class="reference internal" href="ansys_optical_automation.html">
+     ansys_optical_automation package
+    </a>
+    <input checked="" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/>
+    <label for="toctree-checkbox-2">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul class="current">
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys_optical_automation.application.html">
+       ansys_optical_automation.application package
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys_optical_automation.post_process.html">
+       ansys_optical_automation.post_process package
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys_optical_automation.scdm_core.html">
+       ansys_optical_automation.scdm_core package
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys_optical_automation.scdm_process.html">
+       ansys_optical_automation.scdm_process package
+      </a>
+     </li>
+     <li class="toctree-l3 current active">
+      <a class="current reference internal" href="#">
+       ansys_optical_automation.speos_process package
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+    </div>
+</nav></div>
+        <div class="bd-sidebar__bottom">
+             <!-- To handle the deprecated key -->
+            
+            <div class="navbar_extra_footer">
+            Theme by the <a href="https://ebp.jupyterbook.org">Executable Book Project</a>
+            </div>
+            
+        </div>
+    </div>
+    <div id="rtd-footer-container"></div>
+</div>
+
+
+          
+
+
+          
+<!-- A tiny helper pixel to detect if we've scrolled -->
+<div class="sbt-scroll-pixel-helper"></div>
+<!-- Main content -->
+<div class="col py-0 content-container">
+    
+    <div class="header-article row sticky-top noprint">
+        
+
+
+
+<div class="col py-1 d-flex header-article-main">
+    <div class="header-article__left">
+        
+        <label for="__navigation"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="right"
+title="Toggle navigation"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-bars"></i>
+  </span>
+
+</label>
+
+        
+    </div>
+    <div class="header-article__right">
+<button onclick="toggleFullScreen()"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="bottom"
+title="Fullscreen mode"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+<div class="menu-dropdown menu-dropdown-download-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Download this page">
+      <i class="fas fa-download"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="../_sources/api/ansys_optical_automation.speos_process.rst.txt"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Download source file"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="headerbtn__text-container">.rst</span>
+</a>
+
+      </li>
+      
+      <li>
+        
+<button onclick="printPdf(this)"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="left"
+title="Print to PDF"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="headerbtn__text-container">.pdf</span>
+</button>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+<label for="__page-toc"
+  class="headerbtn headerbtn-page-toc"
+  
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-list"></i>
+  </span>
+
+</label>
+
+    </div>
+</div>
+
+<!-- Table of contents -->
+<div class="col-md-3 bd-toc show noprint">
+    <div class="tocsection onthispage pt-5 pb-3">
+        <i class="fas fa-list"></i> Contents
+    </div>
+    <nav id="bd-toc-nav" aria-label="Page">
+        <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#submodules">
+   Submodules
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#module-ansys_optical_automation.speos_process.speos_sensors">
+   ansys_optical_automation.speos_process.speos_sensors module
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#module-ansys_optical_automation.speos_process.speos_simulations">
+   ansys_optical_automation.speos_process.speos_simulations module
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#module-ansys_optical_automation.speos_process">
+   Module contents
+  </a>
+ </li>
+</ul>
+
+    </nav>
+</div>
+    </div>
+    <div class="article row">
+        <div class="col pl-md-3 pl-lg-5 content-container">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>ansys_optical_automation.speos_process package</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#submodules">
+   Submodules
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#module-ansys_optical_automation.speos_process.speos_sensors">
+   ansys_optical_automation.speos_process.speos_sensors module
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#module-ansys_optical_automation.speos_process.speos_simulations">
+   ansys_optical_automation.speos_process.speos_simulations module
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#module-ansys_optical_automation.speos_process">
+   Module contents
+  </a>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <main id="main-content" role="main">
+                
+              <div>
+                
+  <section id="ansys-optical-automation-speos-process-package">
+<h1>ansys_optical_automation.speos_process package<a class="headerlink" href="#ansys-optical-automation-speos-process-package" title="Permalink to this headline">#</a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">#</a></h2>
+</section>
+<section id="module-ansys_optical_automation.speos_process.speos_sensors">
+<span id="ansys-optical-automation-speos-process-speos-sensors-module"></span><h2>ansys_optical_automation.speos_process.speos_sensors module<a class="headerlink" href="#module-ansys_optical_automation.speos_process.speos_sensors" title="Permalink to this headline">#</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="ansys_optical_automation.speos_process.speos_sensors.Camera">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">ansys_optical_automation.speos_process.speos_sensors.</span></span><span class="sig-name descname"><span class="pre">Camera</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">SpeosSim</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">SpaceClaim</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ansys_optical_automation/speos_process/speos_sensors.html#Camera"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ansys_optical_automation.speos_process.speos_sensors.Camera" title="Permalink to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#ansys_optical_automation.speos_process.speos_sensors.Sensor" title="ansys_optical_automation.speos_process.speos_sensors.Sensor"><code class="xref py py-class docutils literal notranslate"><span class="pre">ansys_optical_automation.speos_process.speos_sensors.Sensor</span></code></a></p>
+<p>Provides methods for defining the Speos camera sensor.</p>
+<p class="rubric">Methods</p>
+<table class="autosummary longtable table autosummary">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">find_axes</span></code>([origin])</p></td>
+<td><p>Find a component with the same name as the sensor, look in it for an axis system and an origin point (if available), and save them as properties in self.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#ansys_optical_automation.speos_process.speos_sensors.Camera.set_distortion" title="ansys_optical_automation.speos_process.speos_sensors.Camera.set_distortion"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_distortion</span></code></a>(distortion_file_name)</p></td>
+<td><p><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p></p></dd>
+</dl>
+</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_position</span></code>([x_reverse, y_reverse, origin, ...])</p></td>
+<td><p>Set the origin and x and y directions of the sensor.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#ansys_optical_automation.speos_process.speos_sensors.Camera.set_sensitivity" title="ansys_optical_automation.speos_process.speos_sensors.Camera.set_sensitivity"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_sensitivity</span></code></a>(color, sensitivity_file_name)</p></td>
+<td><p><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p></p></dd>
+</dl>
+</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#ansys_optical_automation.speos_process.speos_sensors.Camera.set_transmittance" title="ansys_optical_automation.speos_process.speos_sensors.Camera.set_transmittance"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_transmittance</span></code></a>(transmittance_file_name)</p></td>
+<td><p><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p></p></dd>
+</dl>
+</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py method">
+<dt class="sig sig-object py" id="ansys_optical_automation.speos_process.speos_sensors.Camera.set_distortion">
+<span class="sig-name descname"><span class="pre">set_distortion</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">distortion_file_name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ansys_optical_automation/speos_process/speos_sensors.html#Camera.set_distortion"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ansys_optical_automation.speos_process.speos_sensors.Camera.set_distortion" title="Permalink to this definition">#</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>distortion_file_name</strong><span class="classifier">str</span></dt><dd><p>Name of the OPT distortion file.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ansys_optical_automation.speos_process.speos_sensors.Camera.set_sensitivity">
+<span class="sig-name descname"><span class="pre">set_sensitivity</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">color</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sensitivity_file_name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ansys_optical_automation/speos_process/speos_sensors.html#Camera.set_sensitivity"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ansys_optical_automation.speos_process.speos_sensors.Camera.set_sensitivity" title="Permalink to this definition">#</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>color</strong><span class="classifier">str</span></dt><dd><p>Channel color. Options are <code class="docutils literal notranslate"><span class="pre">&quot;red&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;green&quot;</span></code>, and <code class="docutils literal notranslate"><span class="pre">&quot;blue&quot;</span></code>.</p>
+</dd>
+<dt><strong>sensitivity_file_name</strong><span class="classifier">str</span></dt><dd><p>Name of the sensitivity file.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ansys_optical_automation.speos_process.speos_sensors.Camera.set_transmittance">
+<span class="sig-name descname"><span class="pre">set_transmittance</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">transmittance_file_name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ansys_optical_automation/speos_process/speos_sensors.html#Camera.set_transmittance"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ansys_optical_automation.speos_process.speos_sensors.Camera.set_transmittance" title="Permalink to this definition">#</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>transmittance_file_name</strong><span class="classifier">str</span></dt><dd><p>Name of the transmittance spectrum file.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="ansys_optical_automation.speos_process.speos_sensors.IntensitySensor">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">ansys_optical_automation.speos_process.speos_sensors.</span></span><span class="sig-name descname"><span class="pre">IntensitySensor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">SpeosSim</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">SpaceClaim</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ansys_optical_automation/speos_process/speos_sensors.html#IntensitySensor"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ansys_optical_automation.speos_process.speos_sensors.IntensitySensor" title="Permalink to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#ansys_optical_automation.speos_process.speos_sensors.Sensor" title="ansys_optical_automation.speos_process.speos_sensors.Sensor"><code class="xref py py-class docutils literal notranslate"><span class="pre">ansys_optical_automation.speos_process.speos_sensors.Sensor</span></code></a></p>
+<p>Provides methods for the Speos intensity sensor.</p>
+<p class="rubric">Methods</p>
+<table class="autosummary longtable table autosummary">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">find_axes</span></code>([origin])</p></td>
+<td><p>Find a component with the same name as the sensor, look in it for an axis system and an origin point (if available), and save them as properties in self.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#ansys_optical_automation.speos_process.speos_sensors.IntensitySensor.set_format" title="ansys_optical_automation.speos_process.speos_sensors.IntensitySensor.set_format"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_format</span></code></a>([sensor_format])</p></td>
+<td><p>Set the sensor format.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#ansys_optical_automation.speos_process.speos_sensors.IntensitySensor.set_layer" title="ansys_optical_automation.speos_process.speos_sensors.IntensitySensor.set_layer"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_layer</span></code></a>(layer_type)</p></td>
+<td><p>Set the layer type of the sensor. Parameters ---------- layer_type : str     Layer type of the sensor. Options are <code class="docutils literal notranslate"><span class="pre">&quot;source&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;face&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;sequence&quot;</span></code>,     and <code class="docutils literal notranslate"><span class="pre">&quot;none&quot;</span></code>.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_position</span></code>([x_reverse, y_reverse, origin, ...])</p></td>
+<td><p>Set the origin and x and y directions of the sensor.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#ansys_optical_automation.speos_process.speos_sensors.IntensitySensor.set_range" title="ansys_optical_automation.speos_process.speos_sensors.IntensitySensor.set_range"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_range</span></code></a>([x_start, x_end, y_start, y_end, ...])</p></td>
+<td><p>Set the sensor size.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#ansys_optical_automation.speos_process.speos_sensors.IntensitySensor.set_resolution" title="ansys_optical_automation.speos_process.speos_sensors.IntensitySensor.set_resolution"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_resolution</span></code></a>([x_resolution, y_resolution])</p></td>
+<td><p>Set the resolution of the sensor.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#ansys_optical_automation.speos_process.speos_sensors.IntensitySensor.set_sampling" title="ansys_optical_automation.speos_process.speos_sensors.IntensitySensor.set_sampling"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_sampling</span></code></a>([x_sampling, y_sampling])</p></td>
+<td><p>Set the number of samples on the axes.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#ansys_optical_automation.speos_process.speos_sensors.IntensitySensor.set_type" title="ansys_optical_automation.speos_process.speos_sensors.IntensitySensor.set_type"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_type</span></code></a>(sensor_type)</p></td>
+<td><p>Set the sensor type.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#ansys_optical_automation.speos_process.speos_sensors.IntensitySensor.set_wavelength" title="ansys_optical_automation.speos_process.speos_sensors.IntensitySensor.set_wavelength"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_wavelength</span></code></a>([w_start, w_end, w_sampling, ...])</p></td>
+<td><p>Set the wavelength of the sensor.</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py method">
+<dt class="sig sig-object py" id="ansys_optical_automation.speos_process.speos_sensors.IntensitySensor.set_format">
+<span class="sig-name descname"><span class="pre">set_format</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sensor_format</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ansys_optical_automation/speos_process/speos_sensors.html#IntensitySensor.set_format"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ansys_optical_automation.speos_process.speos_sensors.IntensitySensor.set_format" title="Permalink to this definition">#</a></dt>
+<dd><p>Set the sensor format.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>sensor_format</strong><span class="classifier">str</span></dt><dd><p>Format of the sensor. Options are <code class="docutils literal notranslate"><span class="pre">&quot;XMP&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;IESNATypeA&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;IESNATypeB&quot;</span></code>,
+<code class="docutils literal notranslate"><span class="pre">&quot;IESNATypeC&quot;</span></code>, and <code class="docutils literal notranslate"><span class="pre">&quot;Eulumdat&quot;</span></code>.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ansys_optical_automation.speos_process.speos_sensors.IntensitySensor.set_layer">
+<span class="sig-name descname"><span class="pre">set_layer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">layer_type</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ansys_optical_automation/speos_process/speos_sensors.html#IntensitySensor.set_layer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ansys_optical_automation.speos_process.speos_sensors.IntensitySensor.set_layer" title="Permalink to this definition">#</a></dt>
+<dd><p>Set the layer type of the sensor.
+Parameters
+———-
+layer_type : str</p>
+<blockquote>
+<div><p>Layer type of the sensor. Options are <code class="docutils literal notranslate"><span class="pre">&quot;source&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;face&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;sequence&quot;</span></code>,
+and <code class="docutils literal notranslate"><span class="pre">&quot;none&quot;</span></code>.</p>
+</div></blockquote>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ansys_optical_automation.speos_process.speos_sensors.IntensitySensor.set_range">
+<span class="sig-name descname"><span class="pre">set_range</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x_start</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x_end</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_start</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_end</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x_mirrored</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_mirrored</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ansys_optical_automation/speos_process/speos_sensors.html#IntensitySensor.set_range"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ansys_optical_automation.speos_process.speos_sensors.IntensitySensor.set_range" title="Permalink to this definition">#</a></dt>
+<dd><p>Set the sensor size.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>x_start</strong><span class="classifier">int or float, optional</span></dt><dd><p>X size of the sensor in millimeters for the positive part.
+The default is <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p>
+</dd>
+<dt><strong>x_end</strong><span class="classifier">int or float, optional</span></dt><dd><p>X size of the sensor in millimeters for the negative part.
+The default is <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p>
+</dd>
+<dt><strong>y_start</strong><span class="classifier">int of float, optional</span></dt><dd><p>Y size of the sensor in millimeters for the positive part.
+The default is <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p>
+</dd>
+<dt><strong>y_end</strong><span class="classifier">int or float, optional</span></dt><dd><p>Y size of the sensor in millimeters for the negative part.
+The default is <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p>
+</dd>
+<dt><strong>x_mirrored</strong><span class="classifier">bool, optional</span></dt><dd><p>Mirrored extend option of the X size of the sensor.
+The default is <code class="docutils literal notranslate"><span class="pre">False</span></code>.</p>
+</dd>
+<dt><strong>y_mirrored</strong><span class="classifier">bool, optional</span></dt><dd><p>Mirrored extend option of the Y size of the sensor.
+The default is <code class="docutils literal notranslate"><span class="pre">False</span></code>.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ansys_optical_automation.speos_process.speos_sensors.IntensitySensor.set_resolution">
+<span class="sig-name descname"><span class="pre">set_resolution</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x_resolution</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_resolution</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ansys_optical_automation/speos_process/speos_sensors.html#IntensitySensor.set_resolution"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ansys_optical_automation.speos_process.speos_sensors.IntensitySensor.set_resolution" title="Permalink to this definition">#</a></dt>
+<dd><p>Set the resolution of the sensor.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>x_resolution</strong><span class="classifier">int, optional</span></dt><dd><p>X resolution of the sensor in millimeters. The default is <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p>
+</dd>
+<dt><strong>y_resolution</strong><span class="classifier">int, optional</span></dt><dd><p>Y resolution of the sensor in millimeters. The default is <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ansys_optical_automation.speos_process.speos_sensors.IntensitySensor.set_sampling">
+<span class="sig-name descname"><span class="pre">set_sampling</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x_sampling</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_sampling</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ansys_optical_automation/speos_process/speos_sensors.html#IntensitySensor.set_sampling"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ansys_optical_automation.speos_process.speos_sensors.IntensitySensor.set_sampling" title="Permalink to this definition">#</a></dt>
+<dd><p>Set the number of samples on the axes.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>x_sampling</strong><span class="classifier">int, optionl</span></dt><dd><p>Number of samples on the X-axis. The default is <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p>
+</dd>
+<dt><strong>y_sampling</strong><span class="classifier">int</span></dt><dd><p>Number of samples on the Y-axis. The default is <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ansys_optical_automation.speos_process.speos_sensors.IntensitySensor.set_type">
+<span class="sig-name descname"><span class="pre">set_type</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sensor_type</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ansys_optical_automation/speos_process/speos_sensors.html#IntensitySensor.set_type"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ansys_optical_automation.speos_process.speos_sensors.IntensitySensor.set_type" title="Permalink to this definition">#</a></dt>
+<dd><p>Set the sensor type.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>sensor_type</strong><span class="classifier">str</span></dt><dd><p>Type of the sensor. Options are <code class="docutils literal notranslate"><span class="pre">&quot;photometric&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;colorimetric&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;radiometric&quot;</span></code>
+and <code class="docutils literal notranslate"><span class="pre">&quot;spectral&quot;</span></code>.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ansys_optical_automation.speos_process.speos_sensors.IntensitySensor.set_wavelength">
+<span class="sig-name descname"><span class="pre">set_wavelength</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">w_start</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">w_end</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">w_sampling</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">w_resolution</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ansys_optical_automation/speos_process/speos_sensors.html#IntensitySensor.set_wavelength"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ansys_optical_automation.speos_process.speos_sensors.IntensitySensor.set_wavelength" title="Permalink to this definition">#</a></dt>
+<dd><p>Set the wavelength of the sensor.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>w_start</strong><span class="classifier">int, optional</span></dt><dd><p>Start of the wavelength band in nanometers. The default is <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p>
+</dd>
+<dt><strong>w_end</strong><span class="classifier">int, optional</span></dt><dd><p>End of the wavelength band in nanometers. The default is <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p>
+</dd>
+<dt><strong>w_sampling</strong><span class="classifier">int, optional</span></dt><dd><p>Number of spectral samples. The default is <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p>
+</dd>
+<dt><strong>w_resolution</strong><span class="classifier">float, optional</span></dt><dd><p>Spectral sampling or resolution (size of one sample) in nanometers.
+The default is <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="ansys_optical_automation.speos_process.speos_sensors.Sensor">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">ansys_optical_automation.speos_process.speos_sensors.</span></span><span class="sig-name descname"><span class="pre">Sensor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">SpeosSim</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">SpaceClaim</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ansys_optical_automation/speos_process/speos_sensors.html#Sensor"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ansys_optical_automation.speos_process.speos_sensors.Sensor" title="Permalink to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference internal" href="ansys_optical_automation.scdm_core.html#ansys_optical_automation.scdm_core.base.BaseSCDM" title="ansys_optical_automation.scdm_core.base.BaseSCDM"><code class="xref py py-class docutils literal notranslate"><span class="pre">ansys_optical_automation.scdm_core.base.BaseSCDM</span></code></a></p>
+<p>Provides the parent class for all Speos sensor types.</p>
+<p>This class contains methods and properties that are common to all sensor types.
+It shouldn’t be used by itself. Subclasses should be used instead.</p>
+<p class="rubric">Methods</p>
+<table class="autosummary longtable table autosummary">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#ansys_optical_automation.speos_process.speos_sensors.Sensor.find_axes" title="ansys_optical_automation.speos_process.speos_sensors.Sensor.find_axes"><code class="xref py py-obj docutils literal notranslate"><span class="pre">find_axes</span></code></a>([origin])</p></td>
+<td><p>Find a component with the same name as the sensor, look in it for an axis system and an origin point (if available), and save them as properties in self.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#ansys_optical_automation.speos_process.speos_sensors.Sensor.set_position" title="ansys_optical_automation.speos_process.speos_sensors.Sensor.set_position"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_position</span></code></a>([x_reverse, y_reverse, origin, ...])</p></td>
+<td><p>Set the origin and x and y directions of the sensor.</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py method">
+<dt class="sig sig-object py" id="ansys_optical_automation.speos_process.speos_sensors.Sensor.find_axes">
+<span class="sig-name descname"><span class="pre">find_axes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">origin</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ansys_optical_automation/speos_process/speos_sensors.html#Sensor.find_axes"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ansys_optical_automation.speos_process.speos_sensors.Sensor.find_axes" title="Permalink to this definition">#</a></dt>
+<dd><p>Find a component with the same name as the sensor, look in it for an axis system and
+an origin point (if available), and save them as properties in self.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>origin</strong><span class="classifier">SpaceClaim curve object, optional</span></dt><dd><p>Name of the origin point to use for sensor positioning. For example, <code class="docutils literal notranslate"><span class="pre">origin=&quot;EPP_195&quot;</span></code>.
+This point must exist under <code class="docutils literal notranslate"><span class="pre">Curves</span></code> in the component of the same name as the sensor.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ansys_optical_automation.speos_process.speos_sensors.Sensor.set_position">
+<span class="sig-name descname"><span class="pre">set_position</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x_reverse</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_reverse</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">origin</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">axes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ansys_optical_automation/speos_process/speos_sensors.html#Sensor.set_position"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ansys_optical_automation.speos_process.speos_sensors.Sensor.set_position" title="Permalink to this definition">#</a></dt>
+<dd><p>Set the origin and x and y directions of the sensor.</p>
+<p>For some intensity sensors, set the origin and polar-axis and V0/H0-axis.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>x_reverse</strong><span class="classifier">bool, optional</span></dt><dd><p>Whether to reverse the direction of the X-axis of the sensor. The default is <code class="docutils literal notranslate"><span class="pre">False</span></code>.</p>
+</dd>
+<dt><strong>y_reverse</strong><span class="classifier">bool, optional</span></dt><dd><p>Whether to reverse the direction of the Y-axis of the sensor. The default is <code class="docutils literal notranslate"><span class="pre">False</span></code>.</p>
+</dd>
+<dt><strong>origin</strong><span class="classifier">text or integer, optional</span></dt><dd><p>SpaceClaim axis system or a point. The default is <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p>
+</dd>
+<dt><strong>axes</strong><span class="classifier">list, optional</span></dt><dd><p>List in the format <code class="docutils literal notranslate"><span class="pre">[x-axis,</span> <span class="pre">y-axis]</span></code> that defines the orientation of the axis, where
+<code class="docutils literal notranslate"><span class="pre">x-axis</span></code> and <code class="docutils literal notranslate"><span class="pre">y-axis</span></code> are SCDM axis objects (not an axis system). For IESNA and
+Elumdat intensity sensors, provide the polar-axis and V0/H0-axis instead.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-ansys_optical_automation.speos_process.speos_simulations">
+<span id="ansys-optical-automation-speos-process-speos-simulations-module"></span><h2>ansys_optical_automation.speos_process.speos_simulations module<a class="headerlink" href="#module-ansys_optical_automation.speos_process.speos_simulations" title="Permalink to this headline">#</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="ansys_optical_automation.speos_process.speos_simulations.Simulation">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">ansys_optical_automation.speos_process.speos_simulations.</span></span><span class="sig-name descname"><span class="pre">Simulation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">SpeosSim</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">SpaceClaim</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">kind</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'inverse'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ansys_optical_automation/speos_process/speos_simulations.html#Simulation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ansys_optical_automation.speos_process.speos_simulations.Simulation" title="Permalink to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference internal" href="ansys_optical_automation.scdm_core.html#ansys_optical_automation.scdm_core.base.BaseSCDM" title="ansys_optical_automation.scdm_core.base.BaseSCDM"><code class="xref py py-class docutils literal notranslate"><span class="pre">ansys_optical_automation.scdm_core.base.BaseSCDM</span></code></a></p>
+<p>Provides methods for creating, modifying, and running Speos simulations.</p>
+<p class="rubric">Methods</p>
+<table class="autosummary longtable table autosummary">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#ansys_optical_automation.speos_process.speos_simulations.Simulation.add_sensor" title="ansys_optical_automation.speos_process.speos_simulations.Simulation.add_sensor"><code class="xref py py-obj docutils literal notranslate"><span class="pre">add_sensor</span></code></a>(sensor_name)</p></td>
+<td><p>Add a sensor to the simulation.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#ansys_optical_automation.speos_process.speos_simulations.Simulation.define_geometries" title="ansys_optical_automation.speos_process.speos_simulations.Simulation.define_geometries"><code class="xref py py-obj docutils literal notranslate"><span class="pre">define_geometries</span></code></a>()</p></td>
+<td><p>Add all bodies from the simulation's list of bodies (self.my_bodies) to the simulation geometries.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#ansys_optical_automation.speos_process.speos_simulations.Simulation.export_grid" title="ansys_optical_automation.speos_process.speos_simulations.Simulation.export_grid"><code class="xref py py-obj docutils literal notranslate"><span class="pre">export_grid</span></code></a>(sensor_name)</p></td>
+<td><p>Export the projected grid as a SpaceClaim component.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#ansys_optical_automation.speos_process.speos_simulations.Simulation.run_simulation" title="ansys_optical_automation.speos_process.speos_simulations.Simulation.run_simulation"><code class="xref py py-obj docutils literal notranslate"><span class="pre">run_simulation</span></code></a>()</p></td>
+<td><p>Run a simulation on the local CPU.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#ansys_optical_automation.speos_process.speos_simulations.Simulation.save_grid" title="ansys_optical_automation.speos_process.speos_simulations.Simulation.save_grid"><code class="xref py py-obj docutils literal notranslate"><span class="pre">save_grid</span></code></a>(sensor_name, save_name)</p></td>
+<td><p># TODO Save components in the main script in SpaceClaim.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#ansys_optical_automation.speos_process.speos_simulations.Simulation.select_geometrical_sets" title="ansys_optical_automation.speos_process.speos_simulations.Simulation.select_geometrical_sets"><code class="xref py py-obj docutils literal notranslate"><span class="pre">select_geometrical_sets</span></code></a>(geosets_list)</p></td>
+<td><p>Add all geometries from a list of Catia geometrical sets to the simulation's list of bodies.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#ansys_optical_automation.speos_process.speos_simulations.Simulation.select_geometries" title="ansys_optical_automation.speos_process.speos_simulations.Simulation.select_geometries"><code class="xref py py-obj docutils literal notranslate"><span class="pre">select_geometries</span></code></a>(component_list)</p></td>
+<td><p>Add all geometries from components provided in a component list to the simulation's list of bodies.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#ansys_optical_automation.speos_process.speos_simulations.Simulation.set_grid_params" title="ansys_optical_automation.speos_process.speos_simulations.Simulation.set_grid_params"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_grid_params</span></code></a>([primary_step, ...])</p></td>
+<td><p>Set the parameters of the projected grid for the generated camera.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#ansys_optical_automation.speos_process.speos_simulations.Simulation.set_rays_limit" title="ansys_optical_automation.speos_process.speos_simulations.Simulation.set_rays_limit"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_rays_limit</span></code></a>(rays)</p></td>
+<td><p>Set the computation limit either by a maximum number of rays (for direct and inverse simulations) or by a maximum number passes (for inverse simulations).</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py method">
+<dt class="sig sig-object py" id="ansys_optical_automation.speos_process.speos_simulations.Simulation.add_sensor">
+<span class="sig-name descname"><span class="pre">add_sensor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sensor_name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ansys_optical_automation/speos_process/speos_simulations.html#Simulation.add_sensor"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ansys_optical_automation.speos_process.speos_simulations.Simulation.add_sensor" title="Permalink to this definition">#</a></dt>
+<dd><p>Add a sensor to the simulation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>sensor_name</strong><span class="classifier">str</span></dt><dd><p>Name of the sensor.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ansys_optical_automation.speos_process.speos_simulations.Simulation.define_geometries">
+<span class="sig-name descname"><span class="pre">define_geometries</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ansys_optical_automation/speos_process/speos_simulations.html#Simulation.define_geometries"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ansys_optical_automation.speos_process.speos_simulations.Simulation.define_geometries" title="Permalink to this definition">#</a></dt>
+<dd><p>Add all bodies from the simulation’s list of bodies (self.my_bodies) to the
+simulation geometries. This works Like the green <code class="docutils literal notranslate"><span class="pre">validate</span></code> button in Speos.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ansys_optical_automation.speos_process.speos_simulations.Simulation.export_grid">
+<span class="sig-name descname"><span class="pre">export_grid</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sensor_name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ansys_optical_automation/speos_process/speos_simulations.html#Simulation.export_grid"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ansys_optical_automation.speos_process.speos_simulations.Simulation.export_grid" title="Permalink to this definition">#</a></dt>
+<dd><p>Export the projected grid as a SpaceClaim component.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>sensor_name</strong><span class="classifier">str</span></dt><dd><p>Name of the sensor with the grid to import as a geometry.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ansys_optical_automation.speos_process.speos_simulations.Simulation.run_simulation">
+<span class="sig-name descname"><span class="pre">run_simulation</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ansys_optical_automation/speos_process/speos_simulations.html#Simulation.run_simulation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ansys_optical_automation.speos_process.speos_simulations.Simulation.run_simulation" title="Permalink to this definition">#</a></dt>
+<dd><p>Run a simulation on the local CPU.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ansys_optical_automation.speos_process.speos_simulations.Simulation.save_grid">
+<span class="sig-name descname"><span class="pre">save_grid</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sensor_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save_name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ansys_optical_automation/speos_process/speos_simulations.html#Simulation.save_grid"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ansys_optical_automation.speos_process.speos_simulations.Simulation.save_grid" title="Permalink to this definition">#</a></dt>
+<dd><p># TODO Save components in the main script in SpaceClaim.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ansys_optical_automation.speos_process.speos_simulations.Simulation.select_geometrical_sets">
+<span class="sig-name descname"><span class="pre">select_geometrical_sets</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">geosets_list</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ansys_optical_automation/speos_process/speos_simulations.html#Simulation.select_geometrical_sets"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ansys_optical_automation.speos_process.speos_simulations.Simulation.select_geometrical_sets" title="Permalink to this definition">#</a></dt>
+<dd><p>Add all geometries from a list of Catia geometrical sets to the simulation’s list
+of bodies.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>geosets_list</strong><span class="classifier">list</span></dt><dd><p>List with the names of Catia geometrical sets to add. For example, <code class="docutils literal notranslate"><span class="pre">[&quot;geo_set1&quot;,</span> <span class="pre">&quot;geo_set2&quot;]</span></code>.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ansys_optical_automation.speos_process.speos_simulations.Simulation.select_geometries">
+<span class="sig-name descname"><span class="pre">select_geometries</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">component_list</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ansys_optical_automation/speos_process/speos_simulations.html#Simulation.select_geometries"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ansys_optical_automation.speos_process.speos_simulations.Simulation.select_geometries" title="Permalink to this definition">#</a></dt>
+<dd><p>Add all geometries from components provided in a component list to the simulation’s list of bodies.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>component_list</strong><span class="classifier">list</span></dt><dd><p>List with component names. For example, <code class="docutils literal notranslate"><span class="pre">[&quot;part1&quot;,</span> <span class="pre">&quot;part2&quot;]</span></code>.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ansys_optical_automation.speos_process.speos_simulations.Simulation.set_grid_params">
+<span class="sig-name descname"><span class="pre">set_grid_params</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">primary_step</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">20</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">secondary_step</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">4</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_distance</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1500</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_incidence</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">89</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_distance</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ansys_optical_automation/speos_process/speos_simulations.html#Simulation.set_grid_params"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ansys_optical_automation.speos_process.speos_simulations.Simulation.set_grid_params" title="Permalink to this definition">#</a></dt>
+<dd><p>Set the parameters of the projected grid for the generated camera.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>primary_step</strong><span class="classifier">int, optional</span></dt><dd><p>Primary step of the grid. The default is <code class="docutils literal notranslate"><span class="pre">20</span></code>.</p>
+</dd>
+<dt><strong>secondary_step</strong><span class="classifier">int, optional</span></dt><dd><p>Secondary step of the grid. The default is <code class="docutils literal notranslate"><span class="pre">4</span></code>.</p>
+</dd>
+<dt><strong>max_distance</strong><span class="classifier">float, optional</span></dt><dd><p>Maximum distance between a pixel and the camera in millimeters. The default is <code class="docutils literal notranslate"><span class="pre">1500</span></code>.</p>
+</dd>
+<dt><strong>max_incidence</strong><span class="classifier">float, optional</span></dt><dd><p>Maximum angle (degree) under which two projected pixels are to be connected by a line.
+The default is <code class="docutils literal notranslate"><span class="pre">89</span></code>.</p>
+</dd>
+<dt><strong>min_distance</strong><span class="classifier">float or int, optional</span></dt><dd><p>Distance tolerance in millimeters for which two adjacent pixels are to be connected
+by a line. The default is <code class="docutils literal notranslate"><span class="pre">2</span></code>.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ansys_optical_automation.speos_process.speos_simulations.Simulation.set_rays_limit">
+<span class="sig-name descname"><span class="pre">set_rays_limit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rays</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ansys_optical_automation/speos_process/speos_simulations.html#Simulation.set_rays_limit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ansys_optical_automation.speos_process.speos_simulations.Simulation.set_rays_limit" title="Permalink to this definition">#</a></dt>
+<dd><p>Set the computation limit either by a maximum number of rays (for direct and
+inverse simulations) or by a maximum number passes (for inverse simulations).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>rays</strong><span class="classifier">int</span></dt><dd><p>Number of rays or passes for limiting the simulation.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-ansys_optical_automation.speos_process">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-ansys_optical_automation.speos_process" title="Permalink to this headline">#</a></h2>
+</section>
+</section>
+
+
+              </div>
+              
+            </main>
+            <footer class="footer-article noprint">
+                
+    <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+    <a class='left-prev' id="prev-link" href="ansys_optical_automation.scdm_process.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title">ansys_optical_automation.scdm_process package</p>
+        </div>
+    </a>
+</div>
+            </footer>
+        </div>
+    </div>
+    <div class="footer-content row">
+        <footer class="col footer"><p>
+  
+    By Ansys Inc.<br/>
+  
+      &copy; Copyright (c) 2022 ANSYS, Inc. All rights reserved.<br/>
+</p>
+        </footer>
+    </div>
+    
+</div>
+
+
+      </div>
+    </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+
+
+  </body>
+</html>

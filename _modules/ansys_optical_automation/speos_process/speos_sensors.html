@@ -1,0 +1,645 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ansys_optical_automation.speos_process.speos_sensors &#8212; Ansys Optical Automation  documentation</title>
+    
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="../../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css" />
+    <link rel="stylesheet" href="../../../_static/styles/sphinx-book-theme.css?digest=62ba249389abaaa9ffc34bf36a076bdc1d65ee18" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css" />
+    
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
+
+    <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+    <script src="../../../_static/jquery.js"></script>
+    <script src="../../../_static/underscore.js"></script>
+    <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/clipboard.min.js"></script>
+    <script src="../../../_static/copybutton.js"></script>
+    <script src="../../../_static/scripts/sphinx-book-theme.js?digest=f31d14ad54b65d19161ba51d4ffff3a77ae00456"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
+<!-- Checkboxes to toggle the left sidebar -->
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle navigation sidebar">
+<label class="overlay overlay-navbar" for="__navigation">
+    <div class="visually-hidden">Toggle navigation sidebar</div>
+</label>
+<!-- Checkboxes to toggle the in-page toc -->
+<input type="checkbox" class="sidebar-toggle" name="__page-toc" id="__page-toc" aria-label="Toggle in-page Table of Contents">
+<label class="overlay overlay-pagetoc" for="__page-toc">
+    <div class="visually-hidden">Toggle in-page Table of Contents</div>
+</label>
+<!-- Headers at the top -->
+<div class="announcement header-item noprint"></div>
+<div class="header header-item noprint"></div>
+
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<!-- Sidebar -->
+<div class="bd-sidebar noprint" id="site-navigation">
+    <div class="bd-sidebar__content">
+        <div class="bd-sidebar__top"><div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="../../../index.html">
+      
+      
+      
+      <h1 class="site-logo" id="site-title">Ansys Optical Automation  documentation</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="../../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        <p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Contents:
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../../../api/modules.html">
+   ansys_optical_automation
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
+  <label for="toctree-checkbox-1">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../../api/ansys_optical_automation.html">
+     ansys_optical_automation package
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/>
+    <label for="toctree-checkbox-2">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../api/ansys_optical_automation.application.html">
+       ansys_optical_automation.application package
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../api/ansys_optical_automation.post_process.html">
+       ansys_optical_automation.post_process package
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../api/ansys_optical_automation.scdm_core.html">
+       ansys_optical_automation.scdm_core package
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../api/ansys_optical_automation.scdm_process.html">
+       ansys_optical_automation.scdm_process package
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../api/ansys_optical_automation.speos_process.html">
+       ansys_optical_automation.speos_process package
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+    </div>
+</nav></div>
+        <div class="bd-sidebar__bottom">
+             <!-- To handle the deprecated key -->
+            
+            <div class="navbar_extra_footer">
+            Theme by the <a href="https://ebp.jupyterbook.org">Executable Book Project</a>
+            </div>
+            
+        </div>
+    </div>
+    <div id="rtd-footer-container"></div>
+</div>
+
+
+          
+
+
+          
+<!-- A tiny helper pixel to detect if we've scrolled -->
+<div class="sbt-scroll-pixel-helper"></div>
+<!-- Main content -->
+<div class="col py-0 content-container">
+    
+    <div class="header-article row sticky-top noprint">
+        
+
+
+
+<div class="col py-1 d-flex header-article-main">
+    <div class="header-article__left">
+        
+        <label for="__navigation"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="right"
+title="Toggle navigation"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-bars"></i>
+  </span>
+
+</label>
+
+        
+    </div>
+    <div class="header-article__right">
+<button onclick="toggleFullScreen()"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="bottom"
+title="Fullscreen mode"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+    </div>
+</div>
+
+<!-- Table of contents -->
+<div class="col-md-3 bd-toc show noprint">
+</div>
+    </div>
+    <div class="article row">
+        <div class="col pl-md-3 pl-lg-5 content-container">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1></h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                    </div>
+                </div>
+            </div>
+            <main id="main-content" role="main">
+                
+              <div>
+                
+  <h1>Source code for ansys_optical_automation.speos_process.speos_sensors</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">os</span>
+
+<span class="kn">from</span> <span class="nn">ansys_optical_automation.scdm_core.base</span> <span class="kn">import</span> <span class="n">BaseSCDM</span>
+
+
+<div class="viewcode-block" id="Sensor"><a class="viewcode-back" href="../../../api/ansys_optical_automation.speos_process.html#ansys_optical_automation.speos_process.speos_sensors.Sensor">[docs]</a><span class="k">class</span> <span class="nc">Sensor</span><span class="p">(</span><span class="n">BaseSCDM</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Provides the parent class for all Speos sensor types.</span>
+
+<span class="sd">    This class contains methods and properties that are common to all sensor types.</span>
+<span class="sd">    It shouldn&#39;t be used by itself. Subclasses should be used instead.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">SpeosSim</span><span class="p">,</span> <span class="n">SpaceClaim</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Initialize the base sensor object.</span>
+
+<span class="sd">        The base sensor object has a name and some other attributes that are common to all</span>
+<span class="sd">        Speos sensors. It does not have a Speos sensor object and cannot be used by</span>
+<span class="sd">        simulations as is.</span>
+
+<span class="sd">        This is an abstract class.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        name : str</span>
+<span class="sd">            Name of the sensor to create or find.</span>
+<span class="sd">        SpeosSim : SpeosSim</span>
+<span class="sd">            SpeosSim.</span>
+<span class="sd">        SpaceClaim : SpaceClaim object</span>
+<span class="sd">            SpaceClaim object.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">Sensor</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">SpaceClaim</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;V19&quot;</span><span class="p">,</span> <span class="s2">&quot;V20&quot;</span><span class="p">,</span> <span class="s2">&quot;V21&quot;</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">speos_sim</span> <span class="o">=</span> <span class="n">SpeosSim</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">speos_object</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">axes</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">origin</span> <span class="o">=</span> <span class="kc">None</span>
+
+<div class="viewcode-block" id="Sensor.find_axes"><a class="viewcode-back" href="../../../api/ansys_optical_automation.speos_process.html#ansys_optical_automation.speos_process.speos_sensors.Sensor.find_axes">[docs]</a>    <span class="k">def</span> <span class="nf">find_axes</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">origin</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Find a component with the same name as the sensor, look in it for an axis system and</span>
+<span class="sd">        an origin point (if available), and save them as properties in self.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        origin : SpaceClaim curve object, optional</span>
+<span class="sd">            Name of the origin point to use for sensor positioning. For example, ``origin=&quot;EPP_195&quot;``.</span>
+<span class="sd">            This point must exist under ``Curves`` in the component of the same name as the sensor.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">origin_point</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="n">axes</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="c1"># go through parts and find part with the same name as self.name</span>
+        <span class="n">parts</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">GetRootPart</span><span class="p">()</span><span class="o">.</span><span class="n">GetDescendants</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">IPart</span><span class="p">]()</span>
+        <span class="k">for</span> <span class="n">part</span> <span class="ow">in</span> <span class="n">parts</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="ow">in</span> <span class="n">part</span><span class="o">.</span><span class="n">Master</span><span class="o">.</span><span class="n">Name</span><span class="p">:</span>
+                <span class="c1"># Find axis system</span>
+                <span class="n">axis_sys</span> <span class="o">=</span> <span class="n">part</span><span class="o">.</span><span class="n">GetDescendants</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">ICoordinateSystem</span><span class="p">]()[</span><span class="mi">0</span><span class="p">]</span>
+                <span class="n">axes</span> <span class="o">=</span> <span class="n">axis_sys</span><span class="o">.</span><span class="n">GetDescendants</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">ICoordinateAxis</span><span class="p">]()</span>
+                <span class="c1"># Find sensor origin</span>
+                <span class="k">if</span> <span class="n">origin</span><span class="p">:</span>  <span class="c1"># if origin point is explicitly defined</span>
+                    <span class="n">curves</span> <span class="o">=</span> <span class="n">part</span><span class="o">.</span><span class="n">GetDescendants</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">IDesignCurve</span><span class="p">]()</span>
+                    <span class="k">for</span> <span class="n">curve</span> <span class="ow">in</span> <span class="n">curves</span><span class="p">:</span>  <span class="c1"># find the origin point under curves</span>
+                        <span class="k">if</span> <span class="n">origin</span> <span class="ow">in</span> <span class="n">curve</span><span class="o">.</span><span class="n">Master</span><span class="o">.</span><span class="n">Name</span><span class="p">:</span>
+                            <span class="n">origin_point</span> <span class="o">=</span> <span class="n">curve</span>
+                <span class="k">else</span><span class="p">:</span>  <span class="c1"># else define origin using axis system</span>
+                    <span class="n">origin_point</span> <span class="o">=</span> <span class="n">axis_sys</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">axes</span> <span class="o">=</span> <span class="n">axes</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">origin</span> <span class="o">=</span> <span class="n">origin_point</span></div>
+
+<div class="viewcode-block" id="Sensor.set_position"><a class="viewcode-back" href="../../../api/ansys_optical_automation.speos_process.html#ansys_optical_automation.speos_process.speos_sensors.Sensor.set_position">[docs]</a>    <span class="k">def</span> <span class="nf">set_position</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x_reverse</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">y_reverse</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">origin</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">axes</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Set the origin and x and y directions of the sensor.</span>
+
+<span class="sd">        For some intensity sensors, set the origin and polar-axis and V0/H0-axis.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        x_reverse : bool, optional</span>
+<span class="sd">            Whether to reverse the direction of the X-axis of the sensor. The default is ``False``.</span>
+<span class="sd">        y_reverse : bool, optional</span>
+<span class="sd">            Whether to reverse the direction of the Y-axis of the sensor. The default is ``False``.</span>
+<span class="sd">        origin : text or integer, optional</span>
+<span class="sd">            SpaceClaim axis system or a point. The default is ``None``.</span>
+<span class="sd">        axes : list, optional</span>
+<span class="sd">            List in the format ``[x-axis, y-axis]`` that defines the orientation of the axis, where</span>
+<span class="sd">            ``x-axis`` and ``y-axis`` are SCDM axis objects (not an axis system). For IESNA and</span>
+<span class="sd">            Elumdat intensity sensors, provide the polar-axis and V0/H0-axis instead.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">speos_object</span><span class="p">:</span>  <span class="c1"># if self.speos_object (speos sensor speos_object) is not defined</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;No Speos object is defined.&quot;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">axes</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">origin</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="p">(</span><span class="n">axes</span> <span class="ow">and</span> <span class="n">origin</span><span class="p">):</span>  <span class="c1"># if axes and/or origin not defined/provided</span>
+            <span class="k">raise</span> <span class="ne">NameError</span><span class="p">(</span>
+                <span class="s2">&quot;Axes or origin are not defined. Use the find_axes method or provide axes or origin as input.&quot;</span>
+            <span class="p">)</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="n">axes</span> <span class="ow">and</span> <span class="n">origin</span><span class="p">):</span>  <span class="c1"># If no inputs provided, use self.axes and self.origin</span>
+            <span class="n">axes</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">axes</span>
+            <span class="n">origin</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">origin</span>
+        <span class="k">else</span><span class="p">:</span>  <span class="c1"># if axes and origin are provided as inputs, overwrite properties in self</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">axes</span> <span class="o">=</span> <span class="n">axes</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">origin</span> <span class="o">=</span> <span class="n">origin</span>
+
+        <span class="c1"># Set sensor origin</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">speos_object</span><span class="o">.</span><span class="n">OriginPoint</span><span class="o">.</span><span class="n">Set</span><span class="p">(</span><span class="n">origin</span><span class="p">)</span>
+        <span class="c1"># Set sensor orientation (x and y directions)</span>
+        <span class="n">axis_x</span> <span class="o">=</span> <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">axis_y</span> <span class="o">=</span> <span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">speos_object</span><span class="o">.</span><span class="n">XDirection</span><span class="o">.</span><span class="n">Set</span><span class="p">(</span><span class="n">axis_x</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">speos_object</span><span class="o">.</span><span class="n">YDirection</span><span class="o">.</span><span class="n">Set</span><span class="p">(</span><span class="n">axis_y</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">speos_object</span><span class="o">.</span><span class="n">XDirectionReverse</span> <span class="o">=</span> <span class="n">x_reverse</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">speos_object</span><span class="o">.</span><span class="n">YDirectionReverse</span> <span class="o">=</span> <span class="n">y_reverse</span>
+        <span class="k">return</span> <span class="bp">self</span></div></div>
+
+
+<div class="viewcode-block" id="Camera"><a class="viewcode-back" href="../../../api/ansys_optical_automation.speos_process.html#ansys_optical_automation.speos_process.speos_sensors.Camera">[docs]</a><span class="k">class</span> <span class="nc">Camera</span><span class="p">(</span><span class="n">Sensor</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Provides methods for defining the Speos camera sensor.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">SpeosSim</span><span class="p">,</span> <span class="n">SpaceClaim</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Searches for a Speos camera sensor in the simulation tree. If the specified name is not found, a new</span>
+<span class="sd">        Speos camera sensor is created with this name.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        name : str</span>
+<span class="sd">            Name of the sensor to find or create.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">Camera</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">SpeosSim</span><span class="p">,</span> <span class="n">SpaceClaim</span><span class="p">)</span>
+        <span class="n">speos_object</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">speos_sim</span><span class="o">.</span><span class="n">SensorCamera</span><span class="o">.</span><span class="n">Find</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">speos_object</span><span class="p">:</span>  <span class="c1"># if camera doesn&#39;t exist -&gt; create a new camera</span>
+            <span class="n">speos_object</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">speos_sim</span><span class="o">.</span><span class="n">SensorCamera</span><span class="o">.</span><span class="n">Create</span><span class="p">()</span>
+            <span class="n">speos_object</span><span class="o">.</span><span class="n">Name</span> <span class="o">=</span> <span class="n">name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">speos_object</span> <span class="o">=</span> <span class="n">speos_object</span>
+
+<div class="viewcode-block" id="Camera.set_distortion"><a class="viewcode-back" href="../../../api/ansys_optical_automation.speos_process.html#ansys_optical_automation.speos_process.speos_sensors.Camera.set_distortion">[docs]</a>    <span class="k">def</span> <span class="nf">set_distortion</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">distortion_file_name</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        distortion_file_name : str</span>
+<span class="sd">            Name of the OPT distortion file.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">distortion_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">,</span> <span class="s2">&quot;SPEOS input files&quot;</span><span class="p">,</span> <span class="n">distortion_file_name</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">speos_object</span><span class="o">.</span><span class="n">DistorsionFile</span> <span class="o">=</span> <span class="n">distortion_path</span>
+        <span class="k">return</span> <span class="bp">self</span></div>
+
+<div class="viewcode-block" id="Camera.set_transmittance"><a class="viewcode-back" href="../../../api/ansys_optical_automation.speos_process.html#ansys_optical_automation.speos_process.speos_sensors.Camera.set_transmittance">[docs]</a>    <span class="k">def</span> <span class="nf">set_transmittance</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">transmittance_file_name</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        transmittance_file_name : str</span>
+<span class="sd">            Name of the transmittance spectrum file.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">transmittance_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">,</span> <span class="s2">&quot;SPEOS input files&quot;</span><span class="p">,</span> <span class="n">transmittance_file_name</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">speos_object</span><span class="o">.</span><span class="n">TransmittanceFile</span> <span class="o">=</span> <span class="n">transmittance_path</span>
+        <span class="k">return</span> <span class="bp">self</span></div>
+
+<div class="viewcode-block" id="Camera.set_sensitivity"><a class="viewcode-back" href="../../../api/ansys_optical_automation.speos_process.html#ansys_optical_automation.speos_process.speos_sensors.Camera.set_sensitivity">[docs]</a>    <span class="k">def</span> <span class="nf">set_sensitivity</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">color</span><span class="p">,</span> <span class="n">sensitivity_file_name</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        color : str</span>
+<span class="sd">            Channel color. Options are ``&quot;red&quot;``, ``&quot;green&quot;``, and ``&quot;blue&quot;``.</span>
+<span class="sd">        sensitivity_file_name : str</span>
+<span class="sd">            Name of the sensitivity file.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">sensitivity_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">,</span> <span class="s2">&quot;SPEOS input files&quot;</span><span class="p">,</span> <span class="n">sensitivity_file_name</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">color</span> <span class="o">==</span> <span class="s2">&quot;red&quot;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">speos_object</span><span class="o">.</span><span class="n">RedSpectrumFile</span> <span class="o">=</span> <span class="n">sensitivity_path</span>
+        <span class="k">elif</span> <span class="n">color</span> <span class="o">==</span> <span class="s2">&quot;green&quot;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">speos_object</span><span class="o">.</span><span class="n">GreenSpectrumFile</span> <span class="o">=</span> <span class="n">sensitivity_path</span>
+        <span class="k">elif</span> <span class="n">color</span> <span class="o">==</span> <span class="s2">&quot;blue&quot;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">speos_object</span><span class="o">.</span><span class="n">BlueSpectrumFile</span> <span class="o">=</span> <span class="n">sensitivity_path</span>
+        <span class="k">return</span> <span class="bp">self</span></div></div>
+
+    <span class="c1"># TODO: color mode.</span>
+    <span class="c1">#  Camera1.ColorMode = SpeosSim.SensorCamera.EnumColorMode.Monochromatic</span>
+    <span class="c1">#  Camera1.ColorMode = SpeosSim.SensorCamera.EnumColorMode.Color</span>
+
+    <span class="c1"># TODO: set sensitivity for monochrome sensor. Camera1.SpectrumFile</span>
+
+
+<div class="viewcode-block" id="IntensitySensor"><a class="viewcode-back" href="../../../api/ansys_optical_automation.speos_process.html#ansys_optical_automation.speos_process.speos_sensors.IntensitySensor">[docs]</a><span class="k">class</span> <span class="nc">IntensitySensor</span><span class="p">(</span><span class="n">Sensor</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Provides methods for the Speos intensity sensor.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">SpeosSim</span><span class="p">,</span> <span class="n">SpaceClaim</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Searches for a Speos intensity sensor in the simulation tree. If the specified name is</span>
+<span class="sd">        not found, a new Speos intensity sensor is created with this name.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        name : str</span>
+<span class="sd">            Name of the sensor to find or create.</span>
+<span class="sd">        SpeosSim : SpeosSim</span>
+<span class="sd">            SpeosSim.</span>
+<span class="sd">        SpaceClaim : SpaceClaim object</span>
+<span class="sd">            SpaceClaim object.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">IntensitySensor</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">SpeosSim</span><span class="p">,</span> <span class="n">SpaceClaim</span><span class="p">)</span>
+        <span class="n">speos_object</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">speos_sim</span><span class="o">.</span><span class="n">SensorIntensity</span><span class="o">.</span><span class="n">Find</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">speos_object</span><span class="p">:</span>
+            <span class="n">speos_object</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">speos_sim</span><span class="o">.</span><span class="n">SensorIntensity</span><span class="o">.</span><span class="n">Create</span><span class="p">()</span>
+            <span class="n">speos_object</span><span class="o">.</span><span class="n">Name</span> <span class="o">=</span> <span class="n">name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">speos_object</span> <span class="o">=</span> <span class="n">speos_object</span>
+
+<div class="viewcode-block" id="IntensitySensor.set_format"><a class="viewcode-back" href="../../../api/ansys_optical_automation.speos_process.html#ansys_optical_automation.speos_process.speos_sensors.IntensitySensor.set_format">[docs]</a>    <span class="k">def</span> <span class="nf">set_format</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sensor_format</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Set the sensor format.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        sensor_format : str</span>
+<span class="sd">            Format of the sensor. Options are ``&quot;XMP&quot;``, ``&quot;IESNATypeA&quot;``, ``&quot;IESNATypeB&quot;``,</span>
+<span class="sd">            ``&quot;IESNATypeC&quot;``, and ``&quot;Eulumdat&quot;``.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">sensor_format</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">NameError</span><span class="p">(</span><span class="s2">&quot;Format input not provided.&quot;</span><span class="p">)</span>
+        <span class="n">sensor_format</span> <span class="o">=</span> <span class="n">sensor_format</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">sensor_format</span> <span class="o">==</span> <span class="s2">&quot;xmp&quot;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">speos_object</span><span class="o">.</span><span class="n">FormatType</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">speos_sim</span><span class="o">.</span><span class="n">SensorIntensity</span><span class="o">.</span><span class="n">EnumFormatType</span><span class="o">.</span><span class="n">XMP</span>
+        <span class="k">elif</span> <span class="n">sensor_format</span> <span class="o">==</span> <span class="s2">&quot;iesnatypea&quot;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">speos_object</span><span class="o">.</span><span class="n">FormatType</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">speos_sim</span><span class="o">.</span><span class="n">SensorIntensity</span><span class="o">.</span><span class="n">EnumFormatType</span><span class="o">.</span><span class="n">IESNATypeA</span>
+        <span class="k">elif</span> <span class="n">sensor_format</span> <span class="o">==</span> <span class="s2">&quot;iesnatypeb&quot;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">speos_object</span><span class="o">.</span><span class="n">FormatType</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">speos_sim</span><span class="o">.</span><span class="n">SensorIntensity</span><span class="o">.</span><span class="n">EnumFormatType</span><span class="o">.</span><span class="n">IESNATypeB</span>
+        <span class="k">elif</span> <span class="n">sensor_format</span> <span class="o">==</span> <span class="s2">&quot;iesnatypec&quot;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">speos_object</span><span class="o">.</span><span class="n">FormatType</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">speos_sim</span><span class="o">.</span><span class="n">SensorIntensity</span><span class="o">.</span><span class="n">EnumFormatType</span><span class="o">.</span><span class="n">IESNATypeC</span>
+        <span class="k">elif</span> <span class="n">sensor_format</span> <span class="o">==</span> <span class="s2">&quot;eulumdat&quot;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">speos_object</span><span class="o">.</span><span class="n">FormatType</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">speos_sim</span><span class="o">.</span><span class="n">SensorIntensity</span><span class="o">.</span><span class="n">EnumFormatType</span><span class="o">.</span><span class="n">Eulumdat</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Wrong input value. Choose from XMP, IESNATypeA, IESNATypeB, IESNATypeC or Eulumdat.&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="IntensitySensor.set_range"><a class="viewcode-back" href="../../../api/ansys_optical_automation.speos_process.html#ansys_optical_automation.speos_process.speos_sensors.IntensitySensor.set_range">[docs]</a>    <span class="k">def</span> <span class="nf">set_range</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x_start</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">x_end</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">y_start</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">y_end</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">x_mirrored</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">y_mirrored</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Set the sensor size.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        x_start : int or float, optional</span>
+<span class="sd">            X size of the sensor in millimeters for the positive part.</span>
+<span class="sd">            The default is ``None``.</span>
+<span class="sd">        x_end : int or float, optional</span>
+<span class="sd">            X size of the sensor in millimeters for the negative part.</span>
+<span class="sd">            The default is ``None``.</span>
+<span class="sd">        y_start : int of float, optional</span>
+<span class="sd">            Y size of the sensor in millimeters for the positive part.</span>
+<span class="sd">            The default is ``None``.</span>
+<span class="sd">        y_end : int or float, optional</span>
+<span class="sd">            Y size of the sensor in millimeters for the negative part.</span>
+<span class="sd">            The default is ``None``.</span>
+<span class="sd">        x_mirrored : bool, optional</span>
+<span class="sd">            Mirrored extend option of the X size of the sensor.</span>
+<span class="sd">            The default is ``False``.</span>
+<span class="sd">        y_mirrored : bool, optional</span>
+<span class="sd">            Mirrored extend option of the Y size of the sensor.</span>
+<span class="sd">            The default is ``False``.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">x_start</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">x_end</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">y_start</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">y_end</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">x_mirrored</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">y_mirrored</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">NameError</span><span class="p">(</span><span class="s2">&quot;No inputs provided.&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">x_mirrored</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">speos_object</span><span class="o">.</span><span class="n">XIsMirrored</span> <span class="o">=</span> <span class="n">x_mirrored</span>
+        <span class="k">if</span> <span class="n">y_mirrored</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">speos_object</span><span class="o">.</span><span class="n">YIsMirrored</span> <span class="o">=</span> <span class="n">y_mirrored</span>
+        <span class="k">if</span> <span class="n">x_start</span> <span class="ow">and</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">speos_object</span><span class="o">.</span><span class="n">XIsMirrored</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">speos_object</span><span class="o">.</span><span class="n">XStart</span> <span class="o">=</span> <span class="n">x_start</span>
+        <span class="k">if</span> <span class="n">x_end</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">speos_object</span><span class="o">.</span><span class="n">XEnd</span> <span class="o">=</span> <span class="n">x_end</span>
+        <span class="k">if</span> <span class="n">y_start</span> <span class="ow">and</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">speos_object</span><span class="o">.</span><span class="n">YIsMirrored</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">speos_object</span><span class="o">.</span><span class="n">YStart</span> <span class="o">=</span> <span class="n">y_start</span>
+        <span class="k">if</span> <span class="n">y_end</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">speos_object</span><span class="o">.</span><span class="n">YEnd</span> <span class="o">=</span> <span class="n">y_end</span></div>
+
+<div class="viewcode-block" id="IntensitySensor.set_sampling"><a class="viewcode-back" href="../../../api/ansys_optical_automation.speos_process.html#ansys_optical_automation.speos_process.speos_sensors.IntensitySensor.set_sampling">[docs]</a>    <span class="k">def</span> <span class="nf">set_sampling</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x_sampling</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">y_sampling</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Set the number of samples on the axes.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        x_sampling : int, optionl</span>
+<span class="sd">            Number of samples on the X-axis. The default is ``None``.</span>
+<span class="sd">        y_sampling : int</span>
+<span class="sd">            Number of samples on the Y-axis. The default is ``None``.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">x_sampling</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">y_sampling</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">NameError</span><span class="p">(</span><span class="s2">&quot;No inputs provided.&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">x_sampling</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">speos_object</span><span class="o">.</span><span class="n">XNbSamples</span> <span class="o">=</span> <span class="n">x_sampling</span>
+        <span class="k">if</span> <span class="n">y_sampling</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">speos_object</span><span class="o">.</span><span class="n">YNbSamples</span> <span class="o">=</span> <span class="n">y_sampling</span></div>
+
+<div class="viewcode-block" id="IntensitySensor.set_resolution"><a class="viewcode-back" href="../../../api/ansys_optical_automation.speos_process.html#ansys_optical_automation.speos_process.speos_sensors.IntensitySensor.set_resolution">[docs]</a>    <span class="k">def</span> <span class="nf">set_resolution</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x_resolution</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">y_resolution</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Set the resolution of the sensor.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        x_resolution : int, optional</span>
+<span class="sd">            X resolution of the sensor in millimeters. The default is ``None``.</span>
+<span class="sd">        y_resolution : int, optional</span>
+<span class="sd">            Y resolution of the sensor in millimeters. The default is ``None``.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">x_resolution</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">y_resolution</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">NameError</span><span class="p">(</span><span class="s2">&quot;No inputs are provided.&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">x_resolution</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">speos_object</span><span class="o">.</span><span class="n">XResolution</span> <span class="o">=</span> <span class="n">x_resolution</span>
+        <span class="k">if</span> <span class="n">y_resolution</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">speos_object</span><span class="o">.</span><span class="n">YResolution</span> <span class="o">=</span> <span class="n">y_resolution</span></div>
+
+<div class="viewcode-block" id="IntensitySensor.set_type"><a class="viewcode-back" href="../../../api/ansys_optical_automation.speos_process.html#ansys_optical_automation.speos_process.speos_sensors.IntensitySensor.set_type">[docs]</a>    <span class="k">def</span> <span class="nf">set_type</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sensor_type</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Set the sensor type.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        sensor_type : str</span>
+<span class="sd">            Type of the sensor. Options are ``&quot;photometric&quot;``, ``&quot;colorimetric&quot;``, ``&quot;radiometric&quot;``</span>
+<span class="sd">            and ``&quot;spectral&quot;``.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">sensor_type</span> <span class="o">=</span> <span class="n">sensor_type</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">sensor_type</span> <span class="o">==</span> <span class="s2">&quot;photometric&quot;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">speos_object</span><span class="o">.</span><span class="n">SensorType</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">speos_sim</span><span class="o">.</span><span class="n">SensorIntensity</span><span class="o">.</span><span class="n">EnumSensorType</span><span class="o">.</span><span class="n">Photometric</span>
+        <span class="k">elif</span> <span class="n">sensor_type</span> <span class="o">==</span> <span class="s2">&quot;colorimetric&quot;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">speos_object</span><span class="o">.</span><span class="n">SensorType</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">speos_sim</span><span class="o">.</span><span class="n">SensorIntensity</span><span class="o">.</span><span class="n">EnumSensorType</span><span class="o">.</span><span class="n">Colorimetric</span>
+        <span class="k">elif</span> <span class="n">sensor_type</span> <span class="o">==</span> <span class="s2">&quot;radiometric&quot;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">speos_object</span><span class="o">.</span><span class="n">SensorType</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">speos_sim</span><span class="o">.</span><span class="n">SensorIntensity</span><span class="o">.</span><span class="n">EnumSensorType</span><span class="o">.</span><span class="n">Radiometric</span>
+        <span class="k">elif</span> <span class="n">sensor_type</span> <span class="o">==</span> <span class="s2">&quot;spectral&quot;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">speos_object</span><span class="o">.</span><span class="n">SensorType</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">speos_sim</span><span class="o">.</span><span class="n">SensorIntensity</span><span class="o">.</span><span class="n">EnumSensorType</span><span class="o">.</span><span class="n">Spectral</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">error_message</span> <span class="o">=</span> <span class="p">(</span>
+                <span class="s2">&quot;Unsupported sensor type. Supported types: photometric, colorimetric, radiometric, spectral.&quot;</span>
+            <span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">error_message</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="IntensitySensor.set_wavelength"><a class="viewcode-back" href="../../../api/ansys_optical_automation.speos_process.html#ansys_optical_automation.speos_process.speos_sensors.IntensitySensor.set_wavelength">[docs]</a>    <span class="k">def</span> <span class="nf">set_wavelength</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">w_start</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">w_end</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">w_sampling</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">w_resolution</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Set the wavelength of the sensor.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        w_start : int, optional</span>
+<span class="sd">            Start of the wavelength band in nanometers. The default is ``None``.</span>
+<span class="sd">        w_end : int, optional</span>
+<span class="sd">            End of the wavelength band in nanometers. The default is ``None``.</span>
+<span class="sd">        w_sampling : int, optional</span>
+<span class="sd">            Number of spectral samples. The default is ``None``.</span>
+<span class="sd">        w_resolution : float, optional</span>
+<span class="sd">            Spectral sampling or resolution (size of one sample) in nanometers.</span>
+<span class="sd">            The default is ``None``.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">w_start</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">w_end</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">w_sampling</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">w_resolution</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">NameError</span><span class="p">(</span><span class="s2">&quot;No inputs provided.&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">w_start</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">speos_object</span><span class="o">.</span><span class="n">WavelengthStart</span> <span class="o">=</span> <span class="n">w_start</span>
+        <span class="k">if</span> <span class="n">w_end</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">speos_object</span><span class="o">.</span><span class="n">WavelengthEnd</span> <span class="o">=</span> <span class="n">w_end</span>
+        <span class="k">if</span> <span class="n">w_sampling</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">speos_object</span><span class="o">.</span><span class="n">WavelengthNbSamples</span> <span class="o">=</span> <span class="n">w_sampling</span>
+        <span class="k">if</span> <span class="n">w_resolution</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">speos_object</span><span class="o">.</span><span class="n">WavelengthResolution</span> <span class="o">=</span> <span class="n">w_resolution</span></div>
+
+<div class="viewcode-block" id="IntensitySensor.set_layer"><a class="viewcode-back" href="../../../api/ansys_optical_automation.speos_process.html#ansys_optical_automation.speos_process.speos_sensors.IntensitySensor.set_layer">[docs]</a>    <span class="k">def</span> <span class="nf">set_layer</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">layer_type</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Set the layer type of the sensor.</span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        layer_type : str</span>
+<span class="sd">            Layer type of the sensor. Options are ``&quot;source&quot;``, ``&quot;face&quot;``, ``&quot;sequence&quot;``,</span>
+<span class="sd">            and ``&quot;none&quot;``.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">layer_type</span> <span class="o">=</span> <span class="n">layer_type</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">layer_type</span> <span class="o">==</span> <span class="s2">&quot;source&quot;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">speos_object</span><span class="o">.</span><span class="n">LayerType</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">speos_sim</span><span class="o">.</span><span class="n">SensorIntensity</span><span class="o">.</span><span class="n">EnumLayerType</span><span class="o">.</span><span class="n">Source</span>
+        <span class="k">elif</span> <span class="n">layer_type</span> <span class="o">==</span> <span class="s2">&quot;face&quot;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">speos_object</span><span class="o">.</span><span class="n">LayerType</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">speos_sim</span><span class="o">.</span><span class="n">SensorIntensity</span><span class="o">.</span><span class="n">EnumLayerType</span><span class="o">.</span><span class="n">Face</span>
+        <span class="k">elif</span> <span class="n">layer_type</span> <span class="o">==</span> <span class="s2">&quot;sequence&quot;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">speos_object</span><span class="o">.</span><span class="n">LayerType</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">speos_sim</span><span class="o">.</span><span class="n">SensorIntensity</span><span class="o">.</span><span class="n">EnumLayerType</span><span class="o">.</span><span class="n">Sequence</span>
+        <span class="k">elif</span> <span class="n">layer_type</span> <span class="o">==</span> <span class="s2">&quot;none&quot;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">speos_object</span><span class="o">.</span><span class="n">LayerType</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">speos_sim</span><span class="o">.</span><span class="n">SensorIntensity</span><span class="o">.</span><span class="n">EnumLayerType</span><span class="p">,</span> <span class="s2">&quot;None&quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">error_message</span> <span class="o">=</span> <span class="s2">&quot;Unsupported layer type. Supported types: source, face, sequence, none.&quot;</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">error_message</span><span class="p">)</span></div></div>
+</pre></div>
+
+              </div>
+              
+            </main>
+            <footer class="footer-article noprint">
+                
+    <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+</div>
+            </footer>
+        </div>
+    </div>
+    <div class="footer-content row">
+        <footer class="col footer"><p>
+  
+    By Ansys Inc.<br/>
+  
+      &copy; Copyright (c) 2022 ANSYS, Inc. All rights reserved.<br/>
+</p>
+        </footer>
+    </div>
+    
+</div>
+
+
+      </div>
+    </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+
+
+  </body>
+</html>
