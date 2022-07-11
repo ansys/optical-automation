@@ -24,7 +24,7 @@ jobs:
       run: |
           cd doc
           sphinx-apidoc -o api ../ansys_optical_automation
-          make.bat html
+          make html
           touch build/html/.nojekyll
     
     - name: Update HTML Documentation
