@@ -18,17 +18,13 @@ jobs:
 
     - name: Install dependencies
       run: |
-          python -m ensurepip
-          python -m venv venv
-          venv\Scripts\Activate.ps1
-          python -m pip install --upgrade pip
-          python -m pip install  .[docs]
+          python -m pip install .[docs]
 
     - name: Sphinx documentation
       run: |
           cd doc
-          sphinx-apidoc -o api ..\ansys_optical_automation
-          make.bat html
+          sphinx-apidoc -o api ../ansys_optical_automation
+          make html
           touch build/html/.nojekyll
     
     - name: Update HTML Documentation
