@@ -22,7 +22,7 @@ jobs:
           python -m venv venv
           venv\Scripts\Activate.ps1
           python -m pip install --upgrade pip
-          python -m pip install -e .[docs]
+          python -m pip install  .[docs]
 
     - name: Sphinx documentation
       run: |
@@ -39,7 +39,6 @@ jobs:
           retention-days: 7
       
     - name: Deploy
-      if: github.event_name == 'push' && contains(github.ref, 'refs/heads/main')
       uses: JamesIves/github-pages-deploy-action@4.1.5
       with:
           branch: gh-pages
