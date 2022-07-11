@@ -362,6 +362,7 @@ class IntensitySensor(Sensor):
 
     def set_layer(self, layer_type):
         """Set the layer type of the sensor.
+
         Parameters
         ----------
         layer_type : str

@@ -31,7 +31,7 @@ Include a link to the full Sphinx documentation.  For example, `PyAnsys <https:/
 Contribution
 ------------
 Contributions to this library are welcome. To learn how to contribute, see the
-`Contribute <CONTRIBUTE.rst>`_ document.
+`Contribute <doc/resources/CONTRIBUTE.rst>`_ document.
 
 License
 -------
