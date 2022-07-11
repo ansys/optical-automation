@@ -85,9 +85,21 @@
   <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" >
 </form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item active">
-        <p aria-level="2" class="caption" role="heading">
+        <ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../resources/install.html">
+   Installation
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../resources/CONTRIBUTE.html">
+   Contribute
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
  <span class="caption-text">
-  Contents:
+  Index:
  </span>
 </p>
 <ul class="current nav bd-sidenav">
@@ -350,7 +362,7 @@ title="Print to PDF"
 <span id="ansys-optical-automation-post-process-dpf-base-module"></span><h2>ansys_optical_automation.post_process.dpf_base module<a class="headerlink" href="#module-ansys_optical_automation.post_process.dpf_base" title="Permalink to this headline">#</a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="ansys_optical_automation.post_process.dpf_base.DataProcessingFramework">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">ansys_optical_automation.post_process.dpf_base.</span></span><span class="sig-name descname"><span class="pre">DataProcessingFramework</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">application</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">extension</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ansys_optical_automation/post_process/dpf_base.html#DataProcessingFramework"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ansys_optical_automation.post_process.dpf_base.DataProcessingFramework" title="Permalink to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">ansys_optical_automation.post_process.dpf_base.</span></span><span class="sig-name descname"><span class="pre">DataProcessingFramework</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">application</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">extension</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ansys_optical_automation/post_process/dpf_base.html#DataProcessingFramework"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ansys_optical_automation.post_process.dpf_base.DataProcessingFramework" title="Permalink to this definition">#</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Provides DPF (Data Processing Framework).</p>
 <p>The class contains opening and saving functionalities to allow interacting with any results file.</p>

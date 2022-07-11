@@ -82,9 +82,21 @@
   <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" >
 </form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item active">
-        <p aria-level="2" class="caption" role="heading">
+        <ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../resources/install.html">
+   Installation
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../resources/CONTRIBUTE.html">
+   Contribute
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
  <span class="caption-text">
-  Contents:
+  Index:
  </span>
 </p>
 <ul class="nav bd-sidenav">
@@ -488,8 +500,8 @@ title="Fullscreen mode"
 <span class="sd">            Mirrored extend option of the Y size of the sensor.</span>
 <span class="sd">            The default is ``False``.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">x_start</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">x_end</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">y_start</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">y_end</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">x_mirrored</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">y_mirrored</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">NameError</span><span class="p">(</span><span class="s2">&quot;No inputs provided.&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">all</span><span class="p">([</span><span class="n">x_start</span><span class="p">,</span> <span class="n">x_end</span><span class="p">,</span> <span class="n">y_start</span><span class="p">,</span> <span class="n">y_end</span><span class="p">]):</span>
+            <span class="k">raise</span> <span class="ne">NameError</span><span class="p">(</span><span class="s2">&quot;No inputs are provided.&quot;</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">x_mirrored</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">speos_object</span><span class="o">.</span><span class="n">XIsMirrored</span> <span class="o">=</span> <span class="n">x_mirrored</span>
         <span class="k">if</span> <span class="n">y_mirrored</span><span class="p">:</span>
@@ -590,6 +602,7 @@ title="Fullscreen mode"
 
 <div class="viewcode-block" id="IntensitySensor.set_layer"><a class="viewcode-back" href="../../../api/ansys_optical_automation.speos_process.html#ansys_optical_automation.speos_process.speos_sensors.IntensitySensor.set_layer">[docs]</a>    <span class="k">def</span> <span class="nf">set_layer</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">layer_type</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Set the layer type of the sensor.</span>
+
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
 <span class="sd">        layer_type : str</span>

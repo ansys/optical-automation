@@ -84,9 +84,21 @@
   <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" >
 </form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item active">
-        <p aria-level="2" class="caption" role="heading">
+        <ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../resources/install.html">
+   Installation
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../resources/CONTRIBUTE.html">
+   Contribute
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
  <span class="caption-text">
-  Contents:
+  Index:
  </span>
 </p>
 <ul class="current nav bd-sidenav">
@@ -450,7 +462,7 @@ title="Print to PDF"
 <td><p>Set the sensor format.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#ansys_optical_automation.speos_process.speos_sensors.IntensitySensor.set_layer" title="ansys_optical_automation.speos_process.speos_sensors.IntensitySensor.set_layer"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_layer</span></code></a>(layer_type)</p></td>
-<td><p>Set the layer type of the sensor. Parameters ---------- layer_type : str     Layer type of the sensor. Options are <code class="docutils literal notranslate"><span class="pre">&quot;source&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;face&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;sequence&quot;</span></code>,     and <code class="docutils literal notranslate"><span class="pre">&quot;none&quot;</span></code>.</p></td>
+<td><p>Set the layer type of the sensor.</p></td>
 </tr>
 <tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_position</span></code>([x_reverse, y_reverse, origin, ...])</p></td>
 <td><p>Set the origin and x and y directions of the sensor.</p></td>
@@ -490,14 +502,16 @@ title="Print to PDF"
 <dl class="py method">
 <dt class="sig sig-object py" id="ansys_optical_automation.speos_process.speos_sensors.IntensitySensor.set_layer">
 <span class="sig-name descname"><span class="pre">set_layer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">layer_type</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ansys_optical_automation/speos_process/speos_sensors.html#IntensitySensor.set_layer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ansys_optical_automation.speos_process.speos_sensors.IntensitySensor.set_layer" title="Permalink to this definition">#</a></dt>
-<dd><p>Set the layer type of the sensor.
-Parameters
-———-
-layer_type : str</p>
-<blockquote>
-<div><p>Layer type of the sensor. Options are <code class="docutils literal notranslate"><span class="pre">&quot;source&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;face&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;sequence&quot;</span></code>,
+<dd><p>Set the layer type of the sensor.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>layer_type</strong><span class="classifier">str</span></dt><dd><p>Layer type of the sensor. Options are <code class="docutils literal notranslate"><span class="pre">&quot;source&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;face&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;sequence&quot;</span></code>,
 and <code class="docutils literal notranslate"><span class="pre">&quot;none&quot;</span></code>.</p>
-</div></blockquote>
+</dd>
+</dl>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
