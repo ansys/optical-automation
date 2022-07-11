@@ -29,3 +29,19 @@ jobs:
           cd doc
           sphinx-apidoc -o api ..\ansys_optical_automation
           make.bat html
+          touch build/html/.nojekyll
+    
+    - name: Update HTML Documentation
+      uses: actions/upload-artifact@v2
+      with:
+          name: HTML-Documentation
+          path: doc/build/html
+          retention-days: 7
+      
+    - name: Deploy
+      if: github.event_name == 'push' && contains(github.ref, 'refs/heads/main')
+      uses: JamesIves/github-pages-deploy-action@4.1.5
+      with:
+          branch: gh-pages
+          folder: doc/build/html
+          clean: true
