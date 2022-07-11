@@ -3,6 +3,10 @@ on:
   pull_request:
     branches:
       - main
+    paths:
+      - ansys_optical_automation/**
+      - tests/**
+      - .github/**
 
 jobs:
   simulation-data-test:
