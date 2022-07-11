@@ -15,14 +15,22 @@ classifiers = ["License :: OSI Approved :: MIT License"]
 dynamic = ["version", "description"]
 
 dependencies = [
-    "pytest",
     "pywin32",
 ]
 
 # development dependencies
 [project.optional-dependencies]
 test = [
+    "pytest",
     "pre-commit==2.15.0",
+]
+
+docs = [
+    "Sphinx",
+    "sphinx-book-theme",
+    "sphinx-copybutton",
+    "sphinx-panels",
+    "numpydoc",
 ]
 
 [project.urls]
