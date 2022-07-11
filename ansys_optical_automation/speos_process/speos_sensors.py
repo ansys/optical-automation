@@ -261,7 +261,7 @@ class IntensitySensor(Sensor):
             The default is ``False``.
         """
         if not x_start and not x_end and not y_start and not y_end:
-            raise NameError("No inputs provided.")
+            raise NameError("No inputs are provided.")
         if x_mirrored:
             self.speos_object.XIsMirrored = x_mirrored
         if y_mirrored:
