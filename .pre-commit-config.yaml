@@ -21,7 +21,10 @@ repos:
     hooks:
       - id: isort
         name: isort (python)
-        args: ['--force-single-line-imports', '--profile', 'black']
+        args: [
+            '--force-single-line-imports',
+            '--profile', 'black'
+        ]
         
   - repo: https://github.com/pycqa/flake8
     rev: 4.0.1
@@ -38,8 +41,5 @@ repos:
       - id: velin
         name: Velin
         entry: velin
-        language: python
-        language_version: python3
-        types: [ text ]
-        types_or: [ python ]
-        args: [ "--write" ]
+        types: [ python ]
+        args: ["--write"]
