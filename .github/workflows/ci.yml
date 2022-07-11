@@ -3,6 +3,10 @@ on:
   pull_request:
     branches:
       - main
+    paths:
+      - ansys_optical_automation/**
+      - tests/**
+      - .github/**
 
 jobs:
   simulation-data-test:
@@ -23,7 +27,7 @@ jobs:
           python -m venv venv
           venv\Scripts\Activate.ps1
           python -m pip install --upgrade pip
-          python -m pip install .
+          python -m pip install .[test]
           
       - name: Unittests
         run: |
