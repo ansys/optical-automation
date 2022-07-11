@@ -22,20 +22,11 @@ To install the Optical Automation library, run this code in the Windows command 
    move optical-automation-main\ansys_optical_automation "%AppData%\SpaceClaim\Published Scripts"
 
 
-
 Documentation
 -------------
 Include a link to the full Sphinx documentation.  For example, `PyAnsys <https://docs.pyansys.com/>`_.
-
 
 Contribution
 ------------
 Contributions to this library are welcome. To learn how to contribute, see the
 `Contribute <doc/resources/CONTRIBUTE.rst>`_ document.
-
-License
--------
-The Optical Automation library is licensed under the MIT license.
-
-The full license can be found in the root directory of the `optical-automation
-<https://github.com/ansys/optical-automation>`_ repository.
