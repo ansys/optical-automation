@@ -14,9 +14,9 @@ class DataProcessingFramework:
 
         Parameters
         ----------
-        application : str, optional
+        application : str
             Application object started in DPF. The default is ``None``.
-        extension : tuple, optional
+        extension : tuple
             Extensions accepted by the application object. The default is ``""``.
         """
         self.application = application

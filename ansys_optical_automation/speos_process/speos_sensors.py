@@ -235,7 +235,7 @@ class IntensitySensor(Sensor):
         else:
             raise ValueError("Wrong input value. Choose from XMP, IESNATypeA, IESNATypeB, IESNATypeC or Eulumdat.")
 
-    def set_range(self, x_start=None, x_end=None, y_start=None, y_end=None, x_mirrored=None, y_mirrored=None):
+    def set_range(self, x_start=None, x_end=None, y_start=None, y_end=None, x_mirrored=False, y_mirrored=False):
         """
         Set the sensor size.
 
@@ -255,10 +255,10 @@ class IntensitySensor(Sensor):
             The default is ``None``.
         x_mirrored : bool, optional
             Mirrored extend option of the X size of the sensor.
-            The default is ``None``.
+            The default is ``False``.
         y_mirrored : bool, optional
             Mirrored extend option of the Y size of the sensor.
-            The default is ``None``.
+            The default is ``False``.
         """
         if not x_start and not x_end and not y_start and not y_end and not x_mirrored and not y_mirrored:
             raise NameError("No inputs provided.")
