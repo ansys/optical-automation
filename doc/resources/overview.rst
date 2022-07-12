@@ -2,5 +2,6 @@ Overview
 --------
 
 .. include:: ../../README.rst
-    :start-after: --------
+    :start-after: Overview
+        --------
     :end-before: Installation
