@@ -1,6 +1,6 @@
 License
 =======
 
-.. include:: ../../README.rst
+.. include:: ../README.rst
     :start-after: License
         -------
