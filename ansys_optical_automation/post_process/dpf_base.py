@@ -22,13 +22,16 @@ class DataProcessingFramework:
         self.application = application
         self.accepted_extensions = extension
         if self.application is not None:
-            if "Iron" in sys.version:
-                instance_type = System.Type.GetTypeFromProgID(self.application)
-                self.dpf_instance = System.Activator.CreateInstance(instance_type)
+            if self.application.lower() == "dpf":
+                pass
             else:
-                import win32com.client as win32
+                if "Iron" in sys.version:
+                    instance_type = System.Type.GetTypeFromProgID(self.application)
+                    self.dpf_instance = System.Activator.CreateInstance(instance_type)
+                else:
+                    import win32com.client as win32
 
-                self.dpf_instance = win32.Dispatch(self.application)
+                    self.dpf_instance = win32.Dispatch(self.application)
         else:
             raise ImportError("Application is not defined.")
 

@@ -1,7 +1,7 @@
 import csv
 import os
 
-from ansys_optical_automation.scdm_core.base import BaseSCDM
+from ansys_optical_automation import BaseSCDM
 
 
 class MaterialsFromCSV(BaseSCDM):

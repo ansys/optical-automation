@@ -1,6 +1,6 @@
 import math
 
-from ansys_optical_automation.post_process.dpf_base import DataProcessingFramework
+from ansys_optical_automation import DataProcessingFramework
 
 
 class DpfHdriViewer(DataProcessingFramework):
