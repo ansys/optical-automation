@@ -168,6 +168,7 @@ class Camera(Sensor):
             Name of the sensitivity file.
         """
         sensitivity_path = os.path.join(".", "SPEOS input files", sensitivity_file_name)
+        color = color.lower()
         if color == "red":
             self.speos_object.RedSpectrumFile = sensitivity_path
         elif color == "green":
