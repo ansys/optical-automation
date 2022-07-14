@@ -2,5 +2,6 @@ Installation
 ------------
 
 .. include:: ../../README.rst
-    :start-after: ------------
+    :start-after: Installation
+        ------------
     :end-before: Documentation

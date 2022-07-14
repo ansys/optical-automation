@@ -30,3 +30,10 @@ Contribution
 ------------
 Contributions to this library are welcome. To learn how to contribute, see the
 `Contribute <doc/resources/CONTRIBUTE.rst>`_ document.
+
+License
+-------
+The Optical Automation library is licensed under the MIT license.
+
+The full license can be found in the root directory of the `optical-automation
+<https://github.com/ansys/optical-automation>`_ repository.
