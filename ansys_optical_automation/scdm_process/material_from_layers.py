@@ -1,4 +1,4 @@
-from ansys_optical_automation import BaseSCDM
+from ansys_optical_automation.scdm_core.base import BaseSCDM
 
 
 class SynchLayersMaterials(BaseSCDM):
