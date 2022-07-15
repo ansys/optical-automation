@@ -459,11 +459,11 @@ class RadianceSensor(Sensor):
         """
         layer_type = layer_type.lower()
         if layer_type == "source":
-            self.speos_object.LayerType = self.SpeosSim.SensorRadiance.EnumLayerType.Source
+            self.speos_object.LayerType = self.speos_sim.SensorRadiance.EnumLayerType.Source
         elif layer_type == "face":
-            self.speos_object.LayerType = self.SpeosSim.SensorRadiance.EnumLayerType.Face
+            self.speos_object.LayerType = self.speos_sim.SensorRadiance.EnumLayerType.Face
         elif layer_type == "sequence":
-            self.speos_object.LayerType = self.SpeosSim.SensorRadiance.EnumLayerType.Sequence
+            self.speos_object.LayerType = self.speos_sim.SensorRadiance.EnumLayerType.Sequence
         else:
             error_message = (
                 "please provide a valid radiance layer type"
