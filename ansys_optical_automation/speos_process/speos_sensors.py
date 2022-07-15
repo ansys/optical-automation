@@ -449,6 +449,27 @@ class RadianceSensor(Sensor):
             )
             raise ValueError(error_message)
 
+    def set_layer(self, layer_type):
+        """
+        set the layer type of the radiance sensor
+
+        Parameters
+        ----------
+        layer_type: str
+        """
+        layer_type = layer_type.lower()
+        if layer_type == "source":
+            self.speos_object.LayerType = self.SpeosSim.SensorRadiance.EnumLayerType.Source
+        elif layer_type == "face":
+            self.speos_object.LayerType = self.SpeosSim.SensorRadiance.EnumLayerType.Face
+        elif layer_type == "sequence":
+            self.speos_object.LayerType = self.SpeosSim.SensorRadiance.EnumLayerType.Sequence
+        else:
+            error_message = (
+                "please provide a valid radiance layer type"
+            )
+            raise ValueError(error_message)
+
     def set_observer_type(self, observer_type):
         """
         set observer type of the radiance sensor
