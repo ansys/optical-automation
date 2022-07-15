@@ -489,6 +489,30 @@ class RadianceSensor(Sensor):
             )
             raise ValueError(error_message)
 
+    def set_sampling(self, x_sampling, y_sampling):
+        """
+        set x and y sampling of the radiance sensor
+
+        Parameters
+        ----------
+        x_sampling: int
+        y_sampling: int
+        """
+        self.speos_object.XNbSamples = x_sampling
+        self.speos_object.YNbSamples = y_sampling
+
+    def set_resolution(self, x_resolution, y_resolution):
+        """
+        set x and y resolution of the radiance sensor
+
+        Parameters
+        ----------
+        x_resolution
+        y_resolution
+        """
+        self.speos_object.XResolution = x_resolution
+        self.speos_object.YResolution = y_resolution
+
     def set_wavelength_resolution(self, resolution):
         """
         set wavelength resolution of the radiance sensor
@@ -510,3 +534,13 @@ class RadianceSensor(Sensor):
             raise ValueError(error_message)
         else:
             self.speos_object.WavelengthResolution = resolution
+
+    def set_integration_angle(self, integration_value):
+        """
+        set integration angle of the radiance sensor
+
+        Parameters
+        ----------
+        integration_value
+        """
+        self.speos_object.IntegrationAngle = integration_value
