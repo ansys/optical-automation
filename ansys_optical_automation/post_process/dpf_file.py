@@ -3,7 +3,7 @@ import os
 import ansys_optical_automation.post_process.dpf_base as dpf
 
 
-class DpfFileBase(dpf.DataProcessingFramework):
+class DpfFile(dpf.DataProcessingFramework):
     """
     this base class contains the base method for loading and generating export file optical property files
     """

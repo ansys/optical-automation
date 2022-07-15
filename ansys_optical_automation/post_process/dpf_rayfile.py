@@ -2,7 +2,7 @@ import math
 import os
 import struct
 
-from ansys_optical_automation.post_process.dpf_base_file import DpfFileBase
+from ansys_optical_automation.post_process.dpf_file import DpfFile
 
 Photopic_Conversion_wavelength = [
     380,
@@ -198,7 +198,7 @@ class DpfRay:
         return self.__ray_energy
 
 
-class DpfRayfile(DpfFileBase):
+class DpfRayfile(DpfFile):
     """
     this class contains method to read extract ray data from given binary rayfile
     """
@@ -206,7 +206,7 @@ class DpfRayfile(DpfFileBase):
     def __init__(self, file_path):
         self.file_type = os.path.splitext(file_path)[1].lower()[1:]
         self.file_path = file_path
-        DpfFileBase.__init__(self, self.file_type)
+        DpfFile.__init__(self, self.file_type)
         self.__content = self.load(self.file_path)
         self.__ray_numb = 0
         self.__watt_value = 0
@@ -215,7 +215,6 @@ class DpfRayfile(DpfFileBase):
         self.identifier = 0
         self.description = "description"
         self.source_flux = 0
-
         self.load_content()
 
     def __photopic_conversion(self, wavelength):
