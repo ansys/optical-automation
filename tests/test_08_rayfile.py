@@ -105,7 +105,7 @@ class TestRayfileAPI:
         res = self.results.get("sdf_convert_ray", None)
         assert res is True
 
-    def test_07_check_ray_in_sim(self):
+    def test_07_check_sdf_in_sim(self):
         """
         Check if a Simulation performed with a converted *.ray file is working
         Returns:
@@ -125,12 +125,12 @@ class TestRayfileAPI:
         res = self.results.get("dat_ray_sim", None)
         assert res is True
 
-    def test_09_check_sdf_in_sim(self):
+    def test_09_check_ray_in_sim(self):
         """
         Check if a Simulation performed with a converted *.sdf file is working
         Returns:
         -------
         None
         """
-        res = self.results.get("check lock", None)
+        res = self.results.get("ray_sdf_sim", None)
         assert res is True

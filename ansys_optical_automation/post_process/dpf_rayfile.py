@@ -344,7 +344,7 @@ class DpfRayfile(DpfFile):
                     msg = "Zemax file may be wrong format. File size does not match ray numbers said in header."
                     raise TypeError(msg)
             else:
-                msg = "ray_format_type is in wrong format"
+                msg = "ray_format_type " + str(ray_format_type) + " is in wrong format"
                 raise TypeError(msg)
 
             for ray_idx in range(self.__ray_numb):
