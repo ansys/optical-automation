@@ -1,4 +1,3 @@
-import os
 import struct
 
 from ansys_optical_automation.post_process.dpf_rayfile import DpfRayfile
@@ -89,7 +88,7 @@ class RayfileConverter(DpfRayfile):
 
         Returns
         -------
-
+        None
 
         """
         outfile = self.export_file(rayfile_path, True)
@@ -125,8 +124,8 @@ class RayfileConverter(DpfRayfile):
         None
 
         """
-        self.content = self.load(self.file_path)
-        self.speos_rayfile = DpfRayfile(self.content, "ray")
+
+        self.speos_rayfile = DpfRayfile(self.file_path)
         self.__export_to_zemax(self.file_path)
 
     def zemax_to_speos(self):
@@ -139,13 +138,8 @@ class RayfileConverter(DpfRayfile):
 
         Returns
         -------
-
+        None
 
         """
-        file_type = os.path.splitext(rayfile_path)[1].lower()[1:]
-        if file_type != "dat":
-            msg = "Provided file cannot be converted to speos format"
-            raise ValueError(msg)
-        self.content = self.load(self.file_path)
-        self.zemax_rayfile = DpfRayfile(self.content, file_type)
+        self.zemax_rayfile = DpfRayfile(self.file_path)
         self.__export_to_speos(self.file_path)

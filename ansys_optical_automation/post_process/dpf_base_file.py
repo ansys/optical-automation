@@ -81,6 +81,7 @@ class DpfFileBase(dpf.DataProcessingFramework):
                 exported_file_extension = input_file_extension
                 msg = "Provided file extension" + exported_file_extension + "is not supported"
                 raise TypeError(msg)
+
         else:
             if input_file_extension in self.binary_format or input_file_extension in self.text_format:
                 exported_file_extension = input_file_extension
@@ -88,7 +89,7 @@ class DpfFileBase(dpf.DataProcessingFramework):
                 exported_file_extension = input_file_extension
                 msg = "Provided file extension" + exported_file_extension + "is not supported"
                 raise TypeError(msg)
-            outfile = input_file_name + "." + exported_file_extension
+        outfile = input_file_name + "." + exported_file_extension
         outfile_num = 1
         while os.path.isfile(outfile):
             outfile = input_file_name + "_" + str(outfile_num) + "." + exported_file_extension
