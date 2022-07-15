@@ -381,3 +381,111 @@ class IntensitySensor(Sensor):
         else:
             error_message = "Unsupported layer type. Supported types: source, face, sequence, none."
             raise ValueError(error_message)
+
+
+class RadianceSensor(Sensor):
+    """
+    Provides methods for the Speos Radiance sensor.
+    """
+
+    def __init__(self, name, SpeosSim, SpaceClaim):
+        """
+        Searches for a Speos Radiance sensor in the simulation tree. If the specified name is
+        not found, a new Speos Radiance sensor is created with this name.
+
+        Parameters
+        ----------
+        name : str
+            Name of the sensor to find or create.
+        SpeosSim : SpeosSim
+            SpeosSim.
+        SpaceClaim : SpaceClaim object
+            SpaceClaim object.
+        """
+        super(RadianceSensor, self).__init__(name, SpeosSim, SpaceClaim)
+        speos_object = self.speos_sim.SensorRadiance.Find(self.name)
+        if not speos_object:
+            speos_object = self.speos_sim.SensorRadiance.Create()
+            speos_object.Name = name
+        self.speos_object = speos_object
+
+    def set_focal_value(self, focal_value):
+        """
+        Set focal value of the radiance sensor
+
+        Parameters
+        ----------
+        focal_value: float
+        """
+        opt_sensor_type = self.speos_object.ObserverType.ToString()
+        if opt_sensor_type == "Observer":
+            error_message = (
+                "current radiance sensor observer type is not set to be focal"
+            )
+            raise ValueError(error_message)
+        else:
+            self.speos_object.Focal = focal_value
+
+    def set_type(self, sensor_type):
+        """
+        set type of the radiance sensor
+
+        Parameters
+        ----------
+        sensor_type: str
+        """
+        sensor_type = sensor_type.lower()
+        if sensor_type == "photometric":
+            self.speos_object.SensorType = self.speos_sim.SensorRadiance.EnumSensorType.Photometric
+        elif sensor_type == "radiometric":
+            self.speos_object.SensorType = self.speos_sim.SensorRadiance.EnumSensorType.Radiometric
+        elif sensor_type == "colorimetric":
+            self.speos_object.SensorType = self.speos_sim.SensorRadiance.EnumSensorType.Colorimetric
+        elif sensor_type == "spectral":
+            self.speos_object.SensorType = self.speos_sim.SensorRadiance.EnumSensorType.Spectral
+        else:
+            error_message = (
+                "please provide a valid radiance sensor type"
+            )
+            raise ValueError(error_message)
+
+    def set_observer_type(self, observer_type):
+        """
+        set observer type of the radiance sensor
+
+        Parameters
+        ----------
+        observer_type: str
+        """
+        observer_type = observer_type.lower()
+        if observer_type == "observer":
+            self.speos_object = self.speos_sim.SensorRadiance.EnumObserverType.Observer
+        elif observer_type == "focal":
+            self.speos_object = self.speos_sim.SensorRadiance.EnumObserverType.Focal
+        else:
+            error_message = (
+                "please provide a radiance type as observer or focal"
+            )
+            raise ValueError(error_message)
+
+    def set_wavelength_resolution(self, resolution):
+        """
+        set wavelength resolution of the radiance sensor
+
+        Parameters
+        ----------
+        resolution: float
+        """
+        opt_sensor_type = self.speos_object.SensorType.ToString()
+        if opt_sensor_type != "Colorimetric" and opt_sensor_type != "Spectral":
+            error_message = (
+                "current radiance sensor type does not have Wavelength attribute"
+            )
+            raise ValueError(error_message)
+        if resolution >= 100:
+            error_message = (
+                "resolution not recommended"
+            )
+            raise ValueError(error_message)
+        else:
+            self.speos_object.WavelengthResolution = resolution
