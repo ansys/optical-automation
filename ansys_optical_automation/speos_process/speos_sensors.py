@@ -489,6 +489,46 @@ class RadianceSensor(Sensor):
             )
             raise ValueError(error_message)
 
+    def set_range(self, x_start=None, x_end=None, y_start=None, y_end=None, x_mirrored=False, y_mirrored=False):
+        """
+        Set the sensor size.
+
+        Parameters
+        ----------
+        x_start : int or float, optional
+            X size of the sensor in millimeters for the positive part.
+            The default is ``None``.
+        x_end : int or float, optional
+            X size of the sensor in millimeters for the negative part.
+            The default is ``None``.
+        y_start : int of float, optional
+            Y size of the sensor in millimeters for the positive part.
+            The default is ``None``.
+        y_end : int or float, optional
+            Y size of the sensor in millimeters for the negative part.
+            The default is ``None``.
+        x_mirrored : bool, optional
+            Mirrored extend option of the X size of the sensor.
+            The default is ``False``.
+        y_mirrored : bool, optional
+            Mirrored extend option of the Y size of the sensor.
+            The default is ``False``.
+        """
+        if not all([x_start, x_end, y_start, y_end]):
+            raise NameError("No inputs are provided.")
+        if x_mirrored:
+            self.speos_object.XIsMirrored = x_mirrored
+        if y_mirrored:
+            self.speos_object.YIsMirrored = y_mirrored
+        if x_start and not self.speos_object.XIsMirrored:
+            self.speos_object.XStart = x_start
+        if x_end:
+            self.speos_object.XEnd = x_end
+        if y_start and not self.speos_object.YIsMirrored:
+            self.speos_object.YStart = y_start
+        if y_end:
+            self.speos_object.YEnd = y_end
+
     def set_sampling(self, x_sampling, y_sampling):
         """
         set x and y sampling of the radiance sensor
