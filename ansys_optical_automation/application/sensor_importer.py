@@ -7,18 +7,24 @@ def create_sensor(coordinate_sys):
 
     Parameters
     ----------
-    coordinate_sys: SpaceClaim coordinate system
+    coordinate_sys : SpaceClaim coordinate system
     """
     opt_range = argsDict["range"]
     opt_sensor = RadianceSensor(coordinate_sys.GetName(), SpeosSim, SpaceClaim)
     opt_sensor.set_focal_value(argsDict["observer_distance"] - argsDict["distance_from_origin"])
-    opt_sensor.set_position(x_reverse=False, y_reverse=False, origin=coordinate_sys,
-                            axes=[coordinate_sys.Axes[2], coordinate_sys.Axes[1]])
+    opt_sensor.set_position(
+        x_reverse=False, y_reverse=False, origin=coordinate_sys, axes=[coordinate_sys.Axes[2], coordinate_sys.Axes[1]]
+    )
     opt_sensor.set_type("Colorimetric")
     opt_sensor.set_layer("Source")
-    opt_sensor.set_range(x_start=opt_range[0], x_end=opt_range[1],
-                         y_start=opt_range[2], y_end=opt_range[3],
-                         x_mirrored=False, y_mirrored=False)
+    opt_sensor.set_range(
+        x_start=opt_range[0],
+        x_end=opt_range[1],
+        y_start=opt_range[2],
+        y_end=opt_range[3],
+        x_mirrored=False,
+        y_mirrored=False,
+    )
     opt_sensor.set_wavelength_resolution(10)
     opt_sensor.set_integration_angle(argsDict["integration_angle"])
 
@@ -29,18 +35,24 @@ def update_sensor(sensor_name, coordinate_sys):
 
     Parameters
     ----------
-    sensor_name: str
-    coordinate_sys: SpaceClaim coordinate system
+    sensor_name : str
+    coordinate_sys : SpaceClaim coordinate system
     """
     opt_range = argsDict["range"]
     opt_sensor = RadianceSensor(sensor_name, SpeosSim, SpaceClaim)
     opt_sensor.speos_object.Name = coordinate_sys.GetName()
     opt_sensor.set_focal_value(argsDict["observer_distance"] - argsDict["distance_from_origin"])
-    opt_sensor.set_position(x_reverse=True, y_reverse=False, origin=coordinate_sys,
-                            axes=[coordinate_sys.Axes[1], coordinate_sys.Axes[2]])
-    opt_sensor.set_range(x_start=opt_range[0], x_end=opt_range[1],
-                         y_start=opt_range[2], y_end=opt_range[3],
-                         x_mirrored=False, y_mirrored=False)
+    opt_sensor.set_position(
+        x_reverse=True, y_reverse=False, origin=coordinate_sys, axes=[coordinate_sys.Axes[1], coordinate_sys.Axes[2]]
+    )
+    opt_sensor.set_range(
+        x_start=opt_range[0],
+        x_end=opt_range[1],
+        y_start=opt_range[2],
+        y_end=opt_range[3],
+        x_mirrored=False,
+        y_mirrored=False,
+    )
     opt_sensor.set_integration_angle(argsDict["integration_angle"])
 
 
@@ -50,31 +62,26 @@ def create_coordinate(theta, phi, distance_from_ref):
 
     Parameters
     ----------
-    theta: int
-    phi: int
-    distance_from_ref: int
+    theta : int
+    phi : int
+    distance_from_ref : int
 
     Returns
     -------
     Spaceclaim coordinate system
     """
     p = Point.Create(
-        math.cos(DEG(theta)) * math.cos(DEG(phi)) * MM(distance_from_ref) * (
-            -1 if argsDict["reverse"] is True else 1),
+        math.cos(DEG(theta)) * math.cos(DEG(phi)) * MM(distance_from_ref) * (-1 if argsDict["reverse"] is True else 1),
         math.cos(DEG(theta)) * math.sin(DEG(phi)) * MM(distance_from_ref),
-        math.sin(DEG(theta)) * MM(distance_from_ref)
+        math.sin(DEG(theta)) * MM(distance_from_ref),
     )
-    D = Direction.Create(
-        -p.X,
-        -p.Y,
-        -p.Z
-    )
-    D2 = Direction.Create(
+    direction_x = Direction.Create(-p.X, -p.Y, -p.Z)
+    direction_y = Direction.Create(
         -math.sin(DEG(theta)) * math.cos(DEG(phi)) * (-1 if argsDict["reverse"] is True else 1),
         -math.sin(DEG(theta)) * math.sin(DEG(phi)),
-        math.cos(DEG(theta))
+        math.cos(DEG(theta)),
     )
-    result = DatumOriginCreator.Create(p, D, D2).CreatedOrigin
+    result = DatumOriginCreator.Create(p, direction_x, direction_y).CreatedOrigin
     return result
 
 
@@ -154,11 +161,12 @@ def main():
     try:
         argsDict
         mode = 1
-    except:
+    except Exception:
         mode = 0
 
     if mode == 0:
-        error_message = "This application does not support executing from speos, " \
-                        "please contact support for the usage"
+        error_message = (
+            "This application does not support executing from speos, " "please contact support for the usage"
+        )
         raise ValueError(error_message)
     sensor_lib()
