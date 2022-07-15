@@ -10,6 +10,7 @@ sys.path.append(lib_path)
 
 from ansys_optical_automation.speos_process.speos_sensors import Camera
 from ansys_optical_automation.speos_process.speos_sensors import IntensitySensor
+from ansys_optical_automation.speos_process.speos_sensors import RadianceSensor
 
 scdm_file = os.path.join(unittest_path, "workflows", "example_models", "test_geometry_01.scdoc")
 results_json = os.path.join(unittest_path, "workflows", "test_03_results.json")
@@ -103,6 +104,53 @@ def main():
     results_dict["type_radiometric"] = str(intensity_obj.SensorType)
     intensity.set_type("SPECTRAL")
     results_dict["type_spectral"] = str(intensity_obj.SensorType)
+
+    # test radiance sensors
+    radiance = RadianceSensor("RadianceTest", SpeosSim, SpaceClaim)
+    radiance_obj = SpeosSim.SensorRadiance.Find("RadianceTest")
+    radiance_exists = bool(radiance_obj)
+    results_dict["radiance_exists"] = radiance_exists
+    radiance.find_axes()
+    radiance.set_position()
+    results_dict["radiance_origin"] = radiance_obj.OriginPoint.LinkedObject.Master.Name
+    radiance_x_axis_type = radiance_obj.XDirection.LinkedObject.AxisType.ToString()
+    results_dict["radiance_x_axis_type"] = radiance_x_axis_type
+    radiance_y_axis_type = radiance_obj.YDirection.LinkedObject.AxisType.ToString()
+    results_dict["radiance_y_axis_type"] = radiance_y_axis_type
+    radiance.set_layer("sourCe")
+    results_dict["radiance_layer_source"] = str(radiance_obj.LayerType)
+    radiance.set_layer("NonE")
+    results_dict["radiance_layer_none"] = str(radiance_obj.LayerType)
+    radiance.set_layer("fAcE")
+    results_dict["radiance_layer_face"] = str(radiance_obj.LayerType)
+    radiance.set_layer("SeQUENce")
+    results_dict["radiance_layer_sequence"] = str(radiance_obj.LayerType)
+    radiance.set_range(x_start=-59, x_end=41, y_start=-9, y_end=11, x_mirrored=False, y_mirrored=False)
+    results_dict["radiance_x_start"] = str(radiance_obj.XStart)
+    results_dict["radiance_x_end"] = str(radiance_obj.XEnd)
+    results_dict["radiance_y_start"] = str(radiance_obj.YStart)
+    results_dict["radiance_y_end"] = str(radiance_obj.YEnd)
+    radiance.set_range(x_start=-59, x_end=41, y_start=-9, y_end=11, x_mirrored=True, y_mirrored=True)
+    results_dict["radiance_x_start_mirrored"] = str(radiance_obj.XStart)
+    results_dict["radiance_y_start_mirrored"] = str(radiance_obj.YStart)
+    results_dict["radiance_x_mirrored"] = str(radiance_obj.XIsMirrored)
+    results_dict["radiance_y_mirrored"] = str(radiance_obj.YIsMirrored)
+    radiance.set_sampling(x_sampling=100, y_sampling=150)
+    results_dict["radiance_x_sampling"] = str(radiance_obj.XNbSamples)
+    results_dict["radiance_y_sampling"] = str(radiance_obj.YNbSamples)
+    radiance.set_resolution(x_resolution=1, y_resolution=2)
+    results_dict["radiance_x_resolution"] = str(radiance_obj.XResolution)
+    results_dict["radiance_y_resolution"] = str(radiance_obj.YResolution)
+    radiance.set_type("pHoTOMetric")
+    results_dict["radiance_type_photometric"] = str(radiance_obj.SensorType)
+    radiance.set_type("coLORiMeTric")
+    results_dict["radiance_type_colorimetric"] = str(radiance_obj.SensorType)
+    radiance.set_type("RadiomeTric")
+    results_dict["radiance_type_radiometric"] = str(radiance_obj.SensorType)
+    radiance.set_type("SPECTRAL")
+    results_dict["radiance_type_spectral"] = str(radiance_obj.SensorType)
+    radiance.set_wavelength_resolution(11)
+    results_dict["radiance_wavelength_resolution"] = str(radiance_obj.WavelengthResolution)
 
 
 results_dict = {}

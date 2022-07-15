@@ -431,3 +431,228 @@ class TestSensorAPI:
         res = self.results.get("type_spectral", None)
         ref = self.reference_results["type_spectral"]
         assert res == ref
+
+    def test_41_radiance_created(self):
+        """
+        Compare the results of the ``RadianceSensor`` class initialization method.
+        Returns: None
+        """
+        res = self.results.get("radiance_exists", None)
+        ref = self.reference_results["radiance_exists"]
+        assert res == ref
+
+    def test_42_radiance_origin(self):
+        """
+        Compare the results of the RadianceSensor.set_position() - origin.
+        Returns: None
+        """
+        res = self.results.get("radiance_origin", None)
+        ref = self.reference_results["radiance_origin"]
+        assert res == ref
+
+    def test_43_check_radiance_x_axis(self):
+        """
+        Compare the results of RadianceSensor.set_position() - X Direction.
+        Returns: None
+        """
+        res = self.results.get("radiance_x_axis_type", None)
+        ref = self.reference_results["radiance_x_axis_type"]
+        assert res == ref
+
+    def test_44_check_radiance_y_axis(self):
+        """
+        Compare the results of RadianceSensor.set_position() - Y Direction.
+        Returns: None
+        """
+        res = self.results.get("radiance_y_axis_type", None)
+        ref = self.reference_results["radiance_y_axis_type"]
+        assert res == ref
+
+    def test_43_radiance_wavelength_resolution(self):
+        """
+        Compare the results of RadianceSensor.set_wavelength() - w_resolution.
+        Returns: None
+        """
+        res = self.results.get("radiance_wavelength_resolution", None)
+        ref = self.reference_results["radiance_wavelength_resolution"]
+        assert res == ref
+
+    def test_44_radiance_layer_source(self):
+        """
+        Compare the results of RadianceSensor.set_layer() - source.
+        Returns: None
+        """
+        res = self.results.get("radiance_layer_source", None)
+        ref = self.reference_results["radiance_layer_source"]
+        assert res == ref
+
+    def test_45_radiance_layer_none(self):
+        """
+        Compare the results of RadianceSensor.set_layer() - none.
+        Returns: None
+        """
+        res = self.results.get("radiance_layer_none", None)
+        ref = self.reference_results["radiance_layer_none"]
+        assert res == ref
+
+    def test_46_radiance_layer_face(self):
+        """
+        Compare the results of RadianceSensor.set_layer() - face.
+        Returns: None
+        """
+        res = self.results.get("radiance_layer_face", None)
+        ref = self.reference_results["radiance_layer_face"]
+        assert res == ref
+
+    def test_47_radiance_layer_sequence(self):
+        """
+        Compare the results of RadianceSensor.set_layer() - sequence.
+        Returns: None
+        """
+        res = self.results.get("radiance_layer_sequence", None)
+        ref = self.reference_results["radiance_layer_sequence"]
+        assert res == ref
+
+    def test_48_radiance_range_x_start(self):
+        """
+        Compare the results of RadianceSensor.set_range() - x_start.
+        Returns: None
+        """
+        res = self.results.get("radiance_x_start", None)
+        ref = self.reference_results["radiance_x_start"]
+        assert res == ref
+
+    def test_49_radiance_range_x_end(self):
+        """
+        Compare the results of RadianceSensor.set_range() - x_end.
+        Returns: None
+        """
+        res = self.results.get("radiance_x_end", None)
+        ref = self.reference_results["radiance_x_end"]
+        assert res == ref
+
+    def test_50_radiance_range_y_start(self):
+        """
+        Compare the results of RadianceSensor.set_range() - y_start.
+        Returns: None
+        """
+        res = self.results.get("radiance_y_start", None)
+        ref = self.reference_results["radiance_y_start"]
+        assert res == ref
+
+    def test_51_radiance_range_y_end(self):
+        """
+        Compare the results of RadianceSensor.set_range() - y_end.
+        Returns: None
+        """
+        res = self.results.get("radiance_y_end", None)
+        ref = self.reference_results["radiance_y_end"]
+        assert res == ref
+
+    def test_52_radiance_range_x_mirrored(self):
+        """
+        Compare the results of RadianceSensor.set_range() - x_mirrored.
+        Returns: None
+        """
+        res = self.results.get("radiance_x_mirrored", None)
+        ref = self.reference_results["radiance_x_mirrored"]
+        assert res == ref
+
+    def test_53_radiance_range_x_start_mirrored(self):
+        """
+        Compare the results of RadianceSensor.set_range() - x_mirrored.
+        Returns: None
+        """
+        res = self.results.get("radiance_x_start_mirrored", None)
+        ref = self.reference_results["radiance_x_start_mirrored"]
+        assert res == ref
+
+    def test_54_radiance_range_y_mirrored(self):
+        """
+        Compare the results of RadianceSensor.set_range() - y_mirrored.
+        Returns: None
+        """
+        res = self.results.get("radiance_y_mirrored", None)
+        ref = self.reference_results["radiance_y_mirrored"]
+        assert res == ref
+
+    def test_55_radiance_range_y_start_mirrored(self):
+        """
+        Compare the results of RadianceSensor.set_range() - y_mirrored.
+        Returns: None
+        """
+        res = self.results.get("radiance_y_start_mirrored", None)
+        ref = self.reference_results["radiance_y_start_mirrored"]
+        assert res == ref
+
+    def test_56_radiance_sampling_x(self):
+        """
+        Compare the results of RadianceSensor.set_sampling() - x_sampling.
+        Returns: None
+        """
+        res = self.results.get("radiance_x_sampling", None)
+        ref = self.reference_results["radiance_x_sampling"]
+        assert res == ref
+
+    def test_57_radiance_sampling_y(self):
+        """
+        Compare the results of RadianceSensor.set_sampling() - y_sampling.
+        Returns: None
+        """
+        res = self.results.get("radiance_y_sampling", None)
+        ref = self.reference_results["radiance_y_sampling"]
+        assert res == ref
+
+    def test_58_radiance_resolution_x(self):
+        """
+        Compare the results of RadianceSensor.set_resolution() - x_resolution.
+        Returns: None
+        """
+        res = self.results.get("radiance_x_resolution", None)
+        ref = self.reference_results["radiance_x_resolution"]
+        assert res == ref
+
+    def test_59_radiance_resolution_y(self):
+        """
+        Compare the results of RadianceSensor.set_resolution() - y_resolution.
+        Returns: None
+        """
+        res = self.results.get("radiance_y_resolution", None)
+        ref = self.reference_results["radiance_y_resolution"]
+        assert res == ref
+
+    def test_60_radiance_type_photometric(self):
+        """
+        Compare the results of RadianceSensor.set_type() - photometric.
+        Returns: None
+        """
+        res = self.results.get("radiance_type_photometric", None)
+        ref = self.reference_results["radiance_type_photometric"]
+        assert res == ref
+
+    def test_61_radiance_type_colorimetric(self):
+        """
+        Compare the results of RadianceSensor.set_type() - colorimetric.
+        Returns: None
+        """
+        res = self.results.get("radiance_type_colorimetric", None)
+        ref = self.reference_results["radiance_type_colorimetric"]
+        assert res == ref
+
+    def test_62_radiance_type_radiometric(self):
+        """
+        Compare the results of RadianceSensor.set_type() - radiometric.
+        Returns: None
+        """
+        res = self.results.get("radiance_type_radiometric", None)
+        ref = self.reference_results["radiance_type_radiometric"]
+        assert res == ref
+
+    def test_63_radiance_type_spectral(self):
+        """
+        Compare the results of RadianceSensor.set_type() - spectral.
+        Returns: None
+        """
+        res = self.results.get("radiance_type_spectral", None)
+        ref = self.reference_results["radiance_type_spectral"]
+        assert res == ref
