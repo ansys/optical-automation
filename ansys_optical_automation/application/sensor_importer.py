@@ -29,21 +29,25 @@ def create_sensor(coordinate_sys):
     opt_sensor.set_integration_angle(argsDict["integration_angle"])
 
 
-def update_sensor(sensor_name, coordinate_sys):
+def update_sensor(sensor_coordinate, new_name):
     """
-    update definition and rename the radiance sensor with sensor_name with properties from argsDict ACT.
+    Update sensor with name obtained from sensor_coordinate to the new parameter from argsDict ACT.
 
     Parameters
     ----------
-    sensor_name : str
-    coordinate_sys : SpaceClaim coordinate system
+    sensor_coordinate : SpaceClaim coordinate
+    new_name : str
     """
     opt_range = argsDict["range"]
-    opt_sensor = RadianceSensor(sensor_name, SpeosSim, SpaceClaim)
-    opt_sensor.speos_object.Name = coordinate_sys.GetName()
+    opt_sensor = RadianceSensor(sensor_coordinate.GetName().ToString(), SpeosSim, SpaceClaim)
+    if opt_sensor.speos_object.Name != new_name:
+        opt_sensor.speos_object.Name = new_name
     opt_sensor.set_focal_value(argsDict["observer_distance"] - argsDict["distance_from_origin"])
     opt_sensor.set_position(
-        x_reverse=True, y_reverse=False, origin=coordinate_sys, axes=[coordinate_sys.Axes[1], coordinate_sys.Axes[2]]
+        x_reverse=False,
+        y_reverse=False,
+        origin=sensor_coordinate,
+        axes=[sensor_coordinate.Axes[2], sensor_coordinate.Axes[1]],
     )
     opt_sensor.set_range(
         x_start=opt_range[0],
@@ -71,13 +75,13 @@ def create_coordinate(theta, phi, distance_from_ref):
     Spaceclaim coordinate system
     """
     p = Point.Create(
-        math.cos(DEG(theta)) * math.cos(DEG(phi)) * MM(distance_from_ref) * (-1 if argsDict["reverse"] is True else 1),
+        math.cos(DEG(theta)) * math.cos(DEG(phi)) * MM(distance_from_ref) * (-1 if argsDict["reverse"] == 1 else 1),
         math.cos(DEG(theta)) * math.sin(DEG(phi)) * MM(distance_from_ref),
         math.sin(DEG(theta)) * MM(distance_from_ref),
     )
     direction_x = Direction.Create(-p.X, -p.Y, -p.Z)
     direction_y = Direction.Create(
-        -math.sin(DEG(theta)) * math.cos(DEG(phi)) * (-1 if argsDict["reverse"] is True else 1),
+        -math.sin(DEG(theta)) * math.cos(DEG(phi)) * (-1 if argsDict["reverse"] == 1 else 1),
         -math.sin(DEG(theta)) * math.sin(DEG(phi)),
         math.cos(DEG(theta)),
     )
@@ -135,10 +139,11 @@ def sensor_lib():
                 # change transformation matrix
                 target_origin_matrix = Matrix.CreateMapping(origin_ref.Frame)
                 coord_sys.Transform(target_origin_matrix)
-                # set the name of coordinate_system
-                coord_sys.SetName(str(theta_angle) + "_" + str(phi_angle))
+                new_name = str(theta_angle) + "_" + str(phi_angle)
                 # update radiance sensor
-                update_sensor(coord_sys.GetName(), coord_sys)
+                update_sensor(coord_sys, new_name)
+                # set the name of coordinate_system
+                coord_sys.SetName(new_name)
     else:
         Delete.Execute(Selection.Create(sensor_lib_comp))
         sensor_lib_comp = ComponentHelper.CreateAtRoot("Sensor Lib")
