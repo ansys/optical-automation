@@ -71,8 +71,8 @@ class TestPreprocessing:
         Returns: None
         """
         # Generate test log for ARM
-        res = self.results.get("center_coord", None)
-        ref = self.reference_results["center_coord"]
+        res = self.results.get("center_coord", None)["Component1"]
+        ref = self.reference_results["center_coord"]["Component1"]
         assert res == ref
 
     def test_03_check_materials(self):
