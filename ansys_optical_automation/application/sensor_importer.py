@@ -25,6 +25,7 @@ def create_sensor(coordinate_sys):
         x_mirrored=False,
         y_mirrored=False,
     )
+    opt_sensor.set_resolution(argsDict["resolution"][0], argsDict["resolution"][1])
     opt_sensor.set_wavelength_resolution(10)
     opt_sensor.set_integration_angle(argsDict["integration_angle"])
 
@@ -57,6 +58,7 @@ def update_sensor(sensor_coordinate, new_name):
         x_mirrored=False,
         y_mirrored=False,
     )
+    opt_sensor.set_resolution(argsDict["resolution"][0], argsDict["resolution"][1])
     opt_sensor.set_integration_angle(argsDict["integration_angle"])
 
 
