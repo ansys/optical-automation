@@ -1,6 +1,7 @@
+import os
 import math
 
-from ansys_optical_automation import DataProcessingFramework
+from ansys_optical_automation.post_process.dpf_base import DataProcessingFramework
 
 
 class DpfHdriViewer(DataProcessingFramework):
@@ -14,7 +15,7 @@ class DpfHdriViewer(DataProcessingFramework):
     def __init__(self):
         """Initialize DPF as HDRIViewer."""
         DataProcessingFramework.__init__(
-            self, application="HDRIViewer.Application", extension=(".speos360", ".optisvr", ".xmp")
+            self, extension=(".speos360", ".optisvr", ".xmp"), application="HDRIViewer.Application"
         )
         self.source_list = []
 
@@ -72,7 +73,7 @@ class DpfHdriViewer(DataProcessingFramework):
                         str(phi_angles) + str(theta_angles) + " are not existing iin the file \n Details: " + e
                     )
 
-    def export_vr_views(self, export_path, phi_angles=None, theta_angles=None, config_ids=None):
+    def export_vr_views(self, export_path=None, phi_angles=None, theta_angles=None, config_ids=None):
         """
         Export VR results for all or specific configurations for defined angles or all angles as image (JPG) files.
 
@@ -91,6 +92,8 @@ class DpfHdriViewer(DataProcessingFramework):
             List of configurations IDs to export. The default is ``None``, in which case all configuration
             IDs are exported.
         """
+        if export_path is None:
+            export_path = os.path.dirname(self.file_path)
         self.valid_dir(export_path)
         export_path += "\\"
 

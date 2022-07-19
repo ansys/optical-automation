@@ -2,7 +2,7 @@ import math
 import os
 import struct
 
-from ansys_optical_automation.post_process.dpf_file import DpfFile
+from ansys_optical_automation.post_process.dpf_base import DataProcessingFramework
 
 Photopic_Conversion_wavelength = [
     380,
@@ -198,16 +198,14 @@ class DpfRay:
         return self.__ray_energy
 
 
-class DpfRayfile(DpfFile):
+class DpfRayfile(DataProcessingFramework):
     """
     this class contains method to read extract ray data from given binary rayfile
     """
+    conversion_extension = {".ray": ".sdf", ".dat": ".ray", ".sdf": ".ray"}
 
-    def __init__(self, file_path):
-        self.file_type = os.path.splitext(file_path)[1].lower()[1:]
-        self.file_path = file_path
-        DpfFile.__init__(self, self.file_type)
-        self.__content = self.load(self.file_path)
+    def __init__(self):
+        DataProcessingFramework.__init__(self, extension=list(self.conversion_extension.keys()))
         self.__ray_numb = 0
         self.__watt_value = 0
         self.__lumen_value = 0
@@ -245,29 +243,27 @@ class DpfRayfile(DpfFile):
 
         Returns
         -------
-
-
         """
-
-        if self.file_type == "ray":
-            content_size = os.fstat(self.__content.fileno()).st_size - 28
+        rayfile_type = self.file_path.split(".")[-1]
+        if rayfile_type == "ray":
+            content_size = os.fstat(self.dpf_instance.fileno()).st_size - 28
             if content_size % 32 != 0:
                 msg = "Provided rayfile is not generated from speos"
                 raise ValueError(msg)
             self.__ray_numb = int(content_size / 32)
 
-            self.__watt_value = struct.unpack("f", self.__content.read(4))[0]
-            self.__content.read(4 * 5)
-            self.__lumen_value = struct.unpack("f", self.__content.read(4))[0]
+            self.__watt_value = struct.unpack("f", self.dpf_instance.read(4))[0]
+            self.dpf_instance.read(4 * 5)
+            self.__lumen_value = struct.unpack("f", self.dpf_instance.read(4))[0]
             for ray_idx in range(self.__ray_numb):
-                x = struct.unpack("f", self.__content.read(4))[0]
-                y = struct.unpack("f", self.__content.read(4))[0]
-                z = struct.unpack("f", self.__content.read(4))[0]
-                l_dir = struct.unpack("f", self.__content.read(4))[0]
-                m_dir = struct.unpack("f", self.__content.read(4))[0]
-                n_dir = struct.unpack("f", self.__content.read(4))[0]
-                wav = struct.unpack("f", self.__content.read(4))[0] * 0.001
-                e = struct.unpack("f", self.__content.read(4))[0]
+                x = struct.unpack("f", self.dpf_instance.read(4))[0]
+                y = struct.unpack("f", self.dpf_instance.read(4))[0]
+                z = struct.unpack("f", self.dpf_instance.read(4))[0]
+                l_dir = struct.unpack("f", self.dpf_instance.read(4))[0]
+                m_dir = struct.unpack("f", self.dpf_instance.read(4))[0]
+                n_dir = struct.unpack("f", self.dpf_instance.read(4))[0]
+                wav = struct.unpack("f", self.dpf_instance.read(4))[0] * 0.001
+                e = struct.unpack("f", self.dpf_instance.read(4))[0]
                 if e <= 0:
                     msg = "Error: ray power of ray of " + str(ray_idx) + " cannot be <= 0"
                     raise ValueError(msg)
@@ -279,47 +275,48 @@ class DpfRayfile(DpfFile):
                     msg = "Error: Vector length of " + str(ray_idx) + "the ray is unusual (" + str(raylen) + ")"
                     raise ValueError(msg)
                 self.__rays.append(DpfRay(x, y, z, l_dir, m_dir, n_dir, wav, e))
-            self.__content.close()
-        elif self.file_type == "dat" or self.file_type == "sdf":
+            self.dpf_instance.close()
+        elif rayfile_type == "dat" or rayfile_type == "sdf":
             self.identifier = int.from_bytes(
-                self.__content.read(4), byteorder="little"
+                self.dpf_instance.read(4), byteorder="little"
             )  # Format version ID, current value is 1010
             self.__ray_numb = int.from_bytes(
-                self.__content.read(4), byteorder="little"
+                self.dpf_instance.read(4), byteorder="little"
             )  # The number of rays in the file
-            self.description = self.__content.read(100).decode()  # A text description of the source
-            self.source_flux = struct.unpack("f", self.__content.read(4))[0]  # The total flux in watts of this source
-            ray_set_flux = struct.unpack("f", self.__content.read(4))[
+            self.description = self.dpf_instance.read(100).decode()  # A text description of the source
+            self.source_flux = struct.unpack("f", self.dpf_instance.read(4))[
+                0]  # The total flux in watts of this source
+            ray_set_flux = struct.unpack("f", self.dpf_instance.read(4))[
                 0
             ]  # The flux in watts represented by this Ray Set
-            wavelength = 1000 * struct.unpack("f", self.__content.read(4))[0]
+            wavelength = 1000 * struct.unpack("f", self.dpf_instance.read(4))[0]
             # The wavelength in micrometers,
             # 0 if a composite,converted to nanometer since this is the speos' source file format.
-            self.__content.read(18 * 4)
-            # InclinationBeg = struct.unpack('f', self.__content.read(4))[0]  # Angular range for ray set (Degrees)
-            # InclinationEnd = struct.unpack('f', self.__content.read(4))[0]  # Angular range for ray set (Degrees)
-            # AzimuthBeg = struct.unpack('f', self.__content.read(4))[0]  # Angular range for ray set (Degrees)
-            # AzimuthEnd = struct.unpack('f', self.__content.read(4))[0]  # Angular range for ray set (Degrees)
-            # DimensionUnits = int.from_bytes(self.__content.read(4), byteorder='little')
+            self.dpf_instance.read(18 * 4)
+            # InclinationBeg = struct.unpack('f', self.dpf_instance.read(4))[0]  # Angular range for ray set (Degrees)
+            # InclinationEnd = struct.unpack('f', self.dpf_instance.read(4))[0]  # Angular range for ray set (Degrees)
+            # AzimuthBeg = struct.unpack('f', self.dpf_instance.read(4))[0]  # Angular range for ray set (Degrees)
+            # AzimuthEnd = struct.unpack('f', self.dpf_instance.read(4))[0]  # Angular range for ray set (Degrees)
+            # DimensionUnits = int.from_bytes(self.dpf_instance.read(4), byteorder='little')
             # METERS=0, IN=1, CM=2, FEET=3, MM=4
-            # LocX = struct.unpack('f', self.__content.read(4))[0]  # Coordinate Translation of the source
-            # LocY = struct.unpack('f', self.__content.read(4))[0]  # Coordinate Translation of the source
-            # LocZ = struct.unpack('f', self.__content.read(4))[0]  # Coordinate Translation of the source
-            # RotX = struct.unpack('f', self.__content.read(4))[0]  # Source rotation (Radians)
-            # RotY = struct.unpack('f', self.__content.read(4))[0]  # Source rotation (Radians)
-            # RotZ = struct.unpack('f', self.__content.read(4))[0]  # Source rotation (Radians)
-            # ScaleX = struct.unpack('f', self.__content.read(4))[0]  # Currently unused
-            # ScaleY = struct.unpack('f', self.__content.read(4))[0]  # Currently unused
-            # ScaleZ = struct.unpack('f', self.__content.read(4))[0]  # Currently unused
+            # LocX = struct.unpack('f', self.dpf_instance.read(4))[0]  # Coordinate Translation of the source
+            # LocY = struct.unpack('f', self.dpf_instance.read(4))[0]  # Coordinate Translation of the source
+            # LocZ = struct.unpack('f', self.dpf_instance.read(4))[0]  # Coordinate Translation of the source
+            # RotX = struct.unpack('f', self.dpf_instance.read(4))[0]  # Source rotation (Radians)
+            # RotY = struct.unpack('f', self.dpf_instance.read(4))[0]  # Source rotation (Radians)
+            # RotZ = struct.unpack('f', self.dpf_instance.read(4))[0]  # Source rotation (Radians)
+            # ScaleX = struct.unpack('f', self.dpf_instance.read(4))[0]  # Currently unused
+            # ScaleY = struct.unpack('f', self.dpf_instance.read(4))[0]  # Currently unused
+            # ScaleZ = struct.unpack('f', self.dpf_instance.read(4))[0]  # Currently unused
             # self.__content.read(4 * 4)  # Unused data
-            ray_format_type = int.from_bytes(self.__content.read(4), byteorder="little")
+            ray_format_type = int.from_bytes(self.dpf_instance.read(4), byteorder="little")
             # The ray_format_type must be either 0 for flux only format(.dat), or 2 for the spectral color format(.sdf).
             flux_type = int.from_bytes(
-                self.__content.read(4), byteorder="little"
+                self.dpf_instance.read(4), byteorder="little"
             )  # If and only if the ray_format_type is 0, then the flux_type is 0 for watts, and 1 for lumens.
             # For the spectral color format(.sdf), the flux must be in watts, and the wavelength in micrometers.
-            self.__content.read(4 * 2)  # Unused data
-            content_size = os.fstat(self.__content.fileno()).st_size - self.__content.tell()
+            self.dpf_instance.read(4 * 2)  # Unused data
+            content_size = os.fstat(self.dpf_instance.fileno()).st_size - self.dpf_instance.tell()
             if ray_format_type == 0:
                 if content_size % (7 * 4) != 0 or content_size // (7 * 4) != self.__ray_numb:
                     msg = "Warning: Zemax file may be wrong format. File size does not match ray numbers said in header"
@@ -348,16 +345,16 @@ class DpfRayfile(DpfFile):
                 raise TypeError(msg)
 
             for ray_idx in range(self.__ray_numb):
-                x = struct.unpack("f", self.__content.read(4))[0]
-                y = struct.unpack("f", self.__content.read(4))[0]
-                z = struct.unpack("f", self.__content.read(4))[0]
-                l_dir = struct.unpack("f", self.__content.read(4))[0]
-                m_dir = struct.unpack("f", self.__content.read(4))[0]
-                n_dir = struct.unpack("f", self.__content.read(4))[0]
+                x = struct.unpack("f", self.dpf_instance.read(4))[0]
+                y = struct.unpack("f", self.dpf_instance.read(4))[0]
+                z = struct.unpack("f", self.dpf_instance.read(4))[0]
+                l_dir = struct.unpack("f", self.dpf_instance.read(4))[0]
+                m_dir = struct.unpack("f", self.dpf_instance.read(4))[0]
+                n_dir = struct.unpack("f", self.dpf_instance.read(4))[0]
                 wav = 550
                 if ray_format_type == 2:
-                    wav = struct.unpack("f", self.__content.read(4))[0]
-                e = struct.unpack("f", self.__content.read(4))[0]
+                    wav = struct.unpack("f", self.dpf_instance.read(4))[0]
+                e = struct.unpack("f", self.dpf_instance.read(4))[0]
                 if e <= 0:
                     msg = "Error: ray power of " + str(m_dir) + "th ray is <= 0"
                     raise ValueError(msg)
@@ -416,3 +413,37 @@ class DpfRayfile(DpfFile):
 
         """
         return self.__rays
+
+    def export_file(self, export_folder_dir=None):
+        """
+        this method generates a file to be exported
+        Parameters
+        ----------
+
+        file_path: str
+            input file
+        convert : Boolean , optional
+            defines if the export is a conversion, default value is False
+        Returns
+        -------
+        outfile: str
+            output file
+
+        """
+        input_file_folder = os.path.dirname(self.file_path)
+        input_file_name = os.path.basename(self.file_path).split(".")[0]
+        input_file_extension = os.path.splitext(self.file_path)[1].lower()[1:]
+        exported_file_extension = self.conversion_extension[input_file_extension]
+        output_file_path = ""
+        if export_folder_dir is not None:
+            self.valid_dir(export_folder_dir)
+            output_file_path = export_folder_dir + input_file_name
+        else:
+            output_file_path = input_file_folder + input_file_name
+
+        outfile = output_file_path + "." + exported_file_extension
+        outfile_num = 1
+        while os.path.isfile(outfile):
+            outfile = output_file_path + "_" + str(outfile_num) + "." + exported_file_extension
+            outfile_num += 1
+        return outfile
