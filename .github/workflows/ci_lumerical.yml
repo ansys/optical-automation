@@ -1,0 +1,35 @@
+name: ci_lumerical
+on:
+  pull_request:
+    branches:
+      - main
+    paths:
+      - ansys_optical_automation/lumerical_core/**
+      - tests/**
+      - .github/**
+
+jobs:
+  simulation-data-test:
+    runs-on: self-hosted
+    steps:
+      - run: echo $(hostname)
+      - name: Check out repository code
+        uses: actions/checkout@v3
+
+      - name: Setup Python
+        uses: actions/setup-python@v2
+        with:
+            python-version: 3.7
+
+      - name: Install dependencies
+        run: |
+          python -m ensurepip
+          python -m venv venv
+          venv\Scripts\Activate.ps1
+          python -m pip install --upgrade pip
+          python -m pip install .[test]
+
+      - name: Unittests
+        run: |
+          venv\Scripts\Activate.ps1
+          pytest -v tests -k "lumerical"
