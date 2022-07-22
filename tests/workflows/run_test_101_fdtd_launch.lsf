@@ -1,0 +1,8 @@
+newproject;
+clear;
+addfdtd;
+addrect;
+#save("simple_test.fsp");
+
+x = getresult("FDTD", "x");
+jsonsave("test_101_fdtd_launch_results");
