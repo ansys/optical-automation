@@ -219,7 +219,7 @@ class DpfRayfile(DataProcessingFramework):
         self.load_content()
 
     def __is_binary(self):
-        """Checs if file is binary
+        """Checks if file is binary
 
         Returns
         -------
