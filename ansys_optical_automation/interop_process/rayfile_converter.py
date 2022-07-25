@@ -55,8 +55,8 @@ class RayfileConverter(DpfRayfile):
         zemax_spectrum_file.write(struct.pack("f", 0))  # unused4 (float)
         zemax_spectrum_file.write(
             struct.pack("<I", 2)
-        )  # ray_format_type is color since the SPES ray file always contains wavelength
-        zemax_spectrum_file.write(struct.pack("<I", 0))  # flux_type is Watss
+        )  # ray_format_type is color since the SPEOS ray file always contains wavelength
+        zemax_spectrum_file.write(struct.pack("<I", 0))  # flux_type is Watts
         zemax_spectrum_file.write(struct.pack("<I", 0))  # reversed1 (int)
         zemax_spectrum_file.write(struct.pack("<I", 0))  # reversed2 (int)
         for ray in self.rays:
@@ -95,7 +95,7 @@ class RayfileConverter(DpfRayfile):
             speos_ray_file.write(struct.pack("f", ray.radiation_l))
             speos_ray_file.write(struct.pack("f", ray.radiation_m))
             speos_ray_file.write(struct.pack("f", ray.radiation_n))
-            speos_ray_file.write(struct.pack("f", ray.wavelength))
+            speos_ray_file.write(struct.pack("f", ray.wavelength * 1000))
             speos_ray_file.write(struct.pack("f", ray.energy))
         speos_ray_file.close()
 

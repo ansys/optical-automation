@@ -228,7 +228,9 @@ class DpfRayfile(DataProcessingFramework):
         with open(self.file_path, "rb") as f:
             for block in f:
                 if b"\0" in block:
+                    f.close()
                     return True
+            f.close()
         return False
 
     def __photopic_conversion(self, wavelength):
@@ -308,10 +310,10 @@ class DpfRayfile(DataProcessingFramework):
             ray_set_flux = struct.unpack("f", self.dpf_instance.read(4))[
                 0
             ]  # The flux in watts represented by this Ray Set
-            wavelength = 1000 * struct.unpack("f", self.dpf_instance.read(4))[0]
+            wavelength = struct.unpack("f", self.dpf_instance.read(4))[0]
             # The wavelength in micrometers,
             # 0 if a composite,converted to nanometer since this is the speos' source file format.
-            self.dpf_instance.read(18 * 4)
+            self.dpf_instance.read(18 * 4)  # Unused data
             ray_format_type = int.from_bytes(self.dpf_instance.read(4), byteorder="little")
             # The ray_format_type must be either 0 for flux only format(.dat), or 2 for the spectral color format(.sdf).
             flux_type = int.from_bytes(
@@ -324,8 +326,8 @@ class DpfRayfile(DataProcessingFramework):
                 if content_size % (7 * 4) != 0 or content_size // (7 * 4) != self.__ray_numb:
                     msg = "Warning: Zemax file may be wrong format. File size does not match ray numbers said in header"
                     raise ValueError(msg)
-                wavelength = wavelength if wavelength != 0 else 550
-                photopic_conversion = self.__photopic_conversion(wavelength)
+                wavelength = wavelength if wavelength != 0 else 0.550
+                photopic_conversion = self.__photopic_conversion(wavelength * 1000)
                 # float(input(
                 #     'You can find a luminous efficacy table here: '
                 #     'http://hyperphysics.phy-astr.gsu.edu/hbase/vision/efficacy.html '
@@ -343,6 +345,7 @@ class DpfRayfile(DataProcessingFramework):
                 if content_size % (8 * 4) != 0 or content_size // (8 * 4) != self.__ray_numb:
                     msg = "Zemax file may be wrong format. File size does not match ray numbers said in header."
                     raise TypeError(msg)
+                self.__watt_value = ray_set_flux
             else:
                 msg = "ray_format_type " + str(ray_format_type) + " is in wrong format"
                 raise TypeError(msg)
@@ -354,7 +357,7 @@ class DpfRayfile(DataProcessingFramework):
                 l_dir = struct.unpack("f", self.dpf_instance.read(4))[0]
                 m_dir = struct.unpack("f", self.dpf_instance.read(4))[0]
                 n_dir = struct.unpack("f", self.dpf_instance.read(4))[0]
-                wav = 550
+                wav = wavelength if wavelength != 0 else 550
                 if ray_format_type == 2:
                     wav = struct.unpack("f", self.dpf_instance.read(4))[0]
                 e = struct.unpack("f", self.dpf_instance.read(4))[0]

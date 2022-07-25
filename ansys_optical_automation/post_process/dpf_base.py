@@ -75,3 +75,11 @@ class DataProcessingFramework:
         """
         if not os.path.isdir(str_path):
             os.makedirs(str_path)
+
+    def close(self):
+        if self.application is None:  # no application is required to open file, e.g. rayfile
+            self.dpf_instance.close()
+        else:
+            pid = self.dpf_instance.GetPID
+            cmd = "taskkill /PID " + str(pid) + " /F"
+            os.system(cmd)
