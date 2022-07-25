@@ -107,7 +107,7 @@ class TestRayfileAPI:
 
     def test_07_check_sdf_in_sim(self):
         """
-        Check if a Simulation performed with a converted *.ray file is working
+        Check if a Simulation performed with a converted *.sdf file is working in Speos sim
         Returns:
         -------
         None
@@ -117,7 +117,7 @@ class TestRayfileAPI:
 
     def test_08_check_dat_in_sim(self):
         """
-        Check if a Simulation performed with a converted *.dat file is working
+        Check if a Simulation performed with a converted *.dat file is working in Speos sim
         Returns:
         -------
         None
@@ -125,12 +125,13 @@ class TestRayfileAPI:
         res = self.results.get("dat_ray_sim", None)
         assert res is True
 
-    def test_09_check_ray_in_sim(self):
-        """
-        Check if a Simulation performed with a converted *.sdf file is working
-        Returns:
-        -------
-        None
-        """
-        res = self.results.get("ray_sdf_sim", None)
-        assert res is True
+
+"""
+def test_09_check_ray_in_sim(self):
+    Check if a Simulation performed with a converted *.sdf file is working
+    Returns:
+    -------
+    None
+    res = self.results.get("ray_sdf_sim", None)
+    assert res is True
+"""

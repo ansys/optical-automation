@@ -11,23 +11,19 @@ class RayfileConverter(DpfRayfile):
     def __init__(self, file_path):
         DpfRayfile.__init__(self, file_path)
 
-    def __export_to_zemax(self, rayfile_path):
+    def __export_to_zemax(self):
         """
         this method convert the rayfile from speos into zemax format
-        Parameters
-        ----------
-        rayfile_path: str
-            filename to be used for converted file
 
         Returns
         -------
         None
 
         """
-        outfile = self.export_file(rayfile_path, True)
+        outfile = self.export_file(convert=True)
         zemax_spectrum_file = open(outfile, "wb")
         zemax_spectrum_file.write(struct.pack("<I", 1010))  # Identifier
-        zemax_spectrum_file.write(struct.pack("<I", self.speos_rayfile.rays_number))  # NbrRays
+        zemax_spectrum_file.write(struct.pack("<I", self.rays_number))  # NbrRays
 
         description = "Converted from SPEOS .ray file."
         # if len(description) > 100:
@@ -36,12 +32,8 @@ class RayfileConverter(DpfRayfile):
         #    description = description.ljust(100)
         description = description.ljust(100)
         zemax_spectrum_file.write(description.encode("ascii"))  # Description
-        zemax_spectrum_file.write(
-            struct.pack("f", self.speos_rayfile.radiometric_power)
-        )  # SourceFlux = radiometric flux in SPOES
-        zemax_spectrum_file.write(
-            struct.pack("f", self.speos_rayfile.radiometric_power)
-        )  # RaySetFlux = radiometric flux in SPOES
+        zemax_spectrum_file.write(struct.pack("f", self.radiometric_power))  # SourceFlux = radiometric flux in SPOES
+        zemax_spectrum_file.write(struct.pack("f", self.radiometric_power))  # RaySetFlux = radiometric flux in SPOES
         zemax_spectrum_file.write(struct.pack("f", 0))  # Wavelength
         zemax_spectrum_file.write(struct.pack("f", 0))  # InclinationBeg
         zemax_spectrum_file.write(struct.pack("f", 0))  # InclinationEnd
@@ -67,7 +59,7 @@ class RayfileConverter(DpfRayfile):
         zemax_spectrum_file.write(struct.pack("<I", 0))  # flux_type is Watss
         zemax_spectrum_file.write(struct.pack("<I", 0))  # reversed1 (int)
         zemax_spectrum_file.write(struct.pack("<I", 0))  # reversed2 (int)
-        for ray in self.speos_rayfile.rays:
+        for ray in self.rays:
             zemax_spectrum_file.write(struct.pack("f", ray.coordinate_x))  # x
             zemax_spectrum_file.write(struct.pack("f", ray.coordinate_y))  # y
             zemax_spectrum_file.write(struct.pack("f", ray.coordinate_z))  # z
@@ -78,29 +70,25 @@ class RayfileConverter(DpfRayfile):
             zemax_spectrum_file.write(struct.pack("f", ray.wavelength))  # wavelength
         zemax_spectrum_file.close()
 
-    def __export_to_speos(self, rayfile_path):
+    def __export_to_speos(self):
         """
         this method convert the zemax rayfile into speos format
-        Parameters
-        ----------
-        rayfile_path: str
-            zemax rayfile
 
         Returns
         -------
         None
 
         """
-        outfile = self.export_file(rayfile_path, True)
+        outfile = self.export_file(convert=True)
         speos_ray_file = open(outfile, "wb")
-        speos_ray_file.write(struct.pack("f", self.zemax_rayfile.radiometric_power))
+        speos_ray_file.write(struct.pack("f", self.radiometric_power))
         speos_ray_file.write(struct.pack("f", 2.0))
         speos_ray_file.write(struct.pack("f", 2.0))
         speos_ray_file.write(struct.pack("f", 2.0))
         speos_ray_file.write(struct.pack("f", 2.0))
         speos_ray_file.write(struct.pack("f", 2.0))
-        speos_ray_file.write(struct.pack("f", self.zemax_rayfile.photometric_power))
-        for ray in self.zemax_rayfile.rays:
+        speos_ray_file.write(struct.pack("f", self.photometric_power))
+        for ray in self.rays:
             speos_ray_file.write(struct.pack("f", ray.coordinate_x))
             speos_ray_file.write(struct.pack("f", ray.coordinate_y))
             speos_ray_file.write(struct.pack("f", ray.coordinate_z))
@@ -125,8 +113,7 @@ class RayfileConverter(DpfRayfile):
 
         """
 
-        self.speos_rayfile = DpfRayfile(self.file_path)
-        self.__export_to_zemax(self.file_path)
+        self.__export_to_zemax()
 
     def zemax_to_speos(self):
         """
@@ -141,5 +128,4 @@ class RayfileConverter(DpfRayfile):
         None
 
         """
-        self.zemax_rayfile = DpfRayfile(self.file_path)
-        self.__export_to_speos(self.file_path)
+        self.__export_to_speos()

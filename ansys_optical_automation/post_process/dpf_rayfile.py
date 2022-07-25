@@ -202,18 +202,34 @@ class DpfRayfile(DataProcessingFramework):
     """
     this class contains method to read extract ray data from given binary rayfile
     """
+
     conversion_extension = {".ray": ".sdf", ".dat": ".ray", ".sdf": ".ray"}
 
-    def __init__(self):
+    def __init__(self, file_path):
         DataProcessingFramework.__init__(self, extension=list(self.conversion_extension.keys()))
+        self.open_file(file_path)
         self.__ray_numb = 0
         self.__watt_value = 0
         self.__lumen_value = 0
         self.__rays = []
+        self.__binary = self.__is_binary()
         self.identifier = 0
         self.description = "description"
         self.source_flux = 0
         self.load_content()
+
+    def __is_binary(self):
+        """Checs if file is binary
+
+        Returns
+        -------
+        Boolean
+        """
+        with open(self.file_path, "rb") as f:
+            for block in f:
+                if b"\0" in block:
+                    return True
+        return False
 
     def __photopic_conversion(self, wavelength):
         start = 0
@@ -243,6 +259,8 @@ class DpfRayfile(DataProcessingFramework):
 
         Returns
         -------
+
+
         """
         rayfile_type = self.file_path.split(".")[-1]
         if rayfile_type == "ray":
@@ -276,7 +294,7 @@ class DpfRayfile(DataProcessingFramework):
                     raise ValueError(msg)
                 self.__rays.append(DpfRay(x, y, z, l_dir, m_dir, n_dir, wav, e))
             self.dpf_instance.close()
-        elif rayfile_type == "dat" or rayfile_type == "sdf":
+        elif (rayfile_type == "dat" or rayfile_type == "sdf") and self.__binary:
             self.identifier = int.from_bytes(
                 self.dpf_instance.read(4), byteorder="little"
             )  # Format version ID, current value is 1010
@@ -285,7 +303,8 @@ class DpfRayfile(DataProcessingFramework):
             )  # The number of rays in the file
             self.description = self.dpf_instance.read(100).decode()  # A text description of the source
             self.source_flux = struct.unpack("f", self.dpf_instance.read(4))[
-                0]  # The total flux in watts of this source
+                0
+            ]  # The total flux in watts of this source
             ray_set_flux = struct.unpack("f", self.dpf_instance.read(4))[
                 0
             ]  # The flux in watts represented by this Ray Set
@@ -293,22 +312,6 @@ class DpfRayfile(DataProcessingFramework):
             # The wavelength in micrometers,
             # 0 if a composite,converted to nanometer since this is the speos' source file format.
             self.dpf_instance.read(18 * 4)
-            # InclinationBeg = struct.unpack('f', self.dpf_instance.read(4))[0]  # Angular range for ray set (Degrees)
-            # InclinationEnd = struct.unpack('f', self.dpf_instance.read(4))[0]  # Angular range for ray set (Degrees)
-            # AzimuthBeg = struct.unpack('f', self.dpf_instance.read(4))[0]  # Angular range for ray set (Degrees)
-            # AzimuthEnd = struct.unpack('f', self.dpf_instance.read(4))[0]  # Angular range for ray set (Degrees)
-            # DimensionUnits = int.from_bytes(self.dpf_instance.read(4), byteorder='little')
-            # METERS=0, IN=1, CM=2, FEET=3, MM=4
-            # LocX = struct.unpack('f', self.dpf_instance.read(4))[0]  # Coordinate Translation of the source
-            # LocY = struct.unpack('f', self.dpf_instance.read(4))[0]  # Coordinate Translation of the source
-            # LocZ = struct.unpack('f', self.dpf_instance.read(4))[0]  # Coordinate Translation of the source
-            # RotX = struct.unpack('f', self.dpf_instance.read(4))[0]  # Source rotation (Radians)
-            # RotY = struct.unpack('f', self.dpf_instance.read(4))[0]  # Source rotation (Radians)
-            # RotZ = struct.unpack('f', self.dpf_instance.read(4))[0]  # Source rotation (Radians)
-            # ScaleX = struct.unpack('f', self.dpf_instance.read(4))[0]  # Currently unused
-            # ScaleY = struct.unpack('f', self.dpf_instance.read(4))[0]  # Currently unused
-            # ScaleZ = struct.unpack('f', self.dpf_instance.read(4))[0]  # Currently unused
-            # self.__content.read(4 * 4)  # Unused data
             ray_format_type = int.from_bytes(self.dpf_instance.read(4), byteorder="little")
             # The ray_format_type must be either 0 for flux only format(.dat), or 2 for the spectral color format(.sdf).
             flux_type = int.from_bytes(
@@ -367,8 +370,12 @@ class DpfRayfile(DataProcessingFramework):
                     raise ValueError(msg)
                 self.__rays.append(DpfRay(x, y, z, l_dir, m_dir, n_dir, wav, e))
         else:
-            msg = "Provided file type is not supported"
-            raise TypeError(msg)
+            if not self.__binary:
+                msg = "Non binary files not supported"
+                raise TypeError(msg)
+            else:
+                msg = "Provided file type is not supported"
+                raise TypeError(msg)
 
     @property
     def radiometric_power(self) -> float:
@@ -414,14 +421,14 @@ class DpfRayfile(DataProcessingFramework):
         """
         return self.__rays
 
-    def export_file(self, export_folder_dir=None):
+    def export_file(self, export_folder_dir=None, convert=False):
         """
         this method generates a file to be exported
         Parameters
         ----------
 
-        file_path: str
-            input file
+        export_folder_dir : str ,optional
+            defines path where to export the rayfile
         convert : Boolean , optional
             defines if the export is a conversion, default value is False
         Returns
@@ -432,18 +439,32 @@ class DpfRayfile(DataProcessingFramework):
         """
         input_file_folder = os.path.dirname(self.file_path)
         input_file_name = os.path.basename(self.file_path).split(".")[0]
-        input_file_extension = os.path.splitext(self.file_path)[1].lower()[1:]
-        exported_file_extension = self.conversion_extension[input_file_extension]
+        input_file_extension = os.path.splitext(self.file_path)[1].lower()[0:]
         output_file_path = ""
         if export_folder_dir is not None:
             self.valid_dir(export_folder_dir)
-            output_file_path = export_folder_dir + input_file_name
+            output_file_path = os.path.join(export_folder_dir, input_file_name)
         else:
-            output_file_path = input_file_folder + input_file_name
+            output_file_path = os.path.join(input_file_folder, input_file_name)
 
-        outfile = output_file_path + "." + exported_file_extension
+        if convert:
+            if input_file_extension in self.conversion_extension:
+                exported_file_extension = self.conversion_extension[input_file_extension]
+            else:
+                exported_file_extension = input_file_extension
+                msg = "Provided file extension " + exported_file_extension + " is not supported"
+                raise TypeError(msg)
+
+        else:
+            if input_file_extension in self.conversion_extension:
+                exported_file_extension = input_file_extension
+            else:
+                exported_file_extension = input_file_extension
+                msg = "Provided file extension" + exported_file_extension + "is not supported"
+                raise TypeError(msg)
+        outfile = output_file_path + exported_file_extension
         outfile_num = 1
         while os.path.isfile(outfile):
-            outfile = output_file_path + "_" + str(outfile_num) + "." + exported_file_extension
+            outfile = output_file_path + "_" + str(outfile_num) + exported_file_extension
             outfile_num += 1
         return outfile

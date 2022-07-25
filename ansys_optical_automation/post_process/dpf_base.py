@@ -8,6 +8,7 @@ class DataProcessingFramework:
     The class contains opening and saving functionalities to allow interacting with any results file.
 
     """
+
     application_list = "HDRIViewer.Application"
     binary_format = {".ray", ".dat", ".sdf"}
     text_format = {".spectrum", ".spcd"}
@@ -48,17 +49,15 @@ class DataProcessingFramework:
         if not os.path.isfile(str_path):  # check if file is existing.
             raise FileNotFoundError("File is not found.")
 
-        if not str_path.lower().endswith(self.accepted_extensions):
+        if not str_path.lower().endswith(tuple(self.accepted_extensions)):
             # check if accept extensions
             raise TypeError(
-                str_path.lower().split(".")[len(str_path.lower().split(".")) - 1]
-                + " is not an"
-                + "accepted extension"
+                str_path.lower().split(".")[len(str_path.lower().split(".")) - 1] + " is not an" + "accepted extension"
             )
 
         self.file_path = str_path
-        if self.application is None: # no application is required to open file, e.g. rayfile
-            if str_path.lower().endswith(self.binary_format):
+        if self.application is None:  # no application is required to open file, e.g. rayfile
+            if str_path.lower().endswith(tuple(self.binary_format)):
                 self.dpf_instance = open(str_path, "br")
             else:
                 self.dpf_instance = open(str_path, "r")

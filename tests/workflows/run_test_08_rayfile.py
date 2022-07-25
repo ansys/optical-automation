@@ -3,6 +3,7 @@ import os
 import shutil
 import subprocess
 import sys
+import traceback
 
 unittest_path = os.path.dirname(os.path.realpath(__file__))
 lib_path = os.path.dirname(unittest_path)
