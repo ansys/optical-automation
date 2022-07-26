@@ -1,5 +1,5 @@
-import os
 import math
+import os
 
 from ansys_optical_automation.post_process.dpf_base import DataProcessingFramework
 
