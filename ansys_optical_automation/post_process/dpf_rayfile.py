@@ -219,7 +219,7 @@ class DpfRayfile(DataProcessingFramework):
         self.load_content()
 
     def __is_binary(self):
-        """Checks if file is binary
+        """this method checks if a file is binary
 
         Returns
         -------
@@ -234,6 +234,13 @@ class DpfRayfile(DataProcessingFramework):
         return False
 
     def __photopic_conversion(self, wavelength):
+        """This method computes photopic to Radiometric conversion factor at the given wavelength
+
+        Parameters
+        ----------
+        wavelength : int
+            wavelength in nm
+        """
         start = 0
         end = len(Photopic_Conversion_wavelength)
         pos = 0

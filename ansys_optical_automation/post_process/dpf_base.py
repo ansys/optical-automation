@@ -45,6 +45,11 @@ class DataProcessingFramework:
         ----------
         str_path : str
             Path for the file to open. For example, ``r"C:\\temp\\Test.speos360"``.
+
+        Returns
+        -------
+        None
+
         """
         if not os.path.isfile(str_path):  # check if file is existing.
             raise FileNotFoundError("File is not found.")
@@ -72,11 +77,23 @@ class DataProcessingFramework:
         ----------
         str_path : str
             Path for the folder to validate or create. For example, ``r"C:\\temp\"``.
+
+        Returns
+        -------
+        None
+
         """
         if not os.path.isdir(str_path):
             os.makedirs(str_path)
 
     def close(self):
+        """Function to close open files and applications
+
+        Returns
+        -------
+        None
+
+        """
         if self.application is None:  # no application is required to open file, e.g. rayfile
             self.dpf_instance.close()
         else:

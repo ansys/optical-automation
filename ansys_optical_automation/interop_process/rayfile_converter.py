@@ -13,7 +13,7 @@ class RayfileConverter(DpfRayfile):
 
     def __export_to_zemax(self):
         """
-        this method convert the rayfile from speos into zemax format
+        this method convert the rayfile into zemax format
 
         Returns
         -------
@@ -72,7 +72,7 @@ class RayfileConverter(DpfRayfile):
 
     def __export_to_speos(self):
         """
-        this method convert the zemax rayfile into speos format
+        this method convert the rayfile into speos format
 
         Returns
         -------
@@ -100,12 +100,7 @@ class RayfileConverter(DpfRayfile):
         speos_ray_file.close()
 
     def speos_to_zemax(self):
-        """
-        this method will read the speos rayfile content and convert it to zemax format
-        Parameters
-        ----------
-        rayfile_path: str
-            speos rayfile path
+        """this method will read the speos rayfile content and convert it to zemax format
 
         Returns
         -------
@@ -116,12 +111,7 @@ class RayfileConverter(DpfRayfile):
         self.__export_to_zemax()
 
     def zemax_to_speos(self):
-        """
-        this method convert the zemax rayfile into speos format
-        Parameters
-        ----------
-        rayfile_path: str
-            zemax rayfile
+        """this method convert the zemax rayfile into speos format
 
         Returns
         -------
