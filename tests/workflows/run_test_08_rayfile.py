@@ -191,13 +191,14 @@ def main():
     results_dict["dat_ray_sim"] = check_speos_sim(os.path.splitext(test_file)[0].lower() + ".ray")
 
 
-try:
-    main()
-except Exception:
-    print("exception in main")
-    results_dict["error"] = traceback.format_exc()
+def unittest_run():
+    try:
+        main()
+    except Exception:
+        print("exception in main")
+        results_dict["error"] = traceback.format_exc()
 
-with open(results_json, "w") as file:
-    json.dump(results_dict, file, indent=4)
+    with open(results_json, "w") as file:
+        json.dump(results_dict, file, indent=4)
 
-shutil.rmtree(work_directory)
+    shutil.rmtree(work_directory)
