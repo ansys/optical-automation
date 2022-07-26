@@ -239,7 +239,7 @@ class DpfRayfile(DataProcessingFramework):
         pos = 0
         while start < end:
             mid = (start + end) // 2
-            print(mid, Photopic_Conversion_wavelength[mid])
+            # print(mid, Photopic_Conversion_wavelength[mid])
             if Photopic_Conversion_wavelength[mid] == wavelength:
                 pos = mid
                 break
@@ -282,7 +282,7 @@ class DpfRayfile(DataProcessingFramework):
                 l_dir = struct.unpack("f", self.dpf_instance.read(4))[0]
                 m_dir = struct.unpack("f", self.dpf_instance.read(4))[0]
                 n_dir = struct.unpack("f", self.dpf_instance.read(4))[0]
-                wav = struct.unpack("f", self.dpf_instance.read(4))[0] * 0.001
+                wav = round(struct.unpack("f", self.dpf_instance.read(4))[0] * 0.001, 3)
                 e = struct.unpack("f", self.dpf_instance.read(4))[0]
                 if e <= 0:
                     msg = "Error: ray power of ray of " + str(ray_idx) + " cannot be <= 0"
@@ -310,7 +310,7 @@ class DpfRayfile(DataProcessingFramework):
             ray_set_flux = struct.unpack("f", self.dpf_instance.read(4))[
                 0
             ]  # The flux in watts represented by this Ray Set
-            wavelength = struct.unpack("f", self.dpf_instance.read(4))[0]
+            wavelength = round(struct.unpack("f", self.dpf_instance.read(4))[0], 3)
             # The wavelength in micrometers,
             # 0 if a composite,converted to nanometer since this is the speos' source file format.
             self.dpf_instance.read(18 * 4)  # Unused data
@@ -359,7 +359,7 @@ class DpfRayfile(DataProcessingFramework):
                 n_dir = struct.unpack("f", self.dpf_instance.read(4))[0]
                 wav = wavelength if wavelength != 0 else 550
                 if ray_format_type == 2:
-                    wav = struct.unpack("f", self.dpf_instance.read(4))[0]
+                    wav = round(struct.unpack("f", self.dpf_instance.read(4))[0], 3)
                 e = struct.unpack("f", self.dpf_instance.read(4))[0]
                 if e <= 0:
                     msg = "Error: ray power of " + str(m_dir) + "th ray is <= 0"
