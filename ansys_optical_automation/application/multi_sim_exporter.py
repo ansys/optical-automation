@@ -1,0 +1,27 @@
+from ansys_optical_automation.speos_process.speos_simulations import Simulation
+
+
+def find_sims(selection):
+    sim_list = []
+    for item in selection.Items:
+        name = item.GetName()
+        if SpeosSim.SimulationDirect.Find(name):
+            sim_list.append([name, "direct"])
+        elif SpeosSim.SimulationInverse.Find(name):
+            sim_list.append([name, "inverse"])
+    return sim_list
+
+
+def main():
+    input_return = InputHelper.PauseAndGetInput("Select Simulations to export.")
+    if not input_return.Success:
+        MessageBox.Show("to export the simulation please select a Simulation")
+    sim_selection = input_return.PrimarySelection
+    if len(find_sims(sim_selection)) == 0:
+        MessageBox.Show("Select at least one valid simulation")
+    for sim in find_sims(sim_selection):
+        current_sim = Simulation(sim[0], SpeosSim, SpaceClaim, sim[1])
+        current_sim.linked_export_simulation()
+
+
+main()

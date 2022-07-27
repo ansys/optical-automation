@@ -1,5 +1,6 @@
 import json
 import os
+import shutil
 import sys
 import traceback
 
@@ -12,7 +13,8 @@ from ansys_optical_automation.scdm_process.material_from_csv import MaterialsFro
 from ansys_optical_automation.speos_process.speos_sensors import Camera
 from ansys_optical_automation.speos_process.speos_simulations import Simulation
 
-scdm_file = os.path.join(unittest_path, "workflows", "example_models", "test_geometry_01.scdoc")
+scdm_file = os.path.join(unittest_path, "workflows", "example_models", "test_geometry_01.scdocx")
+scdm_file_2 = os.path.join(unittest_path, "workflows", "example_models", "test_05_simexport.scdocx")
 results_json = os.path.join(unittest_path, "workflows", "test_05_results.json")
 
 csv_path = os.path.join(unittest_path, "workflows", "example_models", "SPEOS input files", "Materials.csv")
@@ -20,6 +22,18 @@ work_directory = os.path.join(unittest_path, "workflows", "example_models")
 
 interactive_geoset = ["Plane"]
 output_files = ["Test_simulation.Cam.OPTProjectedGrid", "Test_simulation.Report.html"]
+isolated_dir = os.path.join(unittest_path, "workflows", "example_models", "SPEOS isolated files")
+
+
+def find_sims(selection):
+    sim_list = []
+    for item in selection.Items:
+        name = item.GetName()
+        if SpeosSim.SimulationDirect.Find(name):
+            sim_list.append([name, "direct"])
+        elif SpeosSim.SimulationInverse.Find(name):
+            sim_list.append([name, "inverse"])
+    return sim_list
 
 
 def main():
@@ -97,6 +111,17 @@ def main():
             grid_exported = True
     results_dict["grid_exported"] = grid_exported
     results_dict["curves_exported"] = curves_exported
+    GetActiveWindow().Close()
+    DocumentOpen.Execute(scdm_file_2)
+    sel = Selection.CreateByGroups("Sim")
+    sim_list = find_sims(sel)
+    exported = True
+    for sim in sim_list:
+        current_sim = Simulation(sim[0], SpeosSim, SpaceClaim, sim[1])
+        path = current_sim.linked_export_simulation()
+        exported = exported and os.path.exists(path)
+    results_dict["exported"] = exported
+    shutil.rmtree(isolated_dir, True)
 
 
 results_dict = {}

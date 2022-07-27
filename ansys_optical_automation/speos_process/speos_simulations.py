@@ -1,4 +1,5 @@
 # Python Script, API Version = V21
+import os
 
 from ansys_optical_automation.scdm_core.base import BaseSCDM
 from ansys_optical_automation.scdm_process.preprocessing_library import PreProcessingASP
@@ -25,7 +26,7 @@ class Simulation(BaseSCDM):
         kind : str, optional
             Type of the simulation. Options are ``"inverse"``, ``"direct"``, and ``"interactive"``.
         """
-        super(Simulation, self).__init__(SpaceClaim, ["V19", "V20", "V21"])
+        super(Simulation, self).__init__(SpaceClaim, ["V19", "V20", "V21", "V22"])
         self.PreProcASP = PreProcessingASP(SpaceClaim)
         self.speos_sim = SpeosSim
         self.name = name
@@ -232,3 +233,27 @@ class Simulation(BaseSCDM):
         if sensor_object:
             self.object.Sensors.Set(sensor_object)
         return self
+
+    def linked_export_simulation(self):
+        """method to do a linked export
+
+        Returns
+        -------
+        str
+            string containing the path to the simulation file
+        """
+        if self.kind == "interactive":
+            msg = "Interactive Simulation can't be exported"
+            raise TypeError(msg)
+        n = 1
+
+        while self.speos_sim.SimulationLinkedExport.Find(self.name + "." + str(n)):
+            n = n + 1
+        export_name = self.name + "." + str(n) + ".speos"
+        self.object.LinkedExport()
+        doc_path = self.GetRootPart().Root.Document.Path
+        save_path = os.path.split(doc_path)[0]
+        sim_path = os.path.join(
+            save_path, r"SPEOS isolated files", os.path.basename(doc_path).split(".")[0], export_name, export_name
+        )
+        return sim_path
