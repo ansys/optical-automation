@@ -12,6 +12,7 @@ sys.path.append(lib_path)
 
 from ansys_optical_automation.interop_process.rayfile_converter import RayfileConverter
 from ansys_optical_automation.post_process.dpf_rayfile import DpfRayfile
+from ansys_optical_automation.scdm_core.utils import get_speos_core
 from tests.config import SCDM_VERSION
 
 ray_file = os.path.join(unittest_path, "example_models", "test_08_ray.ray")
@@ -88,25 +89,6 @@ def verify_data_load(rayfile_path):
         result.append(ray.wavelength)
         result.append(ray.energy)
     return result
-
-
-def get_speos_core(version):
-    """
-    get speos core path for version
-    Parameters
-    ----------
-    version : str
-        Ansys Version used
-
-    Returns
-    -------
-    str
-        path to speos core executable
-
-    """
-    ansys_install_dir = os.environ["AWP_ROOT{}".format(version)]
-    speos_core_dir = os.path.join(ansys_install_dir, r"Optical Products", r"Viewers", r"SPEOSCore.exe")
-    return speos_core_dir
 
 
 def check_speos_sim(rayfile_path):
