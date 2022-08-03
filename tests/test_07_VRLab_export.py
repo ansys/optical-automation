@@ -37,8 +37,7 @@ class TestVRLabExportAPI:
 
     def teardown_class(self):
         """
-        Called after all tests are completed to clean up the SCDM session
-        and clean the results file.
+        Called after all tests are completed to the VRlabs session and clean the results file.
 
         On fail will report traceback with lines where the code failed.
         """

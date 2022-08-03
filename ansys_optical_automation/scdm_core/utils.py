@@ -22,6 +22,25 @@ def get_scdm_install_location(version):
     return scdm_install_dir
 
 
+def get_speos_core(version):
+    """
+    get speos core path for version
+    Parameters
+    ----------
+    version : str
+        Ansys Version used
+
+    Returns
+    -------
+    str
+        path to speos core executable
+
+    """
+    ansys_install_dir = os.environ["AWP_ROOT{}".format(version)]
+    speos_core_dir = os.path.join(ansys_install_dir, r"Optical Products", r"Viewers", r"SPEOSCore.exe")
+    return speos_core_dir
+
+
 def run_scdm_batch(scdm_version, api_version, script_file):
     """
     Start a Speos script in batch mode via the ``subprocess.call`` method.

@@ -97,7 +97,7 @@ ipch/
 *.ncb
 *.opendb
 *.opensdf
-*.sdf
+#*.sdf zemax fileneding
 *.cachefile
 *.VC.db
 *.VC.VC.opendb
