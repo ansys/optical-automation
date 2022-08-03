@@ -10,7 +10,7 @@ sys.path.append(lib_path)
 
 from ansys_optical_automation.scdm_process.preprocessing_library import PreProcessingASP
 
-scdm_file = os.path.join(unittest_path, "workflows", "example_models", "test_geometry_01.scdoc")
+scdm_file = os.path.join(unittest_path, "workflows", "example_models", "test_geometry_01.scdocx")
 results_json = os.path.join(unittest_path, "workflows", "test_02_results.json")
 
 

@@ -10,7 +10,7 @@ sys.path.append(lib_path)
 
 from ansys_optical_automation.speos_process.speos_simulations import Simulation
 
-scdm_file = os.path.join(unittest_path, "workflows", "example_models", "test_geometry_01.scdoc")
+scdm_file = os.path.join(unittest_path, "workflows", "example_models", "test_geometry_01.scdocx")
 results_json = os.path.join(unittest_path, "workflows", "test_04_results.json")
 
 test_geometries = ["Component1"]

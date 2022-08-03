@@ -158,3 +158,13 @@ class TestSimAutomation:
         res = self.results.get("sensor_name", None)
         ref = self.reference_results["sensor_name"]
         assert res == ref
+
+    def test_12_export_sim(self):
+        """
+        Compare the export of the Speos file
+        Returns
+        -------
+
+        """
+        res = self.results.get("exported", None)
+        assert res is True
