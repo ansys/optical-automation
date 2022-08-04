@@ -152,13 +152,15 @@ class PreProcessingASP(BaseSCDM):
 
     def stitch_comp(self, comp, max_group_limit):
         """
-        Stitch according to component structure.
+        Stitch according to component structure. Surfaces inside the Component provided are stitched
+        group by group whose seize is defined by group size
 
         Parameters
         ----------
         comp: SpaceClaim Component
             SpaceClaim component.
         max_group_limit: int
+            group size
 
         Returns
         -------

@@ -70,7 +70,7 @@ def main():
     for comp in GetRootPart().GetAllComponents():
         comp_name = comp.GetName()
         preproc_asp.remove_duplicates(comp)
-        preproc_asp.stitch_comp(comp)
+        preproc_asp.stitch_comp(comp, 200)
         results_dict["center_coord"][comp_name] = extract_centre_for_dict(comp)
 
 
