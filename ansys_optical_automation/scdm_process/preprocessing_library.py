@@ -150,17 +150,25 @@ class PreProcessingASP(BaseSCDM):
             stitch_group_list.append(group)
         return stitch_group_list
 
-    def stitch_comp(self, comp):
+    def stitch_comp(self, comp, max_group_limit):
         """
-        Stitch according to component structure.
+        Stitch according to component structure. Surfaces inside the Component provided are stitched
+        group by group whose seize is defined by group size
 
         Parameters
         ----------
         comp : SpaceClaim Component
             SpaceClaim component.
+        max_group_limit : int
+            group size
+
+        Returns
+        -------
+
+
         """
+
         all_bodies = self.ComponentExtensions.GetBodies(comp)
-        max_group_limit = 200
         while True:
             num_bodies = len(all_bodies)
             total_iter = int(num_bodies / max_group_limit) + 1
