@@ -150,7 +150,7 @@ class PreProcessingASP(BaseSCDM):
             stitch_group_list.append(group)
         return stitch_group_list
 
-    def stitch_comp(self, comp, max_group_limit, try_combine=False):
+    def stitch_comp(self, comp, max_group_limit):
         """
         Stitch according to component structure.
 
@@ -159,7 +159,6 @@ class PreProcessingASP(BaseSCDM):
         comp: SpaceClaim Component
             SpaceClaim component.
         max_group_limit: int
-        try_combine: bool
 
         Returns
         -------
@@ -179,20 +178,6 @@ class PreProcessingASP(BaseSCDM):
             num_bodies_after_stitch = len(all_bodies)
             if num_bodies_after_stitch == num_bodies:
                 break
-
-        if max_group_limit == 1 and try_combine:
-            all_bodies = self.ComponentExtensions.GetBodies(comp)
-            while True:
-                num_bodies = len(all_bodies)
-                sel = self.Selection.Create(all_bodies)
-                try:
-                    self.Combine.Merge(sel)
-                except Exception as error:
-                    break
-                all_bodies = self.ComponentExtensions.GetBodies(comp)
-                num_bodies_after_combine = len(all_bodies)
-                if num_bodies == num_bodies_after_combine:
-                    break
 
     def stitch(self, conversion_dict):
         """
