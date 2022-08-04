@@ -157,13 +157,14 @@ class PreProcessingASP(BaseSCDM):
 
         Parameters
         ----------
-        comp: SpaceClaim Component
+        comp : SpaceClaim Component
             SpaceClaim component.
-        max_group_limit: int
+        max_group_limit : int
             group size
 
         Returns
         -------
+
 
         """
 
