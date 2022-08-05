@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-    <title>ansys_optical_automation package &#8212; Ansys Optical Automation  documentation</title>
+    <title>ansys_optical_automation.interop_process package &#8212; Ansys Optical Automation  documentation</title>
     
   <!-- Loaded before other Sphinx assets -->
   <link href="../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
@@ -37,8 +37,8 @@
     <script src="../_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="ansys_optical_automation.application package" href="ansys_optical_automation.application.html" />
-    <link rel="prev" title="ansys_optical_automation" href="modules.html" />
+    <link rel="next" title="ansys_optical_automation.post_process package" href="ansys_optical_automation.post_process.html" />
+    <link rel="prev" title="ansys_optical_automation.application package" href="ansys_optical_automation.application.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
     
@@ -114,7 +114,7 @@
   </label>
   <ul class="current">
    <li class="toctree-l2 current active has-children">
-    <a class="current reference internal" href="#">
+    <a class="reference internal" href="ansys_optical_automation.html">
      ansys_optical_automation package
     </a>
     <input checked="" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/>
@@ -122,14 +122,14 @@
      <i class="fas fa-chevron-down">
      </i>
     </label>
-    <ul>
+    <ul class="current">
      <li class="toctree-l3">
       <a class="reference internal" href="ansys_optical_automation.application.html">
        ansys_optical_automation.application package
       </a>
      </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="ansys_optical_automation.interop_process.html">
+     <li class="toctree-l3 current active">
+      <a class="current reference internal" href="#">
        ansys_optical_automation.interop_process package
       </a>
      </li>
@@ -230,7 +230,7 @@ title="Fullscreen mode"
   <div class="menu-dropdown__content">
     <ul>
       <li>
-        <a href="../_sources/api/ansys_optical_automation.rst.txt"
+        <a href="../_sources/api/ansys_optical_automation.interop_process.rst.txt"
    class="headerbtn"
    data-toggle="tooltip"
 data-placement="left"
@@ -290,12 +290,17 @@ title="Print to PDF"
     <nav id="bd-toc-nav" aria-label="Page">
         <ul class="visible nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#subpackages">
-   Subpackages
+  <a class="reference internal nav-link" href="#submodules">
+   Submodules
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#module-ansys_optical_automation">
+  <a class="reference internal nav-link" href="#module-ansys_optical_automation.interop_process.rayfile_converter">
+   ansys_optical_automation.interop_process.rayfile_converter module
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#module-ansys_optical_automation.interop_process">
    Module contents
   </a>
  </li>
@@ -308,7 +313,7 @@ title="Print to PDF"
         <div class="col pl-md-3 pl-lg-5 content-container">
             <!-- Table of contents that is only displayed when printing the page -->
             <div id="jb-print-docs-body" class="onlyprint">
-                <h1>ansys_optical_automation package</h1>
+                <h1>ansys_optical_automation.interop_process package</h1>
                 <!-- Table of contents -->
                 <div id="print-main-content">
                     <div id="jb-print-toc">
@@ -319,12 +324,17 @@ title="Print to PDF"
                         <nav aria-label="Page">
                             <ul class="visible nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#subpackages">
-   Subpackages
+  <a class="reference internal nav-link" href="#submodules">
+   Submodules
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#module-ansys_optical_automation">
+  <a class="reference internal nav-link" href="#module-ansys_optical_automation.interop_process.rayfile_converter">
+   ansys_optical_automation.interop_process.rayfile_converter module
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#module-ansys_optical_automation.interop_process">
    Module contents
   </a>
  </li>
@@ -338,63 +348,93 @@ title="Print to PDF"
                 
               <div>
                 
-  <section id="ansys-optical-automation-package">
-<h1>ansys_optical_automation package<a class="headerlink" href="#ansys-optical-automation-package" title="Permalink to this headline">#</a></h1>
-<section id="subpackages">
-<h2>Subpackages<a class="headerlink" href="#subpackages" title="Permalink to this headline">#</a></h2>
-<div class="toctree-wrapper compound">
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="ansys_optical_automation.application.html">ansys_optical_automation.application package</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="ansys_optical_automation.application.html#submodules">Submodules</a></li>
-<li class="toctree-l2"><a class="reference internal" href="ansys_optical_automation.application.html#module-ansys_optical_automation.application.led_importer">ansys_optical_automation.application.led_importer module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="ansys_optical_automation.application.html#ansys-optical-automation-application-multi-sim-exporter-module">ansys_optical_automation.application.multi_sim_exporter module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="ansys_optical_automation.application.html#module-ansys_optical_automation.application.sensor_importer">ansys_optical_automation.application.sensor_importer module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="ansys_optical_automation.application.html#module-ansys_optical_automation.application">Module contents</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="ansys_optical_automation.interop_process.html">ansys_optical_automation.interop_process package</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="ansys_optical_automation.interop_process.html#submodules">Submodules</a></li>
-<li class="toctree-l2"><a class="reference internal" href="ansys_optical_automation.interop_process.html#module-ansys_optical_automation.interop_process.rayfile_converter">ansys_optical_automation.interop_process.rayfile_converter module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="ansys_optical_automation.interop_process.html#module-ansys_optical_automation.interop_process">Module contents</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="ansys_optical_automation.post_process.html">ansys_optical_automation.post_process package</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="ansys_optical_automation.post_process.html#submodules">Submodules</a></li>
-<li class="toctree-l2"><a class="reference internal" href="ansys_optical_automation.post_process.html#module-ansys_optical_automation.post_process.dpf_base">ansys_optical_automation.post_process.dpf_base module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="ansys_optical_automation.post_process.html#module-ansys_optical_automation.post_process.dpf_hdri_viewer">ansys_optical_automation.post_process.dpf_hdri_viewer module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="ansys_optical_automation.post_process.html#module-ansys_optical_automation.post_process.dpf_rayfile">ansys_optical_automation.post_process.dpf_rayfile module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="ansys_optical_automation.post_process.html#module-ansys_optical_automation.post_process">Module contents</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="ansys_optical_automation.scdm_core.html">ansys_optical_automation.scdm_core package</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="ansys_optical_automation.scdm_core.html#submodules">Submodules</a></li>
-<li class="toctree-l2"><a class="reference internal" href="ansys_optical_automation.scdm_core.html#module-ansys_optical_automation.scdm_core.base">ansys_optical_automation.scdm_core.base module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="ansys_optical_automation.scdm_core.html#module-ansys_optical_automation.scdm_core.utils">ansys_optical_automation.scdm_core.utils module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="ansys_optical_automation.scdm_core.html#module-ansys_optical_automation.scdm_core">Module contents</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="ansys_optical_automation.scdm_process.html">ansys_optical_automation.scdm_process package</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="ansys_optical_automation.scdm_process.html#submodules">Submodules</a></li>
-<li class="toctree-l2"><a class="reference internal" href="ansys_optical_automation.scdm_process.html#module-ansys_optical_automation.scdm_process.material_from_csv">ansys_optical_automation.scdm_process.material_from_csv module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="ansys_optical_automation.scdm_process.html#module-ansys_optical_automation.scdm_process.material_from_layers">ansys_optical_automation.scdm_process.material_from_layers module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="ansys_optical_automation.scdm_process.html#module-ansys_optical_automation.scdm_process.preprocessing_library">ansys_optical_automation.scdm_process.preprocessing_library module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="ansys_optical_automation.scdm_process.html#module-ansys_optical_automation.scdm_process.scdm_io">ansys_optical_automation.scdm_process.scdm_io module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="ansys_optical_automation.scdm_process.html#module-ansys_optical_automation.scdm_process">Module contents</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="ansys_optical_automation.speos_process.html">ansys_optical_automation.speos_process package</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="ansys_optical_automation.speos_process.html#submodules">Submodules</a></li>
-<li class="toctree-l2"><a class="reference internal" href="ansys_optical_automation.speos_process.html#module-ansys_optical_automation.speos_process.speos_sensors">ansys_optical_automation.speos_process.speos_sensors module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="ansys_optical_automation.speos_process.html#module-ansys_optical_automation.speos_process.speos_simulations">ansys_optical_automation.speos_process.speos_simulations module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="ansys_optical_automation.speos_process.html#module-ansys_optical_automation.speos_process">Module contents</a></li>
-</ul>
-</li>
-</ul>
-</div>
+  <section id="ansys-optical-automation-interop-process-package">
+<h1>ansys_optical_automation.interop_process package<a class="headerlink" href="#ansys-optical-automation-interop-process-package" title="Permalink to this headline">#</a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">#</a></h2>
 </section>
-<section id="module-ansys_optical_automation">
-<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-ansys_optical_automation" title="Permalink to this headline">#</a></h2>
-<p>Library where you can find functionalities and tools for Speos, Zemax and Lumerical automations and interoperations.</p>
+<section id="module-ansys_optical_automation.interop_process.rayfile_converter">
+<span id="ansys-optical-automation-interop-process-rayfile-converter-module"></span><h2>ansys_optical_automation.interop_process.rayfile_converter module<a class="headerlink" href="#module-ansys_optical_automation.interop_process.rayfile_converter" title="Permalink to this headline">#</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="ansys_optical_automation.interop_process.rayfile_converter.RayfileConverter">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">ansys_optical_automation.interop_process.rayfile_converter.</span></span><span class="sig-name descname"><span class="pre">RayfileConverter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file_path</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ansys_optical_automation/interop_process/rayfile_converter.html#RayfileConverter"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ansys_optical_automation.interop_process.rayfile_converter.RayfileConverter" title="Permalink to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference internal" href="ansys_optical_automation.post_process.html#ansys_optical_automation.post_process.dpf_rayfile.DpfRayfile" title="ansys_optical_automation.post_process.dpf_rayfile.DpfRayfile"><code class="xref py py-class docutils literal notranslate"><span class="pre">ansys_optical_automation.post_process.dpf_rayfile.DpfRayfile</span></code></a></p>
+<p>This class contains the methods to convert rayfile between speos and zemax</p>
+<dl class="field-list simple">
+<dt class="field-odd">Attributes</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><code class="xref py py-obj docutils literal notranslate"><span class="pre">photometric_power</span></code></dt><dd><p>this method return Photometric Power value</p>
+</dd>
+<dt><code class="xref py py-obj docutils literal notranslate"><span class="pre">radiometric_power</span></code></dt><dd><p>this method return the Radiometric Power value</p>
+</dd>
+<dt><code class="xref py py-obj docutils literal notranslate"><span class="pre">rays</span></code></dt><dd><p>this method return a list of rays</p>
+</dd>
+<dt><code class="xref py py-obj docutils literal notranslate"><span class="pre">rays_number</span></code></dt><dd><p>this method return the number of rays</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<p class="rubric">Methods</p>
+<table class="autosummary longtable table autosummary">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">close</span></code>()</p></td>
+<td><p>Function to close open files and applications</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">export_file</span></code>([export_folder_dir, convert])</p></td>
+<td><p>this method generates a file to be exported Parameters ----------</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">load_content</span></code>()</p></td>
+<td><p>this method load the information from rayfile provided</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">open_file</span></code>(str_path)</p></td>
+<td><p>Open a file in DPF.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#ansys_optical_automation.interop_process.rayfile_converter.RayfileConverter.speos_to_zemax" title="ansys_optical_automation.interop_process.rayfile_converter.RayfileConverter.speos_to_zemax"><code class="xref py py-obj docutils literal notranslate"><span class="pre">speos_to_zemax</span></code></a>()</p></td>
+<td><p>this method will read the speos rayfile content and convert it to zemax format</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">valid_dir</span></code>(str_path)</p></td>
+<td><p>Check if a folder is present and, if not, create it.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#ansys_optical_automation.interop_process.rayfile_converter.RayfileConverter.zemax_to_speos" title="ansys_optical_automation.interop_process.rayfile_converter.RayfileConverter.zemax_to_speos"><code class="xref py py-obj docutils literal notranslate"><span class="pre">zemax_to_speos</span></code></a>()</p></td>
+<td><p>this method convert the zemax rayfile into speos format</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py method">
+<dt class="sig sig-object py" id="ansys_optical_automation.interop_process.rayfile_converter.RayfileConverter.speos_to_zemax">
+<span class="sig-name descname"><span class="pre">speos_to_zemax</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ansys_optical_automation/interop_process/rayfile_converter.html#RayfileConverter.speos_to_zemax"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ansys_optical_automation.interop_process.rayfile_converter.RayfileConverter.speos_to_zemax" title="Permalink to this definition">#</a></dt>
+<dd><p>this method will read the speos rayfile content and convert it to zemax format</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><dl class="simple">
+<dt>None</dt><dd></dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ansys_optical_automation.interop_process.rayfile_converter.RayfileConverter.zemax_to_speos">
+<span class="sig-name descname"><span class="pre">zemax_to_speos</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ansys_optical_automation/interop_process/rayfile_converter.html#RayfileConverter.zemax_to_speos"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ansys_optical_automation.interop_process.rayfile_converter.RayfileConverter.zemax_to_speos" title="Permalink to this definition">#</a></dt>
+<dd><p>this method convert the zemax rayfile into speos format</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><dl class="simple">
+<dt>None</dt><dd></dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-ansys_optical_automation.interop_process">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-ansys_optical_automation.interop_process" title="Permalink to this headline">#</a></h2>
 </section>
 </section>
 
@@ -406,17 +446,17 @@ title="Print to PDF"
                 
     <!-- Previous / next buttons -->
 <div class='prev-next-area'>
-    <a class='left-prev' id="prev-link" href="modules.html" title="previous page">
+    <a class='left-prev' id="prev-link" href="ansys_optical_automation.application.html" title="previous page">
         <i class="fas fa-angle-left"></i>
         <div class="prev-next-info">
             <p class="prev-next-subtitle">previous</p>
-            <p class="prev-next-title">ansys_optical_automation</p>
+            <p class="prev-next-title">ansys_optical_automation.application package</p>
         </div>
     </a>
-    <a class='right-next' id="next-link" href="ansys_optical_automation.application.html" title="next page">
+    <a class='right-next' id="next-link" href="ansys_optical_automation.post_process.html" title="next page">
     <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">ansys_optical_automation.application package</p>
+        <p class="prev-next-title">ansys_optical_automation.post_process package</p>
     </div>
     <i class="fas fa-angle-right"></i>
     </a>

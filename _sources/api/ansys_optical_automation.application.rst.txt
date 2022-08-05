@@ -12,6 +12,22 @@ ansys\_optical\_automation.application.led\_importer module
    :undoc-members:
    :show-inheritance:
 
+ansys\_optical\_automation.application.multi\_sim\_exporter module
+------------------------------------------------------------------
+
+.. automodule:: ansys_optical_automation.application.multi_sim_exporter
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+ansys\_optical\_automation.application.sensor\_importer module
+--------------------------------------------------------------
+
+.. automodule:: ansys_optical_automation.application.sensor_importer
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 Module contents
 ---------------
 

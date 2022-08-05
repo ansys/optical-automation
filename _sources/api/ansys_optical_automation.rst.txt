@@ -8,6 +8,7 @@ Subpackages
    :maxdepth: 4
 
    ansys_optical_automation.application
+   ansys_optical_automation.interop_process
    ansys_optical_automation.post_process
    ansys_optical_automation.scdm_core
    ansys_optical_automation.scdm_process

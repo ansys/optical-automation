@@ -20,7 +20,7 @@
     href="../../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
 
     <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css" />
-    <link rel="stylesheet" href="../../../_static/styles/sphinx-book-theme.css?digest=62ba249389abaaa9ffc34bf36a076bdc1d65ee18" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css" />
     
@@ -33,7 +33,7 @@
     <script src="../../../_static/doctools.js"></script>
     <script src="../../../_static/clipboard.min.js"></script>
     <script src="../../../_static/copybutton.js"></script>
-    <script src="../../../_static/scripts/sphinx-book-theme.js?digest=f31d14ad54b65d19161ba51d4ffff3a77ae00456"></script>
+    <script src="../../../_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -123,6 +123,11 @@
      <li class="toctree-l3">
       <a class="reference internal" href="../../../api/ansys_optical_automation.application.html">
        ansys_optical_automation.application package
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../api/ansys_optical_automation.interop_process.html">
+       ansys_optical_automation.interop_process package
       </a>
      </li>
      <li class="toctree-l3">
@@ -249,7 +254,11 @@ title="Fullscreen mode"
 
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">application</span><span class="p">,</span> <span class="n">extension</span><span class="p">):</span>
+    <span class="n">application_list</span> <span class="o">=</span> <span class="s2">&quot;HDRIViewer.Application&quot;</span>
+    <span class="n">binary_format</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;.ray&quot;</span><span class="p">,</span> <span class="s2">&quot;.dat&quot;</span><span class="p">,</span> <span class="s2">&quot;.sdf&quot;</span><span class="p">}</span>
+    <span class="n">text_format</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;.spectrum&quot;</span><span class="p">,</span> <span class="s2">&quot;.spcd&quot;</span><span class="p">}</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">extension</span><span class="p">,</span> <span class="n">application</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Initialize general properties of DPF.</span>
 
 <span class="sd">        Parameters</span>
@@ -257,20 +266,22 @@ title="Fullscreen mode"
 <span class="sd">        application : str</span>
 <span class="sd">            Application object started in DPF. The default is ``None``.</span>
 <span class="sd">        extension : tuple</span>
-<span class="sd">            Extensions accepted by the application object. The default is ``&quot;&quot;``.</span>
+<span class="sd">            Extensions accepted by the application object.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">file_path</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">application</span> <span class="o">=</span> <span class="n">application</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">accepted_extensions</span> <span class="o">=</span> <span class="n">extension</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">application</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="k">if</span> <span class="s2">&quot;Iron&quot;</span> <span class="ow">in</span> <span class="n">sys</span><span class="o">.</span><span class="n">version</span><span class="p">:</span>
-                <span class="n">instance_type</span> <span class="o">=</span> <span class="n">System</span><span class="o">.</span><span class="n">Type</span><span class="o">.</span><span class="n">GetTypeFromProgID</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">application</span><span class="p">)</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">dpf_instance</span> <span class="o">=</span> <span class="n">System</span><span class="o">.</span><span class="n">Activator</span><span class="o">.</span><span class="n">CreateInstance</span><span class="p">(</span><span class="n">instance_type</span><span class="p">)</span>
-            <span class="k">else</span><span class="p">:</span>
-                <span class="kn">import</span> <span class="nn">win32com.client</span> <span class="k">as</span> <span class="nn">win32</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">application</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">application_list</span><span class="p">:</span>
+                <span class="k">if</span> <span class="s2">&quot;Iron&quot;</span> <span class="ow">in</span> <span class="n">sys</span><span class="o">.</span><span class="n">version</span><span class="p">:</span>
+                    <span class="n">instance_type</span> <span class="o">=</span> <span class="n">System</span><span class="o">.</span><span class="n">Type</span><span class="o">.</span><span class="n">GetTypeFromProgID</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">application</span><span class="p">)</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">dpf_instance</span> <span class="o">=</span> <span class="n">System</span><span class="o">.</span><span class="n">Activator</span><span class="o">.</span><span class="n">CreateInstance</span><span class="p">(</span><span class="n">instance_type</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="kn">import</span> <span class="nn">win32com.client</span> <span class="k">as</span> <span class="nn">win32</span>
 
-                <span class="bp">self</span><span class="o">.</span><span class="n">dpf_instance</span> <span class="o">=</span> <span class="n">win32</span><span class="o">.</span><span class="n">Dispatch</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">application</span><span class="p">)</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ImportError</span><span class="p">(</span><span class="s2">&quot;Application is not defined.&quot;</span><span class="p">)</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">dpf_instance</span> <span class="o">=</span> <span class="n">win32</span><span class="o">.</span><span class="n">Dispatch</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">application</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ImportError</span><span class="p">(</span><span class="s2">&quot;Application is not supported.&quot;</span><span class="p">)</span>
 
 <div class="viewcode-block" id="DataProcessingFramework.open_file"><a class="viewcode-back" href="../../../api/ansys_optical_automation.post_process.html#ansys_optical_automation.post_process.dpf_base.DataProcessingFramework.open_file">[docs]</a>    <span class="k">def</span> <span class="nf">open_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">str_path</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Open a file in DPF.</span>
@@ -279,18 +290,30 @@ title="Fullscreen mode"
 <span class="sd">        ----------</span>
 <span class="sd">        str_path : str</span>
 <span class="sd">            Path for the file to open. For example, ``r&quot;C:\\temp\\Test.speos360&quot;``.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        None</span>
+
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">str_path</span><span class="p">):</span>
-            <span class="k">if</span> <span class="ow">not</span> <span class="n">str_path</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">accepted_extensions</span><span class="p">):</span>
-                <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span>
-                    <span class="n">str_path</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)[</span><span class="nb">len</span><span class="p">(</span><span class="n">str_path</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">))</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span>
-                    <span class="o">+</span> <span class="s2">&quot; is not an&quot;</span>
-                    <span class="o">+</span> <span class="s2">&quot;accepted extension&quot;</span>
-                <span class="p">)</span>
-            <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">dpf_instance</span><span class="o">.</span><span class="n">OpenFile</span><span class="p">(</span><span class="n">str_path</span><span class="p">):</span>
-                <span class="k">raise</span> <span class="ne">ImportError</span><span class="p">(</span><span class="s2">&quot;Opening the file failed.&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">str_path</span><span class="p">):</span>  <span class="c1"># check if file is existing.</span>
+            <span class="k">raise</span> <span class="ne">FileNotFoundError</span><span class="p">(</span><span class="s2">&quot;File is not found.&quot;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">str_path</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="nb">tuple</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">accepted_extensions</span><span class="p">)):</span>
+            <span class="c1"># check if accept extensions</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span>
+                <span class="n">str_path</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)[</span><span class="nb">len</span><span class="p">(</span><span class="n">str_path</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">))</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="s2">&quot; is not an&quot;</span> <span class="o">+</span> <span class="s2">&quot;accepted extension&quot;</span>
+            <span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">file_path</span> <span class="o">=</span> <span class="n">str_path</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">application</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>  <span class="c1"># no application is required to open file, e.g. rayfile</span>
+            <span class="k">if</span> <span class="n">str_path</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="nb">tuple</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">binary_format</span><span class="p">)):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">dpf_instance</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">str_path</span><span class="p">,</span> <span class="s2">&quot;br&quot;</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">dpf_instance</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">str_path</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">FileNotFoundError</span><span class="p">(</span><span class="s2">&quot;File is not found.&quot;</span><span class="p">)</span></div>
+            <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">dpf_instance</span><span class="o">.</span><span class="n">OpenFile</span><span class="p">(</span><span class="n">str_path</span><span class="p">):</span>
+                <span class="k">raise</span> <span class="ne">ImportError</span><span class="p">(</span><span class="s2">&quot;Opening the file failed.&quot;</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="DataProcessingFramework.valid_dir"><a class="viewcode-back" href="../../../api/ansys_optical_automation.post_process.html#ansys_optical_automation.post_process.dpf_base.DataProcessingFramework.valid_dir">[docs]</a>    <span class="k">def</span> <span class="nf">valid_dir</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">str_path</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Check if a folder is present and, if not, create it.</span>
@@ -299,9 +322,29 @@ title="Fullscreen mode"
 <span class="sd">        ----------</span>
 <span class="sd">        str_path : str</span>
 <span class="sd">            Path for the folder to validate or create. For example, ``r&quot;C:\\temp\&quot;``.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        None</span>
+
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">str_path</span><span class="p">):</span>
-            <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">str_path</span><span class="p">)</span></div></div>
+            <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">str_path</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="DataProcessingFramework.close"><a class="viewcode-back" href="../../../api/ansys_optical_automation.post_process.html#ansys_optical_automation.post_process.dpf_base.DataProcessingFramework.close">[docs]</a>    <span class="k">def</span> <span class="nf">close</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Function to close open files and applications</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        None</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">application</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>  <span class="c1"># no application is required to open file, e.g. rayfile</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">dpf_instance</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">pid</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dpf_instance</span><span class="o">.</span><span class="n">GetPID</span>
+            <span class="n">cmd</span> <span class="o">=</span> <span class="s2">&quot;taskkill /PID &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">pid</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot; /F&quot;</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="n">cmd</span><span class="p">)</span></div></div>
 </pre></div>
 
               </div>

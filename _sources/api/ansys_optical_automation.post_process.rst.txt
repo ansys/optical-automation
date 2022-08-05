@@ -20,6 +20,14 @@ ansys\_optical\_automation.post\_process.dpf\_hdri\_viewer module
    :undoc-members:
    :show-inheritance:
 
+ansys\_optical\_automation.post\_process.dpf\_rayfile module
+------------------------------------------------------------
+
+.. automodule:: ansys_optical_automation.post_process.dpf_rayfile
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 Module contents
 ---------------
 

@@ -1,0 +1,459 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ansys_optical_automation.application.sensor_importer &#8212; Ansys Optical Automation  documentation</title>
+    
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="../../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css" />
+    <link rel="stylesheet" href="../../../_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css" />
+    
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
+
+    <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+    <script src="../../../_static/jquery.js"></script>
+    <script src="../../../_static/underscore.js"></script>
+    <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/clipboard.min.js"></script>
+    <script src="../../../_static/copybutton.js"></script>
+    <script src="../../../_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
+<!-- Checkboxes to toggle the left sidebar -->
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle navigation sidebar">
+<label class="overlay overlay-navbar" for="__navigation">
+    <div class="visually-hidden">Toggle navigation sidebar</div>
+</label>
+<!-- Checkboxes to toggle the in-page toc -->
+<input type="checkbox" class="sidebar-toggle" name="__page-toc" id="__page-toc" aria-label="Toggle in-page Table of Contents">
+<label class="overlay overlay-pagetoc" for="__page-toc">
+    <div class="visually-hidden">Toggle in-page Table of Contents</div>
+</label>
+<!-- Headers at the top -->
+<div class="announcement header-item noprint"></div>
+<div class="header header-item noprint"></div>
+
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<!-- Sidebar -->
+<div class="bd-sidebar noprint" id="site-navigation">
+    <div class="bd-sidebar__content">
+        <div class="bd-sidebar__top"><div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="../../../index.html">
+      
+      
+      
+      <h1 class="site-logo" id="site-title">Ansys Optical Automation  documentation</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="../../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        <ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../resources/install.html">
+   Installation
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../resources/CONTRIBUTE.html">
+   Contribute
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Index:
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../../../api/modules.html">
+   ansys_optical_automation
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
+  <label for="toctree-checkbox-1">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../../api/ansys_optical_automation.html">
+     ansys_optical_automation package
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/>
+    <label for="toctree-checkbox-2">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../api/ansys_optical_automation.application.html">
+       ansys_optical_automation.application package
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../api/ansys_optical_automation.interop_process.html">
+       ansys_optical_automation.interop_process package
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../api/ansys_optical_automation.post_process.html">
+       ansys_optical_automation.post_process package
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../api/ansys_optical_automation.scdm_core.html">
+       ansys_optical_automation.scdm_core package
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../api/ansys_optical_automation.scdm_process.html">
+       ansys_optical_automation.scdm_process package
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../api/ansys_optical_automation.speos_process.html">
+       ansys_optical_automation.speos_process package
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+    </div>
+</nav></div>
+        <div class="bd-sidebar__bottom">
+             <!-- To handle the deprecated key -->
+            
+            <div class="navbar_extra_footer">
+            Theme by the <a href="https://ebp.jupyterbook.org">Executable Book Project</a>
+            </div>
+            
+        </div>
+    </div>
+    <div id="rtd-footer-container"></div>
+</div>
+
+
+          
+
+
+          
+<!-- A tiny helper pixel to detect if we've scrolled -->
+<div class="sbt-scroll-pixel-helper"></div>
+<!-- Main content -->
+<div class="col py-0 content-container">
+    
+    <div class="header-article row sticky-top noprint">
+        
+
+
+
+<div class="col py-1 d-flex header-article-main">
+    <div class="header-article__left">
+        
+        <label for="__navigation"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="right"
+title="Toggle navigation"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-bars"></i>
+  </span>
+
+</label>
+
+        
+    </div>
+    <div class="header-article__right">
+<button onclick="toggleFullScreen()"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="bottom"
+title="Fullscreen mode"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+    </div>
+</div>
+
+<!-- Table of contents -->
+<div class="col-md-3 bd-toc show noprint">
+</div>
+    </div>
+    <div class="article row">
+        <div class="col pl-md-3 pl-lg-5 content-container">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1></h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                    </div>
+                </div>
+            </div>
+            <main id="main-content" role="main">
+                
+              <div>
+                
+  <h1>Source code for ansys_optical_automation.application.sensor_importer</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">ansys_optical_automation.speos_process.speos_sensors</span> <span class="kn">import</span> <span class="n">RadianceSensor</span>
+
+
+<div class="viewcode-block" id="create_sensor"><a class="viewcode-back" href="../../../api/ansys_optical_automation.application.html#ansys_optical_automation.application.sensor_importer.create_sensor">[docs]</a><span class="k">def</span> <span class="nf">create_sensor</span><span class="p">(</span><span class="n">coordinate_sys</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    create sensor at the location of provided coordinate system with properties from argsDict ACT.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    coordinate_sys : SpaceClaim coordinate system</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">opt_range</span> <span class="o">=</span> <span class="n">argsDict</span><span class="p">[</span><span class="s2">&quot;range&quot;</span><span class="p">]</span>
+    <span class="n">opt_sensor</span> <span class="o">=</span> <span class="n">RadianceSensor</span><span class="p">(</span><span class="n">coordinate_sys</span><span class="o">.</span><span class="n">GetName</span><span class="p">(),</span> <span class="n">SpeosSim</span><span class="p">,</span> <span class="n">SpaceClaim</span><span class="p">)</span>
+    <span class="n">opt_sensor</span><span class="o">.</span><span class="n">set_focal_value</span><span class="p">(</span><span class="n">argsDict</span><span class="p">[</span><span class="s2">&quot;observer_distance&quot;</span><span class="p">]</span> <span class="o">-</span> <span class="n">argsDict</span><span class="p">[</span><span class="s2">&quot;distance_from_origin&quot;</span><span class="p">])</span>
+    <span class="n">opt_sensor</span><span class="o">.</span><span class="n">set_position</span><span class="p">(</span>
+        <span class="n">x_reverse</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">y_reverse</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">origin</span><span class="o">=</span><span class="n">coordinate_sys</span><span class="p">,</span> <span class="n">axes</span><span class="o">=</span><span class="p">[</span><span class="n">coordinate_sys</span><span class="o">.</span><span class="n">Axes</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">coordinate_sys</span><span class="o">.</span><span class="n">Axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]]</span>
+    <span class="p">)</span>
+    <span class="n">opt_sensor</span><span class="o">.</span><span class="n">set_type</span><span class="p">(</span><span class="s2">&quot;Colorimetric&quot;</span><span class="p">)</span>
+    <span class="n">opt_sensor</span><span class="o">.</span><span class="n">set_layer</span><span class="p">(</span><span class="s2">&quot;Source&quot;</span><span class="p">)</span>
+    <span class="n">opt_sensor</span><span class="o">.</span><span class="n">set_range</span><span class="p">(</span>
+        <span class="n">x_start</span><span class="o">=</span><span class="n">opt_range</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+        <span class="n">x_end</span><span class="o">=</span><span class="n">opt_range</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
+        <span class="n">y_start</span><span class="o">=</span><span class="n">opt_range</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span>
+        <span class="n">y_end</span><span class="o">=</span><span class="n">opt_range</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span>
+        <span class="n">x_mirrored</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="n">y_mirrored</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">opt_sensor</span><span class="o">.</span><span class="n">set_resolution</span><span class="p">(</span><span class="n">argsDict</span><span class="p">[</span><span class="s2">&quot;resolution&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="n">argsDict</span><span class="p">[</span><span class="s2">&quot;resolution&quot;</span><span class="p">][</span><span class="mi">1</span><span class="p">])</span>
+    <span class="n">opt_sensor</span><span class="o">.</span><span class="n">set_wavelength_resolution</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+    <span class="n">opt_sensor</span><span class="o">.</span><span class="n">set_integration_angle</span><span class="p">(</span><span class="n">argsDict</span><span class="p">[</span><span class="s2">&quot;integration_angle&quot;</span><span class="p">])</span></div>
+
+
+<div class="viewcode-block" id="update_sensor"><a class="viewcode-back" href="../../../api/ansys_optical_automation.application.html#ansys_optical_automation.application.sensor_importer.update_sensor">[docs]</a><span class="k">def</span> <span class="nf">update_sensor</span><span class="p">(</span><span class="n">sensor_coordinate</span><span class="p">,</span> <span class="n">new_name</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Update sensor with name obtained from sensor_coordinate to the new parameter from argsDict ACT.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    sensor_coordinate : SpaceClaim coordinate</span>
+<span class="sd">    new_name : str</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">opt_range</span> <span class="o">=</span> <span class="n">argsDict</span><span class="p">[</span><span class="s2">&quot;range&quot;</span><span class="p">]</span>
+    <span class="n">opt_sensor</span> <span class="o">=</span> <span class="n">RadianceSensor</span><span class="p">(</span><span class="n">sensor_coordinate</span><span class="o">.</span><span class="n">GetName</span><span class="p">()</span><span class="o">.</span><span class="n">ToString</span><span class="p">(),</span> <span class="n">SpeosSim</span><span class="p">,</span> <span class="n">SpaceClaim</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">opt_sensor</span><span class="o">.</span><span class="n">speos_object</span><span class="o">.</span><span class="n">Name</span> <span class="o">!=</span> <span class="n">new_name</span><span class="p">:</span>
+        <span class="n">opt_sensor</span><span class="o">.</span><span class="n">speos_object</span><span class="o">.</span><span class="n">Name</span> <span class="o">=</span> <span class="n">new_name</span>
+    <span class="n">opt_sensor</span><span class="o">.</span><span class="n">set_focal_value</span><span class="p">(</span><span class="n">argsDict</span><span class="p">[</span><span class="s2">&quot;observer_distance&quot;</span><span class="p">]</span> <span class="o">-</span> <span class="n">argsDict</span><span class="p">[</span><span class="s2">&quot;distance_from_origin&quot;</span><span class="p">])</span>
+    <span class="n">opt_sensor</span><span class="o">.</span><span class="n">set_position</span><span class="p">(</span>
+        <span class="n">x_reverse</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="n">y_reverse</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="n">origin</span><span class="o">=</span><span class="n">sensor_coordinate</span><span class="p">,</span>
+        <span class="n">axes</span><span class="o">=</span><span class="p">[</span><span class="n">sensor_coordinate</span><span class="o">.</span><span class="n">Axes</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">sensor_coordinate</span><span class="o">.</span><span class="n">Axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]],</span>
+    <span class="p">)</span>
+    <span class="n">opt_sensor</span><span class="o">.</span><span class="n">set_range</span><span class="p">(</span>
+        <span class="n">x_start</span><span class="o">=</span><span class="n">opt_range</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+        <span class="n">x_end</span><span class="o">=</span><span class="n">opt_range</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
+        <span class="n">y_start</span><span class="o">=</span><span class="n">opt_range</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span>
+        <span class="n">y_end</span><span class="o">=</span><span class="n">opt_range</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span>
+        <span class="n">x_mirrored</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="n">y_mirrored</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">opt_sensor</span><span class="o">.</span><span class="n">set_resolution</span><span class="p">(</span><span class="n">argsDict</span><span class="p">[</span><span class="s2">&quot;resolution&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="n">argsDict</span><span class="p">[</span><span class="s2">&quot;resolution&quot;</span><span class="p">][</span><span class="mi">1</span><span class="p">])</span>
+    <span class="n">opt_sensor</span><span class="o">.</span><span class="n">set_integration_angle</span><span class="p">(</span><span class="n">argsDict</span><span class="p">[</span><span class="s2">&quot;integration_angle&quot;</span><span class="p">])</span></div>
+
+
+<div class="viewcode-block" id="create_coordinate"><a class="viewcode-back" href="../../../api/ansys_optical_automation.application.html#ansys_optical_automation.application.sensor_importer.create_coordinate">[docs]</a><span class="k">def</span> <span class="nf">create_coordinate</span><span class="p">(</span><span class="n">theta</span><span class="p">,</span> <span class="n">phi</span><span class="p">,</span> <span class="n">distance_from_ref</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Create a coordinate_system.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    theta : int</span>
+<span class="sd">    phi : int</span>
+<span class="sd">    distance_from_ref : int</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    Spaceclaim coordinate system</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">p</span> <span class="o">=</span> <span class="n">Point</span><span class="o">.</span><span class="n">Create</span><span class="p">(</span>
+        <span class="n">math</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">DEG</span><span class="p">(</span><span class="n">theta</span><span class="p">))</span> <span class="o">*</span> <span class="n">math</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">DEG</span><span class="p">(</span><span class="n">phi</span><span class="p">))</span> <span class="o">*</span> <span class="n">MM</span><span class="p">(</span><span class="n">distance_from_ref</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="o">-</span><span class="mi">1</span> <span class="k">if</span> <span class="n">argsDict</span><span class="p">[</span><span class="s2">&quot;reverse&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span> <span class="k">else</span> <span class="mi">1</span><span class="p">),</span>
+        <span class="n">math</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">DEG</span><span class="p">(</span><span class="n">theta</span><span class="p">))</span> <span class="o">*</span> <span class="n">math</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">DEG</span><span class="p">(</span><span class="n">phi</span><span class="p">))</span> <span class="o">*</span> <span class="n">MM</span><span class="p">(</span><span class="n">distance_from_ref</span><span class="p">),</span>
+        <span class="n">math</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">DEG</span><span class="p">(</span><span class="n">theta</span><span class="p">))</span> <span class="o">*</span> <span class="n">MM</span><span class="p">(</span><span class="n">distance_from_ref</span><span class="p">),</span>
+    <span class="p">)</span>
+    <span class="n">direction_x</span> <span class="o">=</span> <span class="n">Direction</span><span class="o">.</span><span class="n">Create</span><span class="p">(</span><span class="o">-</span><span class="n">p</span><span class="o">.</span><span class="n">X</span><span class="p">,</span> <span class="o">-</span><span class="n">p</span><span class="o">.</span><span class="n">Y</span><span class="p">,</span> <span class="o">-</span><span class="n">p</span><span class="o">.</span><span class="n">Z</span><span class="p">)</span>
+    <span class="n">direction_y</span> <span class="o">=</span> <span class="n">Direction</span><span class="o">.</span><span class="n">Create</span><span class="p">(</span>
+        <span class="o">-</span><span class="n">math</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">DEG</span><span class="p">(</span><span class="n">theta</span><span class="p">))</span> <span class="o">*</span> <span class="n">math</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">DEG</span><span class="p">(</span><span class="n">phi</span><span class="p">))</span> <span class="o">*</span> <span class="p">(</span><span class="o">-</span><span class="mi">1</span> <span class="k">if</span> <span class="n">argsDict</span><span class="p">[</span><span class="s2">&quot;reverse&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span> <span class="k">else</span> <span class="mi">1</span><span class="p">),</span>
+        <span class="o">-</span><span class="n">math</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">DEG</span><span class="p">(</span><span class="n">theta</span><span class="p">))</span> <span class="o">*</span> <span class="n">math</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">DEG</span><span class="p">(</span><span class="n">phi</span><span class="p">)),</span>
+        <span class="n">math</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">DEG</span><span class="p">(</span><span class="n">theta</span><span class="p">)),</span>
+    <span class="p">)</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">DatumOriginCreator</span><span class="o">.</span><span class="n">Create</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">direction_x</span><span class="p">,</span> <span class="n">direction_y</span><span class="p">)</span><span class="o">.</span><span class="n">CreatedOrigin</span>
+    <span class="k">return</span> <span class="n">result</span></div>
+
+
+<div class="viewcode-block" id="sensor_lib"><a class="viewcode-back" href="../../../api/ansys_optical_automation.application.html#ansys_optical_automation.application.sensor_importer.sensor_lib">[docs]</a><span class="k">def</span> <span class="nf">sensor_lib</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    create sensor lib based on the information defined in argsDict from ACT.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">sensor_comps</span> <span class="o">=</span> <span class="n">GetRootPart</span><span class="p">()</span><span class="o">.</span><span class="n">GetAllComponents</span><span class="p">(</span><span class="s2">&quot;Sensor Lib&quot;</span><span class="p">)</span>
+    <span class="n">sensor_lib_comp</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="k">if</span> <span class="n">sensor_comps</span><span class="o">.</span><span class="n">Count</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">sensor_lib_comp</span> <span class="o">=</span> <span class="n">ComponentHelper</span><span class="o">.</span><span class="n">CreateAtRoot</span><span class="p">(</span><span class="s2">&quot;Sensor Lib&quot;</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">sensor_comps</span><span class="o">.</span><span class="n">Count</span> <span class="o">!=</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="n">MessageBox</span><span class="o">.</span><span class="n">Show</span><span class="p">(</span><span class="s2">&quot;multi components found&quot;</span><span class="p">,</span> <span class="s2">&quot;Error&quot;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">sensor_lib_comp</span> <span class="o">=</span> <span class="n">sensor_comps</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+    <span class="n">ComponentHelper</span><span class="o">.</span><span class="n">SetActive</span><span class="p">(</span><span class="n">Selection</span><span class="o">.</span><span class="n">Create</span><span class="p">(</span><span class="n">sensor_lib_comp</span><span class="p">))</span>
+    <span class="n">coordinate_systems</span> <span class="o">=</span> <span class="n">sensor_lib_comp</span><span class="o">.</span><span class="n">GetAllCoordinateSystems</span><span class="p">()</span>
+
+    <span class="n">origin_ref</span> <span class="o">=</span> <span class="n">argsDict</span><span class="p">[</span><span class="s2">&quot;origin&quot;</span><span class="p">]</span>
+    <span class="n">phi_angles</span> <span class="o">=</span> <span class="n">argsDict</span><span class="p">[</span><span class="s2">&quot;phi_angles&quot;</span><span class="p">]</span>
+    <span class="n">tilt_angles</span> <span class="o">=</span> <span class="n">argsDict</span><span class="p">[</span><span class="s2">&quot;theta_angles&quot;</span><span class="p">]</span>
+    <span class="n">distance_from_ref_center</span> <span class="o">=</span> <span class="n">argsDict</span><span class="p">[</span><span class="s2">&quot;observer_distance&quot;</span><span class="p">]</span> <span class="o">-</span> <span class="n">argsDict</span><span class="p">[</span><span class="s2">&quot;distance_from_origin&quot;</span><span class="p">]</span>
+
+    <span class="k">if</span> <span class="n">coordinate_systems</span><span class="o">.</span><span class="n">Count</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>  <span class="c1"># case there is no coordinates</span>
+        <span class="k">for</span> <span class="n">theta_angle</span> <span class="ow">in</span> <span class="n">tilt_angles</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">phi_angle</span> <span class="ow">in</span> <span class="n">phi_angles</span><span class="p">:</span>
+                <span class="c1"># create coordinate_system for sensor</span>
+                <span class="n">sensor_coordinate_system</span> <span class="o">=</span> <span class="n">create_coordinate</span><span class="p">(</span><span class="n">theta_angle</span><span class="p">,</span> <span class="n">phi_angle</span><span class="p">,</span> <span class="n">distance_from_ref_center</span><span class="p">)</span>
+                <span class="c1"># update it to the selected origin_ref</span>
+                <span class="n">target_origin_matrix</span> <span class="o">=</span> <span class="n">Matrix</span><span class="o">.</span><span class="n">CreateMapping</span><span class="p">(</span><span class="n">origin_ref</span><span class="o">.</span><span class="n">Frame</span><span class="p">)</span>
+                <span class="n">sensor_coordinate_system</span><span class="o">.</span><span class="n">Transform</span><span class="p">(</span><span class="n">target_origin_matrix</span><span class="p">)</span>
+                <span class="c1"># set the name of coordinate_system</span>
+                <span class="n">sensor_coordinate_system</span><span class="o">.</span><span class="n">SetName</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">theta_angle</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;_&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">phi_angle</span><span class="p">))</span>
+                <span class="c1"># create radiance sensor</span>
+                <span class="n">create_sensor</span><span class="p">(</span><span class="n">sensor_coordinate_system</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">coordinate_systems</span><span class="o">.</span><span class="n">Count</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">phi_angles</span><span class="p">)</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">tilt_angles</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">:</span>  <span class="c1"># case there are same number of</span>
+        <span class="c1"># coordinates</span>
+        <span class="k">for</span> <span class="n">theta_idx</span><span class="p">,</span> <span class="n">theta_angle</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">tilt_angles</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">phi_idx</span><span class="p">,</span> <span class="n">phi_angle</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">phi_angles</span><span class="p">):</span>
+                <span class="c1"># find the coordinate_system to be updated</span>
+                <span class="n">coord_sys</span> <span class="o">=</span> <span class="n">coordinate_systems</span><span class="p">[</span><span class="n">theta_idx</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">phi_angles</span><span class="p">)</span> <span class="o">+</span> <span class="n">phi_idx</span><span class="p">]</span>
+                <span class="c1"># create coordinate_system to which should be located</span>
+                <span class="n">sensor_coordinate_system</span> <span class="o">=</span> <span class="n">create_coordinate</span><span class="p">(</span><span class="n">theta_angle</span><span class="p">,</span> <span class="n">phi_angle</span><span class="p">,</span> <span class="n">distance_from_ref_center</span><span class="p">)</span>
+                <span class="c1"># change transformation matrix</span>
+                <span class="n">target_matrix</span> <span class="o">=</span> <span class="n">Matrix</span><span class="o">.</span><span class="n">CreateMapping</span><span class="p">(</span><span class="n">sensor_coordinate_system</span><span class="o">.</span><span class="n">Frame</span><span class="p">)</span>
+                <span class="n">source_matrix</span> <span class="o">=</span> <span class="n">Matrix</span><span class="o">.</span><span class="n">CreateMapping</span><span class="p">(</span><span class="n">coord_sys</span><span class="o">.</span><span class="n">Frame</span><span class="p">)</span>
+                <span class="n">coord_sys</span><span class="o">.</span><span class="n">Transform</span><span class="p">(</span><span class="n">source_matrix</span><span class="o">.</span><span class="n">Inverse</span><span class="p">)</span>
+                <span class="n">coord_sys</span><span class="o">.</span><span class="n">Transform</span><span class="p">(</span><span class="n">target_matrix</span><span class="p">)</span>
+                <span class="n">Delete</span><span class="o">.</span><span class="n">Execute</span><span class="p">(</span><span class="n">Selection</span><span class="o">.</span><span class="n">Create</span><span class="p">(</span><span class="n">sensor_coordinate_system</span><span class="p">))</span>
+                <span class="c1"># change transformation matrix</span>
+                <span class="n">target_origin_matrix</span> <span class="o">=</span> <span class="n">Matrix</span><span class="o">.</span><span class="n">CreateMapping</span><span class="p">(</span><span class="n">origin_ref</span><span class="o">.</span><span class="n">Frame</span><span class="p">)</span>
+                <span class="n">coord_sys</span><span class="o">.</span><span class="n">Transform</span><span class="p">(</span><span class="n">target_origin_matrix</span><span class="p">)</span>
+                <span class="n">new_name</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">theta_angle</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;_&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">phi_angle</span><span class="p">)</span>
+                <span class="c1"># update radiance sensor</span>
+                <span class="n">update_sensor</span><span class="p">(</span><span class="n">coord_sys</span><span class="p">,</span> <span class="n">new_name</span><span class="p">)</span>
+                <span class="c1"># set the name of coordinate_system</span>
+                <span class="n">coord_sys</span><span class="o">.</span><span class="n">SetName</span><span class="p">(</span><span class="n">new_name</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">Delete</span><span class="o">.</span><span class="n">Execute</span><span class="p">(</span><span class="n">Selection</span><span class="o">.</span><span class="n">Create</span><span class="p">(</span><span class="n">sensor_lib_comp</span><span class="p">))</span>
+        <span class="n">sensor_lib_comp</span> <span class="o">=</span> <span class="n">ComponentHelper</span><span class="o">.</span><span class="n">CreateAtRoot</span><span class="p">(</span><span class="s2">&quot;Sensor Lib&quot;</span><span class="p">)</span>
+        <span class="n">ComponentHelper</span><span class="o">.</span><span class="n">SetActive</span><span class="p">(</span><span class="n">Selection</span><span class="o">.</span><span class="n">Create</span><span class="p">(</span><span class="n">sensor_lib_comp</span><span class="p">))</span>
+        <span class="k">for</span> <span class="n">theta_angle</span> <span class="ow">in</span> <span class="n">tilt_angles</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">phi_angle</span> <span class="ow">in</span> <span class="n">phi_angles</span><span class="p">:</span>
+                <span class="n">sensor_coordinate_system</span> <span class="o">=</span> <span class="n">create_coordinate</span><span class="p">(</span><span class="n">theta_angle</span><span class="p">,</span> <span class="n">phi_angle</span><span class="p">,</span> <span class="n">distance_from_ref_center</span><span class="p">)</span>
+                <span class="n">target_origin_matrix</span> <span class="o">=</span> <span class="n">Matrix</span><span class="o">.</span><span class="n">CreateMapping</span><span class="p">(</span><span class="n">origin_ref</span><span class="o">.</span><span class="n">Frame</span><span class="p">)</span>
+                <span class="n">sensor_coordinate_system</span><span class="o">.</span><span class="n">Transform</span><span class="p">(</span><span class="n">target_origin_matrix</span><span class="p">)</span>
+                <span class="n">sensor_coordinate_system</span><span class="o">.</span><span class="n">SetName</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">theta_angle</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;_&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">phi_angle</span><span class="p">))</span>
+                <span class="n">create_sensor</span><span class="p">(</span><span class="n">sensor_coordinate_system</span><span class="p">)</span>
+    <span class="n">ComponentHelper</span><span class="o">.</span><span class="n">SetRootActive</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="main"><a class="viewcode-back" href="../../../api/ansys_optical_automation.application.html#ansys_optical_automation.application.sensor_importer.main">[docs]</a><span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    main run function to create sensor_lib.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">mode</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">argsDict</span>
+        <span class="n">mode</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+        <span class="n">mode</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="k">if</span> <span class="n">mode</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">error_message</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="s2">&quot;This application does not support executing from speos, &quot;</span> <span class="s2">&quot;please contact support for the usage&quot;</span>
+        <span class="p">)</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">error_message</span><span class="p">)</span>
+    <span class="n">sensor_lib</span><span class="p">()</span></div>
+</pre></div>
+
+              </div>
+              
+            </main>
+            <footer class="footer-article noprint">
+                
+    <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+</div>
+            </footer>
+        </div>
+    </div>
+    <div class="footer-content row">
+        <footer class="col footer"><p>
+  
+    By Ansys Inc.<br/>
+  
+      &copy; Copyright (c) 2022 ANSYS, Inc. All rights reserved.<br/>
+</p>
+        </footer>
+    </div>
+    
+</div>
+
+
+      </div>
+    </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+
+
+  </body>
+</html>

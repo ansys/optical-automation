@@ -1,0 +1,760 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ansys_optical_automation.post_process.dpf_rayfile &#8212; Ansys Optical Automation  documentation</title>
+    
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="../../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css" />
+    <link rel="stylesheet" href="../../../_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css" />
+    
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
+
+    <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+    <script src="../../../_static/jquery.js"></script>
+    <script src="../../../_static/underscore.js"></script>
+    <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/clipboard.min.js"></script>
+    <script src="../../../_static/copybutton.js"></script>
+    <script src="../../../_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
+<!-- Checkboxes to toggle the left sidebar -->
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle navigation sidebar">
+<label class="overlay overlay-navbar" for="__navigation">
+    <div class="visually-hidden">Toggle navigation sidebar</div>
+</label>
+<!-- Checkboxes to toggle the in-page toc -->
+<input type="checkbox" class="sidebar-toggle" name="__page-toc" id="__page-toc" aria-label="Toggle in-page Table of Contents">
+<label class="overlay overlay-pagetoc" for="__page-toc">
+    <div class="visually-hidden">Toggle in-page Table of Contents</div>
+</label>
+<!-- Headers at the top -->
+<div class="announcement header-item noprint"></div>
+<div class="header header-item noprint"></div>
+
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<!-- Sidebar -->
+<div class="bd-sidebar noprint" id="site-navigation">
+    <div class="bd-sidebar__content">
+        <div class="bd-sidebar__top"><div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="../../../index.html">
+      
+      
+      
+      <h1 class="site-logo" id="site-title">Ansys Optical Automation  documentation</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="../../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        <ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../resources/install.html">
+   Installation
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../resources/CONTRIBUTE.html">
+   Contribute
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Index:
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../../../api/modules.html">
+   ansys_optical_automation
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
+  <label for="toctree-checkbox-1">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../../api/ansys_optical_automation.html">
+     ansys_optical_automation package
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/>
+    <label for="toctree-checkbox-2">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../api/ansys_optical_automation.application.html">
+       ansys_optical_automation.application package
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../api/ansys_optical_automation.interop_process.html">
+       ansys_optical_automation.interop_process package
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../api/ansys_optical_automation.post_process.html">
+       ansys_optical_automation.post_process package
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../api/ansys_optical_automation.scdm_core.html">
+       ansys_optical_automation.scdm_core package
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../api/ansys_optical_automation.scdm_process.html">
+       ansys_optical_automation.scdm_process package
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../api/ansys_optical_automation.speos_process.html">
+       ansys_optical_automation.speos_process package
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+    </div>
+</nav></div>
+        <div class="bd-sidebar__bottom">
+             <!-- To handle the deprecated key -->
+            
+            <div class="navbar_extra_footer">
+            Theme by the <a href="https://ebp.jupyterbook.org">Executable Book Project</a>
+            </div>
+            
+        </div>
+    </div>
+    <div id="rtd-footer-container"></div>
+</div>
+
+
+          
+
+
+          
+<!-- A tiny helper pixel to detect if we've scrolled -->
+<div class="sbt-scroll-pixel-helper"></div>
+<!-- Main content -->
+<div class="col py-0 content-container">
+    
+    <div class="header-article row sticky-top noprint">
+        
+
+
+
+<div class="col py-1 d-flex header-article-main">
+    <div class="header-article__left">
+        
+        <label for="__navigation"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="right"
+title="Toggle navigation"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-bars"></i>
+  </span>
+
+</label>
+
+        
+    </div>
+    <div class="header-article__right">
+<button onclick="toggleFullScreen()"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="bottom"
+title="Fullscreen mode"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+    </div>
+</div>
+
+<!-- Table of contents -->
+<div class="col-md-3 bd-toc show noprint">
+</div>
+    </div>
+    <div class="article row">
+        <div class="col pl-md-3 pl-lg-5 content-container">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1></h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                    </div>
+                </div>
+            </div>
+            <main id="main-content" role="main">
+                
+              <div>
+                
+  <h1>Source code for ansys_optical_automation.post_process.dpf_rayfile</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">math</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">struct</span>
+
+<span class="kn">from</span> <span class="nn">ansys_optical_automation.post_process.dpf_base</span> <span class="kn">import</span> <span class="n">DataProcessingFramework</span>
+
+<span class="n">Photopic_Conversion_wavelength</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="mi">380</span><span class="p">,</span>
+    <span class="mi">390</span><span class="p">,</span>
+    <span class="mi">400</span><span class="p">,</span>
+    <span class="mi">410</span><span class="p">,</span>
+    <span class="mi">420</span><span class="p">,</span>
+    <span class="mi">430</span><span class="p">,</span>
+    <span class="mi">440</span><span class="p">,</span>
+    <span class="mi">450</span><span class="p">,</span>
+    <span class="mi">460</span><span class="p">,</span>
+    <span class="mi">470</span><span class="p">,</span>
+    <span class="mi">480</span><span class="p">,</span>
+    <span class="mi">490</span><span class="p">,</span>
+    <span class="mi">500</span><span class="p">,</span>
+    <span class="mi">507</span><span class="p">,</span>
+    <span class="mi">510</span><span class="p">,</span>
+    <span class="mi">520</span><span class="p">,</span>
+    <span class="mi">530</span><span class="p">,</span>
+    <span class="mi">540</span><span class="p">,</span>
+    <span class="mi">550</span><span class="p">,</span>
+    <span class="mi">555</span><span class="p">,</span>
+    <span class="mi">560</span><span class="p">,</span>
+    <span class="mi">570</span><span class="p">,</span>
+    <span class="mi">580</span><span class="p">,</span>
+    <span class="mi">590</span><span class="p">,</span>
+    <span class="mi">600</span><span class="p">,</span>
+    <span class="mi">610</span><span class="p">,</span>
+    <span class="mi">620</span><span class="p">,</span>
+    <span class="mi">630</span><span class="p">,</span>
+    <span class="mi">640</span><span class="p">,</span>
+    <span class="mi">650</span><span class="p">,</span>
+    <span class="mi">660</span><span class="p">,</span>
+    <span class="mi">670</span><span class="p">,</span>
+    <span class="mi">680</span><span class="p">,</span>
+    <span class="mi">690</span><span class="p">,</span>
+    <span class="mi">700</span><span class="p">,</span>
+    <span class="mi">710</span><span class="p">,</span>
+    <span class="mi">720</span><span class="p">,</span>
+    <span class="mi">730</span><span class="p">,</span>
+    <span class="mi">740</span><span class="p">,</span>
+    <span class="mi">750</span><span class="p">,</span>
+    <span class="mi">760</span><span class="p">,</span>
+    <span class="mi">770</span><span class="p">,</span>
+<span class="p">]</span>
+<span class="n">Photopic_Conversion_value</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="mf">0.027</span><span class="p">,</span>
+    <span class="mf">0.082</span><span class="p">,</span>
+    <span class="mf">0.27</span><span class="p">,</span>
+    <span class="mf">0.826</span><span class="p">,</span>
+    <span class="mf">2.732</span><span class="p">,</span>
+    <span class="mf">7.923</span><span class="p">,</span>
+    <span class="mf">15.709</span><span class="p">,</span>
+    <span class="mf">25.954</span><span class="p">,</span>
+    <span class="mf">40.98</span><span class="p">,</span>
+    <span class="mf">62.139</span><span class="p">,</span>
+    <span class="mf">94.951</span><span class="p">,</span>
+    <span class="mf">142.078</span><span class="p">,</span>
+    <span class="mf">220.609</span><span class="p">,</span>
+    <span class="mf">303.464</span><span class="p">,</span>
+    <span class="mf">303.464</span><span class="p">,</span>
+    <span class="mf">484.93</span><span class="p">,</span>
+    <span class="mf">588.746</span><span class="p">,</span>
+    <span class="mf">651.582</span><span class="p">,</span>
+    <span class="mf">679.551</span><span class="p">,</span>
+    <span class="mi">683</span><span class="p">,</span>
+    <span class="mf">679.585</span><span class="p">,</span>
+    <span class="mf">650.216</span><span class="p">,</span>
+    <span class="mf">594.21</span><span class="p">,</span>
+    <span class="mf">517.031</span><span class="p">,</span>
+    <span class="mf">430.973</span><span class="p">,</span>
+    <span class="mf">343.549</span><span class="p">,</span>
+    <span class="mf">260.223</span><span class="p">,</span>
+    <span class="mf">180.995</span><span class="p">,</span>
+    <span class="mf">119.525</span><span class="p">,</span>
+    <span class="mf">73.081</span><span class="p">,</span>
+    <span class="mf">41.663</span><span class="p">,</span>
+    <span class="mf">21.856</span><span class="p">,</span>
+    <span class="mf">11.611</span><span class="p">,</span>
+    <span class="mf">5.607</span><span class="p">,</span>
+    <span class="mf">2.802</span><span class="p">,</span>
+    <span class="mf">1.428</span><span class="p">,</span>
+    <span class="mf">0.715</span><span class="p">,</span>
+    <span class="mf">0.355</span><span class="p">,</span>
+    <span class="mf">0.17</span><span class="p">,</span>
+    <span class="mf">0.082</span><span class="p">,</span>
+    <span class="mf">0.041</span><span class="p">,</span>
+    <span class="mf">0.02</span><span class="p">,</span>
+<span class="p">]</span>
+
+
+<div class="viewcode-block" id="DpfRay"><a class="viewcode-back" href="../../../api/ansys_optical_automation.post_process.html#ansys_optical_automation.post_process.dpf_rayfile.DpfRay">[docs]</a><span class="k">class</span> <span class="nc">DpfRay</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    this class defines the ray property</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="n">l_dir</span><span class="p">,</span> <span class="n">m_dir</span><span class="p">,</span> <span class="n">n_dir</span><span class="p">,</span> <span class="n">wavelength</span><span class="p">,</span> <span class="n">e</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__cardinal_coordinate_x</span> <span class="o">=</span> <span class="n">x</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__cardinal_coordinate_y</span> <span class="o">=</span> <span class="n">y</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__cardinal_coordinate_Z</span> <span class="o">=</span> <span class="n">z</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__vector_radiation_l</span> <span class="o">=</span> <span class="n">l_dir</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__vector_radiation_m</span> <span class="o">=</span> <span class="n">m_dir</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__vector_radiation_n</span> <span class="o">=</span> <span class="n">n_dir</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__ray_wavelength</span> <span class="o">=</span> <span class="n">wavelength</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__ray_energy</span> <span class="o">=</span> <span class="n">e</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">coordinate_x</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        return ray cardinal_coordinate_x</span>
+<span class="sd">        Returns:</span>
+<span class="sd">            cardinal_coordinate_x</span>
+<span class="sd">        -------</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__cardinal_coordinate_x</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">coordinate_y</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        return ray cardinal_coordinate_y</span>
+<span class="sd">        Returns:</span>
+<span class="sd">            cardinal_coordinate_y</span>
+<span class="sd">        -------</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__cardinal_coordinate_y</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">coordinate_z</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        return ray cardinal_coordinate_z</span>
+<span class="sd">        Returns:</span>
+<span class="sd">            cardinal_coordinate_z</span>
+<span class="sd">        -------</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__cardinal_coordinate_Z</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">radiation_l</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        return ray vector_radiation_l</span>
+<span class="sd">        Returns:</span>
+<span class="sd">            vector_radiation_l</span>
+<span class="sd">        -------</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__vector_radiation_l</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">radiation_m</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        return ray vector_radiation_m</span>
+<span class="sd">        Returns:</span>
+<span class="sd">            vector_radiation_m</span>
+<span class="sd">        -------</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__vector_radiation_m</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">radiation_n</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        return ray vector_radiation_n</span>
+<span class="sd">        Returns:</span>
+<span class="sd">            vector_radiation_n</span>
+<span class="sd">        -------</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__vector_radiation_n</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">wavelength</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        return ray wavelength</span>
+<span class="sd">        Returns:</span>
+<span class="sd">            wavelength</span>
+<span class="sd">        -------</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__ray_wavelength</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">energy</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        return ray energy</span>
+<span class="sd">        Returns:</span>
+<span class="sd">            energy</span>
+<span class="sd">        -------</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__ray_energy</span></div>
+
+
+<div class="viewcode-block" id="DpfRayfile"><a class="viewcode-back" href="../../../api/ansys_optical_automation.post_process.html#ansys_optical_automation.post_process.dpf_rayfile.DpfRayfile">[docs]</a><span class="k">class</span> <span class="nc">DpfRayfile</span><span class="p">(</span><span class="n">DataProcessingFramework</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    this class contains method to read extract ray data from given binary rayfile</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">conversion_extension</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;.ray&quot;</span><span class="p">:</span> <span class="s2">&quot;.sdf&quot;</span><span class="p">,</span> <span class="s2">&quot;.dat&quot;</span><span class="p">:</span> <span class="s2">&quot;.ray&quot;</span><span class="p">,</span> <span class="s2">&quot;.sdf&quot;</span><span class="p">:</span> <span class="s2">&quot;.ray&quot;</span><span class="p">}</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">file_path</span><span class="p">):</span>
+        <span class="n">DataProcessingFramework</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">extension</span><span class="o">=</span><span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">conversion_extension</span><span class="o">.</span><span class="n">keys</span><span class="p">()))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">open_file</span><span class="p">(</span><span class="n">file_path</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__ray_numb</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__watt_value</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__lumen_value</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__rays</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__binary</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__is_binary</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">identifier</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">description</span> <span class="o">=</span> <span class="s2">&quot;description&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">source_flux</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">load_content</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">__is_binary</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;this method checks if a file is binary</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        Boolean</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">file_path</span><span class="p">,</span> <span class="s2">&quot;rb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">block</span> <span class="ow">in</span> <span class="n">f</span><span class="p">:</span>
+                <span class="k">if</span> <span class="sa">b</span><span class="s2">&quot;</span><span class="se">\0</span><span class="s2">&quot;</span> <span class="ow">in</span> <span class="n">block</span><span class="p">:</span>
+                    <span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+                    <span class="k">return</span> <span class="kc">True</span>
+            <span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+        <span class="k">return</span> <span class="kc">False</span>
+
+    <span class="k">def</span> <span class="nf">__photopic_conversion</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">wavelength</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;This method computes photopic to Radiometric conversion factor at the given wavelength</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        wavelength : int</span>
+<span class="sd">            wavelength in nm</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">start</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">end</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">Photopic_Conversion_wavelength</span><span class="p">)</span>
+        <span class="n">pos</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">while</span> <span class="n">start</span> <span class="o">&lt;</span> <span class="n">end</span><span class="p">:</span>
+            <span class="n">mid</span> <span class="o">=</span> <span class="p">(</span><span class="n">start</span> <span class="o">+</span> <span class="n">end</span><span class="p">)</span> <span class="o">//</span> <span class="mi">2</span>
+            <span class="c1"># print(mid, Photopic_Conversion_wavelength[mid])</span>
+            <span class="k">if</span> <span class="n">Photopic_Conversion_wavelength</span><span class="p">[</span><span class="n">mid</span><span class="p">]</span> <span class="o">==</span> <span class="n">wavelength</span><span class="p">:</span>
+                <span class="n">pos</span> <span class="o">=</span> <span class="n">mid</span>
+                <span class="k">break</span>
+            <span class="k">if</span> <span class="n">Photopic_Conversion_wavelength</span><span class="p">[</span><span class="n">mid</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">wavelength</span><span class="p">:</span>
+                <span class="n">end</span> <span class="o">=</span> <span class="n">mid</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">start</span> <span class="o">=</span> <span class="n">mid</span> <span class="o">+</span> <span class="mi">1</span>
+        <span class="n">pos</span> <span class="o">=</span> <span class="n">pos</span> <span class="k">if</span> <span class="n">pos</span> <span class="o">!=</span> <span class="mi">0</span> <span class="k">else</span> <span class="n">start</span>
+
+        <span class="n">start_wave</span> <span class="o">=</span> <span class="n">Photopic_Conversion_wavelength</span><span class="p">[</span><span class="n">pos</span><span class="p">]</span>
+        <span class="n">end_wave</span> <span class="o">=</span> <span class="n">Photopic_Conversion_wavelength</span><span class="p">[</span><span class="n">pos</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span>
+        <span class="n">start_photopic</span> <span class="o">=</span> <span class="n">Photopic_Conversion_value</span><span class="p">[</span><span class="n">pos</span><span class="p">]</span>
+        <span class="n">end_photopic</span> <span class="o">=</span> <span class="n">Photopic_Conversion_value</span><span class="p">[</span><span class="n">pos</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span>
+        <span class="k">return</span> <span class="p">((</span><span class="n">wavelength</span> <span class="o">-</span> <span class="n">start_wave</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">end_wave</span> <span class="o">-</span> <span class="n">start_wave</span><span class="p">))</span> <span class="o">*</span> <span class="p">(</span><span class="n">end_photopic</span> <span class="o">-</span> <span class="n">start_photopic</span><span class="p">)</span> <span class="o">+</span> <span class="n">start_photopic</span>
+
+<div class="viewcode-block" id="DpfRayfile.load_content"><a class="viewcode-back" href="../../../api/ansys_optical_automation.post_process.html#ansys_optical_automation.post_process.dpf_rayfile.DpfRayfile.load_content">[docs]</a>    <span class="k">def</span> <span class="nf">load_content</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        this method load the information from rayfile provided</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">rayfile_type</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">file_path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">rayfile_type</span> <span class="o">==</span> <span class="s2">&quot;ray&quot;</span><span class="p">:</span>
+            <span class="n">content_size</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">fstat</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dpf_instance</span><span class="o">.</span><span class="n">fileno</span><span class="p">())</span><span class="o">.</span><span class="n">st_size</span> <span class="o">-</span> <span class="mi">28</span>
+            <span class="k">if</span> <span class="n">content_size</span> <span class="o">%</span> <span class="mi">32</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">msg</span> <span class="o">=</span> <span class="s2">&quot;Provided rayfile is not generated from speos&quot;</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__ray_numb</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">content_size</span> <span class="o">/</span> <span class="mi">32</span><span class="p">)</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">__watt_value</span> <span class="o">=</span> <span class="n">struct</span><span class="o">.</span><span class="n">unpack</span><span class="p">(</span><span class="s2">&quot;f&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">dpf_instance</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="mi">4</span><span class="p">))[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">dpf_instance</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="mi">4</span> <span class="o">*</span> <span class="mi">5</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__lumen_value</span> <span class="o">=</span> <span class="n">struct</span><span class="o">.</span><span class="n">unpack</span><span class="p">(</span><span class="s2">&quot;f&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">dpf_instance</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="mi">4</span><span class="p">))[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="k">for</span> <span class="n">ray_idx</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__ray_numb</span><span class="p">):</span>
+                <span class="n">x</span> <span class="o">=</span> <span class="n">struct</span><span class="o">.</span><span class="n">unpack</span><span class="p">(</span><span class="s2">&quot;f&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">dpf_instance</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="mi">4</span><span class="p">))[</span><span class="mi">0</span><span class="p">]</span>
+                <span class="n">y</span> <span class="o">=</span> <span class="n">struct</span><span class="o">.</span><span class="n">unpack</span><span class="p">(</span><span class="s2">&quot;f&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">dpf_instance</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="mi">4</span><span class="p">))[</span><span class="mi">0</span><span class="p">]</span>
+                <span class="n">z</span> <span class="o">=</span> <span class="n">struct</span><span class="o">.</span><span class="n">unpack</span><span class="p">(</span><span class="s2">&quot;f&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">dpf_instance</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="mi">4</span><span class="p">))[</span><span class="mi">0</span><span class="p">]</span>
+                <span class="n">l_dir</span> <span class="o">=</span> <span class="n">struct</span><span class="o">.</span><span class="n">unpack</span><span class="p">(</span><span class="s2">&quot;f&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">dpf_instance</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="mi">4</span><span class="p">))[</span><span class="mi">0</span><span class="p">]</span>
+                <span class="n">m_dir</span> <span class="o">=</span> <span class="n">struct</span><span class="o">.</span><span class="n">unpack</span><span class="p">(</span><span class="s2">&quot;f&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">dpf_instance</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="mi">4</span><span class="p">))[</span><span class="mi">0</span><span class="p">]</span>
+                <span class="n">n_dir</span> <span class="o">=</span> <span class="n">struct</span><span class="o">.</span><span class="n">unpack</span><span class="p">(</span><span class="s2">&quot;f&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">dpf_instance</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="mi">4</span><span class="p">))[</span><span class="mi">0</span><span class="p">]</span>
+                <span class="n">wav</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="n">struct</span><span class="o">.</span><span class="n">unpack</span><span class="p">(</span><span class="s2">&quot;f&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">dpf_instance</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="mi">4</span><span class="p">))[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="mf">0.001</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+                <span class="n">e</span> <span class="o">=</span> <span class="n">struct</span><span class="o">.</span><span class="n">unpack</span><span class="p">(</span><span class="s2">&quot;f&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">dpf_instance</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="mi">4</span><span class="p">))[</span><span class="mi">0</span><span class="p">]</span>
+                <span class="k">if</span> <span class="n">e</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="n">msg</span> <span class="o">=</span> <span class="s2">&quot;Error: ray power of ray of &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">ray_idx</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot; cannot be &lt;= 0&quot;</span>
+                    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">wav</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="n">msg</span> <span class="o">=</span> <span class="s2">&quot;Error: ray wavelength of ray of &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">ray_idx</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;cannot be &lt;= 0&quot;</span>
+                    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+                <span class="n">raylen</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">l_dir</span> <span class="o">*</span> <span class="n">l_dir</span> <span class="o">+</span> <span class="n">m_dir</span> <span class="o">*</span> <span class="n">m_dir</span> <span class="o">+</span> <span class="n">n_dir</span> <span class="o">*</span> <span class="n">n_dir</span><span class="p">)</span>
+                <span class="k">if</span> <span class="nb">abs</span><span class="p">(</span><span class="n">raylen</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mf">1e-3</span><span class="p">:</span>
+                    <span class="n">msg</span> <span class="o">=</span> <span class="s2">&quot;Error: Vector length of &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">ray_idx</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;the ray is unusual (&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">raylen</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;)&quot;</span>
+                    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">__rays</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">DpfRay</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="n">l_dir</span><span class="p">,</span> <span class="n">m_dir</span><span class="p">,</span> <span class="n">n_dir</span><span class="p">,</span> <span class="n">wav</span><span class="p">,</span> <span class="n">e</span><span class="p">))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">dpf_instance</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+        <span class="k">elif</span> <span class="p">(</span><span class="n">rayfile_type</span> <span class="o">==</span> <span class="s2">&quot;dat&quot;</span> <span class="ow">or</span> <span class="n">rayfile_type</span> <span class="o">==</span> <span class="s2">&quot;sdf&quot;</span><span class="p">)</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">__binary</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">identifier</span> <span class="o">=</span> <span class="nb">int</span><span class="o">.</span><span class="n">from_bytes</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">dpf_instance</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="mi">4</span><span class="p">),</span> <span class="n">byteorder</span><span class="o">=</span><span class="s2">&quot;little&quot;</span>
+            <span class="p">)</span>  <span class="c1"># Format version ID, current value is 1010</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__ray_numb</span> <span class="o">=</span> <span class="nb">int</span><span class="o">.</span><span class="n">from_bytes</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">dpf_instance</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="mi">4</span><span class="p">),</span> <span class="n">byteorder</span><span class="o">=</span><span class="s2">&quot;little&quot;</span>
+            <span class="p">)</span>  <span class="c1"># The number of rays in the file</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">description</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dpf_instance</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span><span class="o">.</span><span class="n">decode</span><span class="p">()</span>  <span class="c1"># A text description of the source</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">source_flux</span> <span class="o">=</span> <span class="n">struct</span><span class="o">.</span><span class="n">unpack</span><span class="p">(</span><span class="s2">&quot;f&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">dpf_instance</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="mi">4</span><span class="p">))[</span>
+                <span class="mi">0</span>
+            <span class="p">]</span>  <span class="c1"># The total flux in watts of this source</span>
+            <span class="n">ray_set_flux</span> <span class="o">=</span> <span class="n">struct</span><span class="o">.</span><span class="n">unpack</span><span class="p">(</span><span class="s2">&quot;f&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">dpf_instance</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="mi">4</span><span class="p">))[</span>
+                <span class="mi">0</span>
+            <span class="p">]</span>  <span class="c1"># The flux in watts represented by this Ray Set</span>
+            <span class="n">wavelength</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="n">struct</span><span class="o">.</span><span class="n">unpack</span><span class="p">(</span><span class="s2">&quot;f&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">dpf_instance</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="mi">4</span><span class="p">))[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">3</span><span class="p">)</span>
+            <span class="c1"># The wavelength in micrometers,</span>
+            <span class="c1"># 0 if a composite,converted to nanometer since this is the speos&#39; source file format.</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">dpf_instance</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="mi">18</span> <span class="o">*</span> <span class="mi">4</span><span class="p">)</span>  <span class="c1"># Unused data</span>
+            <span class="n">ray_format_type</span> <span class="o">=</span> <span class="nb">int</span><span class="o">.</span><span class="n">from_bytes</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dpf_instance</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="mi">4</span><span class="p">),</span> <span class="n">byteorder</span><span class="o">=</span><span class="s2">&quot;little&quot;</span><span class="p">)</span>
+            <span class="c1"># The ray_format_type must be either 0 for flux only format(.dat), or 2 for the spectral color format(.sdf).</span>
+            <span class="n">flux_type</span> <span class="o">=</span> <span class="nb">int</span><span class="o">.</span><span class="n">from_bytes</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">dpf_instance</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="mi">4</span><span class="p">),</span> <span class="n">byteorder</span><span class="o">=</span><span class="s2">&quot;little&quot;</span>
+            <span class="p">)</span>  <span class="c1"># If and only if the ray_format_type is 0, then the flux_type is 0 for watts, and 1 for lumens.</span>
+            <span class="c1"># For the spectral color format(.sdf), the flux must be in watts, and the wavelength in micrometers.</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">dpf_instance</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="mi">4</span> <span class="o">*</span> <span class="mi">2</span><span class="p">)</span>  <span class="c1"># Unused data</span>
+            <span class="n">content_size</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">fstat</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dpf_instance</span><span class="o">.</span><span class="n">fileno</span><span class="p">())</span><span class="o">.</span><span class="n">st_size</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">dpf_instance</span><span class="o">.</span><span class="n">tell</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">ray_format_type</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">content_size</span> <span class="o">%</span> <span class="p">(</span><span class="mi">7</span> <span class="o">*</span> <span class="mi">4</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">content_size</span> <span class="o">//</span> <span class="p">(</span><span class="mi">7</span> <span class="o">*</span> <span class="mi">4</span><span class="p">)</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__ray_numb</span><span class="p">:</span>
+                    <span class="n">msg</span> <span class="o">=</span> <span class="s2">&quot;Warning: Zemax file may be wrong format. File size does not match ray numbers said in header&quot;</span>
+                    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+                <span class="n">wavelength</span> <span class="o">=</span> <span class="n">wavelength</span> <span class="k">if</span> <span class="n">wavelength</span> <span class="o">!=</span> <span class="mi">0</span> <span class="k">else</span> <span class="mf">0.550</span>
+                <span class="n">photopic_conversion</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__photopic_conversion</span><span class="p">(</span><span class="n">wavelength</span> <span class="o">*</span> <span class="mi">1000</span><span class="p">)</span>
+                <span class="c1"># float(input(</span>
+                <span class="c1">#     &#39;You can find a luminous efficacy table here: &#39;</span>
+                <span class="c1">#     &#39;http://hyperphysics.phy-astr.gsu.edu/hbase/vision/efficacy.html &#39;</span>
+                <span class="c1">#     &#39;Please enter the Photopic Conversion value for this wavelength, 683 for wavelength at 550nm: &#39;))</span>
+                <span class="k">if</span> <span class="n">flux_type</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">__watt_value</span> <span class="o">=</span> <span class="n">ray_set_flux</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">__lumen_value</span> <span class="o">=</span> <span class="n">ray_set_flux</span> <span class="o">*</span> <span class="n">photopic_conversion</span>
+                <span class="k">elif</span> <span class="n">flux_type</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">__watt_value</span> <span class="o">=</span> <span class="n">ray_set_flux</span> <span class="o">/</span> <span class="n">photopic_conversion</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">__lumen_value</span> <span class="o">=</span> <span class="n">ray_set_flux</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">msg</span> <span class="o">=</span> <span class="s2">&quot;flux_type is in wrong format&quot;</span>
+                    <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">ray_format_type</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">content_size</span> <span class="o">%</span> <span class="p">(</span><span class="mi">8</span> <span class="o">*</span> <span class="mi">4</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">content_size</span> <span class="o">//</span> <span class="p">(</span><span class="mi">8</span> <span class="o">*</span> <span class="mi">4</span><span class="p">)</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__ray_numb</span><span class="p">:</span>
+                    <span class="n">msg</span> <span class="o">=</span> <span class="s2">&quot;Zemax file may be wrong format. File size does not match ray numbers said in header.&quot;</span>
+                    <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">__watt_value</span> <span class="o">=</span> <span class="n">ray_set_flux</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">msg</span> <span class="o">=</span> <span class="s2">&quot;ray_format_type &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">ray_format_type</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot; is in wrong format&quot;</span>
+                <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+
+            <span class="k">for</span> <span class="n">ray_idx</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__ray_numb</span><span class="p">):</span>
+                <span class="n">x</span> <span class="o">=</span> <span class="n">struct</span><span class="o">.</span><span class="n">unpack</span><span class="p">(</span><span class="s2">&quot;f&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">dpf_instance</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="mi">4</span><span class="p">))[</span><span class="mi">0</span><span class="p">]</span>
+                <span class="n">y</span> <span class="o">=</span> <span class="n">struct</span><span class="o">.</span><span class="n">unpack</span><span class="p">(</span><span class="s2">&quot;f&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">dpf_instance</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="mi">4</span><span class="p">))[</span><span class="mi">0</span><span class="p">]</span>
+                <span class="n">z</span> <span class="o">=</span> <span class="n">struct</span><span class="o">.</span><span class="n">unpack</span><span class="p">(</span><span class="s2">&quot;f&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">dpf_instance</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="mi">4</span><span class="p">))[</span><span class="mi">0</span><span class="p">]</span>
+                <span class="n">l_dir</span> <span class="o">=</span> <span class="n">struct</span><span class="o">.</span><span class="n">unpack</span><span class="p">(</span><span class="s2">&quot;f&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">dpf_instance</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="mi">4</span><span class="p">))[</span><span class="mi">0</span><span class="p">]</span>
+                <span class="n">m_dir</span> <span class="o">=</span> <span class="n">struct</span><span class="o">.</span><span class="n">unpack</span><span class="p">(</span><span class="s2">&quot;f&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">dpf_instance</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="mi">4</span><span class="p">))[</span><span class="mi">0</span><span class="p">]</span>
+                <span class="n">n_dir</span> <span class="o">=</span> <span class="n">struct</span><span class="o">.</span><span class="n">unpack</span><span class="p">(</span><span class="s2">&quot;f&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">dpf_instance</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="mi">4</span><span class="p">))[</span><span class="mi">0</span><span class="p">]</span>
+                <span class="n">wav</span> <span class="o">=</span> <span class="n">wavelength</span> <span class="k">if</span> <span class="n">wavelength</span> <span class="o">!=</span> <span class="mi">0</span> <span class="k">else</span> <span class="mi">550</span>
+                <span class="k">if</span> <span class="n">ray_format_type</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+                    <span class="n">wav</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="n">struct</span><span class="o">.</span><span class="n">unpack</span><span class="p">(</span><span class="s2">&quot;f&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">dpf_instance</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="mi">4</span><span class="p">))[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">3</span><span class="p">)</span>
+                <span class="n">e</span> <span class="o">=</span> <span class="n">struct</span><span class="o">.</span><span class="n">unpack</span><span class="p">(</span><span class="s2">&quot;f&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">dpf_instance</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="mi">4</span><span class="p">))[</span><span class="mi">0</span><span class="p">]</span>
+                <span class="k">if</span> <span class="n">e</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="n">msg</span> <span class="o">=</span> <span class="s2">&quot;Error: ray power of &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">m_dir</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;th ray is &lt;= 0&quot;</span>
+                    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">wav</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="n">msg</span> <span class="o">=</span> <span class="s2">&quot;Error: ray wavelength cannot be &lt;= 0&quot;</span>
+                    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+                <span class="n">raylen</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">l_dir</span> <span class="o">*</span> <span class="n">l_dir</span> <span class="o">+</span> <span class="n">m_dir</span> <span class="o">*</span> <span class="n">m_dir</span> <span class="o">+</span> <span class="n">n_dir</span> <span class="o">*</span> <span class="n">n_dir</span><span class="p">)</span>
+                <span class="k">if</span> <span class="nb">abs</span><span class="p">(</span><span class="n">raylen</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mf">1e-3</span><span class="p">:</span>
+                    <span class="n">msg</span> <span class="o">=</span> <span class="s2">&quot;Erorr: Vector length of &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">m_dir</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;th ray is unusual (&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">raylen</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;)&quot;</span>
+                    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">__rays</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">DpfRay</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="n">l_dir</span><span class="p">,</span> <span class="n">m_dir</span><span class="p">,</span> <span class="n">n_dir</span><span class="p">,</span> <span class="n">wav</span><span class="p">,</span> <span class="n">e</span><span class="p">))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">__binary</span><span class="p">:</span>
+                <span class="n">msg</span> <span class="o">=</span> <span class="s2">&quot;Non binary files not supported&quot;</span>
+                <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">msg</span> <span class="o">=</span> <span class="s2">&quot;Provided file type is not supported&quot;</span>
+                <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span></div>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">radiometric_power</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        this method return the Radiometric Power value</span>
+<span class="sd">        Returns:</span>
+<span class="sd">            Radiometric Power value</span>
+<span class="sd">        -------</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__watt_value</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">photometric_power</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        this method return Photometric Power value</span>
+<span class="sd">        Returns:</span>
+<span class="sd">            Photometric Power value</span>
+<span class="sd">        -------</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__lumen_value</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">rays_number</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        this method return the number of rays</span>
+<span class="sd">        Returns:</span>
+<span class="sd">            number of rays in rayfile</span>
+<span class="sd">        -------</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__ray_numb</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">rays</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="p">[</span><span class="n">DpfRay</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        this method return a list of rays</span>
+<span class="sd">        Returns:</span>
+<span class="sd">            a list of rays</span>
+<span class="sd">        -------</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__rays</span>
+
+<div class="viewcode-block" id="DpfRayfile.export_file"><a class="viewcode-back" href="../../../api/ansys_optical_automation.post_process.html#ansys_optical_automation.post_process.dpf_rayfile.DpfRayfile.export_file">[docs]</a>    <span class="k">def</span> <span class="nf">export_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">export_folder_dir</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">convert</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        this method generates a file to be exported</span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+
+<span class="sd">        export_folder_dir : str ,optional</span>
+<span class="sd">            defines path where to export the rayfile</span>
+<span class="sd">        convert : Boolean , optional</span>
+<span class="sd">            defines if the export is a conversion, default value is False</span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        outfile: str</span>
+<span class="sd">            output file</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">input_file_folder</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">file_path</span><span class="p">)</span>
+        <span class="n">input_file_name</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">file_path</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">input_file_extension</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">file_path</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">lower</span><span class="p">()[</span><span class="mi">0</span><span class="p">:]</span>
+        <span class="n">output_file_path</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">export_folder_dir</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">valid_dir</span><span class="p">(</span><span class="n">export_folder_dir</span><span class="p">)</span>
+            <span class="n">output_file_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">export_folder_dir</span><span class="p">,</span> <span class="n">input_file_name</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">output_file_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">input_file_folder</span><span class="p">,</span> <span class="n">input_file_name</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">convert</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">input_file_extension</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">conversion_extension</span><span class="p">:</span>
+                <span class="n">exported_file_extension</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">conversion_extension</span><span class="p">[</span><span class="n">input_file_extension</span><span class="p">]</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">exported_file_extension</span> <span class="o">=</span> <span class="n">input_file_extension</span>
+                <span class="n">msg</span> <span class="o">=</span> <span class="s2">&quot;Provided file extension &quot;</span> <span class="o">+</span> <span class="n">exported_file_extension</span> <span class="o">+</span> <span class="s2">&quot; is not supported&quot;</span>
+                <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">input_file_extension</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">conversion_extension</span><span class="p">:</span>
+                <span class="n">exported_file_extension</span> <span class="o">=</span> <span class="n">input_file_extension</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">exported_file_extension</span> <span class="o">=</span> <span class="n">input_file_extension</span>
+                <span class="n">msg</span> <span class="o">=</span> <span class="s2">&quot;Provided file extension&quot;</span> <span class="o">+</span> <span class="n">exported_file_extension</span> <span class="o">+</span> <span class="s2">&quot;is not supported&quot;</span>
+                <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+        <span class="n">outfile</span> <span class="o">=</span> <span class="n">output_file_path</span> <span class="o">+</span> <span class="n">exported_file_extension</span>
+        <span class="n">outfile_num</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="k">while</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">outfile</span><span class="p">):</span>
+            <span class="n">outfile</span> <span class="o">=</span> <span class="n">output_file_path</span> <span class="o">+</span> <span class="s2">&quot;_&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">outfile_num</span><span class="p">)</span> <span class="o">+</span> <span class="n">exported_file_extension</span>
+            <span class="n">outfile_num</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">return</span> <span class="n">outfile</span></div></div>
+</pre></div>
+
+              </div>
+              
+            </main>
+            <footer class="footer-article noprint">
+                
+    <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+</div>
+            </footer>
+        </div>
+    </div>
+    <div class="footer-content row">
+        <footer class="col footer"><p>
+  
+    By Ansys Inc.<br/>
+  
+      &copy; Copyright (c) 2022 ANSYS, Inc. All rights reserved.<br/>
+</p>
+        </footer>
+    </div>
+    
+</div>
+
+
+      </div>
+    </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+
+
+  </body>
+</html>

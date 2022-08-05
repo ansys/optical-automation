@@ -21,7 +21,7 @@
     href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
 
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
-    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=62ba249389abaaa9ffc34bf36a076bdc1d65ee18" type="text/css" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
     <link rel="stylesheet" type="text/css" href="../_static/graphviz.css" />
     
@@ -34,11 +34,11 @@
     <script src="../_static/doctools.js"></script>
     <script src="../_static/clipboard.min.js"></script>
     <script src="../_static/copybutton.js"></script>
-    <script src="../_static/scripts/sphinx-book-theme.js?digest=f31d14ad54b65d19161ba51d4ffff3a77ae00456"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="ansys_optical_automation.scdm_core package" href="ansys_optical_automation.scdm_core.html" />
-    <link rel="prev" title="ansys_optical_automation.application package" href="ansys_optical_automation.application.html" />
+    <link rel="prev" title="ansys_optical_automation.interop_process package" href="ansys_optical_automation.interop_process.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
     
@@ -126,6 +126,11 @@
      <li class="toctree-l3">
       <a class="reference internal" href="ansys_optical_automation.application.html">
        ansys_optical_automation.application package
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys_optical_automation.interop_process.html">
+       ansys_optical_automation.interop_process package
       </a>
      </li>
      <li class="toctree-l3 current active">
@@ -300,6 +305,11 @@ title="Print to PDF"
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#module-ansys_optical_automation.post_process.dpf_rayfile">
+   ansys_optical_automation.post_process.dpf_rayfile module
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#module-ansys_optical_automation.post_process">
    Module contents
   </a>
@@ -339,6 +349,11 @@ title="Print to PDF"
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#module-ansys_optical_automation.post_process.dpf_rayfile">
+   ansys_optical_automation.post_process.dpf_rayfile module
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#module-ansys_optical_automation.post_process">
    Module contents
   </a>
@@ -362,7 +377,7 @@ title="Print to PDF"
 <span id="ansys-optical-automation-post-process-dpf-base-module"></span><h2>ansys_optical_automation.post_process.dpf_base module<a class="headerlink" href="#module-ansys_optical_automation.post_process.dpf_base" title="Permalink to this headline">#</a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="ansys_optical_automation.post_process.dpf_base.DataProcessingFramework">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">ansys_optical_automation.post_process.dpf_base.</span></span><span class="sig-name descname"><span class="pre">DataProcessingFramework</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">application</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">extension</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ansys_optical_automation/post_process/dpf_base.html#DataProcessingFramework"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ansys_optical_automation.post_process.dpf_base.DataProcessingFramework" title="Permalink to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">ansys_optical_automation.post_process.dpf_base.</span></span><span class="sig-name descname"><span class="pre">DataProcessingFramework</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">extension</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">application</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ansys_optical_automation/post_process/dpf_base.html#DataProcessingFramework"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ansys_optical_automation.post_process.dpf_base.DataProcessingFramework" title="Permalink to this definition">#</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Provides DPF (Data Processing Framework).</p>
 <p>The class contains opening and saving functionalities to allow interacting with any results file.</p>
@@ -373,14 +388,40 @@ title="Print to PDF"
 <col style="width: 90%" />
 </colgroup>
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#ansys_optical_automation.post_process.dpf_base.DataProcessingFramework.open_file" title="ansys_optical_automation.post_process.dpf_base.DataProcessingFramework.open_file"><code class="xref py py-obj docutils literal notranslate"><span class="pre">open_file</span></code></a>(str_path)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#ansys_optical_automation.post_process.dpf_base.DataProcessingFramework.close" title="ansys_optical_automation.post_process.dpf_base.DataProcessingFramework.close"><code class="xref py py-obj docutils literal notranslate"><span class="pre">close</span></code></a>()</p></td>
+<td><p>Function to close open files and applications</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#ansys_optical_automation.post_process.dpf_base.DataProcessingFramework.open_file" title="ansys_optical_automation.post_process.dpf_base.DataProcessingFramework.open_file"><code class="xref py py-obj docutils literal notranslate"><span class="pre">open_file</span></code></a>(str_path)</p></td>
 <td><p>Open a file in DPF.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#ansys_optical_automation.post_process.dpf_base.DataProcessingFramework.valid_dir" title="ansys_optical_automation.post_process.dpf_base.DataProcessingFramework.valid_dir"><code class="xref py py-obj docutils literal notranslate"><span class="pre">valid_dir</span></code></a>(str_path)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#ansys_optical_automation.post_process.dpf_base.DataProcessingFramework.valid_dir" title="ansys_optical_automation.post_process.dpf_base.DataProcessingFramework.valid_dir"><code class="xref py py-obj docutils literal notranslate"><span class="pre">valid_dir</span></code></a>(str_path)</p></td>
 <td><p>Check if a folder is present and, if not, create it.</p></td>
 </tr>
 </tbody>
 </table>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ansys_optical_automation.post_process.dpf_base.DataProcessingFramework.application_list">
+<span class="sig-name descname"><span class="pre">application_list</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'HDRIViewer.Application'</span></em><a class="headerlink" href="#ansys_optical_automation.post_process.dpf_base.DataProcessingFramework.application_list" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ansys_optical_automation.post_process.dpf_base.DataProcessingFramework.binary_format">
+<span class="sig-name descname"><span class="pre">binary_format</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'.dat',</span> <span class="pre">'.ray',</span> <span class="pre">'.sdf'}</span></em><a class="headerlink" href="#ansys_optical_automation.post_process.dpf_base.DataProcessingFramework.binary_format" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ansys_optical_automation.post_process.dpf_base.DataProcessingFramework.close">
+<span class="sig-name descname"><span class="pre">close</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ansys_optical_automation/post_process/dpf_base.html#DataProcessingFramework.close"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ansys_optical_automation.post_process.dpf_base.DataProcessingFramework.close" title="Permalink to this definition">#</a></dt>
+<dd><p>Function to close open files and applications</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><dl class="simple">
+<dt>None</dt><dd></dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
 <dl class="py method">
 <dt class="sig sig-object py" id="ansys_optical_automation.post_process.dpf_base.DataProcessingFramework.open_file">
 <span class="sig-name descname"><span class="pre">open_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">str_path</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ansys_optical_automation/post_process/dpf_base.html#DataProcessingFramework.open_file"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ansys_optical_automation.post_process.dpf_base.DataProcessingFramework.open_file" title="Permalink to this definition">#</a></dt>
@@ -392,8 +433,18 @@ title="Print to PDF"
 </dd>
 </dl>
 </dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt>None</dt><dd></dd>
+</dl>
+</dd>
 </dl>
 </dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ansys_optical_automation.post_process.dpf_base.DataProcessingFramework.text_format">
+<span class="sig-name descname"><span class="pre">text_format</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'.spcd',</span> <span class="pre">'.spectrum'}</span></em><a class="headerlink" href="#ansys_optical_automation.post_process.dpf_base.DataProcessingFramework.text_format" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="ansys_optical_automation.post_process.dpf_base.DataProcessingFramework.valid_dir">
@@ -404,6 +455,11 @@ title="Print to PDF"
 <dd class="field-odd"><dl class="simple">
 <dt><strong>str_path</strong><span class="classifier">str</span></dt><dd><p>Path for the folder to validate or create. For example, <code class="docutils literal notranslate"><span class="pre">r&quot;C:\temp&quot;</span></code>.</p>
 </dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt>None</dt><dd></dd>
 </dl>
 </dd>
 </dl>
@@ -428,23 +484,26 @@ analysis and postprocessing on the simulation results</p>
 <col style="width: 90%" />
 </colgroup>
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#ansys_optical_automation.post_process.dpf_hdri_viewer.DpfHdriViewer.export_vr_views" title="ansys_optical_automation.post_process.dpf_hdri_viewer.DpfHdriViewer.export_vr_views"><code class="xref py py-obj docutils literal notranslate"><span class="pre">export_vr_views</span></code></a>(export_path[, phi_angles, ...])</p></td>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">close</span></code>()</p></td>
+<td><p>Function to close open files and applications</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#ansys_optical_automation.post_process.dpf_hdri_viewer.DpfHdriViewer.export_vr_views" title="ansys_optical_automation.post_process.dpf_hdri_viewer.DpfHdriViewer.export_vr_views"><code class="xref py py-obj docutils literal notranslate"><span class="pre">export_vr_views</span></code></a>([export_path, phi_angles, ...])</p></td>
 <td><p>Export VR results for all or specific configurations for defined angles or all angles as image (JPG) files.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#ansys_optical_automation.post_process.dpf_hdri_viewer.DpfHdriViewer.get_source_list" title="ansys_optical_automation.post_process.dpf_hdri_viewer.DpfHdriViewer.get_source_list"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_source_list</span></code></a>()</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#ansys_optical_automation.post_process.dpf_hdri_viewer.DpfHdriViewer.get_source_list" title="ansys_optical_automation.post_process.dpf_hdri_viewer.DpfHdriViewer.get_source_list"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_source_list</span></code></a>()</p></td>
 <td><p>Get the source list stored in the simulation result.</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">open_file</span></code>(str_path)</p></td>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">open_file</span></code>(str_path)</p></td>
 <td><p>Open a file in DPF.</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">valid_dir</span></code>(str_path)</p></td>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">valid_dir</span></code>(str_path)</p></td>
 <td><p>Check if a folder is present and, if not, create it.</p></td>
 </tr>
 </tbody>
 </table>
 <dl class="py method">
 <dt class="sig sig-object py" id="ansys_optical_automation.post_process.dpf_hdri_viewer.DpfHdriViewer.export_vr_views">
-<span class="sig-name descname"><span class="pre">export_vr_views</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">export_path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">phi_angles</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">theta_angles</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config_ids</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ansys_optical_automation/post_process/dpf_hdri_viewer.html#DpfHdriViewer.export_vr_views"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ansys_optical_automation.post_process.dpf_hdri_viewer.DpfHdriViewer.export_vr_views" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">export_vr_views</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">export_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">phi_angles</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">theta_angles</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config_ids</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ansys_optical_automation/post_process/dpf_hdri_viewer.html#DpfHdriViewer.export_vr_views"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ansys_optical_automation.post_process.dpf_hdri_viewer.DpfHdriViewer.export_vr_views" title="Permalink to this definition">#</a></dt>
 <dd><p>Export VR results for all or specific configurations for defined angles or all angles as image (JPG) files.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -483,6 +542,236 @@ IDs are exported.</p>
 </dd></dl>
 
 </section>
+<section id="module-ansys_optical_automation.post_process.dpf_rayfile">
+<span id="ansys-optical-automation-post-process-dpf-rayfile-module"></span><h2>ansys_optical_automation.post_process.dpf_rayfile module<a class="headerlink" href="#module-ansys_optical_automation.post_process.dpf_rayfile" title="Permalink to this headline">#</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="ansys_optical_automation.post_process.dpf_rayfile.DpfRay">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">ansys_optical_automation.post_process.dpf_rayfile.</span></span><span class="sig-name descname"><span class="pre">DpfRay</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">z</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">l_dir</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">m_dir</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_dir</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wavelength</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">e</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ansys_optical_automation/post_process/dpf_rayfile.html#DpfRay"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ansys_optical_automation.post_process.dpf_rayfile.DpfRay" title="Permalink to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>this class defines the ray property</p>
+<dl class="field-list simple">
+<dt class="field-odd">Attributes</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><a class="reference internal" href="#ansys_optical_automation.post_process.dpf_rayfile.DpfRay.coordinate_x" title="ansys_optical_automation.post_process.dpf_rayfile.DpfRay.coordinate_x"><code class="xref py py-obj docutils literal notranslate"><span class="pre">coordinate_x</span></code></a></dt><dd><p>return ray cardinal_coordinate_x</p>
+</dd>
+<dt><a class="reference internal" href="#ansys_optical_automation.post_process.dpf_rayfile.DpfRay.coordinate_y" title="ansys_optical_automation.post_process.dpf_rayfile.DpfRay.coordinate_y"><code class="xref py py-obj docutils literal notranslate"><span class="pre">coordinate_y</span></code></a></dt><dd><p>return ray cardinal_coordinate_y</p>
+</dd>
+<dt><a class="reference internal" href="#ansys_optical_automation.post_process.dpf_rayfile.DpfRay.coordinate_z" title="ansys_optical_automation.post_process.dpf_rayfile.DpfRay.coordinate_z"><code class="xref py py-obj docutils literal notranslate"><span class="pre">coordinate_z</span></code></a></dt><dd><p>return ray cardinal_coordinate_z</p>
+</dd>
+<dt><a class="reference internal" href="#ansys_optical_automation.post_process.dpf_rayfile.DpfRay.energy" title="ansys_optical_automation.post_process.dpf_rayfile.DpfRay.energy"><code class="xref py py-obj docutils literal notranslate"><span class="pre">energy</span></code></a></dt><dd><p>return ray energy</p>
+</dd>
+<dt><a class="reference internal" href="#ansys_optical_automation.post_process.dpf_rayfile.DpfRay.radiation_l" title="ansys_optical_automation.post_process.dpf_rayfile.DpfRay.radiation_l"><code class="xref py py-obj docutils literal notranslate"><span class="pre">radiation_l</span></code></a></dt><dd><p>return ray vector_radiation_l</p>
+</dd>
+<dt><a class="reference internal" href="#ansys_optical_automation.post_process.dpf_rayfile.DpfRay.radiation_m" title="ansys_optical_automation.post_process.dpf_rayfile.DpfRay.radiation_m"><code class="xref py py-obj docutils literal notranslate"><span class="pre">radiation_m</span></code></a></dt><dd><p>return ray vector_radiation_m</p>
+</dd>
+<dt><a class="reference internal" href="#ansys_optical_automation.post_process.dpf_rayfile.DpfRay.radiation_n" title="ansys_optical_automation.post_process.dpf_rayfile.DpfRay.radiation_n"><code class="xref py py-obj docutils literal notranslate"><span class="pre">radiation_n</span></code></a></dt><dd><p>return ray vector_radiation_n</p>
+</dd>
+<dt><a class="reference internal" href="#ansys_optical_automation.post_process.dpf_rayfile.DpfRay.wavelength" title="ansys_optical_automation.post_process.dpf_rayfile.DpfRay.wavelength"><code class="xref py py-obj docutils literal notranslate"><span class="pre">wavelength</span></code></a></dt><dd><p>return ray wavelength</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<dl class="py property">
+<dt class="sig sig-object py" id="ansys_optical_automation.post_process.dpf_rayfile.DpfRay.coordinate_x">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">coordinate_x</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#ansys_optical_automation.post_process.dpf_rayfile.DpfRay.coordinate_x" title="Permalink to this definition">#</a></dt>
+<dd><p>return ray cardinal_coordinate_x
+Returns:</p>
+<blockquote>
+<div><p>cardinal_coordinate_x</p>
+</div></blockquote>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="ansys_optical_automation.post_process.dpf_rayfile.DpfRay.coordinate_y">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">coordinate_y</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#ansys_optical_automation.post_process.dpf_rayfile.DpfRay.coordinate_y" title="Permalink to this definition">#</a></dt>
+<dd><p>return ray cardinal_coordinate_y
+Returns:</p>
+<blockquote>
+<div><p>cardinal_coordinate_y</p>
+</div></blockquote>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="ansys_optical_automation.post_process.dpf_rayfile.DpfRay.coordinate_z">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">coordinate_z</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#ansys_optical_automation.post_process.dpf_rayfile.DpfRay.coordinate_z" title="Permalink to this definition">#</a></dt>
+<dd><p>return ray cardinal_coordinate_z
+Returns:</p>
+<blockquote>
+<div><p>cardinal_coordinate_z</p>
+</div></blockquote>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="ansys_optical_automation.post_process.dpf_rayfile.DpfRay.energy">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">energy</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#ansys_optical_automation.post_process.dpf_rayfile.DpfRay.energy" title="Permalink to this definition">#</a></dt>
+<dd><p>return ray energy
+Returns:</p>
+<blockquote>
+<div><p>energy</p>
+</div></blockquote>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="ansys_optical_automation.post_process.dpf_rayfile.DpfRay.radiation_l">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">radiation_l</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#ansys_optical_automation.post_process.dpf_rayfile.DpfRay.radiation_l" title="Permalink to this definition">#</a></dt>
+<dd><p>return ray vector_radiation_l
+Returns:</p>
+<blockquote>
+<div><p>vector_radiation_l</p>
+</div></blockquote>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="ansys_optical_automation.post_process.dpf_rayfile.DpfRay.radiation_m">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">radiation_m</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#ansys_optical_automation.post_process.dpf_rayfile.DpfRay.radiation_m" title="Permalink to this definition">#</a></dt>
+<dd><p>return ray vector_radiation_m
+Returns:</p>
+<blockquote>
+<div><p>vector_radiation_m</p>
+</div></blockquote>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="ansys_optical_automation.post_process.dpf_rayfile.DpfRay.radiation_n">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">radiation_n</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#ansys_optical_automation.post_process.dpf_rayfile.DpfRay.radiation_n" title="Permalink to this definition">#</a></dt>
+<dd><p>return ray vector_radiation_n
+Returns:</p>
+<blockquote>
+<div><p>vector_radiation_n</p>
+</div></blockquote>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="ansys_optical_automation.post_process.dpf_rayfile.DpfRay.wavelength">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">wavelength</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#ansys_optical_automation.post_process.dpf_rayfile.DpfRay.wavelength" title="Permalink to this definition">#</a></dt>
+<dd><p>return ray wavelength
+Returns:</p>
+<blockquote>
+<div><p>wavelength</p>
+</div></blockquote>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="ansys_optical_automation.post_process.dpf_rayfile.DpfRayfile">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">ansys_optical_automation.post_process.dpf_rayfile.</span></span><span class="sig-name descname"><span class="pre">DpfRayfile</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file_path</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ansys_optical_automation/post_process/dpf_rayfile.html#DpfRayfile"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ansys_optical_automation.post_process.dpf_rayfile.DpfRayfile" title="Permalink to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#ansys_optical_automation.post_process.dpf_base.DataProcessingFramework" title="ansys_optical_automation.post_process.dpf_base.DataProcessingFramework"><code class="xref py py-class docutils literal notranslate"><span class="pre">ansys_optical_automation.post_process.dpf_base.DataProcessingFramework</span></code></a></p>
+<p>this class contains method to read extract ray data from given binary rayfile</p>
+<dl class="field-list simple">
+<dt class="field-odd">Attributes</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><a class="reference internal" href="#ansys_optical_automation.post_process.dpf_rayfile.DpfRayfile.photometric_power" title="ansys_optical_automation.post_process.dpf_rayfile.DpfRayfile.photometric_power"><code class="xref py py-obj docutils literal notranslate"><span class="pre">photometric_power</span></code></a></dt><dd><p>this method return Photometric Power value</p>
+</dd>
+<dt><a class="reference internal" href="#ansys_optical_automation.post_process.dpf_rayfile.DpfRayfile.radiometric_power" title="ansys_optical_automation.post_process.dpf_rayfile.DpfRayfile.radiometric_power"><code class="xref py py-obj docutils literal notranslate"><span class="pre">radiometric_power</span></code></a></dt><dd><p>this method return the Radiometric Power value</p>
+</dd>
+<dt><a class="reference internal" href="#ansys_optical_automation.post_process.dpf_rayfile.DpfRayfile.rays" title="ansys_optical_automation.post_process.dpf_rayfile.DpfRayfile.rays"><code class="xref py py-obj docutils literal notranslate"><span class="pre">rays</span></code></a></dt><dd><p>this method return a list of rays</p>
+</dd>
+<dt><a class="reference internal" href="#ansys_optical_automation.post_process.dpf_rayfile.DpfRayfile.rays_number" title="ansys_optical_automation.post_process.dpf_rayfile.DpfRayfile.rays_number"><code class="xref py py-obj docutils literal notranslate"><span class="pre">rays_number</span></code></a></dt><dd><p>this method return the number of rays</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<p class="rubric">Methods</p>
+<table class="autosummary longtable table autosummary">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">close</span></code>()</p></td>
+<td><p>Function to close open files and applications</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#ansys_optical_automation.post_process.dpf_rayfile.DpfRayfile.export_file" title="ansys_optical_automation.post_process.dpf_rayfile.DpfRayfile.export_file"><code class="xref py py-obj docutils literal notranslate"><span class="pre">export_file</span></code></a>([export_folder_dir, convert])</p></td>
+<td><p>this method generates a file to be exported Parameters ----------</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#ansys_optical_automation.post_process.dpf_rayfile.DpfRayfile.load_content" title="ansys_optical_automation.post_process.dpf_rayfile.DpfRayfile.load_content"><code class="xref py py-obj docutils literal notranslate"><span class="pre">load_content</span></code></a>()</p></td>
+<td><p>this method load the information from rayfile provided</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">open_file</span></code>(str_path)</p></td>
+<td><p>Open a file in DPF.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">valid_dir</span></code>(str_path)</p></td>
+<td><p>Check if a folder is present and, if not, create it.</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ansys_optical_automation.post_process.dpf_rayfile.DpfRayfile.conversion_extension">
+<span class="sig-name descname"><span class="pre">conversion_extension</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'.dat':</span> <span class="pre">'.ray',</span> <span class="pre">'.ray':</span> <span class="pre">'.sdf',</span> <span class="pre">'.sdf':</span> <span class="pre">'.ray'}</span></em><a class="headerlink" href="#ansys_optical_automation.post_process.dpf_rayfile.DpfRayfile.conversion_extension" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ansys_optical_automation.post_process.dpf_rayfile.DpfRayfile.export_file">
+<span class="sig-name descname"><span class="pre">export_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">export_folder_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">convert</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ansys_optical_automation/post_process/dpf_rayfile.html#DpfRayfile.export_file"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ansys_optical_automation.post_process.dpf_rayfile.DpfRayfile.export_file" title="Permalink to this definition">#</a></dt>
+<dd><p>this method generates a file to be exported
+Parameters
+———-</p>
+<dl class="simple">
+<dt>export_folder_dir<span class="classifier">str ,optional</span></dt><dd><p>defines path where to export the rayfile</p>
+</dd>
+<dt>convert<span class="classifier">Boolean , optional</span></dt><dd><p>defines if the export is a conversion, default value is False</p>
+</dd>
+</dl>
+<dl class="simple">
+<dt>outfile: str</dt><dd><p>output file</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ansys_optical_automation.post_process.dpf_rayfile.DpfRayfile.load_content">
+<span class="sig-name descname"><span class="pre">load_content</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ansys_optical_automation/post_process/dpf_rayfile.html#DpfRayfile.load_content"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ansys_optical_automation.post_process.dpf_rayfile.DpfRayfile.load_content" title="Permalink to this definition">#</a></dt>
+<dd><p>this method load the information from rayfile provided</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"></dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="ansys_optical_automation.post_process.dpf_rayfile.DpfRayfile.photometric_power">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">photometric_power</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#ansys_optical_automation.post_process.dpf_rayfile.DpfRayfile.photometric_power" title="Permalink to this definition">#</a></dt>
+<dd><p>this method return Photometric Power value
+Returns:</p>
+<blockquote>
+<div><p>Photometric Power value</p>
+</div></blockquote>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="ansys_optical_automation.post_process.dpf_rayfile.DpfRayfile.radiometric_power">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">radiometric_power</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#ansys_optical_automation.post_process.dpf_rayfile.DpfRayfile.radiometric_power" title="Permalink to this definition">#</a></dt>
+<dd><p>this method return the Radiometric Power value
+Returns:</p>
+<blockquote>
+<div><p>Radiometric Power value</p>
+</div></blockquote>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="ansys_optical_automation.post_process.dpf_rayfile.DpfRayfile.rays">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">rays</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">[&lt;class</span> <span class="pre">'ansys_optical_automation.post_process.dpf_rayfile.DpfRay'&gt;]</span></em><a class="headerlink" href="#ansys_optical_automation.post_process.dpf_rayfile.DpfRayfile.rays" title="Permalink to this definition">#</a></dt>
+<dd><p>this method return a list of rays
+Returns:</p>
+<blockquote>
+<div><p>a list of rays</p>
+</div></blockquote>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="ansys_optical_automation.post_process.dpf_rayfile.DpfRayfile.rays_number">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">rays_number</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#ansys_optical_automation.post_process.dpf_rayfile.DpfRayfile.rays_number" title="Permalink to this definition">#</a></dt>
+<dd><p>this method return the number of rays
+Returns:</p>
+<blockquote>
+<div><p>number of rays in rayfile</p>
+</div></blockquote>
+</dd></dl>
+
+</dd></dl>
+
+</section>
 <section id="module-ansys_optical_automation.post_process">
 <span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-ansys_optical_automation.post_process" title="Permalink to this headline">#</a></h2>
 </section>
@@ -496,11 +785,11 @@ IDs are exported.</p>
                 
     <!-- Previous / next buttons -->
 <div class='prev-next-area'>
-    <a class='left-prev' id="prev-link" href="ansys_optical_automation.application.html" title="previous page">
+    <a class='left-prev' id="prev-link" href="ansys_optical_automation.interop_process.html" title="previous page">
         <i class="fas fa-angle-left"></i>
         <div class="prev-next-info">
             <p class="prev-next-subtitle">previous</p>
-            <p class="prev-next-title">ansys_optical_automation.application package</p>
+            <p class="prev-next-title">ansys_optical_automation.interop_process package</p>
         </div>
     </a>
     <a class='right-next' id="next-link" href="ansys_optical_automation.scdm_core.html" title="next page">

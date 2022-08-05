@@ -20,7 +20,7 @@
     href="../../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
 
     <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css" />
-    <link rel="stylesheet" href="../../../_static/styles/sphinx-book-theme.css?digest=62ba249389abaaa9ffc34bf36a076bdc1d65ee18" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css" />
     
@@ -33,7 +33,7 @@
     <script src="../../../_static/doctools.js"></script>
     <script src="../../../_static/clipboard.min.js"></script>
     <script src="../../../_static/copybutton.js"></script>
-    <script src="../../../_static/scripts/sphinx-book-theme.js?digest=f31d14ad54b65d19161ba51d4ffff3a77ae00456"></script>
+    <script src="../../../_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -123,6 +123,11 @@
      <li class="toctree-l3">
       <a class="reference internal" href="../../../api/ansys_optical_automation.application.html">
        ansys_optical_automation.application package
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../api/ansys_optical_automation.interop_process.html">
+       ansys_optical_automation.interop_process package
       </a>
      </li>
      <li class="toctree-l3">
@@ -260,6 +265,25 @@ title="Fullscreen mode"
     <span class="n">ansys_install_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;AWP_ROOT</span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">version</span><span class="p">)]</span>
     <span class="n">scdm_install_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">ansys_install_dir</span><span class="p">,</span> <span class="s2">&quot;scdm&quot;</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">scdm_install_dir</span></div>
+
+
+<div class="viewcode-block" id="get_speos_core"><a class="viewcode-back" href="../../../api/ansys_optical_automation.scdm_core.html#ansys_optical_automation.scdm_core.utils.get_speos_core">[docs]</a><span class="k">def</span> <span class="nf">get_speos_core</span><span class="p">(</span><span class="n">version</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    get speos core path for version</span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    version : str</span>
+<span class="sd">        Ansys Version used</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    str</span>
+<span class="sd">        path to speos core executable</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">ansys_install_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;AWP_ROOT</span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">version</span><span class="p">)]</span>
+    <span class="n">speos_core_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">ansys_install_dir</span><span class="p">,</span> <span class="sa">r</span><span class="s2">&quot;Optical Products&quot;</span><span class="p">,</span> <span class="sa">r</span><span class="s2">&quot;Viewers&quot;</span><span class="p">,</span> <span class="sa">r</span><span class="s2">&quot;SPEOSCore.exe&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">speos_core_dir</span></div>
 
 
 <div class="viewcode-block" id="run_scdm_batch"><a class="viewcode-back" href="../../../api/ansys_optical_automation.scdm_core.html#ansys_optical_automation.scdm_core.utils.run_scdm_batch">[docs]</a><span class="k">def</span> <span class="nf">run_scdm_batch</span><span class="p">(</span><span class="n">scdm_version</span><span class="p">,</span> <span class="n">api_version</span><span class="p">,</span> <span class="n">script_file</span><span class="p">):</span>

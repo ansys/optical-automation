@@ -20,7 +20,7 @@
     href="../../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
 
     <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css" />
-    <link rel="stylesheet" href="../../../_static/styles/sphinx-book-theme.css?digest=62ba249389abaaa9ffc34bf36a076bdc1d65ee18" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css" />
     
@@ -33,7 +33,7 @@
     <script src="../../../_static/doctools.js"></script>
     <script src="../../../_static/clipboard.min.js"></script>
     <script src="../../../_static/copybutton.js"></script>
-    <script src="../../../_static/scripts/sphinx-book-theme.js?digest=f31d14ad54b65d19161ba51d4ffff3a77ae00456"></script>
+    <script src="../../../_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -123,6 +123,11 @@
      <li class="toctree-l3">
       <a class="reference internal" href="../../../api/ansys_optical_automation.application.html">
        ansys_optical_automation.application package
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../api/ansys_optical_automation.interop_process.html">
+       ansys_optical_automation.interop_process package
       </a>
      </li>
      <li class="toctree-l3">
@@ -239,6 +244,7 @@ title="Fullscreen mode"
                 
   <h1>Source code for ansys_optical_automation.post_process.dpf_hdri_viewer</h1><div class="highlight"><pre>
 <span></span><span class="kn">import</span> <span class="nn">math</span>
+<span class="kn">import</span> <span class="nn">os</span>
 
 <span class="kn">from</span> <span class="nn">ansys_optical_automation.post_process.dpf_base</span> <span class="kn">import</span> <span class="n">DataProcessingFramework</span>
 
@@ -254,7 +260,7 @@ title="Fullscreen mode"
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Initialize DPF as HDRIViewer.&quot;&quot;&quot;</span>
         <span class="n">DataProcessingFramework</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
-            <span class="bp">self</span><span class="p">,</span> <span class="n">application</span><span class="o">=</span><span class="s2">&quot;HDRIViewer.Application&quot;</span><span class="p">,</span> <span class="n">extension</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;.speos360&quot;</span><span class="p">,</span> <span class="s2">&quot;.optisvr&quot;</span><span class="p">,</span> <span class="s2">&quot;.xmp&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="p">,</span> <span class="n">extension</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;.speos360&quot;</span><span class="p">,</span> <span class="s2">&quot;.optisvr&quot;</span><span class="p">,</span> <span class="s2">&quot;.xmp&quot;</span><span class="p">),</span> <span class="n">application</span><span class="o">=</span><span class="s2">&quot;HDRIViewer.Application&quot;</span>
         <span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">source_list</span> <span class="o">=</span> <span class="p">[]</span>
 
@@ -312,7 +318,7 @@ title="Fullscreen mode"
                         <span class="nb">str</span><span class="p">(</span><span class="n">phi_angles</span><span class="p">)</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">theta_angles</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot; are not existing iin the file </span><span class="se">\n</span><span class="s2"> Details: &quot;</span> <span class="o">+</span> <span class="n">e</span>
                     <span class="p">)</span>
 
-<div class="viewcode-block" id="DpfHdriViewer.export_vr_views"><a class="viewcode-back" href="../../../api/ansys_optical_automation.post_process.html#ansys_optical_automation.post_process.dpf_hdri_viewer.DpfHdriViewer.export_vr_views">[docs]</a>    <span class="k">def</span> <span class="nf">export_vr_views</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">export_path</span><span class="p">,</span> <span class="n">phi_angles</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">theta_angles</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">config_ids</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="DpfHdriViewer.export_vr_views"><a class="viewcode-back" href="../../../api/ansys_optical_automation.post_process.html#ansys_optical_automation.post_process.dpf_hdri_viewer.DpfHdriViewer.export_vr_views">[docs]</a>    <span class="k">def</span> <span class="nf">export_vr_views</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">export_path</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">phi_angles</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">theta_angles</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">config_ids</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Export VR results for all or specific configurations for defined angles or all angles as image (JPG) files.</span>
 
@@ -331,6 +337,8 @@ title="Fullscreen mode"
 <span class="sd">            List of configurations IDs to export. The default is ``None``, in which case all configuration</span>
 <span class="sd">            IDs are exported.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">export_path</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">export_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">file_path</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">valid_dir</span><span class="p">(</span><span class="n">export_path</span><span class="p">)</span>
         <span class="n">export_path</span> <span class="o">+=</span> <span class="s2">&quot;</span><span class="se">\\</span><span class="s2">&quot;</span>
 
