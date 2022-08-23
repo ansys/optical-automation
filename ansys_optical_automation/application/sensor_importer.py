@@ -95,10 +95,11 @@ def sensor_lib():
     """
     create sensor lib based on the information defined in argsDict from ACT.
     """
-    sensor_comps = GetRootPart().GetAllComponents("Sensor Lib")
+    sensor_lib_name = argsDict["name"] + " Sensor Lib"
+    sensor_comps = GetRootPart().GetAllComponents(sensor_lib_name)
     sensor_lib_comp = None
     if sensor_comps.Count == 0:
-        sensor_lib_comp = ComponentHelper.CreateAtRoot("Sensor Lib")
+        sensor_lib_comp = ComponentHelper.CreateAtRoot(sensor_lib_name)
     elif sensor_comps.Count != 1:
         MessageBox.Show("multi components found", "Error")
     else:
@@ -148,7 +149,7 @@ def sensor_lib():
                 coord_sys.SetName(new_name)
     else:
         Delete.Execute(Selection.Create(sensor_lib_comp))
-        sensor_lib_comp = ComponentHelper.CreateAtRoot("Sensor Lib")
+        sensor_lib_comp = ComponentHelper.CreateAtRoot(sensor_lib_name)
         ComponentHelper.SetActive(Selection.Create(sensor_lib_comp))
         for theta_angle in tilt_angles:
             for phi_angle in phi_angles:
