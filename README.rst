@@ -26,6 +26,11 @@ Documentation
 -------------
 You can read API documentation here: `Ansys Optical Automation <https://ansys.github.io/optical-automation/>`_.
 
+Examples
+--------
+Examples on how to use the created modules you can find under `application <https://github.com/ansys/optical-automation
+/tree/main/ansys_optical_automation/application>`_
+
 Contribution
 ------------
 Contributions to this library are welcome. To learn how to contribute, see the
