@@ -6,6 +6,16 @@ from ansys_optical_automation.interop_process.rayfile_converter import RayfileCo
 
 
 def getfilename(extension, save=False):
+    """
+    Parameters
+    ----------
+    extension : str containing the which file extension in *.ending format
+    save : Bool to define to open(default) or save. The default is False.
+
+    Returns
+    -------
+    str containing the selected file path
+    """
     root = tk.Tk()
     root.withdraw()
     if not save:
@@ -18,6 +28,7 @@ def getfilename(extension, save=False):
 
 
 def main():
+    """Main script to convert a rayfile fromspeos to Zemac or from zemax to speos"""
     path_to_rayfile = getfilename("*.ray *.sdf *.dat")
     input_file_extension = os.path.splitext(path_to_rayfile)[1].lower()[0:]
     if not (("ray" in input_file_extension) or ("dat" in input_file_extension) or ("sdf" in input_file_extension)):

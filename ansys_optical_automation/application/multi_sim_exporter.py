@@ -2,6 +2,16 @@ from ansys_optical_automation.speos_process.speos_simulations import Simulation
 
 
 def find_sims(selection):
+    """
+    Parameters
+    ----------
+    selection
+        SpaceClaim Selection
+
+    Returns
+    -------
+    list contain two item list first item simulation object second item derives the simulation type
+    """
     sim_list = []
     for item in selection.Items:
         name = item.GetName()
@@ -13,6 +23,7 @@ def find_sims(selection):
 
 
 def main():
+    """Main Script function asking for input an exporting all simulation of the input selection"""
     input_return = InputHelper.PauseAndGetInput("Select Simulations to export.")
     if not input_return.Success:
         MessageBox.Show("to export the simulation please select a Simulation")
