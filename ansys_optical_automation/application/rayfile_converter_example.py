@@ -9,12 +9,15 @@ def getfilename(extension, save=False):
     """
     Parameters
     ----------
-    extension : str containing the which file extension in *.ending format
-    save : Bool to define to open(default) or save. The default is False.
+    extension : str 
+        containing the which file extension in *.ending format
+    save : Bool 
+        option to define to open(default) or save. The default is False.
 
     Returns
     -------
-    str containing the selected file path
+    str 
+        string containing the selected file path
     """
     root = tk.Tk()
     root.withdraw()
