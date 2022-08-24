@@ -10,7 +10,8 @@ def find_sims(selection):
 
     Returns
     -------
-    list contain two item list first item simulation object second item derives the simulation type
+    list
+        list contain two item list first item simulation object second item derives the simulation type
     """
     sim_list = []
     for item in selection.Items:
