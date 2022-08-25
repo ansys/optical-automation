@@ -209,7 +209,7 @@ def create_intensity_sensors(axys_sys, orientation_option):
 
 def main():
     """
-    main function to export multiple intensity sensors
+    main function to create multiple intensity sensors based on user input
     """
     mode = None
     try:
