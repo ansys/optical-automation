@@ -33,8 +33,12 @@ def orientation_selection_dialog():
 
     Returns
     -------
-    bool, bool, bool, bool
-        status of orientation options
+    tuples
+        status of orientation options, example:
+            Rear: True, False, False, False
+            Left: False, True, False, False
+            Right: False, False, True, False
+            Front: False, False, False, True
 
     """
     global txtbox1
