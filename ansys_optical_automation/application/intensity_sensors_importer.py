@@ -167,13 +167,20 @@ def orientation_selection_dialog():
     create_dialog_label(form, label_text="+Y", label_location=[35, 76], label_size=[25, 22])
     create_dialog_label(form, label_text="- Y", label_location=[100, 54], label_size=[25, 22])
     create_dialog_label(form, label_text="- X", label_location=[100, 76], label_size=[25, 22])
-    radio1 = create_dialog_radio_button(form, button_location=[60, 50], button_checked=True, button_size=[25, 22])
-    radio2 = create_dialog_radio_button(form, button_location=[60, 72], button_checked=False, button_size=[25, 22])
-    radio3 = create_dialog_radio_button(form, button_location=[125, 50], button_checked=False, button_size=[25, 22])
-    radio4 = create_dialog_radio_button(form, button_location=[125, 72], button_checked=False, button_size=[25, 22])
+    front_option_radio_button = create_dialog_radio_button(form, button_location=[60, 50], button_checked=True, button_size=[25, 22])
+    left_option_radio_button = create_dialog_radio_button(form, button_location=[60, 72], button_checked=False, button_size=[25, 22])
+    right_option_radio_button = create_dialog_radio_button(form, button_location=[125, 50], button_checked=False, button_size=[25, 22])
+    rear_option_radio_button = create_dialog_radio_button(form, button_location=[125, 72], button_checked=False, button_size=[25, 22])
     button.Click += click  # Add event handler
     form.ShowDialog()
-    return radio1.Checked, radio2.Checked, radio3.Checked, radio4.Checked
+    if front_option_radio_button.Checked:
+        return "Front"
+    elif left_option_radio_button.Checked:
+        return "Left"
+    elif right_option_radio_button.Checked:
+        return "Right"
+    else:
+        return "Rear"
 
 
 def click(sender, event):
@@ -200,9 +207,9 @@ def apply_usesr_options(axys_sys, option_selected, type, speos_senor):
     axis_z = axes[2]
     if option_selected == "Rear":
         if type == "IESNATypeA":
-            speos_senor.set_position(axes=[axis_z, axis_x], origin=axys_sys)
+            speos_senor.set_position(axes=[axis_z, axis_x], origin=axys_sys,  y_reverse=True)
         else:
-            speos_senor.set_position(axes=[axis_y, axis_z], origin=axys_sys)
+            speos_senor.set_position(axes=[axis_y, axis_z], origin=axys_sys,  x_reverse=True)
     elif option_selected == "Left":
         if type == "IESNATypeA":
             speos_senor.set_position(axes=[axis_z, axis_y], origin=axys_sys)
@@ -215,9 +222,9 @@ def apply_usesr_options(axys_sys, option_selected, type, speos_senor):
             speos_senor.set_position(axes=[axis_x, axis_z], origin=axys_sys)
     elif option_selected == "Front":
         if type == "IESNATypeA":
-            speos_senor.set_position(axes=[axis_z, axis_x], origin=axys_sys, y_reverse=True)
+            speos_senor.set_position(axes=[axis_z, axis_x], origin=axys_sys)
         else:
-            speos_senor.set_position(axes=[axis_y, axis_z], origin=axys_sys, x_reverse=True)
+            speos_senor.set_position(axes=[axis_y, axis_z], origin=axys_sys)
 
 
 def create_intensity_sensor(sensor_name, option_selected, sensor_origin, sensor_type, x_y_samplings, w_sampling=None):
@@ -357,15 +364,8 @@ def main():
         from System.Windows.Forms import TextBox
 
         axys_sys = get_axis_system()
-        opt1, opt2, opt3, opt4 = orientation_selection_dialog()
-        if opt1:
-            create_intensity_sensors(axys_sys, "Front")
-        elif opt2:
-            create_intensity_sensors(axys_sys, "Left")
-        elif opt3:
-            create_intensity_sensors(axys_sys, "Right")
-        elif opt4:
-            create_intensity_sensors(axys_sys, "Rear")
+        orientation_option_selected = orientation_selection_dialog()
+        create_intensity_sensors(axys_sys, orientation_option_selected)
     else:
         create_intensity_sensors(argsDict["origin"], argsDict["orientation"])
 
