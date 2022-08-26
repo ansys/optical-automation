@@ -167,10 +167,18 @@ def orientation_selection_dialog():
     create_dialog_label(form, label_text="+Y", label_location=[35, 76], label_size=[25, 22])
     create_dialog_label(form, label_text="- Y", label_location=[100, 54], label_size=[25, 22])
     create_dialog_label(form, label_text="- X", label_location=[100, 76], label_size=[25, 22])
-    front_option_radio_button = create_dialog_radio_button(form, button_location=[60, 50], button_checked=True, button_size=[25, 22])
-    left_option_radio_button = create_dialog_radio_button(form, button_location=[60, 72], button_checked=False, button_size=[25, 22])
-    right_option_radio_button = create_dialog_radio_button(form, button_location=[125, 50], button_checked=False, button_size=[25, 22])
-    rear_option_radio_button = create_dialog_radio_button(form, button_location=[125, 72], button_checked=False, button_size=[25, 22])
+    front_option_radio_button = create_dialog_radio_button(
+        form, button_location=[60, 50], button_checked=True, button_size=[25, 22]
+    )
+    left_option_radio_button = create_dialog_radio_button(
+        form, button_location=[60, 72], button_checked=False, button_size=[25, 22]
+    )
+    right_option_radio_button = create_dialog_radio_button(
+        form, button_location=[125, 50], button_checked=False, button_size=[25, 22]
+    )
+    rear_option_radio_button = create_dialog_radio_button(
+        form, button_location=[125, 72], button_checked=False, button_size=[25, 22]
+    )
     button.Click += click  # Add event handler
     form.ShowDialog()
     if front_option_radio_button.Checked:
@@ -179,8 +187,11 @@ def orientation_selection_dialog():
         return "Left"
     elif right_option_radio_button.Checked:
         return "Right"
-    else:
+    elif rear_option_radio_button.Checked:
         return "Rear"
+    else:
+        error_message = "incorrect selection"
+        raise ValueError(error_message)
 
 
 def click(sender, event):
@@ -207,9 +218,9 @@ def apply_usesr_options(axys_sys, option_selected, type, speos_senor):
     axis_z = axes[2]
     if option_selected == "Rear":
         if type == "IESNATypeA":
-            speos_senor.set_position(axes=[axis_z, axis_x], origin=axys_sys,  y_reverse=True)
+            speos_senor.set_position(axes=[axis_z, axis_x], origin=axys_sys, y_reverse=True)
         else:
-            speos_senor.set_position(axes=[axis_y, axis_z], origin=axys_sys,  x_reverse=True)
+            speos_senor.set_position(axes=[axis_y, axis_z], origin=axys_sys, x_reverse=True)
     elif option_selected == "Left":
         if type == "IESNATypeA":
             speos_senor.set_position(axes=[axis_z, axis_y], origin=axys_sys)
