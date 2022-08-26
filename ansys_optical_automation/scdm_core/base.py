@@ -64,6 +64,7 @@ class BaseSCDM(object):
         self.ICoordinateAxis = scdm_api.ICoordinateAxis
         self.ICoordinateSystem = scdm_api.ICoordinateSystem
         self.IDesignBody = scdm_api.IDesignBody
+        self.IDesignMesh = scdm_api.IDesignMesh
         self.IDesignCurve = scdm_api.IDesignCurve
         self.IPart = scdm_api.IPart
         self.Layers = scdm_api.Scripting.Commands.Layers
@@ -74,3 +75,19 @@ class BaseSCDM(object):
         self.SetName = scdm_api.Scripting.Helpers.ComponentHelper.SetName
         self.StitchFaces = scdm_api.Scripting.Commands.StitchFaces
         self.ViewHelper = scdm_api.Scripting.Helpers.ViewHelper
+        self.Window = scdm_api.Window
+
+    def convert_object_version(self, obj):
+        """
+        Function to convert Speos returns from latest to used API version
+        Parameters
+        ----------
+        obj : SpeosSelectedObject
+
+        Returns
+        -------
+        Object in used API version
+        """
+        doc = self.Window.ActiveWindow.Document
+        res = self.scdm_api.Moniker[self.scdm_api.IDocObject].FromString(obj.Moniker.ToString()).Resolve(doc)
+        return res
