@@ -27,6 +27,116 @@ def get_axis_system():
         return sel
 
 
+def create_dialog_form(form_text, form_size, form_min_max_box, form_position, form_border):
+    """
+    create form to show the dialog later based on the information provided.
+
+    Parameters
+    ----------
+    form_text : str
+        information of the header
+    form_size : list
+        wide and height of the form
+    form_min_max_box : list[bool, bool]
+        to have the min and max function
+    form_position : FormStartPosition
+        position to create the form
+    form_border : FormBorderStyle
+        Stype of the border
+
+    Returns
+    -------
+    Form
+
+    """
+    form = Form()
+    form.Size = Size(form_size[0], form_size[1])
+    form.Text = form_text
+    form.StartPosition = form_position
+    form.MaximizeBox = form_min_max_box[0]
+    form.MinimizeBox = form_min_max_box[1]
+    form.FormBorderStyle = form_border
+    return form
+
+
+def create_dialog_label(form, label_text, label_location, label_size):
+    """
+    create label inside the form with information provided.
+
+    Parameters
+    ----------
+    form : form
+    label_text : str
+        text shown inside lable
+    label_location : list
+        x and y location
+    label_size : list
+        wide and height of label
+
+    Returns
+    -------
+    label
+
+    """
+    label = Label()
+    label.Text = label_text
+    label.Location = Point(label_location[0], label_location[1])
+    label.Size = Size(label_size[0], label_size[1])
+    form.Controls.Add(label)
+    return label
+
+
+def create_dialog_radio_button(form, button_location, button_checked, button_size):
+    """
+    create radio button side the form with provided information.
+
+    Parameters
+    ----------
+    form : form
+    button_location : list
+        x and y location of the button created
+    button_checked : bool
+        default status of the button as True checked, False otherwise
+    button_size : list
+        wide and height of the button
+
+    Returns
+    -------
+    RadioButton
+
+    """
+    radio = RadioButton()
+    radio.Location = Point(button_location[0], button_location[1])
+    radio.Checked = button_checked
+    radio.Size = Size(button_size[0], button_size[1])
+    form.Controls.Add(radio)
+    return radio
+
+
+def create_dialog_button(form, button_text, button_location):
+    """
+    create button inside the form with information provided.
+
+    Parameters
+    ----------
+    form : form
+    button_text : str
+        texture shown inside the button
+    button_location : list
+        x and y location
+
+    Returns
+    -------
+    button
+
+    """
+    button = Button(Text=button_text)  # Creates a Windows Form Application
+    button.Location = Point(button_location[0], button_location[1])  # Button Location
+    button.DialogResult = DialogResult.OK
+    form.Controls.Add(button)
+    return button
+
+
 def orientation_selection_dialog():
     """
     Asks users to select the orientation for intensity sensors.
@@ -43,70 +153,24 @@ def orientation_selection_dialog():
     """
     global txtbox1
     global txtbox2
-    form = Form()  # Creates a Windows Form Application
-    form.Size = Size(190, 170)
-    form.Text = "Sensor orientation"  # Name for that form
-    form.StartPosition = FormStartPosition.CenterScreen
-    form.MaximizeBox = False
-    form.MinimizeBox = False
-    form.FormBorderStyle = FormBorderStyle.FixedSingle
-
-    button = Button(Text="OK")  # Creates a Windows Form Application
-    button.Location = Point(52, 110)  # Button Location
-    button.DialogResult = DialogResult.OK
-
-    lab = Label()
-    lab.Text = "Choose orientation of the sensors relative to the selected axis system:"
-    lab.Location = Point(5, 10)
-    lab.Size = Size(180, 44)
-
-    move_x = 15
-    lab1 = Label()  # Creates label
-    lab1.Text = "+X"  # Label Text
-    lab1.Location = Point(20 + move_x, 54)
-    lab1.Size = Size(25, 22)
-    lab2 = Label()  # Creates label
-    lab2.Location = Point(20 + move_x, 76)  # Label Location
-    lab2.Text = "+Y"  # Label Text
-    lab2.Size = Size(25, 22)
-
-    radio1 = RadioButton()
-    radio1.Location = Point(45 + move_x, 50)
-    radio1.Checked = True
-    radio1.Size = Size(25, 22)
-    radio2 = RadioButton()
-    radio2.Location = Point(45 + move_x, 72)
-    radio2.Checked = False
-    radio2.Size = Size(25, 22)
-
-    lab3 = Label()  # Creates label
-    lab3.Text = "- Y"  # Label Text
-    lab3.Location = Point(85 + move_x, 54)
-    lab3.Size = Size(25, 22)
-    lab4 = Label()  # Creates label
-    lab4.Location = Point(85 + move_x, 76)  # Label Location
-    lab4.Text = "- X"  # Label Text
-    lab4.Size = Size(25, 22)
-
-    radio3 = RadioButton()
-    radio3.Location = Point(110 + move_x, 50)
-    radio3.Checked = False
-    radio3.Size = Size(25, 22)
-    radio4 = RadioButton()
-    radio4.Location = Point(110 + move_x, 72)
-    radio4.Checked = False
-    radio4.Size = Size(25, 22)
-
-    form.Controls.Add(lab)  # Add Label
-    form.Controls.Add(lab1)  # Add Label
-    form.Controls.Add(lab2)  # Add Label
-    form.Controls.Add(lab3)  # Add Label
-    form.Controls.Add(lab4)  # Add Label
-    form.Controls.Add(radio1)
-    form.Controls.Add(radio2)
-    form.Controls.Add(radio3)
-    form.Controls.Add(radio4)
-    form.Controls.Add(button)
+    form = create_dialog_form(
+        form_text="Sensor orientation",
+        form_size=[190, 170],
+        form_min_max_box=[False, False],
+        form_position=FormStartPosition.CenterScreen,
+        form_border=FormBorderStyle.FixedSingle,
+    )
+    button = create_dialog_button(form, button_text="OK", button_location=[52, 110])
+    info_text = "Choose orientation of the sensors relative to the selected axis system:"
+    create_dialog_label(form, info_text, label_location=[5, 10], label_size=[180, 44])
+    create_dialog_label(form, label_text="+X", label_location=[35, 54], label_size=[25, 22])
+    create_dialog_label(form, label_text="+Y", label_location=[35, 76], label_size=[25, 22])
+    create_dialog_label(form, label_text="- Y", label_location=[100, 54], label_size=[25, 22])
+    create_dialog_label(form, label_text="- X", label_location=[100, 76], label_size=[25, 22])
+    radio1 = create_dialog_radio_button(form, button_location=[60, 50], button_checked=True, button_size=[25, 22])
+    radio2 = create_dialog_radio_button(form, button_location=[60, 72], button_checked=False, button_size=[25, 22])
+    radio3 = create_dialog_radio_button(form, button_location=[125, 50], button_checked=False, button_size=[25, 22])
+    radio4 = create_dialog_radio_button(form, button_location=[125, 72], button_checked=False, button_size=[25, 22])
     button.Click += click  # Add event handler
     form.ShowDialog()
     return radio1.Checked, radio2.Checked, radio3.Checked, radio4.Checked
@@ -114,6 +178,82 @@ def orientation_selection_dialog():
 
 def click(sender, event):
     """function to check if selection is checked."""
+
+
+def apply_usesr_options(axys_sys, option_selected, type, speos_senor):
+    """
+    check the orientation selected and provide corresponding settings of a intensity sensor.
+
+    Parameters
+    ----------
+    axys_sys : SpaceClaim SpaceClaim coordinate system
+        a SpaceClaim SpaceClaim coordinate system
+    option_selected : str
+        "Rear"/"Left"/"Right"/"Front"
+    type : str
+        sensor type selected
+    speos_senor : SPEOS sensor object
+    """
+    axes = axys_sys.GetDescendants[ICoordinateAxis]()
+    axis_x = axes[0]
+    axis_y = axes[1]
+    axis_z = axes[2]
+    if option_selected == "Rear":
+        if type == "IESNATypeA":
+            speos_senor.set_position(axes=[axis_z, axis_x], origin=axys_sys)
+        else:
+            speos_senor.set_position(axes=[axis_y, axis_z], origin=axys_sys)
+    elif option_selected == "Left":
+        if type == "IESNATypeA":
+            speos_senor.set_position(axes=[axis_z, axis_y], origin=axys_sys)
+        else:
+            speos_senor.set_position(axes=[axis_x, axis_z], origin=axys_sys, x_reverse=True)
+    elif option_selected == "Right":
+        if type == "IESNATypeA":
+            speos_senor.set_position(axes=[axis_z, axis_y], origin=axys_sys, y_reverse=True)
+        else:
+            speos_senor.set_position(axes=[axis_x, axis_z], origin=axys_sys)
+    elif option_selected == "Front":
+        if type == "IESNATypeA":
+            speos_senor.set_position(axes=[axis_z, axis_x], origin=axys_sys, y_reverse=True)
+        else:
+            speos_senor.set_position(axes=[axis_y, axis_z], origin=axys_sys, x_reverse=True)
+
+
+def create_intensity_sensor(sensor_name, option_selected, sensor_origin, sensor_type, x_y_samplings, w_sampling=None):
+    """
+    create sensor based on the information provided.
+
+    Parameters
+    ----------
+    sensor_name : str
+        name used for sensor
+    option_selected : str
+        orientation option selected by user
+    sensor_origin : SpaceClaim coordinate system
+    sensor_type : str
+        type of sensor to be created
+    x_y_samplings : list[int, int]
+        list of x-sampling and y-sampling
+    w_sampling : int
+        wavelength sampling
+
+    Returns
+    -------
+    sensor_obj:
+        SPEOS sensor object
+
+    """
+    sensor_obj = IntensitySensor(option_selected + "_" + sensor_name, SpeosSim, SpaceClaim)
+    apply_usesr_options(sensor_origin, option_selected, sensor_type, sensor_obj)
+    sensor_obj.set_sampling(x_sampling=x_y_samplings[0], y_sampling=x_y_samplings[1])
+    if sensor_type == "IESNATypeA":
+        sensor_obj.set_format(sensor_format="IESNATypeA")
+    if sensor_type == "XMP":
+        sensor_obj.set_format(sensor_format="XMP")
+        sensor_obj.set_range(x_mirrored=True, y_mirrored=True, x_start=-90, x_end=90, y_start=-90, y_end=90)
+        sensor_obj.set_wavelength(w_sampling=w_sampling)
+    return sensor_obj
 
 
 def create_intensity_sensors(axys_sys, orientation_option):
@@ -126,40 +266,6 @@ def create_intensity_sensors(axys_sys, orientation_option):
     orientation_option : str
         options for intensity sensor orientation: Front, Rear, Left, or Right
     """
-    axes = axys_sys.GetDescendants[ICoordinateAxis]()
-    axis_x = axes[0]
-    axis_y = axes[1]
-    axis_z = axes[2]
-
-    axes_iesna = []
-    axes_xmp = []
-    iesna_y_rev = False
-    xmp_x_rev = False
-    name = ""
-    if orientation_option == "Rear":
-        axes_iesna = [axis_z, axis_x]
-        axes_xmp = [axis_y, axis_z]
-        iesna_y_rev = False
-        xmp_x_rev = False
-        name = "Rear_"
-    elif orientation_option == "Left":
-        axes_iesna = [axis_z, axis_y]
-        axes_xmp = [axis_x, axis_z]
-        iesna_y_rev = False
-        xmp_x_rev = True
-        name = "Left_"
-    elif orientation_option == "Right":
-        axes_iesna = [axis_z, axis_y]
-        axes_xmp = [axis_x, axis_z]
-        iesna_y_rev = True
-        xmp_x_rev = False
-        name = "Right_"
-    elif orientation_option == "Front":
-        axes_iesna = [axis_z, axis_x]
-        axes_xmp = [axis_y, axis_z]
-        iesna_y_rev = True
-        xmp_x_rev = True
-        name = "Front_"
 
     sampling_ies_hq = 721
     sampling_ies_lq = 361
@@ -168,43 +274,52 @@ def create_intensity_sensors(axys_sys, orientation_option):
     w_sampling_hq = 61
     w_sampling_lq = 31
 
-    std_liq_IES = IntensitySensor(name + "StdLiqIES", SpeosSim, SpaceClaim)
-    std_liq_IES.set_position(axes=axes_iesna, origin=axys_sys, y_reverse=iesna_y_rev)
-    std_liq_IES.set_format(sensor_format="IESNATypeA")
-    std_liq_IES.set_sampling(x_sampling=sampling_ies_hq, y_sampling=sampling_ies_hq)
-
-    std_lig_color_5nm = IntensitySensor(name + "StdLigColor5nm", SpeosSim, SpaceClaim)
-    std_lig_color_5nm.set_position(axes=axes_xmp, origin=axys_sys, x_reverse=xmp_x_rev)
-    std_lig_color_5nm.set_format(sensor_format="XMP")
-    std_lig_color_5nm.set_sampling(x_sampling=sampling_xmp_hq, y_sampling=sampling_xmp_hq)
-    std_lig_color_5nm.set_wavelength(w_sampling=w_sampling_hq)
-    std_lig_color_5nm.set_range(-90, 90, -90, 90, True, True)
-
-    std_lig_color_10nm = IntensitySensor(name + "StdLigColor10nm", SpeosSim, SpaceClaim)
-    std_lig_color_10nm.set_position(axes=axes_xmp, origin=axys_sys, x_reverse=xmp_x_rev)
-    std_lig_color_10nm.set_format(sensor_format="XMP")
-    std_lig_color_10nm.set_sampling(x_sampling=sampling_xmp_hq, y_sampling=sampling_xmp_hq)
-    std_lig_color_10nm.set_wavelength(w_sampling=w_sampling_lq)
-    std_lig_color_10nm.set_range(x_mirrored=True, y_mirrored=True, x_start=-90, x_end=90, y_start=-90, y_end=90)
-
-    std_iq_IES = IntensitySensor(name + "StdSiqIES", SpeosSim, SpaceClaim)
-    std_iq_IES.set_position(axes=axes_iesna, origin=axys_sys, y_reverse=iesna_y_rev)
-    std_iq_IES.set_format(sensor_format="IESNATypeA")
-    std_iq_IES.set_sampling(x_sampling=sampling_ies_lq, y_sampling=sampling_ies_lq)
-
-    std_sig_color_5nm = IntensitySensor(name + "StdSigColor5nm", SpeosSim, SpaceClaim)
-    std_sig_color_5nm.set_position(axes=axes_xmp, origin=axys_sys, x_reverse=xmp_x_rev)
-    std_sig_color_5nm.set_format(sensor_format="XMP")
-    std_sig_color_5nm.set_sampling(x_sampling=sampling_xmp_lq, y_sampling=sampling_xmp_lq)
-    std_sig_color_5nm.set_wavelength(w_sampling=w_sampling_hq)
-    std_sig_color_5nm.set_range(x_mirrored=True, y_mirrored=True, x_start=-90, x_end=90, y_start=-90, y_end=90)
-
-    std_sig_color_10nm = IntensitySensor(name + "StdSigColor10nm", SpeosSim, SpaceClaim)
-    std_sig_color_10nm.set_position(axes=axes_xmp, origin=axys_sys, x_reverse=xmp_x_rev)
-    std_sig_color_10nm.set_format(sensor_format="XMP")
-    std_sig_color_10nm.set_sampling(x_sampling=sampling_xmp_lq, y_sampling=sampling_xmp_lq)
-    std_sig_color_10nm.set_wavelength(w_sampling=w_sampling_lq)
-    std_sig_color_10nm.set_range(x_mirrored=True, y_mirrored=True, x_start=-90, x_end=90, y_start=-90, y_end=90)
+    create_intensity_sensor(
+        "StdLiqIES",
+        orientation_option,
+        axys_sys,
+        "IESNATypeA",
+        x_y_samplings=[sampling_ies_hq, sampling_ies_hq],
+    )
+    create_intensity_sensor(
+        "StdSiqIES",
+        orientation_option,
+        axys_sys,
+        "IESNATypeA",
+        x_y_samplings=[sampling_ies_lq, sampling_ies_lq],
+    )
+    create_intensity_sensor(
+        "StdLigColor5nm",
+        orientation_option,
+        axys_sys,
+        "XMP",
+        x_y_samplings=[sampling_xmp_hq, sampling_xmp_hq],
+        w_sampling=w_sampling_hq,
+    )
+    create_intensity_sensor(
+        "StdLigColor10nm",
+        orientation_option,
+        axys_sys,
+        "XMP",
+        x_y_samplings=[sampling_xmp_hq, sampling_xmp_hq],
+        w_sampling=w_sampling_hq,
+    )
+    create_intensity_sensor(
+        "StdSigColor5nm",
+        orientation_option,
+        axys_sys,
+        "XMP",
+        x_y_samplings=[sampling_xmp_lq, sampling_xmp_lq],
+        w_sampling=w_sampling_lq,
+    )
+    create_intensity_sensor(
+        "StdSigColor10nm",
+        orientation_option,
+        axys_sys,
+        "XMP",
+        x_y_samplings=[sampling_xmp_lq, sampling_xmp_lq],
+        w_sampling=w_sampling_lq,
+    )
 
 
 def main():
@@ -244,13 +359,13 @@ def main():
         axys_sys = get_axis_system()
         opt1, opt2, opt3, opt4 = orientation_selection_dialog()
         if opt1:
-            create_intensity_sensors(axys_sys, "Rear")
+            create_intensity_sensors(axys_sys, "Front")
         elif opt2:
             create_intensity_sensors(axys_sys, "Left")
         elif opt3:
             create_intensity_sensors(axys_sys, "Right")
         elif opt4:
-            create_intensity_sensors(axys_sys, "Front")
+            create_intensity_sensors(axys_sys, "Rear")
     else:
         create_intensity_sensors(argsDict["origin"], argsDict["orientation"])
 
