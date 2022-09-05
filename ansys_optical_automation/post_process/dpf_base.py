@@ -9,7 +9,7 @@ class DataProcessingFramework:
 
     """
 
-    application_list = "HDRIViewer.Application"
+    application_list = ["HDRIViewer.Application", "XMPViewer.Application"]
     binary_format = {".ray", ".dat", ".sdf"}
     text_format = {".spectrum", ".spcd"}
 
@@ -32,9 +32,9 @@ class DataProcessingFramework:
                     instance_type = System.Type.GetTypeFromProgID(self.application)
                     self.dpf_instance = System.Activator.CreateInstance(instance_type)
                 else:
-                    import win32com.client as win32
+                    from comtypes.client import CreateObject
 
-                    self.dpf_instance = win32.Dispatch(self.application)
+                    self.dpf_instance = CreateObject(self.application)
             else:
                 raise ImportError("Application is not supported.")
 
