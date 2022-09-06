@@ -1,4 +1,6 @@
+import csv
 import os
+import sys
 
 import comtypes
 
@@ -47,27 +49,71 @@ class XmpViewer(DataProcessingFramework):
         else:
             raise ImportError("Opening the file failed.")
 
-    def export(self, format="txt", layer=False):
+    def export(self, format="txt"):
         """
         function to export an XMP map to another format
 
         Parameters
         ----------
         format : str
-            Format to export
-        layer : bool
-            False-> active configuration is exported
-            True-> all layer are exported
+            export format allowed values
+            ["txt", "png", "bmp", "jpg", "tiff", "pf", "ies", "ldt"]
+        """
+        allowed_exports = ["txt", "png", "bmp", "jpg", "tiff", "pf", "ies", "ldt"]
+        if format in allowed_exports:
+            export_path = self.file_path + "export." + format
+            if format == "txt":
+                if not self.dpf_instance.ExportTXT(export_path):
+                    msg = format + " export failed"
+                    raise Exception(msg)
+            elif format == "pf":
+                if not self.dpf_instance.ExportPF(export_path):
+                    msg = format + " export failed"
+                    raise Exception(msg)
+            elif format == "pf":
+                if not self.dpf_instance.ExportPF(export_path):
+                    msg = format + " export failed"
+                    raise Exception(msg)
+            elif format in ["ies", "ldt"]:
+                if not self.dpf_instance.ExportXMPtoIntensity(export_path):
+                    msg = format + " export failed"
+                    raise Exception(msg)
+            elif format in ["png", "bmp", "jpg", "tiff"]:
+                if not self.dpf_instance.ExportXMPImage(export_path):
+                    msg = format + " export failed"
+                    raise Exception(msg)
+        else:
+            msg = "cannot export data to: " + format
+            raise ValueError(msg)
+
+        return export_path
+
+    def read_txt_export(self, txt_path, inc_data=False):
+        """
+        Parameters
+        ----------
+        txt_path : str
+            string pointing to the textfile
+        inc_data : bool
+            Boolean to determine if to include data matrix as list
 
         Returns
         -------
-        str
-            path to exported text file
+        for inc_data True: data matrix
         """
-        self.dpf_instance.MapType
-        export_path = self.file_path + "text_export.txt"
-
-        return export_path
+        if not inc_data:
+            self.dpf_instance.ImportTXT(txt_path)
+        else:
+            self.dpf_instance.ImportTXT(txt_path)
+            matrix = []
+            with open(txt_path, "r") as file:
+                my_data = csv.reader(file, delimiter="\t")
+                for i in range(8):
+                    next(my_data)
+                for i in range(int(self.dpf_instance.YHeight / self.dpf_instance.YSampleHeight)):
+                    line = next(my_data)
+                    matrix.append(line)
+            return matrix
 
     def get_source_list(self):
         """
@@ -78,17 +124,20 @@ class XmpViewer(DataProcessingFramework):
         list
             List of sources available in the postprocessing file.
         """
-        if self.dpf_instance.MapType == 2 or self.dpf_instance.MapType == 3:
-            print(self.dpf_instance.MapType)
-            total_sources = self.dpf_instance.ExtendedGetNbSource
-            for layer in range(total_sources):
-                name = comtypes.automation.VARIANT()
-                self.dpf_instance.ExtendedGetSourceName(layer, comtypes.pointer(name))
-                self.source_list.append(name.value[0])
-            return self.source_list
+        if "Iron" in sys.version:
+            raise Exception("IronPython not supported")
         else:
-            msg = "MapType=" + self.dpf_instance.MapType + " not support."
-            raise TypeError(msg)
+            if self.dpf_instance.MapType == 2 or self.dpf_instance.MapType == 3:
+                print(self.dpf_instance.MapType)
+                total_sources = self.dpf_instance.ExtendedGetNbSource
+                for layer in range(total_sources):
+                    name = comtypes.automation.VARIANT()
+                    self.dpf_instance.ExtendedGetSourceName(layer, comtypes.pointer(name))
+                    self.source_list.append(name.value[0])
+                return self.source_list
+            else:
+                msg = "MapType=" + self.dpf_instance.MapType + " not support."
+                raise TypeError(msg)
 
     def export_template_measures(self, template_path, export_path):
         """
@@ -105,11 +154,12 @@ class XmpViewer(DataProcessingFramework):
         None
         """
         if not self.dpf_instance.ImportTemplate(template_path, 1, 1, 1):
+            raise ImportError("Template import failed")
+        else:
             if not self.dpf_instance.MeasuresExportTXT(export_path):
                 raise ValueError("Measurement export failed")
-            raise ImportError("Template import failed")
 
-    def rect_export_spectrum(self, x_pos, y_pos, width, height, normalize=True):
+    def rect_export_spectrum(self, x_pos, y_pos, width, height):
         """
         Parameters
         ----------
