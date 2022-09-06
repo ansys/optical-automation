@@ -291,6 +291,7 @@ class PreProcessingASP(BaseSCDM):
     def __get_bodies_for_geometrical_sets(self, part, bodies_only=True):
         """
         Get bodies for each geometrical set.
+        !!!This function does not includes Meshed bodies!!!
 
         Parameters
         ----------
