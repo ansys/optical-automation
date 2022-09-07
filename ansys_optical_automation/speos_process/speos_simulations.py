@@ -34,37 +34,47 @@ class Simulation(BaseSCDM):
         self.rays = 10
         self.computed = False
         self.grid = None
+        self.my_bodies = []
         if kind == "inverse":
             sim = self.speos_sim.SimulationInverse.Find(name)
             if sim:
                 self.object = sim
+                for body in self.object.Geometries.LinkedObjects:
+                    self.my_bodies.append(self.convert_object_version(body))
             else:
                 self.object = self.speos_sim.SimulationInverse.Create()
                 self.object.Name = name
+
         elif kind == "direct":
             sim = self.speos_sim.SimulationDirect.Find(name)
             if sim:
                 self.object = sim
+                for body in self.object.Geometries.LinkedObjects:
+                    self.my_bodies.append(self.convert_object_version(body))
             else:
                 self.object = self.speos_sim.SimulationDirect.Create()
                 self.object.Name = name
+
         elif kind == "interactive":
             sim = self.speos_sim.SimulationInteractive.Find(name)
             if sim:
                 self.object = sim
+                for body in self.object.Geometries.LinkedObjects:
+                    self.my_bodies.append(self.convert_object_version(body))
             else:
                 self.object = self.speos_sim.SimulationInteractive.Create()
                 self.object.Name = name
+
         else:
             # TODO throw an error: unknown simulation type
             pass
 
-        self.my_bodies = []
         self.component_list = []
 
     def select_geometries(self, component_list):
         """
-        Add all geometries from components provided in a component list to the simulation's list of bodies.
+        Add all Mesh bodies and Design bodies from components provided in a component list to the simulation's list
+        of bodies.
 
         Parameters
         ----------
@@ -77,6 +87,8 @@ class Simulation(BaseSCDM):
         for component in all_components:
             if component.Content.Master.DisplayName in self.component_list:
                 bodies = component.GetDescendants[self.IDesignBody]()
+                self.my_bodies.extend(bodies)
+                bodies = component.GetDescendants[self.IDesignMesh]()
                 self.my_bodies.extend(bodies)
         return self
 
@@ -107,7 +119,7 @@ class Simulation(BaseSCDM):
         Add all bodies from the simulation's list of bodies (self.my_bodies) to the
         simulation geometries. This works Like the green ``validate`` button in Speos.
         """
-        selection = self.BodySelection.Create(self.my_bodies)
+        selection = self.Selection.Create(self.my_bodies)
         self.object.Geometries.Set(selection.Items)
         return self
 
