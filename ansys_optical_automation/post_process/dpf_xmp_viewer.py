@@ -107,28 +107,39 @@ class DpfXmpViewer(DataProcessingFramework):
             self.dpf_instance.ImportTXT(txt_path)
         else:
             self.dpf_instance.ImportTXT(txt_path)
-            if self.dpf_instance.Maptype == 2:
+            variant = comtypes.automation.VARIANT(5)
+            if self.dpf_instance.Maptype == 2 and self.dpf_instance.GetSampleCRI(0, 0, 2, comtypes.pointer(variant)):
                 "account for spectral maps"
                 matrix = []
                 with open(txt_path, "r") as file:
                     my_data = csv.reader(file, delimiter="\t")
                     for i in range(9):
                         next(my_data)
-                    print(str(self.dpf_instance.YHeight / self.dpf_instance.YSampleHeight))
                     for w in range(self.dpf_instance.WNb - 1):
                         matrix.append([])
                         for k in range(int(self.dpf_instance.YHeight / self.dpf_instance.YSampleHeight)):
                             line = next(my_data)
                             matrix[w].append(line)
+                            # print(line)
                 return matrix
             elif self.dpf_instance.Maptype == 3:
                 matrix = []
                 with open(txt_path, "r") as file:
-                    print(txt_path)
                     my_data = csv.reader(file, delimiter="\t")
                     for i in range(8):
                         next(my_data)
-                    print(str(self.dpf_instance.YHeight / self.dpf_instance.YSampleHeight))
+                    for k in range(int(self.dpf_instance.YHeight / self.dpf_instance.YSampleHeight)):
+                        line = next(my_data)
+                        matrix.append(line)
+                return matrix
+            elif self.dpf_instance.Maptype == 2 and not self.dpf_instance.GetSampleCRI(
+                0, 0, 2, comtypes.pointer(variant)
+            ):
+                matrix = []
+                with open(txt_path, "r") as file:
+                    my_data = csv.reader(file, delimiter="\t")
+                    for i in range(9):
+                        next(my_data)
                     for k in range(int(self.dpf_instance.YHeight / self.dpf_instance.YSampleHeight)):
                         line = next(my_data)
                         matrix.append(line)
