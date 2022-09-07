@@ -4,6 +4,7 @@ import os
 import shutil
 import sys
 import traceback
+from math import floor
 
 unittest_path = os.path.dirname(os.path.realpath(__file__))
 lib_path = os.path.dirname(unittest_path)
@@ -32,8 +33,8 @@ work_directory = os.path.join(unittest_path, "xmp")
 
 
 def check_filesize(file):
-    file_MB_size = round(os.stat(file).st_size / 1024, 2)
-    return file_MB_size
+    file_KB_size = floor(os.stat(file).st_size)
+    return file_KB_size
 
 
 def main():
