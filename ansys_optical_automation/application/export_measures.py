@@ -1,7 +1,7 @@
 import tkinter as tk
 from tkinter import filedialog
 
-from ansys_optical_automation.post_process.dpf_xmp_viewer import XmpViewer
+from ansys_optical_automation.post_process.dpf_xmp_viewer import DpfXmpViewer
 
 
 def getfilename(extension, save=False):
@@ -30,7 +30,7 @@ def getfilename(extension, save=False):
 
 
 def main():
-    xmp = XmpViewer()
+    xmp = DpfXmpViewer()
     path_xmp = getfilename("*.xmp")
     xmp.open_file(path_xmp)
     path_xml = getfilename("*.xml")

@@ -7,7 +7,7 @@ import comtypes
 from ansys_optical_automation.post_process.dpf_base import DataProcessingFramework
 
 
-class XmpViewer(DataProcessingFramework):
+class DpfXmpViewer(DataProcessingFramework):
     """
     Provides for launching Speos postprocessing software, Virtual reality lab.
 
@@ -96,24 +96,45 @@ class XmpViewer(DataProcessingFramework):
             string pointing to the textfile
         inc_data : bool
             Boolean to determine if to include data matrix as list
+            currently not working correctly
 
         Returns
         -------
-        for inc_data True: data matrix
+        for inc_data True: data matrix[wavelength[layer[x[y]]]]
         """
         if not inc_data:
             self.dpf_instance.ImportTXT(txt_path)
         else:
             self.dpf_instance.ImportTXT(txt_path)
-            matrix = []
-            with open(txt_path, "r") as file:
-                my_data = csv.reader(file, delimiter="\t")
-                for i in range(8):
-                    next(my_data)
-                for i in range(int(self.dpf_instance.YHeight / self.dpf_instance.YSampleHeight)):
-                    line = next(my_data)
-                    matrix.append(line)
-            return matrix
+            if self.dpf_instance.Maptype == 2:
+                "account for spectral maps"
+                matrix = []
+                with open(txt_path, "r") as file:
+                    my_data = csv.reader(file, delimiter="\t")
+                    for i in range(8):
+                        next(my_data)
+                    for w in range(self.dpf_instance.WNb - 1):
+                        matrix.append([])
+                        for j in range(len(self.source_list)):
+                            matrix[w].append([])
+                            for k in range(int(self.dpf_instance.YHeight / self.dpf_instance.YSampleHeight)):
+                                line = next(my_data)
+                                matrix[w][j].append(line)
+                return matrix
+            elif self.dpf_instance.Maptype == 3:
+                matrix = []
+                with open(txt_path, "r") as file:
+                    my_data = csv.reader(file, delimiter="\t")
+                    for i in range(8):
+                        next(my_data)
+                    for j in range(len(self.source_list)):
+                        matrix.append([])
+                        for k in range(int(self.dpf_instance.YHeight / self.dpf_instance.YSampleHeight)):
+                            line = next(my_data)
+                            matrix[j].append(line)
+                return matrix
+            else:
+                return False
 
     def get_source_list(self):
         """
