@@ -4,7 +4,7 @@ import os
 from .workflows.run_test_09_xmp_viewer import unittest_run
 
 
-class TestRayfileAPI:
+class TestXmpViewerAPI:
     """
     Defines conditions for running unit tests in PyTest.
     """
