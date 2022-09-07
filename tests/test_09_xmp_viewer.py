@@ -30,7 +30,7 @@ class TestRayfileAPI:
 
         On fail will report traceback with lines where the code failed.
         """
-        self.clean_results(self)
+        # self.clean_results(self)
 
         print("\n\n\n\n\n###############################")
         print(self.results.get("error", "All tests are successful."))
@@ -46,10 +46,10 @@ class TestRayfileAPI:
 
     def test_01_source_list(self):
         """
+        Compares the sourcelist to the reference
         Returns
         -------
-
-
+        None
         """
         res = self.results.get("source_list", None)
         ref = self.reference_results["source_list"]
@@ -57,10 +57,10 @@ class TestRayfileAPI:
 
     def test_02_export_data(self):
         """
+        compare exported data size
         Returns
         -------
-
-
+        None
         """
         allowed_exports = ["txt", "png", "bmp", "jpg", "tiff", "pf", "ies"]
         for export_type in allowed_exports:
@@ -70,10 +70,10 @@ class TestRayfileAPI:
 
     def test_03_import_txt(self):
         """
+        compares imported xmp size
         Returns
         -------
-
-
+        None
         """
         res = self.results.get("xmp_import", None)
         ref = self.reference_results["xmp_import"]
@@ -88,4 +88,15 @@ class TestRayfileAPI:
         """
         res = self.results.get("xmp_import_data", None)
         ref = self.reference_results["xmp_import_data"]
+        assert res == ref
+
+    def test_05_export_measures(self):
+        """
+        compares size of exported measures txt
+        Returns
+        -------
+        None
+        """
+        res = self.results.get("xmp_measures", None)
+        ref = self.reference_results["xmp_measures"]
         assert res == ref

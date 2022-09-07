@@ -44,6 +44,7 @@ class DpfXmpViewer(DataProcessingFramework):
 
         self.file_path = str_path
         if self.dpf_instance.OpenFile(str_path):
+            self.source_list = []
             if self.dpf_instance.MapType == 2 or self.dpf_instance.MapType == 3:
                 self.get_source_list()
         else:
@@ -111,27 +112,26 @@ class DpfXmpViewer(DataProcessingFramework):
                 matrix = []
                 with open(txt_path, "r") as file:
                     my_data = csv.reader(file, delimiter="\t")
-                    for i in range(8):
+                    for i in range(9):
                         next(my_data)
+                    print(str(self.dpf_instance.YHeight / self.dpf_instance.YSampleHeight))
                     for w in range(self.dpf_instance.WNb - 1):
                         matrix.append([])
-                        for j in range(len(self.source_list)):
-                            matrix[w].append([])
-                            for k in range(int(self.dpf_instance.YHeight / self.dpf_instance.YSampleHeight)):
-                                line = next(my_data)
-                                matrix[w][j].append(line)
+                        for k in range(int(self.dpf_instance.YHeight / self.dpf_instance.YSampleHeight)):
+                            line = next(my_data)
+                            matrix[w].append(line)
                 return matrix
             elif self.dpf_instance.Maptype == 3:
                 matrix = []
                 with open(txt_path, "r") as file:
+                    print(txt_path)
                     my_data = csv.reader(file, delimiter="\t")
                     for i in range(8):
                         next(my_data)
-                    for j in range(len(self.source_list)):
-                        matrix.append([])
-                        for k in range(int(self.dpf_instance.YHeight / self.dpf_instance.YSampleHeight)):
-                            line = next(my_data)
-                            matrix[j].append(line)
+                    print(str(self.dpf_instance.YHeight / self.dpf_instance.YSampleHeight))
+                    for k in range(int(self.dpf_instance.YHeight / self.dpf_instance.YSampleHeight)):
+                        line = next(my_data)
+                        matrix.append(line)
                 return matrix
             else:
                 return False
@@ -149,7 +149,6 @@ class DpfXmpViewer(DataProcessingFramework):
             raise Exception("IronPython not supported")
         else:
             if self.dpf_instance.MapType == 2 or self.dpf_instance.MapType == 3:
-                print(self.dpf_instance.MapType)
                 total_sources = self.dpf_instance.ExtendedGetNbSource
                 for layer in range(total_sources):
                     name = comtypes.automation.VARIANT()
