@@ -32,9 +32,9 @@ class DataProcessingFramework:
                     instance_type = System.Type.GetTypeFromProgID(self.application)
                     self.dpf_instance = System.Activator.CreateInstance(instance_type)
                 else:
-                    from comtypes.client import CreateObject
+                    import win32com.client as win32
 
-                    self.dpf_instance = CreateObject(self.application)
+                    self.dpf_instance = win32.Dispatch(self.application)
             else:
                 raise ImportError("Application is not supported.")
 

@@ -45,6 +45,7 @@ def main():
         shutil.copyfile(file, os.path.join(work_directory, "mytest_xmp_" + str(i) + ".xmp"))
     xmp_files = glob.glob(os.path.join(work_directory, "*.xmp"))
     results_dict["source_list"] = []
+    results_dict["Open XMP"] = []
     allowed_exports = ["txt", "png", "bmp", "jpg", "tiff", "pf"]
     special_exports = ["ies"]
     xmp = DpfXmpViewer()
@@ -53,39 +54,41 @@ def main():
     for export_type in special_exports:
         results_dict["export_" + export_type] = []
     for file in xmp_files:
-        xmp.open_file(file)
-        results_dict["source_list"].append(xmp.source_list)
-        for export_type in allowed_exports:
-            export_path = xmp.export(format=export_type)
-            results_dict["export_" + export_type].append(check_file_size(export_path))
-        for export_type in special_exports:
-            if (
-                xmp.dpf_instance.ReturnValueType == 1
-                and (export_type == "ies")
-                and not xmp.dpf_instance.ReturnUnitType == 0
-            ):
-                export_path = xmp.export(format=export_type)
-                results_dict["export_" + export_type].append(check_file_size(export_path))
-    txt_imports = glob.glob(os.path.join(work_directory, "*.txt"))
-
-    results_dict["xmp_import"] = []
-    results_dict["xmp_import_data"] = []
-    for i, txt_data in enumerate(txt_imports):
-        xmp.read_txt_export(txt_data)
-        xmp_import_path = os.path.join(work_directory, "import" + str(i) + ".xmp")
-        xmp.dpf_instance.SaveFile(xmp_import_path)
-        results_dict["xmp_import"].append(check_file_size(xmp_import_path))
-        data = xmp.read_txt_export(txt_data, inc_data=True)
-        results_dict["xmp_import_data"].append(data)
-    results_dict["xmp_measures"] = []
-    for i, comb in enumerate(xml_test_files):
-        xmp.open_file(comb[0])
-        export_path = os.path.join(work_directory, "export" + str(i) + ".txt")
-        xmp.export_template_measures(comb[1], export_path)
-        results_dict["xmp_measures"].append(check_file_size(export_path))
-    xmp.open_file(spectral_test_file)
-    results_dict["spectral"] = xmp.rect_export_spectrum(0, 0, 5, 5)
-    xmp.close()
+        response = xmp.open_file(file)
+        print(response)
+        results_dict["Open XMP"].append(response)
+    #     results_dict["source_list"].append(xmp.source_list)
+    #     for export_type in allowed_exports:
+    #         export_path = xmp.export(format=export_type)
+    #         results_dict["export_" + export_type].append(check_file_size(export_path))
+    #     for export_type in special_exports:
+    #         if (
+    #             xmp.dpf_instance.ReturnValueType == 1
+    #             and (export_type == "ies")
+    #             and not xmp.dpf_instance.ReturnUnitType == 0
+    #         ):
+    #             export_path = xmp.export(format=export_type)
+    #             results_dict["export_" + export_type].append(check_file_size(export_path))
+    # txt_imports = glob.glob(os.path.join(work_directory, "*.txt"))
+    #
+    # results_dict["xmp_import"] = []
+    # results_dict["xmp_import_data"] = []
+    # for i, txt_data in enumerate(txt_imports):
+    #     xmp.read_txt_export(txt_data)
+    #     xmp_import_path = os.path.join(work_directory, "import" + str(i) + ".xmp")
+    #     xmp.dpf_instance.SaveFile(xmp_import_path)
+    #     results_dict["xmp_import"].append(check_file_size(xmp_import_path))
+    #     data = xmp.read_txt_export(txt_data, inc_data=True)
+    #     results_dict["xmp_import_data"].append(data)
+    # results_dict["xmp_measures"] = []
+    # for i, comb in enumerate(xml_test_files):
+    #     xmp.open_file(comb[0])
+    #     export_path = os.path.join(work_directory, "export" + str(i) + ".txt")
+    #     xmp.export_template_measures(comb[1], export_path)
+    #     results_dict["xmp_measures"].append(check_file_size(export_path))
+    # xmp.open_file(spectral_test_file)
+    # results_dict["spectral"] = xmp.rect_export_spectrum(0, 0, 5, 5)
+    # xmp.close()
     return results_dict
 
 
