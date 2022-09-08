@@ -100,3 +100,14 @@ class TestXmpViewerAPI:
         res = self.results.get("xmp_measures", None)
         ref = self.reference_results["xmp_measures"]
         assert res == ref
+
+    def test_06_spectrum_export(self):
+        """
+        compares spectral values from xmp to the reference values
+        Returns
+        -------
+
+        """
+        res = self.results.get("xmp_measures", None)
+        ref = self.reference_results["xmp_measures"]
+        assert res == ref

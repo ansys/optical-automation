@@ -32,9 +32,9 @@ spectral_test_file = os.path.join(unittest_path, "example_models", "Test_09_xmp_
 work_directory = os.path.join(unittest_path, "xmp")
 
 
-def check_filesize(file):
-    file_KB_size = floor(os.stat(file).st_size)
-    return file_KB_size
+def check_file_size(file):
+    file_size = floor(os.stat(file).st_size / 10)
+    return file_size
 
 
 def main():
@@ -57,7 +57,7 @@ def main():
         results_dict["source_list"].append(xmp.source_list)
         for export_type in allowed_exports:
             export_path = xmp.export(format=export_type)
-            results_dict["export_" + export_type].append(check_filesize(export_path))
+            results_dict["export_" + export_type].append(check_file_size(export_path))
         for export_type in special_exports:
             if (
                 xmp.dpf_instance.ReturnValueType == 1
@@ -65,7 +65,7 @@ def main():
                 and not xmp.dpf_instance.ReturnUnitType == 0
             ):
                 export_path = xmp.export(format=export_type)
-                results_dict["export_" + export_type].append(check_filesize(export_path))
+                results_dict["export_" + export_type].append(check_file_size(export_path))
     txt_imports = glob.glob(os.path.join(work_directory, "*.txt"))
 
     results_dict["xmp_import"] = []
@@ -74,7 +74,7 @@ def main():
         xmp.read_txt_export(txt_data)
         xmp_import_path = os.path.join(work_directory, "xmp_import.xmp")
         xmp.dpf_instance.SaveFile(xmp_import_path)
-        results_dict["xmp_import"].append(check_filesize(xmp_import_path))
+        results_dict["xmp_import"].append(check_file_size(xmp_import_path))
         data = xmp.read_txt_export(txt_data, inc_data=True)
         results_dict["xmp_import_data"].append(data)
     results_dict["xmp_measures"] = []
@@ -82,7 +82,9 @@ def main():
         xmp.open_file(comb[0])
         export_path = os.path.join(work_directory, "export.txt")
         xmp.export_template_measures(comb[1], export_path)
-        results_dict["xmp_measures"].append(check_filesize(export_path))
+        results_dict["xmp_measures"].append(check_file_size(export_path))
+    xmp.open_file(spectral_test_file)
+    results_dict["spectral"] = xmp.rect_export_spectrum(0, 0, 5, 5)
     xmp.close()
     return results_dict
 
