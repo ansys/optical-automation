@@ -13,6 +13,7 @@ sys.path.append(lib_path)
 from ansys_optical_automation.interop_process.rayfile_converter import RayfileConverter
 from ansys_optical_automation.post_process.dpf_rayfile import DpfRayfile
 from ansys_optical_automation.scdm_core.utils import get_speos_core
+from ansys_optical_automation.zemax_process.base import BaseZOS
 from tests.config import SCDM_VERSION
 
 ray_file = os.path.join(unittest_path, "example_models", "test_08_ray.ray")
@@ -104,6 +105,67 @@ def check_speos_sim(rayfile_path):
     os.remove(os.path.join(work_directory, "ray.ray"))
     os.remove(os.path.join(work_directory, "speos.speos"))
     return result
+
+
+def check_zos_sim(rayfile_path):
+    zos = BaseZOS()
+    zosapi = zos.ZOSAPI
+    the_application = zos.TheApplication
+    the_system = zos.TheSystem
+    sample_dir = the_application.SamplesDir
+    test_file = os.path.join(os.sep, sample_dir, r"API\Python\test_sourcefile.zos")
+    the_system.New(False)
+    the_system.SaveAs(test_file)
+
+    # Add source and detector
+    the_system.MakeNonSequential()
+    the_nce = the_system.NCE
+    the_nce.AddObject()
+
+    the_application.BeginMessageLogging()
+
+    my_source = the_nce.GetObjectAt(1)
+    typeset_source_file = my_source.GetObjectTypeSettings(zosapi.Editors.NCE.ObjectType.SourceFile)
+    typeset_source_file.FileName1 = "10 mm collimated.dat"  # enter the correct filename
+    # Typeset_SourceFile.FileName1 = '10 mm collimated_invalid.dat'
+    my_source.ChangeType(typeset_source_file)
+    my_source.GetObjectCell(zosapi.Editors.NCE.ObjectColumn.Par1).IntegerValue = 5  # layout rays
+    my_source.GetObjectCell(zosapi.Editors.NCE.ObjectColumn.Par2).IntegerValue = 1000  # analysis rays
+    my_source.GetObjectCell(zosapi.Editors.NCE.ObjectColumn.Par3).DoubleValue = 1.0  # power
+    # Object_1.GetObjectCell(ZOSAPI.Editors.NCE.ObjectColumn.Par8).DoubleValue = 0.47 #wavenumber
+    # Object_1.GetObjectCell(ZOSAPI.Editors.NCE.ObjectColumn.Par9).DoubleValue = 0.47 #colour
+
+    my_detector = the_nce.GetObjectAt(2)
+    typeset_detector_rectangle = my_source.GetObjectTypeSettings(zosapi.Editors.NCE.ObjectType.DetectorRectangle)
+    my_detector.ChangeType(typeset_detector_rectangle)
+    num_x_pixels = 10
+    num_y_pixels = 10
+    half_x_width = 5
+    half_y_width = 5
+
+    my_detector.GetObjectCell(zosapi.Editors.NCE.ObjectColumn.Par1).DoubleValue = half_x_width
+    my_detector.GetObjectCell(zosapi.Editors.NCE.ObjectColumn.Par2).DoubleValue = half_y_width
+    my_detector.GetObjectCell(zosapi.Editors.NCE.ObjectColumn.Par3).IntegerValue = num_x_pixels
+    my_detector.GetObjectCell(zosapi.Editors.NCE.ObjectColumn.Par4).IntegerValue = num_y_pixels
+
+    # Create ray trace
+    NSCRayTrace = the_system.Tools.OpenNSCRayTrace()
+    NSCRayTrace.SplitNSCRays = False
+    NSCRayTrace.ScatterNSCRays = False
+    NSCRayTrace.UsePolarization = False
+    NSCRayTrace.IgnoreErrors = True
+    NSCRayTrace.SaveRays = False
+    NSCRayTrace.Run()
+    NSCRayTrace.WaitForCompletion()
+    bool_success = NSCRayTrace.Succeeded  # doesn't work here
+    NSCRayTrace.Close()
+
+    the_system.SaveAs(test_file)
+
+    print(the_application.RetrieveLogMessages())
+    the_application.ClearMessageLog()
+
+    print("Source file success: %s" % (str(bool_success)))
 
 
 def main():
