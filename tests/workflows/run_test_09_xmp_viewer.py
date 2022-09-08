@@ -70,17 +70,17 @@ def main():
 
     results_dict["xmp_import"] = []
     results_dict["xmp_import_data"] = []
-    for txt_data in txt_imports:
+    for i, txt_data in enumerate(txt_imports):
         xmp.read_txt_export(txt_data)
-        xmp_import_path = os.path.join(work_directory, "xmp_import.xmp")
+        xmp_import_path = os.path.join(work_directory, "import" + str(i) + ".xmp")
         xmp.dpf_instance.SaveFile(xmp_import_path)
         results_dict["xmp_import"].append(check_file_size(xmp_import_path))
         data = xmp.read_txt_export(txt_data, inc_data=True)
         results_dict["xmp_import_data"].append(data)
     results_dict["xmp_measures"] = []
-    for comb in xml_test_files:
+    for i, comb in enumerate(xml_test_files):
         xmp.open_file(comb[0])
-        export_path = os.path.join(work_directory, "export.txt")
+        export_path = os.path.join(work_directory, "export" + str(i) + ".txt")
         xmp.export_template_measures(comb[1], export_path)
         results_dict["xmp_measures"].append(check_file_size(export_path))
     xmp.open_file(spectral_test_file)
