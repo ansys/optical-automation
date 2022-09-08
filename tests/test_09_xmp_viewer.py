@@ -52,70 +52,82 @@ class TestXmpViewerAPI:
         if os.path.isfile(self.results_file):
             os.remove(self.results_file)
 
-    def test_01_source_list(self):
+    def test_09_open_xmp(self):
         """
-        Compares the sourcelist to the reference
+        Compare if XMP is successfully open.
+
         Returns
         -------
-        None
+
         """
-        res = self.results.get("source_list", None)
-        ref = self.reference_results["source_list"]
+        res = self.results.get("Open XMP", None)
+        ref = self.reference_results["Open XMP"]
         assert res == ref
 
-    def test_02_export_data(self):
-        """
-        compare exported data size
-        Returns
-        -------
-        None
-        """
-        allowed_exports = ["txt", "png", "bmp", "jpg", "tiff", "pf", "ies"]
-        for export_type in allowed_exports:
-            res = self.results.get("export_" + export_type, None)
-            ref = self.reference_results["export_" + export_type]
-            assert res == ref
-
-    def test_03_import_txt(self):
-        """
-        compares imported xmp size
-        Returns
-        -------
-        None
-        """
-        res = self.results.get("xmp_import", None)
-        ref = self.reference_results["xmp_import"]
-        assert res == ref
-
-    def test_04_import_advanced(self):
-        """
-        Returns
-        -------
-
-
-        """
-        res = self.results.get("xmp_import_data", None)
-        ref = self.reference_results["xmp_import_data"]
-        assert res == ref
-
-    def test_05_export_measures(self):
-        """
-        compares size of exported measures txt
-        Returns
-        -------
-        None
-        """
-        res = self.results.get("xmp_measures", None)
-        ref = self.reference_results["xmp_measures"]
-        assert res == ref
-
-    def test_06_spectrum_export(self):
-        """
-        compares spectral values from xmp to the reference values
-        Returns
-        -------
-
-        """
-        res = self.results.get("xmp_measures", None)
-        ref = self.reference_results["xmp_measures"]
-        assert res == ref
+    # def test_01_source_list(self):
+    #     """
+    #     Compares the sourcelist to the reference
+    #     Returns
+    #     -------
+    #     None
+    #     """
+    #     res = self.results.get("source_list", None)
+    #     ref = self.reference_results["source_list"]
+    #     assert res == ref
+    #
+    # def test_02_export_data(self):
+    #     """
+    #     compare exported data size
+    #     Returns
+    #     -------
+    #     None
+    #     """
+    #     allowed_exports = ["txt", "png", "bmp", "jpg", "tiff", "pf", "ies"]
+    #     for export_type in allowed_exports:
+    #         res = self.results.get("export_" + export_type, None)
+    #         ref = self.reference_results["export_" + export_type]
+    #         assert res == ref
+    #
+    # def test_03_import_txt(self):
+    #     """
+    #     compares imported xmp size
+    #     Returns
+    #     -------
+    #     None
+    #     """
+    #     res = self.results.get("xmp_import", None)
+    #     ref = self.reference_results["xmp_import"]
+    #     assert res == ref
+    #
+    # def test_04_import_advanced(self):
+    #     """
+    #     Returns
+    #     -------
+    #
+    #
+    #     """
+    #     res = self.results.get("xmp_import_data", None)
+    #     ref = self.reference_results["xmp_import_data"]
+    #     assert res == ref
+    #
+    # def test_05_export_measures(self):
+    #     """
+    #     compares size of exported measures txt
+    #     Returns
+    #     -------
+    #     None
+    #     """
+    #     res = self.results.get("xmp_measures", None)
+    #     ref = self.reference_results["xmp_measures"]
+    #     assert res == ref
+    #
+    # def test_06_spectrum_export(self):
+    #     """
+    #     compares spectral values from xmp to the reference values
+    #     Returns
+    #     -------
+    #
+    #     """
+    #     res = self.results.get("xmp_measures", None)
+    #     ref = self.reference_results["xmp_measures"]
+    #     assert res == ref

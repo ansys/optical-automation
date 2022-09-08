@@ -30,7 +30,6 @@ class DpfXmpViewer(DataProcessingFramework):
 
         Returns
         -------
-        None
 
         """
         if not os.path.isfile(str_path):  # check if file is existing.
@@ -46,7 +45,7 @@ class DpfXmpViewer(DataProcessingFramework):
         if self.dpf_instance.OpenFile(str_path):
             self.source_list = []
             if self.dpf_instance.MapType == 2 or self.dpf_instance.MapType == 3:
-                self.get_source_list()
+                return "successful"
         else:
             raise ImportError("Opening the file failed.")
 
