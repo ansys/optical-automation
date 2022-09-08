@@ -3,7 +3,15 @@ import os
 
 from .workflows.run_test_09_xmp_viewer import unittest_run
 
+Nvidia_GPU = False
+try:
+    subprocess.check_output("nvidia-smi")
+    Nvidia_GPU = True
+except Exception:
+    Nvidia_GPU = False
 
+
+@pytest.mark.skipif(Nvidia_GPU is False, reason="does not have gpu on runner")
 class TestXmpViewerAPI:
     """
     Defines conditions for running unit tests in PyTest.
