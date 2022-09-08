@@ -34,6 +34,7 @@ def main():
     dpf.export_vr_views(export_path=work_directory, config_ids=0)
     vr_exported_list = check_images_exported(work_directory)
     results_dict["VRImages"] = vr_exported_list
+    dpf.close()
     return results_dict
 
 
