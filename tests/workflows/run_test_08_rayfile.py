@@ -109,10 +109,10 @@ def check_speos_sim(rayfile_path):
 
 def check_zos_sim(rayfile_path):
     zos = BaseZOS()
-    zosapi = zos.ZOSAPI
-    the_application = zos.TheApplication
-    the_system = zos.TheSystem
-    sample_dir = the_application.SamplesDir
+    zosapi = zos.zosapi
+    the_application = zos.the_application
+    the_system = zos.the_system
+    sample_dir = zos.samples_dir()
     test_file = os.path.join(os.sep, sample_dir, r"API\Python\test_sourcefile.zos")
     the_system.New(False)
     the_system.SaveAs(test_file)

@@ -6,6 +6,10 @@ import clr
 
 
 class BaseZOS:
+    """
+    Basic Class structure to start Zemax Opticstudio
+    """
+
     class LicenseException(Exception):
         pass
 
@@ -20,82 +24,82 @@ class BaseZOS:
 
     def __init__(self, path=None):
         # determine location of ZOSAPI_NetHelper.dll & add as reference
-        aKey = winreg.OpenKey(
+        a_key = winreg.OpenKey(
             winreg.ConnectRegistry(None, winreg.HKEY_CURRENT_USER), r"Software\Zemax", 0, winreg.KEY_READ
         )
-        zemaxData = winreg.QueryValueEx(aKey, "ZemaxRoot")
-        NetHelper = os.path.join(os.sep, zemaxData[0], r"ZOS-API\Libraries\ZOSAPI_NetHelper.dll")
-        winreg.CloseKey(aKey)
-        clr.AddReference(NetHelper)
+        zemax_data = winreg.QueryValueEx(a_key, "ZemaxRoot")
+        net_helper = os.path.join(os.sep, zemax_data[0], r"ZOS-API\Libraries\ZOSAPI_NetHelper.dll")
+        winreg.CloseKey(a_key)
+        clr.AddReference(net_helper)
         import ZOSAPI_NetHelper
 
         # Find the installed version of OpticStudio
         if path is None:
-            isInitialized = ZOSAPI_NetHelper.ZOSAPI_Initializer.Initialize()
+            is_initialized = ZOSAPI_NetHelper.ZOSAPI_Initializer.Initialize()
         else:
             # Note -- uncomment the following line to use a custom initialization path
-            isInitialized = ZOSAPI_NetHelper.ZOSAPI_Initializer.Initialize(path)
+            is_initialized = ZOSAPI_NetHelper.ZOSAPI_Initializer.Initialize(path)
 
         # determine the ZOS root directory
-        if isInitialized:
-            dir = ZOSAPI_NetHelper.ZOSAPI_Initializer.GetZemaxDirectory()
+        if is_initialized:
+            zemax_directory = ZOSAPI_NetHelper.ZOSAPI_Initializer.GetZemaxDirectory()
         else:
             raise BaseZOS.InitializationException("Unable to locate Zemax OpticStudio.  Try using a hard-coded path.")
 
         # add ZOS-API referencecs
-        clr.AddReference(os.path.join(os.sep, dir, "ZOSAPI.dll"))
-        clr.AddReference(os.path.join(os.sep, dir, "ZOSAPI_Interfaces.dll"))
+        clr.AddReference(os.path.join(os.sep, zemax_directory, "ZOSAPI.dll"))
+        clr.AddReference(os.path.join(os.sep, zemax_directory, "ZOSAPI_Interfaces.dll"))
         import ZOSAPI
 
         # create a reference to the API namespace
-        self.ZOSAPI = ZOSAPI
+        self.zosapi = ZOSAPI
 
         # Create the initial connection class
-        self.TheConnection = ZOSAPI.ZOSAPI_Connection()
+        self.the_connection = ZOSAPI.ZOSAPI_Connection()
 
-        if self.TheConnection is None:
+        if self.the_connection is None:
             raise BaseZOS.ConnectionException("Unable to initialize .NET connection to ZOSAPI")
 
-        self.TheApplication = self.TheConnection.CreateNewApplication()
-        if self.TheApplication is None:
+        self.the_application = self.the_connection.CreateNewApplication()
+        if self.the_application is None:
             raise BaseZOS.InitializationException("Unable to acquire ZOSAPI application")
 
-        if not self.TheApplication.IsValidLicenseForAPI:
+        if not self.the_application.IsValidLicenseForAPI:
             raise BaseZOS.LicenseException("License is not valid for ZOSAPI use")
 
-        self.TheSystem = self.TheApplication.PrimarySystem
-        if self.TheSystem is None:
+        self.the_system = self.the_application.PrimarySystem
+        if self.the_system is None:
             raise BaseZOS.SystemNotPresentException("Unable to acquire Primary system")
 
     def __del__(self):
-        if self.TheApplication is not None:
-            self.TheApplication.CloseApplication()
-            self.TheApplication = None
+        if self.the_application is not None:
+            self.the_application.CloseApplication()
+            self.the_application = None
 
-        self.TheConnection = None
+        self.the_connection = None
 
-    def OpenFile(self, filepath, saveIfNeeded):
-        if self.TheSystem is None:
+    def open_file(self, file_path, save_if_needed):
+        if self.the_system is None:
             raise BaseZOS.SystemNotPresentException("Unable to acquire Primary system")
-        self.TheSystem.LoadFile(filepath, saveIfNeeded)
+        self.the_system.LoadFile(file_path, save_if_needed)
 
-    def CloseFile(self, save):
-        if self.TheSystem is None:
+    def close_file(self, save):
+        if self.the_system is None:
             raise BaseZOS.SystemNotPresentException("Unable to acquire Primary system")
-        self.TheSystem.Close(save)
+        self.the_system.Close(save)
 
-    def SamplesDir(self):
-        if self.TheApplication is None:
+    def samples_dir(self):
+        if self.the_application is None:
             raise BaseZOS.InitializationException("Unable to acquire ZOSAPI application")
 
-        return self.TheApplication.SamplesDir
+        return self.the_application.SamplesDir
 
-    def ExampleConstants(self):
-        if self.TheApplication.LicenseStatus == self.ZOSAPI.LicenseStatusType.PremiumEdition:
+    def example_constants(self):
+        if self.the_application.LicenseStatus == self.zosapi.LicenseStatusType.PremiumEdition:
             return "Premium"
-        elif self.TheApplication.LicenseStatus == self.ZOSAPI.LicenseStatusTypeProfessionalEdition:
+        elif self.the_application.LicenseStatus == self.zosapi.LicenseStatusTypeProfessionalEdition:
             return "Professional"
-        elif self.TheApplication.LicenseStatus == self.ZOSAPI.LicenseStatusTypeStandardEdition:
+        elif self.the_application.LicenseStatus == self.zosapi.LicenseStatusTypeStandardEdition:
             return "Standard"
         else:
             return "Invalid"
