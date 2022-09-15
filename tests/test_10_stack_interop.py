@@ -16,7 +16,7 @@ class TestStackInteropAPI:
         self.results_file = os.path.join(self.local_path, "workflows", "example_models", "test_10_stack_interop.coated")
         self.clean_results(self)  # no idea why but you have to pass there self
 
-        print("Start VRLab to generate the JSON file for tests.")
+        print("Start Lumerical to generate file for tests.")
         unittest_run()
 
     def teardown_class(self):
