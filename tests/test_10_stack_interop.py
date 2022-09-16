@@ -1,5 +1,6 @@
 import os
 
+from .config import LUMERICAL_VERSION
 from .workflows.run_test_10_stack_interop import unittest_run
 
 
@@ -17,7 +18,7 @@ class TestStackInteropAPI:
         self.clean_results(self)  # no idea why but you have to pass there self
 
         print("Start Lumerical to generate file for tests.")
-        unittest_run()
+        unittest_run(LUMERICAL_VERSION)
 
     def teardown_class(self):
         """
@@ -41,7 +42,7 @@ class TestStackInteropAPI:
 
     def test_01_stack_speos_generated(self):
         """
-        Verify sdf content loaded is correct
+        Verify ldf content loaded and coated file generated
         Returns:
         -------
         None
@@ -49,6 +50,12 @@ class TestStackInteropAPI:
         assert os.path.exists(self.results_file)
 
     def test_02_verify_generated_coated_file(self):
+        """
+        Verify speos coated file is corrected generated via comparing to a reference
+        Returns
+        -------
+        None
+        """
 
         res_file = open(self.results_file, "r")
         ref_file = open(self.reference_file, "r")

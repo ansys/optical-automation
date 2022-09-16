@@ -11,27 +11,22 @@ class DpfStack:
 
     """
 
-    def __init__(self, stack_file):
+    def __init__(self, version):
         """Initialize general properties of DPF.
 
         Parameters
         ----------
-        stack_file : str
-            stack file or stack result file provided
+        version : int
+            version of lumerical in format of 222 or 231 to be used. For example, ``222`` for 2022 R2.
         """
-        self.stack_file_location = stack_file
+        self.support_version = version
+        self.stack_file_location = None
         self.stack = None
         self.rt_stack = None
         self.rt_theta = None
         self.rt_lambda = None
         self.R = None
         self.T = None
-
-        if stack_file.lower().endswith(("ldf", "fsp")):
-            self.open_file(self.stack_file_location)
-        else:
-            msg = "incorrect file provided"
-            raise ImportError(msg)
 
     def open_file(self, stack_file):
         """Open a stack file.
@@ -41,16 +36,23 @@ class DpfStack:
         stack_file : str
             directory of stack file
         """
-        if stack_file.lower().endswith("fsp"):
+
+        if not stack_file.lower().endswith(("ldf", "fsp")):
+            msg = "incorrect file provided"
+            raise ImportError(msg)
+        self.stack_file_location = stack_file
+
+        if not self.stack_file_location.lower().endswith("fsp"):
             # TODO compute the stack project
             pass
-        install_location = get_lumerical_install_location(222)
+
+        install_location = get_lumerical_install_location(self.support_version)
         lumapi_location = os.path.join(install_location, "api", "python")
         sys.path.append(lumapi_location)
         import lumapi
 
         self.stack = lumapi.FDTD(hide=True)
-        self.stack.loaddata(stack_file)
+        self.stack.loaddata(self.stack_file_location)
         self.rt_stack = self.stack.getv("RTstack")
 
     def _save_stack_to_speos(self):

@@ -8,7 +8,8 @@ lib_path = os.path.dirname(unittest_path)
 sys.path.append(lib_path)
 
 
-def unittest_run():
+def unittest_run(stack_test_version):
     stack_result_file = os.path.join(unittest_path, "example_models", "test_10_stack_interop.ldf")
-    action = DpfStack(stack_result_file)
-    action.convert_stack_to_speos()
+    stack_dpf = DpfStack(stack_test_version)
+    stack_dpf.open_file(stack_result_file)
+    stack_dpf.convert_stack_to_speos()

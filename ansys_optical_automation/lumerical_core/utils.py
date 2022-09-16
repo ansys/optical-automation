@@ -17,4 +17,6 @@ def get_lumerical_install_location(version):
 
     """
     lumerical_install_dir = os.path.join(os.environ["ProgramFiles"], "Lumerical", "v" + str(version))
+    if not os.path.exists(lumerical_install_dir):
+        raise TypeError("Request Lumerical is not installed or not installed in the default location")
     return lumerical_install_dir
