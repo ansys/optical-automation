@@ -1,4 +1,5 @@
 import os
+import winreg
 
 
 def get_lumerical_install_location(version):
@@ -16,7 +17,16 @@ def get_lumerical_install_location(version):
         Path of the Lumerical installation.
 
     """
-    lumerical_install_dir = os.path.join(os.environ["ProgramFiles"], "Lumerical", "v" + str(version))
-    if not os.path.exists(lumerical_install_dir):
-        raise TypeError("Request Lumerical is not installed or not installed in the default location")
+    lumerical = r"Lumerical v" + str(version)
+    lumerical_install_dir = None
+    try:
+        a_key = winreg.OpenKey(
+            winreg.ConnectRegistry(None, winreg.HKEY_LOCAL_MACHINE),
+            os.path.join("Software", "ANSYS, Inc.", lumerical), 0, winreg.KEY_READ
+        )
+        lumerical_data = winreg.QueryValueEx(a_key, "installFolder")
+        lumerical_install_dir = lumerical_data[0]
+        winreg.CloseKey(a_key)
+    except EnvironmentError:
+        raise EnvironmentError("Request Lumerical is not installed or not installed in the default location")
     return lumerical_install_dir
