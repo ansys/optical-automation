@@ -22,7 +22,9 @@ def get_lumerical_install_location(version):
     try:
         a_key = winreg.OpenKey(
             winreg.ConnectRegistry(None, winreg.HKEY_LOCAL_MACHINE),
-            os.path.join("Software", "ANSYS, Inc.", lumerical), 0, winreg.KEY_READ
+            os.path.join("Software", "ANSYS, Inc.", lumerical),
+            0,
+            winreg.KEY_READ,
         )
         lumerical_data = winreg.QueryValueEx(a_key, "installFolder")
         lumerical_install_dir = lumerical_data[0]
