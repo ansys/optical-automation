@@ -381,10 +381,10 @@ class DpfRayfile(DataProcessingFramework):
                 self.__rays.append(DpfRay(x, y, z, l_dir, m_dir, n_dir, wav, e))
         else:
             if not self.__binary:
-                msg = "Non binary files not supported"
+                msg = "Non binary files not supported \n Filepath:" + self.file_path
                 raise TypeError(msg)
             else:
-                msg = "Provided file type is not supported"
+                msg = "Provided file type is not supported \n Filepath:" + self.file_path
                 raise TypeError(msg)
 
     @property
