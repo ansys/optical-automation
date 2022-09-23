@@ -79,6 +79,20 @@ class BaseZOS:
         self.the_connection = None
 
     def open_file(self, file_path, save_if_needed):
+        """
+        function to open a file
+        Parameters
+        ----------
+        file_path : str
+            String to the zemax zos file
+        save_if_needed : boolean
+            distinguish if to save already opened file before open a new one
+
+        Returns
+        -------
+
+
+        """
         if self.the_system is None:
             raise BaseZOS.SystemNotPresentException("Unable to acquire Primary system")
         self.the_system.LoadFile(file_path, save_if_needed)
