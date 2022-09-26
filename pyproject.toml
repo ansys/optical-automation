@@ -17,6 +17,7 @@ dynamic = ["version", "description"]
 dependencies = [
     "pywin32; sys_platform=='win32'",
     "pythonnet",
+    "numpy",
     "comtypes",
 ]
 
