@@ -93,6 +93,17 @@ def verify_data_load(rayfile_path):
 
 
 def check_speos_sim(rayfile_path):
+    """
+    Function runs a rayfile in a speos sim to test it
+    Parameters
+    ----------
+    rayfile_path : str
+        points to the rayfile to test
+
+    Returns
+    -------
+    bool True if succeed False if failed
+    """
     shutil.move(rayfile_path, os.path.join(work_directory, "ray.ray"))
     shutil.copyfile(sim_path, os.path.join(work_directory, "speos.speos"))
     run_sim = os.path.join(work_directory, "speos.speos")
@@ -108,14 +119,24 @@ def check_speos_sim(rayfile_path):
 
 
 def check_zos_sim(rayfile_path):
-    #Moving the source file to the working directory
+    """
+    Function runs a sdf rayfile in a zemax sim to test it
+    Parameters
+    ----------
+    rayfile_path : str
+        points to the rayfile to test
+
+    Returns
+    -------
+    bool True if succeed False if failed
+    """
+    # Moving the source file to the working directory
     sourcefilename = "ray.sdf"
-    shutil.move(rayfile_path, os.path.join(os.sep, work_directory, r'Objects\Sources\Source Files', sourcefilename))
+    shutil.move(rayfile_path, os.path.join(os.sep, work_directory, r"Objects\Sources\Source Files", sourcefilename))
     zos = BaseZOS()
     zosapi = zos.zosapi
     the_application = zos.the_application
     the_system = zos.the_system
-    sample_dir = zos.samples_dir()
 
     testfile = os.path.join(work_directory, "test_sourcefile.zos")
     the_system.New(False)
@@ -175,7 +196,7 @@ def check_zos_sim(rayfile_path):
 
     the_application.ClearMessageLog()
 
-    #print("Source file success: %s" % (str(bool_success)))
+    # print("Source file success: %s" % (str(bool_success)))
     return bool_success
 
 
