@@ -13,6 +13,7 @@ sys.path.append(lib_path)
 from ansys_optical_automation.interop_process.rayfile_converter import RayfileConverter
 from ansys_optical_automation.post_process.dpf_rayfile import DpfRayfile
 from ansys_optical_automation.scdm_core.utils import get_speos_core
+from ansys_optical_automation.zemax_process.base import BaseZOS
 from tests.config import SCDM_VERSION
 
 ray_file = os.path.join(unittest_path, "example_models", "test_08_ray.ray")
@@ -26,7 +27,6 @@ results_json = os.path.join(unittest_path, "test_08_rayfile_results.json")
 results_dict = {}
 
 work_directory = os.path.join(unittest_path, "rayfile")
-os.mkdir(work_directory)
 
 
 def check_converted_rayfile(rayfile_path, file_type):
@@ -92,6 +92,17 @@ def verify_data_load(rayfile_path):
 
 
 def check_speos_sim(rayfile_path):
+    """
+    Function runs a rayfile in a speos sim to test it
+    Parameters
+    ----------
+    rayfile_path : str
+        points to the rayfile to test
+
+    Returns
+    -------
+    bool True if succeed False if failed
+    """
     shutil.move(rayfile_path, os.path.join(work_directory, "ray.ray"))
     shutil.copyfile(sim_path, os.path.join(work_directory, "speos.speos"))
     run_sim = os.path.join(work_directory, "speos.speos")
@@ -106,7 +117,90 @@ def check_speos_sim(rayfile_path):
     return result
 
 
+def check_zos_sim(rayfile_path):
+    """
+    Function runs a sdf rayfile in a zemax sim to test it
+    Parameters
+    ----------
+    rayfile_path : str
+        points to the rayfile to test
+
+    Returns
+    -------
+    bool True if succeed False if failed
+    """
+    # Moving the source file to the working directory
+    sourcefilename = "ray.sdf"
+    shutil.move(rayfile_path, os.path.join(os.sep, work_directory, r"Objects\Sources\Source Files", sourcefilename))
+    zos = BaseZOS()
+    zosapi = zos.zosapi
+    the_application = zos.the_application
+    the_system = zos.the_system
+
+    testfile = os.path.join(work_directory, "test_sourcefile.zos")
+    the_system.New(False)
+    the_system.SaveAs(testfile)
+    if not the_system.IsProjectDirectory:
+        the_system.ConvertToProjectDirectory(work_directory)
+
+    # Add source and detector
+    the_system.MakeNonSequential()
+    the_nce = the_system.NCE
+    the_nce.AddObject()
+
+    the_application.BeginMessageLogging()
+
+    my_source = the_nce.GetObjectAt(1)
+    typeset_source_file = my_source.GetObjectTypeSettings(zosapi.Editors.NCE.ObjectType.SourceFile)
+    typeset_source_file.FileName1 = sourcefilename  # enter the correct filename
+    # Typeset_SourceFile.FileName1 = '10 mm collimated_invalid.dat'
+    my_source.ChangeType(typeset_source_file)
+    my_source.GetObjectCell(zosapi.Editors.NCE.ObjectColumn.Par1).IntegerValue = 5  # layout rays
+    my_source.GetObjectCell(zosapi.Editors.NCE.ObjectColumn.Par2).IntegerValue = 1000  # analysis rays
+    my_source.GetObjectCell(zosapi.Editors.NCE.ObjectColumn.Par3).DoubleValue = 1.0  # power
+    # Object_1.GetObjectCell(ZOSAPI.Editors.NCE.ObjectColumn.Par8).DoubleValue = 0.47 #wavenumber
+    # Object_1.GetObjectCell(ZOSAPI.Editors.NCE.ObjectColumn.Par9).DoubleValue = 0.47 #colour
+
+    my_detector = the_nce.GetObjectAt(2)
+    typeset_detector_rectangle = my_source.GetObjectTypeSettings(zosapi.Editors.NCE.ObjectType.DetectorRectangle)
+    my_detector.ChangeType(typeset_detector_rectangle)
+    num_x_pixels = 10
+    num_y_pixels = 10
+    half_x_width = 5
+    half_y_width = 5
+
+    my_detector.GetObjectCell(zosapi.Editors.NCE.ObjectColumn.Par1).DoubleValue = half_x_width
+    my_detector.GetObjectCell(zosapi.Editors.NCE.ObjectColumn.Par2).DoubleValue = half_y_width
+    my_detector.GetObjectCell(zosapi.Editors.NCE.ObjectColumn.Par3).IntegerValue = num_x_pixels
+    my_detector.GetObjectCell(zosapi.Editors.NCE.ObjectColumn.Par4).IntegerValue = num_y_pixels
+
+    # Create ray trace
+    nsc_raytrace = the_system.Tools.OpenNSCRayTrace()
+    nsc_raytrace.SplitNSCRays = False
+    nsc_raytrace.ScatterNSCRays = False
+    nsc_raytrace.UsePolarization = False
+    nsc_raytrace.IgnoreErrors = True
+    nsc_raytrace.SaveRays = False
+    nsc_raytrace.Run()
+    nsc_raytrace.WaitForCompletion()
+    # bool_success = NSCRayTrace.Succeeded  # doesn't work here
+    nsc_raytrace.Close()
+
+    the_system.SaveAs(testfile)
+
+    if the_application.RetrieveLogMessages() == "":
+        bool_success = True
+    else:
+        bool_success = False
+
+    the_application.ClearMessageLog()
+
+    # print("Source file success: %s" % (str(bool_success)))
+    return bool_success
+
+
 def main():
+    os.mkdir(work_directory)
     # test01
     test_file = os.path.join(work_directory, "test_08_sdf.sdf")
     shutil.copyfile(sdf_file, test_file)
@@ -171,6 +265,12 @@ def main():
     convert = RayfileConverter(test_file)
     convert.zemax_to_speos()
     results_dict["dat_ray_sim"] = check_speos_sim(os.path.splitext(test_file)[0].lower() + ".ray")
+    # test09
+    test_file = os.path.join(work_directory, "test_08_ray.ray")
+    shutil.copyfile(ray_file, test_file)
+    convert = RayfileConverter(test_file)
+    convert.speos_to_zemax()
+    results_dict["ray_sdf_sim"] = check_speos_sim(os.path.splitext(test_file)[0].lower() + ".sdf")
 
 
 def unittest_run():
