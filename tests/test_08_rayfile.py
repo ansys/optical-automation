@@ -128,7 +128,7 @@ class TestRayfileAPI:
         assert res is True
 
     def test_09_check_ray_in_sim(self):
-        """"
+        """
         Check if a Simulation performed with a converted *.ray file is working in Zemax sim
         Returns:
         -------
@@ -136,4 +136,3 @@ class TestRayfileAPI:
         """
         res = self.results.get("ray_sdf_sim", None)
         assert res is True
-
