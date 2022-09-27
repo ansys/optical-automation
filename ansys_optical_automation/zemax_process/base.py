@@ -2,8 +2,6 @@ import os
 import winreg
 from itertools import islice
 
-import clr
-
 
 class BaseZOS:
     """
@@ -24,6 +22,8 @@ class BaseZOS:
 
     def __init__(self, path=None):
         # determine location of ZOSAPI_NetHelper.dll & add as reference
+        import clr
+
         a_key = winreg.OpenKey(
             winreg.ConnectRegistry(None, winreg.HKEY_CURRENT_USER), r"Software\Zemax", 0, winreg.KEY_READ
         )

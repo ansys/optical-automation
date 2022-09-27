@@ -27,7 +27,6 @@ results_json = os.path.join(unittest_path, "test_08_rayfile_results.json")
 results_dict = {}
 
 work_directory = os.path.join(unittest_path, "rayfile")
-os.mkdir(work_directory)
 
 
 def check_converted_rayfile(rayfile_path, file_type):
@@ -202,6 +201,7 @@ def check_zos_sim(rayfile_path):
 
 
 def main():
+    os.mkdir(work_directory)
     # test01
     test_file = os.path.join(work_directory, "test_08_sdf.sdf")
     shutil.copyfile(sdf_file, test_file)
@@ -276,6 +276,7 @@ def main():
     convert = RayfileConverter(test_file)
     convert.speos_to_zemax()
     results_dict["ray_sdf_sim"] = check_zos_sim(os.path.splitext(test_file)[0].lower() + ".sdf")
+    shutil.rmtree(work_directory)
 
 
 def unittest_run():
@@ -287,5 +288,3 @@ def unittest_run():
 
     with open(results_json, "w") as file:
         json.dump(results_dict, file, indent=4)
-
-    shutil.rmtree(work_directory)
