@@ -132,6 +132,7 @@ def check_zos_sim(rayfile_path):
     """
     # Moving the source file to the working directory
     sourcefilename = "ray.sdf"
+    os.makedirs(os.path.join(os.sep, work_directory, r"Objects\Sources\Source Files\\"), exist_ok=True)
     shutil.move(rayfile_path, os.path.join(os.sep, work_directory, r"Objects\Sources\Source Files", sourcefilename))
     zos = BaseZOS()
     zosapi = zos.zosapi
@@ -259,18 +260,22 @@ def main():
     convert.zemax_to_speos()
 
     results_dict["sdf_ray_sim"] = check_speos_sim(os.path.splitext(test_file)[0].lower() + ".ray")
+    html_file = glob.glob(os.path.join(work_directory, "*.html"))
+    os.remove(html_file[0])
     # test08
     test_file = os.path.join(work_directory, "test_08_dat.dat")
     shutil.copyfile(dat_file, test_file)
     convert = RayfileConverter(test_file)
     convert.zemax_to_speos()
     results_dict["dat_ray_sim"] = check_speos_sim(os.path.splitext(test_file)[0].lower() + ".ray")
+    html_file = glob.glob(os.path.join(work_directory, "*.html"))
+    os.remove(html_file[0])
     # test09
     test_file = os.path.join(work_directory, "test_08_ray.ray")
     shutil.copyfile(ray_file, test_file)
     convert = RayfileConverter(test_file)
     convert.speos_to_zemax()
-    results_dict["ray_sdf_sim"] = check_speos_sim(os.path.splitext(test_file)[0].lower() + ".sdf")
+    results_dict["ray_sdf_sim"] = check_zos_sim(os.path.splitext(test_file)[0].lower() + ".sdf")
 
 
 def unittest_run():
