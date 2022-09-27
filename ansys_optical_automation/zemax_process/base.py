@@ -23,14 +23,8 @@ class BaseZOS:
         # determine location of ZOSAPI_NetHelper.dll & add as reference
         import clr
 
-        # a_key = winreg.OpenKey(
-        #    winreg.ConnectRegistry(None, winreg.HKEY_CURRENT_USER), r"Software\Zemax", 0, winreg.KEY_READ
-        # )
-        # zemax_data = winreg.QueryValueEx(a_key, "ZemaxRoot")
         program_data = os.environ["Programdata"]
-
         net_helper = os.path.join(program_data, "Zemax", r"ZOS-API\Libraries\ZOSAPI_NetHelper.dll")
-        # winreg.CloseKey(a_key)
         clr.AddReference(net_helper)
         import ZOSAPI_NetHelper
 
@@ -99,11 +93,28 @@ class BaseZOS:
         self.the_system.LoadFile(file_path, save_if_needed)
 
     def close_file(self, save):
+        """
+        close open file
+        Parameters
+        ----------
+        save : bool
+            defines if to save already open file
+
+        Returns
+        -------
+        None
+        """
         if self.the_system is None:
             raise BaseZOS.SystemNotPresentException("Unable to acquire Primary system")
         self.the_system.Close(save)
 
     def samples_dir(self):
+        """
+        Returns
+        -------
+
+
+        """
         if self.the_application is None:
             raise BaseZOS.InitializationException("Unable to acquire ZOSAPI application")
 
