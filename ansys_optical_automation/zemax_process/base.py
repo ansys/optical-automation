@@ -27,7 +27,7 @@ class BaseZOS:
         #    winreg.ConnectRegistry(None, winreg.HKEY_CURRENT_USER), r"Software\Zemax", 0, winreg.KEY_READ
         # )
         # zemax_data = winreg.QueryValueEx(a_key, "ZemaxRoot")
-        program_data = os.environ("Programdata")
+        program_data = os.environ["Programdata"]
 
         net_helper = os.path.join(program_data, "Zemax", r"ZOS-API\Libraries\ZOSAPI_NetHelper.dll")
         # winreg.CloseKey(a_key)
