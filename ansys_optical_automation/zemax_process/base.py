@@ -1,5 +1,4 @@
 import os
-import winreg
 from itertools import islice
 
 
@@ -24,12 +23,14 @@ class BaseZOS:
         # determine location of ZOSAPI_NetHelper.dll & add as reference
         import clr
 
-        a_key = winreg.OpenKey(
-            winreg.ConnectRegistry(None, winreg.HKEY_CURRENT_USER), r"Software\Zemax", 0, winreg.KEY_READ
-        )
-        zemax_data = winreg.QueryValueEx(a_key, "ZemaxRoot")
-        net_helper = os.path.join(os.sep, zemax_data[0], r"ZOS-API\Libraries\ZOSAPI_NetHelper.dll")
-        winreg.CloseKey(a_key)
+        # a_key = winreg.OpenKey(
+        #    winreg.ConnectRegistry(None, winreg.HKEY_CURRENT_USER), r"Software\Zemax", 0, winreg.KEY_READ
+        # )
+        # zemax_data = winreg.QueryValueEx(a_key, "ZemaxRoot")
+        program_data = os.environ("Programdata")
+
+        net_helper = os.path.join(program_data, "Zemax", r"ZOS-API\Libraries\ZOSAPI_NetHelper.dll")
+        # winreg.CloseKey(a_key)
         clr.AddReference(net_helper)
         import ZOSAPI_NetHelper
 
