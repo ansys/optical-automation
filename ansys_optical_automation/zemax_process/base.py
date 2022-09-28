@@ -5,10 +5,6 @@ from itertools import islice
 class BaseZOS:
     """
     Basic Class structure to start Zemax Opticstudio
-
-
-
-
     """
 
     class LicenseException(Exception):
@@ -80,6 +76,7 @@ class BaseZOS:
     def open_file(self, file_path, save_if_needed):
         """
         function to open a file
+
         Parameters
         ----------
         file_path : str
