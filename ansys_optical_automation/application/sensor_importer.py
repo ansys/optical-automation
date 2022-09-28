@@ -178,3 +178,6 @@ def main():
         )
         raise ValueError(error_message)
     sensor_lib()
+
+
+main()

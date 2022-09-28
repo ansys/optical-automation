@@ -209,6 +209,7 @@ class IntensitySensor(Sensor):
             speos_object = self.speos_sim.SensorIntensity.Create()
             speos_object.Name = name
         self.speos_object = speos_object
+        self.sensor_format = None
 
     def set_format(self, sensor_format=None):
         """
@@ -222,16 +223,16 @@ class IntensitySensor(Sensor):
         """
         if not sensor_format:
             raise NameError("Format input not provided.")
-        sensor_format = sensor_format.lower()
-        if sensor_format == "xmp":
+        self.sensor_format = sensor_format.lower()
+        if self.sensor_format == "xmp":
             self.speos_object.FormatType = self.speos_sim.SensorIntensity.EnumFormatType.XMP
-        elif sensor_format == "iesnatypea":
+        elif self.sensor_format == "iesnatypea":
             self.speos_object.FormatType = self.speos_sim.SensorIntensity.EnumFormatType.IESNATypeA
-        elif sensor_format == "iesnatypeb":
+        elif self.sensor_format == "iesnatypeb":
             self.speos_object.FormatType = self.speos_sim.SensorIntensity.EnumFormatType.IESNATypeB
-        elif sensor_format == "iesnatypec":
+        elif self.sensor_format == "iesnatypec":
             self.speos_object.FormatType = self.speos_sim.SensorIntensity.EnumFormatType.IESNATypeC
-        elif sensor_format == "eulumdat":
+        elif self.sensor_format == "eulumdat":
             self.speos_object.FormatType = self.speos_sim.SensorIntensity.EnumFormatType.Eulumdat
         else:
             raise ValueError("Wrong input value. Choose from XMP, IESNATypeA, IESNATypeB, IESNATypeC or Eulumdat.")
@@ -382,6 +383,19 @@ class IntensitySensor(Sensor):
         else:
             error_message = "Unsupported layer type. Supported types: source, face, sequence, none."
             raise ValueError(error_message)
+
+    def set_integration_angle(self, integration_value):
+        """
+        set integration angle of the radiance sensor
+
+        Parameters
+        ----------
+        integration_value
+        """
+        if self.sensor_format == "xmp" or self.sensor_format is None:
+            raise ValueError("Cannot assign integration values")
+        else:
+            self.speos_object.IntegrationAngle = integration_value
 
 
 class RadianceSensor(Sensor):
