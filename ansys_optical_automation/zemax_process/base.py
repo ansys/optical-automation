@@ -5,6 +5,10 @@ from itertools import islice
 class BaseZOS:
     """
     Basic Class structure to start Zemax Opticstudio
+
+
+
+
     """
 
     class LicenseException(Exception):
