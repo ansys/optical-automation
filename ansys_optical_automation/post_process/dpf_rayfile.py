@@ -384,7 +384,12 @@ class DpfRayfile(DataProcessingFramework):
                 msg = "Non binary files not supported \n Filepath:" + self.file_path
                 raise TypeError(msg)
             else:
-                msg = "Provided file type is not supported \n Filepath:" + self.file_path
+                msg = (
+                    "Provided file type is not supported \n Filepath: "
+                    + self.file_path
+                    + "\n"
+                    + "For Speos rayfile you can try to open the file with the RayfileEditor and save the file"
+                )
                 raise TypeError(msg)
 
     @property
