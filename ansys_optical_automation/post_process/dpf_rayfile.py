@@ -365,12 +365,12 @@ class DpfRayfile(DataProcessingFramework):
                 m_dir = struct.unpack("f", self.dpf_instance.read(4))[0]
                 n_dir = struct.unpack("f", self.dpf_instance.read(4))[0]
                 wav = wavelength if wavelength != 0 else 550
-                if ray_format_type == 2:
-                    wav = round(struct.unpack("f", self.dpf_instance.read(4))[0], 3)
                 e = struct.unpack("f", self.dpf_instance.read(4))[0]
                 if e <= 0:
                     msg = "Error: ray power of " + str(m_dir) + "th ray is <= 0"
                     raise ValueError(msg)
+                if ray_format_type == 2:
+                    wav = round(struct.unpack("f", self.dpf_instance.read(4))[0], 3)
                 if wav <= 0:
                     msg = "Error: ray wavelength cannot be <= 0"
                     raise ValueError(msg)
