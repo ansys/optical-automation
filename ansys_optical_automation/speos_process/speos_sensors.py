@@ -498,6 +498,34 @@ class RadianceSensor(Sensor):
             error_message = "please provide a radiance type as observer or focal"
             raise ValueError(error_message)
 
+    def set_xmp_template(self, xml_file, take_dimension=False, take_display=False):
+        """
+        set the xmp template.
+
+        Parameters
+        ----------
+        xml_file: str
+            path of xml file
+        take_dimension: bool
+            True if setting of dimension used from xml, otherwise False
+        take_display: bool
+            True if setting of XMP display used from xml, otherwise False
+
+        Returns
+        -------
+
+        """
+        if os.path.isfile(xml_file):
+            self.speos_object.XMPTemplateFile = xml_file
+        else:
+            msg = "Provided XML file is not found"
+            raise ValueError(msg)
+
+        if take_dimension:
+            self.speos_object.DimensionFromFile = True
+        if take_display:
+            self.speos_object.DisplayPropertiesFromFile = True
+
     def set_range(self, x_start=None, x_end=None, y_start=None, y_end=None, x_mirrored=False, y_mirrored=False):
         """
         Set the sensor size.
