@@ -504,15 +504,16 @@ class RadianceSensor(Sensor):
 
         Parameters
         ----------
-        xml_file: str
+        xml_file : str
             path of xml file
-        take_dimension: bool
+        take_dimension : bool
             True if setting of dimension used from xml, otherwise False
-        take_display: bool
+        take_display : bool
             True if setting of XMP display used from xml, otherwise False
 
         Returns
         -------
+
 
         """
         if os.path.isfile(xml_file):
