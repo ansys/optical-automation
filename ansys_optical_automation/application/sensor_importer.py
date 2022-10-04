@@ -28,6 +28,7 @@ def create_sensor(coordinate_sys):
     opt_sensor.set_resolution(argsDict["resolution"][0], argsDict["resolution"][1])
     opt_sensor.set_wavelength_resolution(10)
     opt_sensor.set_integration_angle(argsDict["integration_angle"])
+    opt_sensor.set_xmp_template(argsDict["xml_template"], take_display=True)
 
 
 def update_sensor(sensor_coordinate, new_name):
@@ -111,7 +112,7 @@ def sensor_lib():
     origin_ref = argsDict["origin"]
     phi_angles = argsDict["phi_angles"]
     tilt_angles = argsDict["theta_angles"]
-    distance_from_ref_center = argsDict["observer_distance"] - argsDict["distance_from_origin"]
+    distance_from_ref_center = argsDict["distance_from_origin"]
 
     if coordinate_systems.Count == 1:  # case there is no coordinates
         for theta_angle in tilt_angles:
@@ -178,3 +179,6 @@ def main():
         )
         raise ValueError(error_message)
     sensor_lib()
+
+
+main()
