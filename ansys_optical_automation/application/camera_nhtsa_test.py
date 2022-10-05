@@ -1,4 +1,5 @@
 import os
+import sys
 
 from ansys_optical_automation.speos_process.speos_sensors import Camera
 from ansys_optical_automation.speos_process.speos_simulations import Simulation
@@ -81,12 +82,122 @@ def main():
         argsDict
         mode = 1
     except Exception:
-        mode = 0
+        try:
+            "batch mode for usage in OSL"
+            sys.argv
+            mode = 2
+        except Exception:
+            mode = 0
 
     if mode == 1:
         camera_model = argsDict["camera_model"]
         car_model = argsDict["car_model"]
         print(car_model + camera_model)
+    elif mode == 2:
+        # This section defines the inputs which might be replaced by Optislang
+        camera_model = 1
+        car_model = "SUV_22R2"
+        Ansys_SPEOS_file = os.path.join(os.getcwd(), "Scene_22R2.scdocx")
+        if "Berline_22R2" in car_model:
+            position_value = 682.2  # Berline =682.2mm
+            car_path = os.path.join(os.getcwd(), "ANSYS_Berline/Berline_22R2.scdocx")
+        if "SUV_22R2" in car_model:
+            position_value = 546.123  # SUV=546.123mm
+            car_path = os.path.join(os.getcwd(), "ANSYS_SUV/SUV_22R2.scdocx")
+        # this section is the normal script part
+        partnames = ["Berline_22R2", "SUV_22R2"]
+        # Open File
+        importOptions = ImportOptions.Create()
+        DocumentOpen.Execute(Ansys_SPEOS_file, importOptions)
+
+        import_car(car_path, position_value)
+
+        ###
+        # Get Camera position
+        ###
+        name = "Cam_pos_1"  # Axis system in Berline and in SUV
+        target = Selection.CreateByNames(name).Filter[ICoordinateSystem]()
+        Cam_1 = Camera("Camera", SpeosSim, SpaceClaim)
+
+        if camera_model == 1:  # Based on Camera model V1
+            parameters = [
+                0.8,
+                10,
+                20,
+                "OPTIS_Distortion_150deg.OPTDistortion",
+                "ANSYS_Transmittance.spectrum",
+                1280,
+                1280,
+                1.8,
+                1.8,
+                [
+                    "ANSYS_Sensitivity_Red.spectrum",
+                    "ANSYS_Sensitivity_Green.spectrum",
+                    "ANSYS_Sensitivity_Blue.spectrum",
+                ],
+            ]
+            define_camera(
+                Cam_1,
+                target,
+                parameters[0],
+                parameters[1],
+                parameters[2],
+                parameters[3],
+                parameters[4],
+                parameters[5],
+                parameters[6],
+                parameters[7],
+                parameters[8],
+                parameters[9],
+            )
+
+        if camera_model == 2:  # Based on Camera model V1
+            parameters = [
+                0.8,
+                10,
+                20,
+                "OPTIS_Distortion_190deg.OPTDistortion",
+                "ANSYS_Transmittance.spectrum",
+                1280,
+                1280,
+                1.8,
+                1.8,
+                [
+                    "ANSYS_Sensitivity_Red.spectrum",
+                    "ANSYS_Sensitivity_Green.spectrum",
+                    "ANSYS_Sensitivity_Blue.spectrum",
+                ],
+            ]
+            define_camera(
+                Cam_1,
+                target,
+                parameters[0],
+                parameters[1],
+                parameters[2],
+                parameters[3],
+                parameters[4],
+                parameters[5],
+                parameters[6],
+                parameters[7],
+                parameters[8],
+                parameters[9],
+            )
+
+        Sim_Cam = Simulation("Cam_Sim", SpeosSim, SpaceClaim, "inverse")
+        Sim_Cam.select_geometries(partnames)  # new
+        Sim_Cam.define_geometries()  # new
+        Sim_Cam.object.Sensors.Set(Cam_1.speos_object)
+
+        # Save File
+        options = ExportOptions.Create()
+        DocumentSave.Execute(Ansys_SPEOS_file, options)
+        # This section is added to export an additonal SOlution nfile for compuatiuon on HPC or GPU
+        # Export speos-file
+        speos_path = os.path.join(os.getcwd(), "SPEOS isolated files")
+        if not os.path.isdir(speos_path):
+            os.mkdir(speos_path)
+        Sim_Cam.object.Export(os.path.join(speos_path, "Cam_Sim.speos"))
+
     elif mode == 0:
         ###
         # Input Camera model number
