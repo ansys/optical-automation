@@ -280,14 +280,14 @@ def create_intensity_sensor(
     sensor_obj.set_sampling(x_sampling=x_y_samplings[0], y_sampling=x_y_samplings[1])
     if layer is not None:
         sensor_obj.set_layer(layer)
-    if integration is not None:
-        sensor_obj.set_integration_angle(integration)
     if sensor_type == "IESNATypeA":
         sensor_obj.set_format(sensor_format="IESNATypeA")
     if sensor_type == "XMP":
         sensor_obj.set_format(sensor_format="XMP")
         sensor_obj.set_range(x_mirrored=True, y_mirrored=True, x_start=-90, x_end=90, y_start=-90, y_end=90)
         sensor_obj.set_wavelength(w_sampling=w_sampling)
+    if integration is not None:
+        sensor_obj.set_integration_angle(integration)
     return sensor_obj
 
 
