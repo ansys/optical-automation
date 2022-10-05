@@ -59,7 +59,7 @@ def define_camera(
         position.Items[0],
         [
             position.Items[0].GetDescendants[ICoordinateAxis]()[0],
-            position.Items[0].GetDescendants[ICoordinateAxis]()[0],
+            position.Items[0].GetDescendants[ICoordinateAxis]()[1],
         ],
     )
     my_cam.speos_object.FocalLength = focal_length
@@ -180,11 +180,12 @@ def main():
         Sim_Cam = Simulation("Cam_Sim", SpeosSim, SpaceClaim, "inverse")
         Sim_Cam.select_geometries(partnames)  # new
         Sim_Cam.define_geometries()  # new
-        Sim_Cam.object.Sensors.Set(Cam_2.speos_object)
+        Sim_Cam.object.Sensors.Set(Cam_1.speos_object)
 
         # Save File
         options = ExportOptions.Create()
-        DocumentSave.Execute(Ansys_SPEOS_file, options)
+
+        DocumentSave.Execute(GetActivePart().Document.Path, options)
 
         Sim_Cam.object.Compute()
 
