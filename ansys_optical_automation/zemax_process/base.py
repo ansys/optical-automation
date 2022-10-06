@@ -20,6 +20,18 @@ class BaseZOS:
         pass
 
     def __init__(self, path=None):
+        """
+        function that initializes the connection to OpticStudio
+
+        Parameters
+        ----------
+        None
+
+        Returns
+        -------
+        None
+
+        """
         # determine location of ZOSAPI_NetHelper.dll & add as reference
         import clr
 
@@ -67,6 +79,19 @@ class BaseZOS:
             raise BaseZOS.SystemNotPresentException("Unable to acquire Primary system")
 
     def __del__(self):
+        """
+        function to shut down the OpticStudio process
+        It cleans up the connection to OpticStudio.
+
+        Parameters
+        ----------
+        None
+
+        Returns
+        -------
+        None
+
+        """
         if self.the_application is not None:
             self.the_application.CloseApplication()
             self.the_application = None
@@ -111,9 +136,15 @@ class BaseZOS:
 
     def samples_dir(self):
         """
+        gets the full path for the current user's samples directory (in the My Documents\Zemax\Samples\folder by default)
+
+        Parameters
+        ----------
+        None
+
         Returns
         -------
-
+        The user's samples files directory
 
         """
         if self.the_application is None:
@@ -122,6 +153,19 @@ class BaseZOS:
         return self.the_application.SamplesDir
 
     def example_constants(self):
+        """
+        gets the license status type
+
+        Parameters
+        ----------
+        None
+
+        Returns
+        -------
+        the license type
+        It can be premium, professional, standard or invalid.
+
+        """
         if self.the_application.LicenseStatus == self.zosapi.LicenseStatusType.PremiumEdition:
             return "Premium"
         elif self.the_application.LicenseStatus == self.zosapi.LicenseStatusTypeProfessionalEdition:
