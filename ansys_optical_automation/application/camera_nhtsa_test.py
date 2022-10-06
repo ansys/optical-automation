@@ -6,6 +6,21 @@ from ansys_optical_automation.speos_process.speos_simulations import Simulation
 
 
 def import_car(path, position_value):
+    """
+    function to import car defined by path into position defined by position_value.
+
+    Parameters
+    ----------
+    path : str
+        path defines the location of part to be imported.
+    position_value : float
+        value about position of car
+
+    Returns
+    -------
+
+
+    """
     param = GetActiveWindow().Groups[0]
     param.SetDimensionValue(MM(position_value))
     name = "Placement_position"
