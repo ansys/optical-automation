@@ -77,6 +77,95 @@ def define_camera(
     my_cam.set_sensitivity("blue", sensitivity[2])
 
 
+def prepare_sim_setup(cam_name, sim_name, part_names, cam_model):
+    """
+    Parameters
+    ----------
+    cam_name
+    sim_name
+    part_names
+    cam_model
+
+    Returns
+    -------
+
+
+    """
+    name = "Cam_pos_1"  # Axis system in Berline and in SUV
+    target = Selection.CreateByNames(name).Filter[ICoordinateSystem]()
+    Cam_1 = Camera(cam_name, SpeosSim, SpaceClaim)
+
+    if cam_model == 1:  # Based on Camera model V1
+        parameters = [
+            0.8,
+            10,
+            20,
+            "OPTIS_Distortion_150deg.OPTDistortion",
+            "ANSYS_Transmittance.spectrum",
+            1280,
+            1280,
+            1.8,
+            1.8,
+            [
+                "ANSYS_Sensitivity_Red.spectrum",
+                "ANSYS_Sensitivity_Green.spectrum",
+                "ANSYS_Sensitivity_Blue.spectrum",
+            ],
+        ]
+        define_camera(
+            Cam_1,
+            target,
+            parameters[0],
+            parameters[1],
+            parameters[2],
+            parameters[3],
+            parameters[4],
+            parameters[5],
+            parameters[6],
+            parameters[7],
+            parameters[8],
+            parameters[9],
+        )
+
+    if cam_model == 2:  # Based on Camera model V1
+        parameters = [
+            0.8,
+            10,
+            20,
+            "OPTIS_Distortion_190deg.OPTDistortion",
+            "ANSYS_Transmittance.spectrum",
+            1280,
+            1280,
+            1.8,
+            1.8,
+            [
+                "ANSYS_Sensitivity_Red.spectrum",
+                "ANSYS_Sensitivity_Green.spectrum",
+                "ANSYS_Sensitivity_Blue.spectrum",
+            ],
+        ]
+        define_camera(
+            Cam_1,
+            target,
+            parameters[0],
+            parameters[1],
+            parameters[2],
+            parameters[3],
+            parameters[4],
+            parameters[5],
+            parameters[6],
+            parameters[7],
+            parameters[8],
+            parameters[9],
+        )
+
+    sim_cam = Simulation(sim_name, SpeosSim, SpaceClaim, "inverse")
+    sim_cam.select_geometries(part_names)  # new
+    sim_cam.define_geometries()  # new
+    sim_cam.object.Sensors.Set(Cam_1.speos_object)
+    return sim_cam
+
+
 def main():
     try:
         argsDict
@@ -90,7 +179,17 @@ def main():
     if mode == 1:
         camera_model = argsDict["camera_model"]
         car_model = argsDict["car_model"]
-        print(car_model + camera_model)
+        position_value = argsDict["position_value"]
+
+        import_car(car_model, position_value)
+        part_names = []
+        for part in GetRootPart().Components:
+            part_names.append(part.GetName())
+        ###
+        # Define Sim
+        sim_cam = prepare_sim_setup("Camera", "Sim_Cam", part_names, camera_model)
+        sim_cam.object.Compute()
+
     elif mode == 2:
         # This section defines the inputs which might be replaced by Optislang or the user on usage
         repo_path = os.path.join(os.getcwd(), r"Reference\optical-automation-main")
@@ -104,100 +203,26 @@ def main():
         if "SUV_22R2" in car_model:
             position_value = 546.123  # SUV=546.123mm
             car_path = os.path.join(os.getcwd(), "ANSYS_SUV/SUV_22R2.scdocx")
+
         # this section is the normal script part
-        partnames = []
         # Open File
         importOptions = ImportOptions.Create()
         DocumentOpen.Execute(Ansys_SPEOS_file, importOptions)
-
         import_car(car_path, position_value)
+
+        part_names = []
         for part in GetRootPart().Components:
-            partnames.append(part.GetName())
-        ###
-        # Get Camera position
-        ###
-        name = "Cam_pos_1"  # Axis system in Berline and in SUV
-        target = Selection.CreateByNames(name).Filter[ICoordinateSystem]()
-        Cam_1 = Camera("Camera", SpeosSim, SpaceClaim)
-
-        if camera_model == 1:  # Based on Camera model V1
-            parameters = [
-                0.8,
-                10,
-                20,
-                "OPTIS_Distortion_150deg.OPTDistortion",
-                "ANSYS_Transmittance.spectrum",
-                1280,
-                1280,
-                1.8,
-                1.8,
-                [
-                    "ANSYS_Sensitivity_Red.spectrum",
-                    "ANSYS_Sensitivity_Green.spectrum",
-                    "ANSYS_Sensitivity_Blue.spectrum",
-                ],
-            ]
-            define_camera(
-                Cam_1,
-                target,
-                parameters[0],
-                parameters[1],
-                parameters[2],
-                parameters[3],
-                parameters[4],
-                parameters[5],
-                parameters[6],
-                parameters[7],
-                parameters[8],
-                parameters[9],
-            )
-
-        if camera_model == 2:  # Based on Camera model V1
-            parameters = [
-                0.8,
-                10,
-                20,
-                "OPTIS_Distortion_190deg.OPTDistortion",
-                "ANSYS_Transmittance.spectrum",
-                1280,
-                1280,
-                1.8,
-                1.8,
-                [
-                    "ANSYS_Sensitivity_Red.spectrum",
-                    "ANSYS_Sensitivity_Green.spectrum",
-                    "ANSYS_Sensitivity_Blue.spectrum",
-                ],
-            ]
-            define_camera(
-                Cam_1,
-                target,
-                parameters[0],
-                parameters[1],
-                parameters[2],
-                parameters[3],
-                parameters[4],
-                parameters[5],
-                parameters[6],
-                parameters[7],
-                parameters[8],
-                parameters[9],
-            )
-
-        Sim_Cam = Simulation("Cam_Sim", SpeosSim, SpaceClaim, "inverse")
-        Sim_Cam.select_geometries(partnames)  # new
-        Sim_Cam.define_geometries()  # new
-        Sim_Cam.object.Sensors.Set(Cam_1.speos_object)
-
+            part_names.append(part.GetName())
+        sim_cam = prepare_sim_setup("Camera", "Sim_Cam", part_names, camera_model)
         # Save File
         options = ExportOptions.Create()
         DocumentSave.Execute(Ansys_SPEOS_file, options)
-        # This section is added to export an additonal SOlution nfile for compuatiuon on HPC or GPU
+        # This section is added to export an additonal Solution file for computation on HPC or GPU
         # Export speos-file
         speos_path = os.path.join(os.getcwd(), "SPEOS isolated files")
         if not os.path.isdir(speos_path):
             os.mkdir(speos_path)
-        Sim_Cam.object.Export(os.path.join(speos_path, "Cam_Sim.speos"))
+        sim_cam.object.Export(os.path.join(speos_path, "Cam_Sim.speos"))
 
     elif mode == 0:
         ###
@@ -206,7 +231,7 @@ def main():
         camera_model = 1
 
         InputHelper.PauseAndGetInput("Please provide a camera model number (2 models availables)", camera_model)
-        partnames = []  # new
+        part_names = []  # new
         car_model = "SUV_22R2"
 
         if "Berline_22R2" in car_model:
@@ -218,89 +243,15 @@ def main():
 
         import_car(car_path, position_value)
         for part in GetRootPart().Components:
-            partnames.append(part.GetName())
+            part_names.append(part.GetName())
         ###
-        # Get Camera position
-        ###
-        name = "Cam_pos_1"  # Axis system in Berline and in SUV
-        target = Selection.CreateByNames(name).Filter[ICoordinateSystem]()
-        Cam_1 = Camera("Camera", SpeosSim, SpaceClaim)
-
-        if camera_model == 1:  # Based on Camera model V1
-            parameters = [
-                0.8,
-                10,
-                20,
-                "OPTIS_Distortion_150deg.OPTDistortion",
-                "ANSYS_Transmittance.spectrum",
-                1280,
-                1280,
-                1.8,
-                1.8,
-                [
-                    "ANSYS_Sensitivity_Red.spectrum",
-                    "ANSYS_Sensitivity_Green.spectrum",
-                    "ANSYS_Sensitivity_Blue.spectrum",
-                ],
-            ]
-            define_camera(
-                Cam_1,
-                target,
-                parameters[0],
-                parameters[1],
-                parameters[2],
-                parameters[3],
-                parameters[4],
-                parameters[5],
-                parameters[6],
-                parameters[7],
-                parameters[8],
-                parameters[9],
-            )
-
-        if camera_model == 2:  # Based on Camera model V1
-            parameters = [
-                0.8,
-                10,
-                20,
-                "OPTIS_Distortion_190deg.OPTDistortion",
-                "ANSYS_Transmittance.spectrum",
-                1280,
-                1280,
-                1.8,
-                1.8,
-                [
-                    "ANSYS_Sensitivity_Red.spectrum",
-                    "ANSYS_Sensitivity_Green.spectrum",
-                    "ANSYS_Sensitivity_Blue.spectrum",
-                ],
-            ]
-            define_camera(
-                Cam_1,
-                target,
-                parameters[0],
-                parameters[1],
-                parameters[2],
-                parameters[3],
-                parameters[4],
-                parameters[5],
-                parameters[6],
-                parameters[7],
-                parameters[8],
-                parameters[9],
-            )
-
-        Sim_Cam = Simulation("Cam_Sim", SpeosSim, SpaceClaim, "inverse")
-        Sim_Cam.select_geometries(partnames)  # new
-        Sim_Cam.define_geometries()  # new
-        Sim_Cam.object.Sensors.Set(Cam_1.speos_object)
-
+        # Define Sim
+        sim_cam = prepare_sim_setup("Camera", "Sim_Cam", part_names, camera_model)
+        sim_cam.object.Compute()
         # Save File
         options = ExportOptions.Create()
 
         DocumentSave.Execute(GetActivePart().Document.Path, options)
-
-        Sim_Cam.object.Compute()
 
 
 main()
