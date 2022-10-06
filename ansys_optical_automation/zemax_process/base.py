@@ -25,7 +25,7 @@ class BaseZOS:
 
         Parameters
         ----------
-        None
+        path
 
         Returns
         -------
@@ -83,14 +83,9 @@ class BaseZOS:
         function to shut down the OpticStudio process
         It cleans up the connection to OpticStudio.
 
-        Parameters
-        ----------
-        None
-
         Returns
         -------
         None
-
         """
         if self.the_application is not None:
             self.the_application.CloseApplication()
@@ -124,7 +119,7 @@ class BaseZOS:
         Parameters
         ----------
         save : bool
-            defines if to save already open file
+        defines if to save already open file
 
         Returns
         -------
@@ -136,7 +131,8 @@ class BaseZOS:
 
     def samples_dir(self):
         """
-        gets the full path for the current user's samples directory (in the My Documents\Zemax\Samples\folder by default)
+        gets the full path for the current user's samples directory
+        by default: in the "My Documents\\Zemax\\Samples\\folder"
 
         Parameters
         ----------
@@ -155,10 +151,6 @@ class BaseZOS:
     def example_constants(self):
         """
         gets the license status type
-
-        Parameters
-        ----------
-        None
 
         Returns
         -------
