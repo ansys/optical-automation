@@ -1,5 +1,5 @@
+from opcode import stack_effect
 import os
-import sys
 import tkinter as tk
 from tkinter import filedialog
 
@@ -31,12 +31,15 @@ def getfilename(extension, save=False):
 
 
 def main():
-    stack_test_version = "222"
+    stack_test_version = 222
     stack_result_file = getfilename("*.ldf")
+    if not os.path.exists(stack_result_file):
+        msg = "Cannot find specified file: " + stack_result_file
+        raise TypeError(msg)
     stack_dpf = DpfStack(stack_test_version)
     stack_dpf.open_file(stack_result_file)
     stack_dpf.convert_stack_to_speos()
-    print("conversion of stack to Speos coating is done")
+    print("Success: conversion of stack to Speos coating is done")
 
 main()
 
