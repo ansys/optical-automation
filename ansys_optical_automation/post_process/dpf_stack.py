@@ -85,7 +85,7 @@ class DpfStack:
         # # write the file
         write_out = open(output_file_location, "w")
         write_out.write("! Lumerical stack coating data\n")
-        write_out.write("! TABLE LUMERICAL_STACK\n")
+        write_out.write("TABLE LUMERICAL_STACK\n")
 
         for theta_idx, theta in enumerate(self.rt_theta):
             write_out.write("ANGL %3.2f\n" % theta[0])
