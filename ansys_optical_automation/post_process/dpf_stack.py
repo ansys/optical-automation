@@ -104,6 +104,7 @@ class DpfStack:
         write_out.close()
 
     def _organize_data_for_output(self):
+        """Retrieve data from stack result file."""
         import numpy as np
 
         Rp = None
