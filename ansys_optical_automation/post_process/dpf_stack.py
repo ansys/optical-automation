@@ -90,16 +90,20 @@ class DpfStack:
         for theta_idx, theta in enumerate(self.rt_theta):
             write_out.write("ANGL %3.2f\n" % theta[0])
             for lambda_idx, lambda_value in enumerate(self.rt_lambda):
-                write_out.write("WAVE %8.6f %8.6f %8.6f %8.6f %8.6f\n"
-                               % (lambda_value[0] * 1e6,
-                                  self.R[lambda_idx, 1, theta_idx]/100,  #Rs
-                                  self.R[lambda_idx, 0, theta_idx]/100,  #Rp
-                                  self.T[lambda_idx, 1, theta_idx]/100,  #Ts
-                                  self.T[lambda_idx, 0, theta_idx]/100)) #Tp
+                write_out.write(
+                    "WAVE %8.6f %8.6f %8.6f %8.6f %8.6f\n"
+                    % (
+                        lambda_value[0] * 1e6,
+                        self.R[lambda_idx, 1, theta_idx] / 100,  # Rs
+                        self.R[lambda_idx, 0, theta_idx] / 100,  # Rp
+                        self.T[lambda_idx, 1, theta_idx] / 100,  # Ts
+                        self.T[lambda_idx, 0, theta_idx] / 100,  # Tp
+                    )
+                )
         write_out.write("\n")
         write_out.close()
 
-    def _organize_data_for_output(self):        
+    def _organize_data_for_output(self):
         import numpy as np
 
         Rp = None
@@ -139,7 +143,7 @@ class DpfStack:
         """conver the stack result into required information by speos coated file."""
         self._organize_data_for_output()
         self._save_stack_to_speos()
-        
+
     def convert_stack_to_zemax(self):
         """conver the stack result into required information by Zemax .dat coating file."""
         self._organize_data_for_output()
