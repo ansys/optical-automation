@@ -15,7 +15,7 @@ class TestStackInteropAPI:
             self.local_path, "workflows", "example_models", "test_10_stack_interop_speos_reference.coated"
         )
         self.reference_file_zemax = os.path.join(
-            self.local_path, "workflows", "example_models", "test_10_stack_interop_speos_reference.dat"
+            self.local_path, "workflows", "example_models", "test_10_stack_interop_zemax_reference.dat"
         )
         self.results_file_speos = os.path.join(
             self.local_path, "workflows", "example_models", "test_10_stack_interop.coated"
