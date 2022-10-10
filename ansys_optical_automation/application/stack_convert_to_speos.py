@@ -5,6 +5,7 @@ from tkinter import filedialog
 
 from ansys_optical_automation.post_process.dpf_stack import DpfStack
 
+
 def getfilename(extension, save=False):
     """
     Parameters
