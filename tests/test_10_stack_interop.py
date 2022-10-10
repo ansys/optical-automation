@@ -75,7 +75,7 @@ class TestStackInteropAPI:
         ref_file.close()
         assert res == ref
 
-    def test_03_stack_speos_generated(self):
+    def test_03_stack_zemax_generated(self):
         """
         Verify ldf content loaded and zemax dat file generated
         Returns:
