@@ -42,5 +42,6 @@ def main():
     stack_dpf.convert_stack_to_speos()
     print("Success: conversion of stack to Speos coating is done")
 
+
 main()
 
