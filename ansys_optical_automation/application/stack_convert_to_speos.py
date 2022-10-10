@@ -33,9 +33,9 @@ def getfilename(extension, save=False):
 def main():
     stack_test_version = 222
     stack_result_file = getfilename("*.ldf")
-    if not os.path.exists(stack_result_file):
-        msg = "Cannot find specified file: " + stack_result_file
-        raise TypeError(msg)
+    if not stack_result_file:
+        print("Exit programme, you have not select any files")
+        return
     stack_dpf = DpfStack(stack_test_version)
     stack_dpf.open_file(stack_result_file)
     stack_dpf.convert_stack_to_speos()
