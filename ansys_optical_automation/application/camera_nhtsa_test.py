@@ -29,6 +29,24 @@ def import_car(path, position_value):
     DocumentInsert.Execute(path)
 
 
+def selection_dialog_window():
+    """
+    Asks for a file selection.
+
+    Returns
+    -------
+    str
+        File directory selected, otherwise ``False``.
+    """
+    open_dialog = OpenFileDialog()
+    open_dialog.Filter = "ANSYS SPEOS files (*.scdoc;*.scdocx)|*.scdoc;*scdocx|All Files (*.*)|*.*"
+    open_dialog.Show()
+    if open_dialog.FileName == "":
+        MessageBox.Show("You did not select a file.")
+        return False
+    return open_dialog.FileName
+
+
 def define_camera(
     my_cam,
     position,
@@ -248,13 +266,9 @@ def main():
         InputHelper.PauseAndGetInput("Please provide a camera model number (2 models availables)", camera_model)
         part_names = []  # new
         car_model = "SUV_22R2"
-
-        if "Berline_22R2" in car_model:
-            position_value = 682.2  # Berline =682.2mm
-            car_path = os.path.join(os.getcwd(), "ANSYS_Berline/Berline_22R2.scdocx")
-        if "SUV_22R2" in car_model:
-            position_value = 546.123  # SUV=546.123mm
-            car_path = os.path.join(os.getcwd(), "ANSYS_SUV/SUV_22R2.scdocx")
+        position_value = 682.2
+        car_path = selection_dialog_window()
+        InputHelper.PauseAndGetInput("Please provide height value of selected car", position_value)
 
         import_car(car_path, position_value)
         for part in GetRootPart().Components:
