@@ -112,16 +112,25 @@ def define_camera(
 
 def prepare_sim_setup(cam_name, sim_name, part_names, cam_model):
     """
+    Prepares a simulation model based on the given input:
+    creates/edits the Camera with name cam_name based on the predefined Ccam_model,
+        positions it at axissystem "Cam_pos_1"
+    creates/edits the Simulation with name sim_name
+    adds all geometries of the parts given in part_names
     Parameters
     ----------
-    cam_name
-    sim_name
-    part_names
-    cam_model
+    cam_name :  str
+        camera name to edit/create
+    sim_name :  str
+        simulation name to edit/create
+    part_names : list[str]
+        list of partnames to be added to the simulation
+    cam_model : int
+        predefine camera model ID
 
     Returns
     -------
-
+    ansys_optical_automation.speos_process.speos_simulations.Simulation object
 
     """
     name = "Cam_pos_1"  # Axis system in Berline and in SUV
@@ -200,6 +209,14 @@ def prepare_sim_setup(cam_name, sim_name, part_names, cam_model):
 
 
 def main():
+    """
+    Adds a car to an already loaded nhtsa testscene
+    creates a camera based on the "Cam_pos_1" axis system
+    runs/exports the speos simulations
+    Returns
+    -------
+
+    """
     try:
         argsDict
         mode = 1
