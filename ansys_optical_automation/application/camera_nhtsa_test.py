@@ -282,7 +282,6 @@ def main():
 
         InputHelper.PauseAndGetInput("Please provide a camera model number (2 models availables)", camera_model)
         part_names = []  # new
-        car_model = "SUV_22R2"
         position_value = 682.2
         car_path = selection_dialog_window()
         InputHelper.PauseAndGetInput("Please provide height value of selected car", position_value)
