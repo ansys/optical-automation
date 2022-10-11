@@ -15,7 +15,7 @@ class TestRayfileAPI:
         reference_file = os.path.join(self.local_path, "workflows", "test_08_rayfile_reference_results.json")
         self.clean_results(self)  # no idea why but you have to pass there self
 
-        print("Start VRLab to generate the JSON file for tests.")
+        print("Start Rayfile converter to generate the JSON file for tests.")
         unittest_run()
 
         with open(self.results_file) as file:
