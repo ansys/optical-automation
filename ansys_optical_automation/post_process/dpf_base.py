@@ -29,6 +29,8 @@ class DataProcessingFramework:
         if self.application is not None:
             if self.application in self.application_list:
                 if "Iron" in sys.version:
+                    import System
+
                     instance_type = System.Type.GetTypeFromProgID(self.application)
                     self.dpf_instance = System.Activator.CreateInstance(instance_type)
                 else:

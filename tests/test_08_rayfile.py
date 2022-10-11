@@ -15,7 +15,7 @@ class TestRayfileAPI:
         reference_file = os.path.join(self.local_path, "workflows", "test_08_rayfile_reference_results.json")
         self.clean_results(self)  # no idea why but you have to pass there self
 
-        print("Start VRLab to generate the JSON file for tests.")
+        print("Start Rayfile converter to generate the JSON file for tests.")
         unittest_run()
 
         with open(self.results_file) as file:
@@ -127,13 +127,12 @@ class TestRayfileAPI:
         res = self.results.get("dat_ray_sim", None)
         assert res is True
 
-
-"""
-def test_09_check_ray_in_sim(self):
-    Check if a Simulation performed with a converted *.sdf file is working
-    Returns:
-    -------
-    None
-    res = self.results.get("ray_sdf_sim", None)
-    assert res is True
-"""
+    def test_09_check_ray_in_sim(self):
+        """
+        Check if a Simulation performed with a converted *.ray file is working in Zemax sim
+        Returns:
+        -------
+        None
+        """
+        res = self.results.get("ray_sdf_sim", None)
+        assert res is True

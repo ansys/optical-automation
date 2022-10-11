@@ -2,7 +2,8 @@ import csv
 import os
 import sys
 
-import comtypes
+from comtypes import automation
+from comtypes import pointer
 
 from ansys_optical_automation.post_process.dpf_base import DataProcessingFramework
 
@@ -107,8 +108,8 @@ class DpfXmpViewer(DataProcessingFramework):
             self.dpf_instance.ImportTXT(txt_path)
         else:
             self.dpf_instance.ImportTXT(txt_path)
-            variant = comtypes.automation.VARIANT(5)
-            if self.dpf_instance.Maptype == 2 and self.dpf_instance.GetSampleCRI(0, 0, 2, comtypes.pointer(variant)):
+            variant = automation.VARIANT(5)
+            if self.dpf_instance.Maptype == 2 and self.dpf_instance.GetSampleCRI(0, 0, 2, pointer(variant)):
                 "account for spectral maps"
                 matrix = []
                 with open(txt_path, "r") as file:
@@ -132,9 +133,7 @@ class DpfXmpViewer(DataProcessingFramework):
                         line = next(my_data)
                         matrix.append(line)
                 return matrix
-            elif self.dpf_instance.Maptype == 2 and not self.dpf_instance.GetSampleCRI(
-                0, 0, 2, comtypes.pointer(variant)
-            ):
+            elif self.dpf_instance.Maptype == 2 and not self.dpf_instance.GetSampleCRI(0, 0, 2, pointer(variant)):
                 matrix = []
                 with open(txt_path, "r") as file:
                     my_data = csv.reader(file, delimiter="\t")
@@ -162,8 +161,8 @@ class DpfXmpViewer(DataProcessingFramework):
             if self.dpf_instance.MapType == 2 or self.dpf_instance.MapType == 3:
                 total_sources = self.dpf_instance.ExtendedGetNbSource
                 for layer in range(total_sources):
-                    name = comtypes.automation.VARIANT()
-                    self.dpf_instance.ExtendedGetSourceName(layer, comtypes.pointer(name))
+                    name = automation.VARIANT()
+                    self.dpf_instance.ExtendedGetSourceName(layer, pointer(name))
                     self.source_list.append(name.value[0])
                 return self.source_list
             else:
