@@ -238,7 +238,7 @@ def main():
             part_names.append(part.GetName())
         ###
         # Define Sim
-        sim_cam = prepare_sim_setup("Camera", "Sim_Cam", part_names, camera_model)
+        sim_cam = prepare_sim_setup("Camera", "Cam_Sim", part_names, camera_model)
         sim_cam.object.Compute()
 
     elif mode == 2:
@@ -264,7 +264,7 @@ def main():
         part_names = []
         for part in GetRootPart().Components:
             part_names.append(part.GetName())
-        sim_cam = prepare_sim_setup("Camera", "Sim_Cam", part_names, camera_model)
+        sim_cam = prepare_sim_setup("Camera", "Cam_Sim", part_names, camera_model)
         # Save File
         options = ExportOptions.Create()
         DocumentSave.Execute(Ansys_SPEOS_file, options)
@@ -292,7 +292,7 @@ def main():
             part_names.append(part.GetName())
         ###
         # Define Sim
-        sim_cam = prepare_sim_setup("Camera", "Sim_Cam", part_names, camera_model)
+        sim_cam = prepare_sim_setup("Camera", "Cam_Sim", part_names, camera_model)
         sim_cam.object.Compute()
         # Save File
         options = ExportOptions.Create()
