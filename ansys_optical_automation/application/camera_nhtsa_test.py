@@ -1,3 +1,4 @@
+# Python Script, API Version = V21
 import os
 import sys
 
@@ -66,11 +67,11 @@ def define_camera(
     ],
 ):
     """
-    function to define the camera
+    function to define the camera based on the given parameters
     Parameters
     ----------
-    my_cam
-    position
+    my_cam : ansys_optical_automation.speos_process.speos_sensors.Camera
+    position :
     focal_length
     imager_distance
     f_number
