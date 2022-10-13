@@ -32,7 +32,7 @@ def main():
     print(vr_file)
     dpf.open_file(vr_file)
     dpf.export_vr_views(export_path=work_directory, config_ids=0)
-    vr_exported_list = check_images_exported(work_directory)
+    vr_exported_list = check_images_exported(os.path.join(work_directory, str(0)))
     results_dict["VRImages"] = vr_exported_list
     dpf.close()
     return results_dict
