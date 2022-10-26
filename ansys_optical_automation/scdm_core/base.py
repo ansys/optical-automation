@@ -61,11 +61,13 @@ class BaseSCDM(object):
         self.GetActiveDocument = scdm_api.Scripting.Helpers.DocumentHelper.GetActiveDocument
         self.GetOriginal = scdm_api.Scripting.Extensions.DocObjectExtensions.GetOriginal
         self.GetRootPart = scdm_api.Scripting.Helpers.DocumentHelper.GetRootPart
+        self.GetActiveWindow = scdm_api.Scripting.Window.GetActiveWindow
         self.IComponent = scdm_api.IComponent
         self.ICoordinateAxis = scdm_api.ICoordinateAxis
         self.ICoordinateSystem = scdm_api.ICoordinateSystem
         self.IDesignBody = scdm_api.IDesignBody
         self.IDesignCurve = scdm_api.IDesignCurve
+        self.InputHelper = scdm_api.Scripting.Helpers.InputHelper
         self.IPart = scdm_api.IPart
         self.Layers = scdm_api.Scripting.Commands.Layers
         self.NamedSelection = scdm_api.Scripting.Commands.NamedSelection
