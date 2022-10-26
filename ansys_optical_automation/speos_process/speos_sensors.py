@@ -575,3 +575,41 @@ class RadianceSensor(Sensor):
         integration_value
         """
         self.speos_object.IntegrationAngle = integration_value
+
+    def set_observer_point(self, observer_point):
+        """
+        set observer point of the radiance sensor (Definition from Observer)
+
+        Parameters
+        ----------
+        observer_point : point or origin (coordinate system)
+        """
+        self.speos_object.ObserverPoint = observer_point
+
+    def set_observer_directions(self, front_direction, top_direction):
+        """
+        set front and top directions of the radiance sensor (Definition from Observer)
+
+        Parameters
+        ----------
+        front_direction : axis or line
+        top_direction : axis or line
+        """
+        self.speos_object.FrontDirection = front_direction
+        self.speos_object.TopDirection = top_direction
+
+    def set_fov(self, horizontal_fov, vertical_fov, horizontal_sampling, vertical_sampling):
+        """
+        set field of view and sampling of the radiance sensor (Definition from Observer)
+
+        Parameters
+        ----------
+        horizontal_fov : float
+        vertical_fov : float
+        horizontal_sampling : float
+        vertical_sampling : float
+        """
+        self.speos_object.HPlane = horizontal_fov
+        self.speos_object.VPlane = vertical_fov
+        self.speos_object.HNbSamples = horizontal_sampling
+        self.speos_object.VNbSamples = vertical_sampling
