@@ -477,9 +477,9 @@ class RadianceSensor(Sensor):
         """
         observer_type = observer_type.lower()
         if observer_type == "observer":
-            self.speos_object = self.speos_sim.SensorRadiance.EnumObserverType.Observer
+            self.speos_object.ObserverType = self.speos_sim.SensorRadiance.EnumObserverType.Observer
         elif observer_type == "focal":
-            self.speos_object = self.speos_sim.SensorRadiance.EnumObserverType.Focal
+            self.speos_object.ObserverType = self.speos_sim.SensorRadiance.EnumObserverType.Focal
         else:
             error_message = "please provide a radiance type as observer or focal"
             raise ValueError(error_message)
