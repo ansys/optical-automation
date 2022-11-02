@@ -26,6 +26,16 @@ isolated_dir = os.path.join(unittest_path, "workflows", "example_models", "SPEOS
 
 
 def find_sims(selection):
+    """
+    Parameters
+    ----------
+    selection
+        SpaceClaim Selection
+
+    Returns
+    -------
+    list contain two item list first item simulation object second item derives the simulation type
+    """
     sim_list = []
     for item in selection.Items:
         name = item.GetName()

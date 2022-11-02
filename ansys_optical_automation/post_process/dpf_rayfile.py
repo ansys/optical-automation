@@ -365,12 +365,12 @@ class DpfRayfile(DataProcessingFramework):
                 m_dir = struct.unpack("f", self.dpf_instance.read(4))[0]
                 n_dir = struct.unpack("f", self.dpf_instance.read(4))[0]
                 wav = wavelength if wavelength != 0 else 550
-                if ray_format_type == 2:
-                    wav = round(struct.unpack("f", self.dpf_instance.read(4))[0], 3)
                 e = struct.unpack("f", self.dpf_instance.read(4))[0]
                 if e <= 0:
                     msg = "Error: ray power of " + str(m_dir) + "th ray is <= 0"
                     raise ValueError(msg)
+                if ray_format_type == 2:
+                    wav = round(struct.unpack("f", self.dpf_instance.read(4))[0], 3)
                 if wav <= 0:
                     msg = "Error: ray wavelength cannot be <= 0"
                     raise ValueError(msg)
@@ -381,10 +381,15 @@ class DpfRayfile(DataProcessingFramework):
                 self.__rays.append(DpfRay(x, y, z, l_dir, m_dir, n_dir, wav, e))
         else:
             if not self.__binary:
-                msg = "Non binary files not supported"
+                msg = "Non binary files not supported \n Filepath:" + self.file_path
                 raise TypeError(msg)
             else:
-                msg = "Provided file type is not supported"
+                msg = (
+                    "Provided file type is not supported \n Filepath: "
+                    + self.file_path
+                    + "\n"
+                    + "For Speos rayfile you can try to open the file with the RayfileEditor and save the file"
+                )
                 raise TypeError(msg)
 
     @property

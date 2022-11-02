@@ -64,6 +64,7 @@ class DpfHdriViewer(DataProcessingFramework):
                     self.dpf_instance.Show(True)
                     self.dpf_instance.ExportObserverImage(
                         export_path
+                        + r"\image"
                         + str(math.degrees([phi_angles[count]]))
                         + str(math.degrees([theta_angles[count]]))
                         + ".JPG"
@@ -94,41 +95,43 @@ class DpfHdriViewer(DataProcessingFramework):
         """
         if export_path is None:
             export_path = os.path.dirname(self.file_path)
-        self.valid_dir(export_path)
-        export_path += "\\"
 
         if config_ids is None:
             "Export all configurations"
             config_ids = self.dpf_instance.GetNbConfigurations
             for config in range(config_ids):
                 self.dpf_instance.SetConfigurationById(config)
-                self.__export_vr_view(export_path, phi_angles, theta_angles)
+                self.valid_dir(os.path.join(export_path, str(config)))
+                self.__export_vr_view(os.path.join(export_path, str(config)), phi_angles, theta_angles)
 
         elif isinstance(config_ids, int):
             try:
                 self.dpf_instance.SetConfigurationById(config_ids)
-                self.__export_vr_view(export_path, phi_angles, theta_angles)
+                self.valid_dir(os.path.join(export_path, str(config_ids)))
+                self.__export_vr_view(os.path.join(export_path, str(config_ids)), phi_angles, theta_angles)
             except Exception as e:
                 raise ValueError(str(config_ids) + " a non valid ID exists in the file \n Details: " + e)
 
         elif isinstance(config_ids, str):
             try:
                 self.dpf_instance.SetConfigurationByName(config_ids)
-                self.__export_vr_view(export_path, phi_angles, theta_angles)
+                self.valid_dir(os.path.join(export_path, str(config_ids)))
+                self.__export_vr_view(os.path.join(export_path, str(config_ids)), phi_angles, theta_angles)
             except Exception as e:
                 raise ValueError(config_ids + " does not exist in the file \n Details: " + e)
 
         elif isinstance(config_ids, list):
             for item in config_ids:
+                self.valid_dir(os.path.join(export_path, str(item)))
                 if isinstance(config_ids[0], int):
                     try:
                         self.dpf_instance.SetConfigurationById(item)
-                        self.__export_vr_view(export_path, phi_angles, theta_angles)
+                        self.__export_vr_view(os.path.join(export_path, str(item)), phi_angles, theta_angles)
                     except Exception as e:
                         raise ValueError(str(item) + " a non valid ID exists in the file \n Details: " + e)
                 else:
                     try:
                         self.dpf_instance.SetConfigurationByName(item)
-                        self.__export_vr_view(export_path, phi_angles, theta_angles)
+                        self.__export_vr_view(os.path.join(export_path, str(item)), phi_angles, theta_angles)
                     except Exception as e:
                         raise ValueError(item + " does not exist in the file \n Details: " + e)
