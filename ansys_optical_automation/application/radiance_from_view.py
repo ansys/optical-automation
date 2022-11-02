@@ -1,4 +1,6 @@
 # Python Script, API Version = V21
+import math
+
 # import sys
 # repo_path = r"your_repo_path"
 # sys.path.append(repo_path)
@@ -9,8 +11,8 @@ def main():
     SpaceClaim.Api.V21.Command.Execute("FlyThroughCamera")
     InputHelper.PauseAndGetInput("Adjust the window to the desired point of view and validate")
     Camera = GetActiveWindow().GetCameraFrame()
-    HFOV = round(GetActiveWindow().HorizontalFieldOfView * 180 / 3.14, 0)
-    VFOV = round(GetActiveWindow().VerticalFieldOfView * 180 / 3.14, 0)
+    HFOV = round(GetActiveWindow().HorizontalFieldOfView * 180 / math.pi, 0)
+    VFOV = round(GetActiveWindow().VerticalFieldOfView * 180 / math.pi, 0)
     DatumCS = DatumOriginCreator.Create(Camera)
     cs = DatumCS.CreatedOrigin
     cs.SetName("ObserverOriginRadianceSensor")
