@@ -2,10 +2,190 @@ import csv
 import os
 import sys
 
+import numpy
 from comtypes import automation
 from comtypes import pointer
 
 from ansys_optical_automation.post_process.dpf_base import DataProcessingFramework
+
+supported_map_types = [2, 3]
+supported_value_types = [0, 2, 20]
+supported_unit_types = [0, 1, 9]
+
+
+class MapStruct:
+    def __init__(self, map_type, value_type, unit_type, axis_unit, size, resolution, wl_res=None, layers=None):
+        """
+        Initialize the XMP Mapstructure to create and edit XMP data
+        Currently only limited data is supported
+        Parameters
+        ----------
+        map_type : int
+            2 for spectral, 3 for extended
+        value_type : int
+            0 for Irradiance, 2 for Radiance, 20 for refractive Power
+        unit_type : int
+            0 fro Radiometric, 1 for Photometric, 9 for Diopter
+        axis_unit : int
+            0 = Default, 1 = Millimeter, 2 = Degree, 3 = Radian, 4 = Feet, 5 = Micrometer, 6 = Nanometer,
+            7 = Meter, 8 = Percent, 9 = dB, 10 = Invert Millimeter, 11 = No Uni, 12 = Wave
+        size : list of floats
+            [XMin, XMax, YMin, YMax] map dimensions
+        resolution : list of int
+            resolution in [x,y]
+        wl_res : list of int
+            [Wstart, Wend, wNb] wstart and end wavlength and the resolution
+        layers : int
+            number of layers please not power values need to be defined later
+        """
+        if map_type not in supported_map_types:
+            msg = "Map type (value: " + str(map_type) + ") not supported"
+            raise TypeError(msg)
+        else:
+            self.map_type = map_type
+        if value_type not in supported_value_types:
+            msg = "Map type (value: " + str(map_type) + ") not supported"
+            raise TypeError(msg)
+        else:
+            self.value_type = value_type
+        if unit_type not in supported_unit_types:
+            msg = "Map type (value: " + str(map_type) + ") not supported"
+            raise TypeError(msg)
+        else:
+            self.unit_type = unit_type
+        if size[1] - size[0] <= 0:
+            msg = "xMin (" + str(size[0]) + ") must be smaller then xMax (" + str(size[1]) + ")"
+            raise ValueError(msg)
+        elif size[3] - size[2] <= 0:
+            msg = "yMin (" + str(size[0]) + ") must be smaller then yMax (" + str(size[1]) + ")"
+            raise ValueError(msg)
+        elif not (int(abs(resolution[0])) > 0 or int(abs(resolution[1])) > 0):
+            msg = "resolution must be a positive integer"
+            raise ValueError(msg)
+        if axis_unit not in range(13):
+            msg = "Please provide a valid axis unit"
+            raise ValueError(msg)
+        else:
+            self.axis_unit = axis_unit
+        self.xMin = size[0]
+        self.xMax = size[1]
+        self.xNb = int(abs(resolution[0]))
+        self.yMin = size[2]
+        self.yMax = size[3]
+        self.yNb = int(abs(resolution[1]))
+        self.width = size[1] - size[0]
+        self.height = size[3] - size[2]
+        self.comment = ""
+        self.intensity_type = 3  # not supported
+        if layers is None:
+            self.layers = 1
+            self.layer_powers = numpy.ones(self.layers)
+        elif type(layers) == int():
+            self.layers = layers
+            self.layer_powers = numpy.ones(self.layers)
+        else:
+            msg = "Please provide a positive layer integer"
+        if value_type == 2:
+            if wl_res is None:
+                msg = "Please provide Wavelength start end and resolution values"
+                raise ValueError(msg)
+            elif wl_res[1] - wl_res[0] <= 0:
+                msg = "Please provide a valid wavelength range: \n" + str(wl_res) + "\n is not valid"
+                raise ValueError(msg)
+            self.wStart = wl_res[0]
+            self.wEnd = wl_res[1]
+            self.wNb = wl_res[2]
+            self.data = numpy.zeros((self.layers, self.xNb, self.yNb, self.wNb))
+        else:
+            self.data = numpy.zeros((self.layers, self.xNb, self.yNb, 1))
+
+    def valid_dir(self, str_path):
+        """Check if a folder is present and, if not, create it.
+
+        Parameters
+        ----------
+        str_path : str
+            Path for the folder to validate or create. For example, ``r"C:\\temp\"``.
+
+        Returns
+        -------
+        None
+
+        """
+        if not os.path.isdir(str_path):
+            os.makedirs(str_path)
+
+    def __export_to_text(self, export_path):
+        """
+        function to export current map struct to xmp TXT export
+        Parameters
+        ----------
+        export_path : export dir
+
+        Returns
+        -------
+        None
+
+        """
+        self.valid_dir(export_path)
+        file_name = os.path.join(export_path, "export_mapstruct.txt")
+
+        with open(file_name, "w") as file_export:
+            file_export.writelines(str(self.map_type) + "\n")
+            file_export.writelines(str(self.value_type) + "\t" + str(self.intensity_type) + "\n")
+            file_export.writelines(str(self.unit_type) + "\n")
+            file_export.writelines(str(self.axis_unit) + "\n")
+            file_export.writelines(
+                str(self.xMin) + "\t" + str(self.xMax) + "\t" + str(self.yMin) + "\t" + str(self.yMax) + "\n"
+            )
+            file_export.writelines(str(self.xNb) + "\t" + str(self.yNb) + "\n")
+            if self.value_type == 2:
+                file_export.writelines(str(self.wStart) + "\t" + str(self.wEnd) + "\t" + str(self.wNb) + "\n")
+                str_layer = str(self.layers)
+                for i in range(self.layers):
+                    str_layer += "\t" + str(self.layer_powers[i]) + "\t" + str(self.layer_powers[i])
+                    # do we need to do a radiometric vonversion for it to work???
+            else:
+                str_layer = str(self.layers)
+                for i in range(self.layers):
+                    str_layer += "\t" + str(self.layer_powers[i])
+            file_export.writelines(str_layer + "\n")
+            if self.value_type == 2:
+                for i in range(self.layers):
+                    file_export.writelines("layer" + str(i) + "\n")
+                    for wl in range(self.wNb):
+                        for x in range(self.xNb):
+                            for y in range(self.yNb):
+                                file_export.writelines(str(self.data[i, x, y, wl]) + "\t")
+                            file_export.writelines("\n")
+            else:
+                for i in range(self.layers):
+                    file_export.writelines("layer" + str(i) + "\n")
+                    for x in range(self.xNb):
+                        for y in range(self.yNb):
+                            file_export.writelines(str(self.data[i, x, y, 0]) + "\t")
+                        file_export.writelines("\n")
+            file_export.close()
+
+    def export_to_xmp(self, export_path=None):
+        """
+        this function exports the current mapstruct in the define dir as Mapstruct.xmp
+        Parameters
+        ----------
+        export_path :  export dir
+
+        Returns
+        -------
+        DpfXmpViewer object of the
+        """
+        xmp = DpfXmpViewer()
+        if export_path is None:
+            export_path = r"C:\temp"
+        file_name = os.path.join(export_path, "export_mapstruct.txt")
+        self.__export_to_text(export_path)
+        xmp.read_txt_export(file_name)
+        os.remove(file_name)
+        return xmp
 
 
 class DpfXmpViewer(DataProcessingFramework):
