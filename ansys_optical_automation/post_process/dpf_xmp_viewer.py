@@ -177,7 +177,7 @@ class MapStruct:
 
         Returns
         -------
-        DpfXmpViewer object of the
+        DpfXmpViewer object of the MapStruct
         """
         xmp = DpfXmpViewer()
         if export_path is None:
