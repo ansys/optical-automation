@@ -106,6 +106,8 @@ class MapStruct:
         else:
             self.data = numpy.zeros((self.layers, self.xNb, self.yNb, 1))
 
+        self.export_name = "export_mapstruct"
+
     def valid_dir(self, str_path):
         """Check if a folder is present and, if not, create it.
 
@@ -135,63 +137,65 @@ class MapStruct:
 
         """
         self.valid_dir(export_path)
-        file_name = os.path.join(export_path, "export_mapstruct.txt")
+        file_name = os.path.join(export_path, self.export_name + ".txt")
 
-        with open(file_name, "w") as file_export:
-            file_export.writelines(str(self.map_type) + "\n")
-            file_export.writelines(str(self.value_type) + "\t" + str(self.intensity_type) + "\n")
-            file_export.writelines(str(self.unit_type) + "\n")
-            file_export.writelines(str(self.axis_unit) + "\n")
-            file_export.writelines(
-                str(self.xMin) + "\t" + str(self.xMax) + "\t" + str(self.yMin) + "\t" + str(self.yMax) + "\n"
-            )
-            file_export.writelines(str(self.xNb) + "\t" + str(self.yNb) + "\n")
-            if self.value_type == 2:
-                file_export.writelines(str(self.wStart) + "\t" + str(self.wEnd) + "\t" + str(self.wNb) + "\n")
-                str_layer = str(self.layers)
-                for i in range(self.layers):
-                    str_layer += "\t" + str(self.layer_powers[i]) + "\t" + str(self.layer_powers[i])
-                    # do we need to do a radiometric conversion for it to work???
-            else:
-                str_layer = str(self.layers)
-                for i in range(self.layers):
-                    str_layer += "\t" + str(self.layer_powers[i])
-            file_export.writelines(str_layer + "\n")
-            if self.value_type == 2:
-                for i in range(self.layers):
-                    file_export.writelines("layer" + str(i) + "\n")
-                    for wl in range(self.wNb):
-                        for x in range(self.xNb):
-                            for y in range(self.yNb):
-                                file_export.writelines(str(self.data[i, x, y, wl]) + "\t")
-                            file_export.writelines("\n")
-            else:
-                for i in range(self.layers):
-                    file_export.writelines("layer" + str(i) + "\n")
+        file_export = open(file_name, "w")
+        file_export.writelines(str(self.map_type) + "\n")
+        file_export.writelines(str(self.value_type) + "\t" + str(self.intensity_type) + "\n")
+        file_export.writelines(str(self.unit_type) + "\n")
+        file_export.writelines(str(self.axis_unit) + "\n")
+        file_export.writelines(
+            str(self.xMin) + "\t" + str(self.xMax) + "\t" + str(self.yMin) + "\t" + str(self.yMax) + "\n"
+        )
+        file_export.writelines(str(self.xNb) + "\t" + str(self.yNb) + "\n")
+        if self.value_type == 2:
+            file_export.writelines(str(self.wStart) + "\t" + str(self.wEnd) + "\t" + str(self.wNb) + "\n")
+            str_layer = str(self.layers)
+            for i in range(self.layers):
+                str_layer += "\t" + str(self.layer_powers[i]) + "\t" + str(self.layer_powers[i])
+                # do we need to do a radiometric conversion for it to work???
+        else:
+            str_layer = str(self.layers)
+            for i in range(self.layers):
+                str_layer += "\t" + str(self.layer_powers[i])
+        file_export.writelines(str_layer + "\n")
+
+        if self.value_type == 2:
+            for i in range(self.layers):
+                file_export.writelines("layer" + str(i) + "\n")
+                for wl in range(self.wNb):
                     for x in range(self.xNb):
                         for y in range(self.yNb):
-                            file_export.writelines(str(self.data[i, x, y, 0]) + "\t")
+                            file_export.writelines(str(self.data[i, x, y, wl]) + "\t")
                         file_export.writelines("\n")
-            file_export.close()
+        else:
+            for i in range(self.layers):
+                file_export.writelines("layer" + str(i) + "\n")
+                for x in range(self.xNb):
+                    for y in range(self.yNb):
+                        file_export.writelines(str(self.data[i, x, y, 0]) + "\t")
+                    file_export.writelines("\n")
+        file_export.close()
 
-    def export_to_xmp(self, export_path=None):
+    def export_to_xmp(self, export_path=r"C:\temp"):
         """
-        this function exports the current mapstruct in the define dir as Mapstruct.xmp
+        this function exports the current mapstruct in the dir defined as Mapstruct.xmp.
         Parameters
         ----------
-        export_path :  export dir
+        export_path: str
+            path to be exported. Default at C:\temp
 
         Returns
         -------
         DpfXmpViewer object of the
         """
         xmp = DpfXmpViewer()
-        if export_path is None:
-            export_path = r"C:\temp"
-        file_name = os.path.join(export_path, "export_mapstruct.txt")
+        txt_file = os.path.join(export_path, self.export_name + ".txt")
+        xmp_file = os.path.join(export_path, self.export_name + ".xmp")
         self.__export_to_text(export_path)
-        xmp.read_txt_export(file_name)
-        os.remove(file_name)
+        xmp.read_txt_export(txt_file)
+        os.remove(txt_file)
+        xmp.dpf_instance.SaveFile(xmp_file)
         return xmp
 
 
