@@ -238,7 +238,16 @@ def apply_usesr_options(axys_sys, option_selected, type, speos_senor):
             speos_senor.set_position(axes=[axis_y, axis_z], origin=axys_sys)
 
 
-def create_intensity_sensor(sensor_name, option_selected, sensor_origin, sensor_type, x_y_samplings, w_sampling=None):
+def create_intensity_sensor(
+    sensor_name,
+    option_selected,
+    sensor_origin,
+    sensor_type,
+    x_y_samplings,
+    w_sampling=None,
+    layer=None,
+    integration=None,
+):
     """
     create sensor based on the information provided.
 
@@ -255,6 +264,10 @@ def create_intensity_sensor(sensor_name, option_selected, sensor_origin, sensor_
         list of x-sampling and y-sampling
     w_sampling : int
         wavelength sampling
+    layer : str
+        type of layer setting for intensity sensor. Default as None
+    integration : float
+        integration value for intensity sensor
 
     Returns
     -------
@@ -265,12 +278,16 @@ def create_intensity_sensor(sensor_name, option_selected, sensor_origin, sensor_
     sensor_obj = IntensitySensor(option_selected + "_" + sensor_name, SpeosSim, SpaceClaim)
     apply_usesr_options(sensor_origin, option_selected, sensor_type, sensor_obj)
     sensor_obj.set_sampling(x_sampling=x_y_samplings[0], y_sampling=x_y_samplings[1])
+    if layer is not None:
+        sensor_obj.set_layer(layer)
     if sensor_type == "IESNATypeA":
         sensor_obj.set_format(sensor_format="IESNATypeA")
     if sensor_type == "XMP":
         sensor_obj.set_format(sensor_format="XMP")
         sensor_obj.set_range(x_mirrored=True, y_mirrored=True, x_start=-90, x_end=90, y_start=-90, y_end=90)
         sensor_obj.set_wavelength(w_sampling=w_sampling)
+    if integration is not None:
+        sensor_obj.set_integration_angle(integration)
     return sensor_obj
 
 
@@ -298,6 +315,7 @@ def create_intensity_sensors(axys_sys, orientation_option):
         axys_sys,
         "IESNATypeA",
         x_y_samplings=[sampling_ies_hq, sampling_ies_hq],
+        integration=0.25,
     )
     create_intensity_sensor(
         "StdSiqIES",
@@ -305,6 +323,7 @@ def create_intensity_sensors(axys_sys, orientation_option):
         axys_sys,
         "IESNATypeA",
         x_y_samplings=[sampling_ies_lq, sampling_ies_lq],
+        integration=0.5,
     )
     create_intensity_sensor(
         "StdLigColor5nm",
@@ -313,6 +332,7 @@ def create_intensity_sensors(axys_sys, orientation_option):
         "XMP",
         x_y_samplings=[sampling_xmp_hq, sampling_xmp_hq],
         w_sampling=w_sampling_hq,
+        layer="source",
     )
     create_intensity_sensor(
         "StdLigColor10nm",
@@ -320,7 +340,8 @@ def create_intensity_sensors(axys_sys, orientation_option):
         axys_sys,
         "XMP",
         x_y_samplings=[sampling_xmp_hq, sampling_xmp_hq],
-        w_sampling=w_sampling_hq,
+        w_sampling=w_sampling_lq,
+        layer="source",
     )
     create_intensity_sensor(
         "StdSigColor5nm",
@@ -328,7 +349,8 @@ def create_intensity_sensors(axys_sys, orientation_option):
         axys_sys,
         "XMP",
         x_y_samplings=[sampling_xmp_lq, sampling_xmp_lq],
-        w_sampling=w_sampling_lq,
+        w_sampling=w_sampling_hq,
+        layer="source",
     )
     create_intensity_sensor(
         "StdSigColor10nm",
@@ -337,6 +359,7 @@ def create_intensity_sensors(axys_sys, orientation_option):
         "XMP",
         x_y_samplings=[sampling_xmp_lq, sampling_xmp_lq],
         w_sampling=w_sampling_lq,
+        layer="source",
     )
 
 
