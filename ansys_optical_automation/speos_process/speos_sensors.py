@@ -498,6 +498,16 @@ class RadianceSensor(Sensor):
             error_message = "please provide a radiance type as observer or focal"
             raise ValueError(error_message)
 
+    def set_definition_type(self, definition_type):
+        definition_type = definition_type.lower()
+        if definition_type == "observer":
+            self.speos_object.DefinitionFrom = self.speos_sim.SensorRadiance.EnumDefinitionFrom.Observer
+        elif definition_type == "frame":
+            self.speos_object.DefinitionFrom = self.speos_sim.SensorRadiance.EnumDefinitionFrom.Frame
+        else:
+            error_message = "please provide a radiance type as observer or frame"
+            raise ValueError(error_message)
+
     def set_xmp_template(self, xml_file, take_dimension=False, take_display=False):
         """
         set the xmp template.
@@ -627,7 +637,7 @@ class RadianceSensor(Sensor):
         ----------
         observer_point : point or origin (coordinate system)
         """
-        self.speos_object.ObserverPoint = observer_point
+        self.speos_object.ObserverPoint.Set(observer_point)
 
     def set_observer_directions(self, front_direction, top_direction):
         """
@@ -638,8 +648,8 @@ class RadianceSensor(Sensor):
         front_direction : axis or line
         top_direction : axis or line
         """
-        self.speos_object.FrontDirection = front_direction
-        self.speos_object.TopDirection = top_direction
+        self.speos_object.FrontDirection.Set(front_direction)
+        self.speos_object.TopDirection.Set(top_direction)
 
     def set_fov(self, horizontal_fov, vertical_fov, horizontal_sampling, vertical_sampling):
         """
