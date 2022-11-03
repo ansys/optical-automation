@@ -16,8 +16,9 @@ supported_unit_types = [0, 1, 9]
 class MapStruct:
     def __init__(self, map_type, value_type, unit_type, axis_unit, size, resolution, wl_res=None, layers=1):
         """
-        Initialize the XMP Mapstructure to create and edit XMP data
-        Currently only limited data is supported
+        Initialize the XMP MapStructure to create and edit XMP data.
+        Currently only limited data is supported.
+
         Parameters
         ----------
         map_type : int
@@ -25,7 +26,7 @@ class MapStruct:
         value_type : int
             0 for Irradiance, 2 for Radiance, 20 for refractive Power
         unit_type : int
-            0 fro Radiometric, 1 for Photometric, 9 for Diopter
+            0 for Radiometric, 1 for Photometric, 9 for Diopter
         axis_unit : int
             0 = Default, 1 = Millimeter, 2 = Degree, 3 = Radian, 4 = Feet, 5 = Micrometer, 6 = Nanometer,
             7 = Meter, 8 = Percent, 9 = dB, 10 = Invert Millimeter, 11 = No Uni, 12 = Wave
@@ -109,7 +110,8 @@ class MapStruct:
         self.export_name = "export_mapstruct"
 
     def valid_dir(self, str_path):
-        """Check if a folder is present and, if not, create it.
+        """
+        Check if a folder is present and, if not, create it.
 
         Parameters
         ----------
@@ -126,7 +128,8 @@ class MapStruct:
 
     def __export_to_text(self, export_path):
         """
-        function to export current map struct to xmp TXT export
+        function to export current map struct to xmp TXT export.
+
         Parameters
         ----------
         export_path : export dir
@@ -153,7 +156,7 @@ class MapStruct:
             str_layer = str(self.layers)
             for i in range(self.layers):
                 str_layer += "\t" + str(self.layer_powers[i]) + "\t" + str(self.layer_powers[i])
-                # do we need to do a radiometric conversion for it to work???
+                # TODO do we need to do a radiometric conversion for it to work???
         else:
             str_layer = str(self.layers)
             for i in range(self.layers):
@@ -187,7 +190,7 @@ class MapStruct:
 
         Returns
         -------
-        DpfXmpViewer object of the
+        DpfXmpViewer object
         """
         xmp = DpfXmpViewer()
         txt_file = os.path.join(export_path, self.export_name + ".txt")
