@@ -1,6 +1,5 @@
 # Python Script, API Version = V21
 import os
-import sys
 
 # repo_path=r"your repository location"
 # sys.path.append(repo_path)
@@ -245,8 +244,6 @@ def main():
 
     elif mode == 2:
         # This section defines the inputs which might be replaced by Optislang or the user on usage
-        repo_path = os.path.join(os.getcwd(), r"Reference\optical-automation-main")
-        sys.path.append(repo_path)
         camera_model = 1
         car_model = "SUV_22R2"
         Ansys_SPEOS_file = os.path.join(os.getcwd(), "Scene_22R2.scdocx")
