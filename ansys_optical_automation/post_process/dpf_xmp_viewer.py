@@ -14,7 +14,7 @@ supported_unit_types = [0, 1, 9]
 
 
 class MapStruct:
-    def __init__(self, map_type, value_type, unit_type, axis_unit, size, resolution, wl_res=None, layers=None):
+    def __init__(self, map_type, value_type, unit_type, axis_unit, size, resolution, wl_res=None, layers=1):
         """
         Initialize the XMP Mapstructure to create and edit XMP data
         Currently only limited data is supported
@@ -77,16 +77,15 @@ class MapStruct:
         self.height = size[3] - size[2]
         self.comment = ""
         self.intensity_type = 3  # not supported
-        if layers is None:
-            self.layers = 1
-            self.layer_powers = numpy.ones(self.layers)
-        elif type(layers) == int():
-            self.layers = layers
-            self.layer_powers = numpy.ones(self.layers)
-        else:
+
+        if layers <= 0 or layers != int(layers):
             msg = "Please provide a positive layer integer"
             raise ValueError(msg)
-        if value_type == 2:
+        else:
+            self.layers = layers
+            self.layer_powers = numpy.ones(self.layers)
+
+        if self.value_type == 2:
             if wl_res is None:
                 msg = "Please provide Wavelength start end and resolution values"
                 raise ValueError(msg)
