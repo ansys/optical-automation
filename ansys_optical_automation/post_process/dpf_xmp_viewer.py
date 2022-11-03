@@ -85,6 +85,7 @@ class MapStruct:
             self.layer_powers = numpy.ones(self.layers)
         else:
             msg = "Please provide a positive layer integer"
+            raise ValueError(msg)
         if value_type == 2:
             if wl_res is None:
                 msg = "Please provide Wavelength start end and resolution values"
@@ -144,7 +145,7 @@ class MapStruct:
                 str_layer = str(self.layers)
                 for i in range(self.layers):
                     str_layer += "\t" + str(self.layer_powers[i]) + "\t" + str(self.layer_powers[i])
-                    # do we need to do a radiometric vonversion for it to work???
+                    # do we need to do a radiometric conversion for it to work???
             else:
                 str_layer = str(self.layers)
                 for i in range(self.layers):
