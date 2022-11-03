@@ -30,7 +30,7 @@ class Sensor(BaseSCDM):
         SpaceClaim : SpaceClaim object
             SpaceClaim object.
         """
-        super(Sensor, self).__init__(SpaceClaim, ["V19", "V20", "V21"])
+        super(Sensor, self).__init__(SpaceClaim, ["V19", "V20", "V21", "V22", "V23"])
         self.name = name
         self.speos_sim = SpeosSim
         self.speos_object = None
