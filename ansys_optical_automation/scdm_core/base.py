@@ -48,6 +48,7 @@ class BaseSCDM(object):
         self.BodySelection = scdm_api.Scripting.Selection.BodySelection
         self.CloseDocument = scdm_api.Scripting.Helpers.DocumentHelper.CloseDocument
         self.ColorHelper = scdm_api.Scripting.Helpers.ColorHelper
+        self.Command = scdm_api.Command
         self.ComponentHelper = scdm_api.Scripting.Helpers.ComponentHelper
         self.ComponentExtensions = scdm_api.Scripting.Extensions.ComponentExtensions
         self.Copy = scdm_api.Scripting.Commands.Copy

@@ -8,7 +8,8 @@ from ansys_optical_automation.speos_process.speos_sensors import RadianceSensor
 
 
 def main():
-    SpaceClaim.Api.V21.Command.Execute("FlyThroughCamera")
+    Radiance = RadianceSensor("Radiance_from_View", SpeosSim, SpaceClaim)
+    Radiance.Command.Execute("FlyThroughCamera")
     InputHelper.PauseAndGetInput("Adjust the window to the desired point of view and validate")
     Camera = GetActiveWindow().GetCameraFrame()
     HFOV = round(GetActiveWindow().HorizontalFieldOfView * 180 / math.pi, 0)
@@ -17,7 +18,6 @@ def main():
     cs = DatumCS.CreatedOrigin
     cs.SetName("ObserverOriginRadianceSensor")
 
-    Radiance = RadianceSensor("Radiance_from_View", SpeosSim, SpaceClaim)
     Radiance.set_definition_type("observer")
     Radiance.set_type("colorimetric")
     Radiance.set_observer_point(cs)
