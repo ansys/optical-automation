@@ -53,20 +53,27 @@ class MapStruct:
             raise TypeError(msg)
         else:
             self.unit_type = unit_type
-        if size[1] - size[0] <= 0:
+
+        if len(size) != 4:
+            msg = "Please provide correct input required"
+            raise ValueError(msg)
+        elif size[1] - size[0] <= 0:
             msg = "xMin (" + str(size[0]) + ") must be smaller then xMax (" + str(size[1]) + ")"
             raise ValueError(msg)
         elif size[3] - size[2] <= 0:
             msg = "yMin (" + str(size[0]) + ") must be smaller then yMax (" + str(size[1]) + ")"
             raise ValueError(msg)
-        elif not (int(abs(resolution[0])) > 0 or int(abs(resolution[1])) > 0):
+
+        if not all(item > 0 for item in resolution):
             msg = "resolution must be a positive integer"
             raise ValueError(msg)
+
         if axis_unit not in range(13):
             msg = "Please provide a valid axis unit"
             raise ValueError(msg)
         else:
             self.axis_unit = axis_unit
+
         self.xMin = size[0]
         self.xMax = size[1]
         self.xNb = int(abs(resolution[0]))
@@ -87,14 +94,14 @@ class MapStruct:
 
         if self.value_type == 2:
             if wl_res is None:
-                msg = "Please provide Wavelength start end and resolution values"
+                msg = "Please provide Wavelength start end and resolution values for Radiance value type"
                 raise ValueError(msg)
-            elif wl_res[1] - wl_res[0] <= 0:
+            elif len(wl_res) != 3 or wl_res[1] - wl_res[0] <= 0:
                 msg = "Please provide a valid wavelength range: \n" + str(wl_res) + "\n is not valid"
                 raise ValueError(msg)
             self.wStart = wl_res[0]
             self.wEnd = wl_res[1]
-            self.wNb = wl_res[2]
+            self.wNb = abs(int(wl_res[2]))
             self.data = numpy.zeros((self.layers, self.xNb, self.yNb, self.wNb))
         else:
             self.data = numpy.zeros((self.layers, self.xNb, self.yNb, 1))
