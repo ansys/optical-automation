@@ -43,4 +43,3 @@ for x in range(50):
         diopter_map.data[0, x, y, 0] = gaussian((x_values[x], y_values[y]), 0, 0, 5, 10, 0.5)
 
 xmp = diopter_map.export_to_xmp(r"c:\temp")
-xmp.dpf_instance.SaveFile(r"c:\temp\test.xmp")
