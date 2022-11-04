@@ -25,7 +25,7 @@ jobs:
       
       - name: Install dependencies
         run: |
-          py -3 -m ensurepip
+          python -m ensurepip
           python -m venv venv
           venv\Scripts\Activate.ps1
           py -3 -m pip install --upgrade pip
