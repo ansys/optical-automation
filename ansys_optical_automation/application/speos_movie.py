@@ -19,7 +19,7 @@ def dot_product(vector1, vector2):
     return vector1.X * vector2.X + vector1.Y * vector2.Y + vector1.Z * vector2.Z
 
 
-def create_movie_sensors(frame_number, trajectory, global_normal, sensor_ref):
+def create_movie_sensors(focus, frame_number, trajectory, global_normal, sensor_ref):
     """
     create a list of radiance sensors based on trajectory and frame rate provided.
 
@@ -42,7 +42,7 @@ def create_movie_sensors(frame_number, trajectory, global_normal, sensor_ref):
     for i in range(frame_number):
         position_percentage = float(i) / (frame_number - 1)
         origin = trajectory.Evaluate(position_percentage).Point
-        z_direction_vector = Vector.Create(origin.X, origin.Y, origin.Z).Direction.UnitVector
+        z_direction_vector = (origin - focus).Direction.UnitVector
         angle = math.acos(dot_product(z_direction_vector, global_normal))
         z_project = Vector.Create(
             z_direction_vector.X * math.cos(angle),
@@ -97,13 +97,14 @@ def main():
     """
     main function to this application of create movie from ansys speos.
     """
-    frame = 60
-    trajectory = GetRootPart().Curves[0]
-    global_normal = Vector.Create(0, 1, 0).Direction.UnitVector
-    export = False
-    reference_sensor = SpeosSim.SensorRadiance.Find("Ref")
-    reference_simulation = SpeosSim.SimulationInverse.Find("Inverse.1")
-    sensor_list = create_movie_sensors(frame, trajectory, global_normal, reference_sensor)
+    frame = 60  # to be defined by user input
+    trajectory = GetRootPart().Curves[0]  # to be defined by user selection
+    global_normal = Vector.Create(0, 1, 0).Direction.UnitVector  # to be defined by user selection
+    focus_point = Point.Create(0, 0, 0)  # to be defined by user selection
+    export = False  # to be defined by user selection
+    reference_sensor = SpeosSim.SensorRadiance.Find("Ref")  # to be defined by user selection
+    reference_simulation = SpeosSim.SimulationInverse.Find("Inverse.1")  # to be defined by user selection
+    sensor_list = create_movie_sensors(focus_point, frame, trajectory, global_normal, reference_sensor)
     create_movie_simulation(sensor_list, reference_simulation, export)
 
 
