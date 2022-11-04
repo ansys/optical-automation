@@ -43,11 +43,11 @@ def create_movie_sensors(focus, frame_number, trajectory, global_normal, sensor_
         position_percentage = float(i) / (frame_number - 1)
         origin = trajectory.Evaluate(position_percentage).Point
         z_direction_vector = (origin - focus).Direction.UnitVector
-        angle = math.acos(dot_product(z_direction_vector, global_normal))
+        cos_angle = dot_product(z_direction_vector, global_normal)
         z_project = Vector.Create(
-            z_direction_vector.X * math.cos(angle),
-            z_direction_vector.Y * math.cos(angle),
-            z_direction_vector.Z * math.cos(angle),
+            z_direction_vector.X * cos_angle,
+            z_direction_vector.Y * cos_angle,
+            z_direction_vector.Z * cos_angle,
         )
         u_direction_vector = (-z_project + global_normal).Direction.UnitVector
 
