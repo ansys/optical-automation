@@ -10,7 +10,7 @@ authors = [
     {name = "Pengyuan Lu", email = "pengyuan.lu@ansys.com"},
 ]
 readme = "README.rst"
-requires-python = ">=3.8"
+requires-python = ">=3.9"
 classifiers = ["License :: OSI Approved :: MIT License"]
 dynamic = ["version", "description"]
 
