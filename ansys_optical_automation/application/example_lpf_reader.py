@@ -89,25 +89,23 @@ for trace in my_lpf.sequences[my_sequence]:
 my_list = sorted(refractive_power, key=lambda x: (x[1], x[2]))
 
 diopter_map = MapStruct(3, 20, 9, 1, [-800, 800, 300, 900], [160, 60])
-step_x = (800 - (-800)) / 161
-step_y = (900 - 300) / 61
+step_x = (800 - (-800)) / 160
+step_y = (900 - 300) / 60
 x_values = np.arange(-800.0, 800.0, step_x)
 y_values = np.arange(300.0, 900.0, step_y)
+print(y_values)
 index = 0
-# TODO rework needed here not very effiecient and not working yet
+# TODO rework needed here not very efficient and not working yet
 for x in range(160):
     for y in range(60):
-        test = True
         my_value = []
-        while test:
-            if y_values[y] < my_list[index][2] < y_values[y] + step_y:
-                if x_values[x] < my_list[index][1] < x_values[x] + step_x:
-                    my_value.append(my_list[index][3])
-                else:
-                    test = False
-                    print(index)
-
-            index += 1
-        diopter_map.data[0, x, y, 0] = sum(my_value) / len(my_value)
+        for item in my_list:
+            if x_values[x] < item[1] < x_values[x] + step_x:
+                if y_values[y] < item[2] < y_values[y] + step_y:
+                    my_value.append(item[3])
+        if len(my_value) == 0:
+            diopter_map.data[0, x, y, 0] = 0
+        else:
+            diopter_map.data[0, x, y, 0] = sum(my_value) / len(my_value)
 
 xmp = diopter_map.export_to_xmp(r"c:\temp")
