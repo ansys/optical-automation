@@ -94,7 +94,7 @@ step_y = (900 - 300) / 61
 x_values = np.arange(-800.0, 800.0, step_x)
 y_values = np.arange(300.0, 900.0, step_y)
 index = 0
-
+# TODO rework needed here not very effiecient and not working yet
 for x in range(160):
     for y in range(60):
         test = True
