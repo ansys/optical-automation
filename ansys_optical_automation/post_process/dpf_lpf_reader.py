@@ -17,6 +17,9 @@ class DpfLpfReader(DataProcessingFramework):
         self.dpf_instance = IllumineSpeos_pywrap.CLpfFileReader()
         self.traces = []
         self.trace_count = 0
+        self.sequence_faces = []
+        self.sequence_impacts = []
+        self.sequences = []
 
     def open_file(self, str_path):
         """
@@ -70,4 +73,10 @@ class DpfLpfReader(DataProcessingFramework):
         error = self.dpf_instance.GetRayPathBundle(ray_path_vector.ToSpan())
         self.error_manager(error)
         self.traces = ray_path_vector
-        # for id in range(self.trace_count):
+        for ray in self.traces:
+            if ray.vUniqueFaceIds in self.sequence_faces:
+                self.sequences[self.sequence_faces.index(ray.vUniqueFaceIds)].append(ray)
+            else:
+                self.sequence_faces.append(ray.vUniqueFaceIds)
+                self.sequence_impacts.append(ray.vImpacts.Size())
+                self.sequences.append([ray])
