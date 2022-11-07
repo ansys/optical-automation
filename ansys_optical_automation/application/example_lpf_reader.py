@@ -79,33 +79,46 @@ for trace in my_lpf.sequences[my_sequence]:
         trace.vImpacts.Get(my_lpf.sequence_impacts[my_sequence] - 1).Get(1),
         trace.vImpacts.Get(my_lpf.sequence_impacts[my_sequence] - 1).Get(2),
     ]
-    list = [
+    temp_list = [
         round(point_2[0], 1),
         round(point_2[1], 1),
         round(point_2[2], 1),
         compute_refactive_power(point_1, point_2, last_dir),
     ]
-    refractive_power.append(list)
-my_list = sorted(refractive_power, key=lambda x: (x[1], x[2]))
-
+    refractive_power.append(temp_list)
+# my_list = sorted(refractive_power, key=lambda x: (x[1], x[2]))
+my_list = refractive_power
 diopter_map = MapStruct(3, 20, 9, 1, [-800, 800, 300, 900], [160, 60])
+# TODO rework needed here not very efficient and not working yet
+data = np.zeros((160, 60), dtype=list)
 step_x = (800 - (-800)) / 160
 step_y = (900 - 300) / 60
-x_values = np.arange(-800.0, 800.0, step_x)
-y_values = np.arange(300.0, 900.0, step_y)
-print(y_values)
-index = 0
-# TODO rework needed here not very efficient and not working yet
 for x in range(160):
     for y in range(60):
-        my_value = []
-        for item in my_list:
-            if x_values[x] < item[1] < x_values[x] + step_x:
-                if y_values[y] < item[2] < y_values[y] + step_y:
-                    my_value.append(item[3])
-        if len(my_value) == 0:
+        data[x, y] = []
+for item in my_list:
+    x_values = np.arange(-800.0, 800.0, step_x)
+    y_values = np.arange(300.0, 900.0, step_y)
+    x_values = x_values.tolist()
+    y_values = y_values.tolist()
+    x_values.append(item[1])
+    y_values.append(item[2])
+    x_values.sort()
+    y_values.sort()
+    x = x_values.index(item[1])
+    y = y_values.index(item[2])
+    if x > 159:
+        x -= 1
+    if y > 59:
+        y -= 1
+    data[x, y].append(item[3])
+
+for x in range(160):
+    print(str(100 * x / 160) + "%")
+    for y in range(60):
+        if len(data[x, y]) == 0:
             diopter_map.data[0, x, y, 0] = 0
         else:
-            diopter_map.data[0, x, y, 0] = sum(my_value) / len(my_value)
+            diopter_map.data[0, x, y, 0] = sum(data[x, y]) / len(data[x, y])
 
 xmp = diopter_map.export_to_xmp(r"c:\temp")
