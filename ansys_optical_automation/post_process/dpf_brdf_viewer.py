@@ -66,6 +66,21 @@ class BrdfStructure:
             os.makedirs(str_path)
 
     def brdf_1d_function(self, wavelength, incident):
+        """
+        to provide a 1d linear fitting function for 2d measurement brdf points.
+
+        Parameters
+        ----------
+        wavelength : float
+            wavelength used to find the target brdf values.
+        incident : float
+            incident used to find the target brdf values.
+
+        Returns
+        -------
+
+
+        """
         theta_brdf = [
             [MeasurePoint.theta, MeasurePoint.brdf]
             for MeasurePoint in self.measurement_2d_brdf
@@ -75,6 +90,21 @@ class BrdfStructure:
         return interpolate.interp1d(theta_brdf[0], theta_brdf[1], fill_value="extrapolate"), np.max(theta_brdf[0])
 
     def __brdf_reflectance(self, theta, phi, brdf):
+        """
+        function to calculate the reflectance of the brdf at one incident and wavelength
+
+        Parameters
+        ----------
+        theta : np.array
+        phi : np.array
+        brdf : 2d brdf function
+
+        Returns
+        -------
+        float
+            brdf reflectance value.
+
+        """
         theta_rad, phi_rad = np.radians(theta), np.radians(phi)  # samples on which integrande is known
         integrande = (1 / math.pi) * brdf * np.sin(theta_rad)  # *theta for polar integration
 
@@ -85,7 +115,37 @@ class BrdfStructure:
         return r[0] * 100  # return reflectance as percentage
 
     def convert(self, sampling=1):
+        """
+        convert the provided 2d measurement brdf data.
+
+        Parameters
+        ----------
+        sampling : int
+            sampling used for exported 4d brdf structure.
+
+        Returns
+        -------
+        None
+
+        """
+
         def brdf_2d_function(theta, phi):
+            """
+            an internal method to calculate the 2d brdf based on location theta and phi.
+
+            Parameters
+            ----------
+            theta : float
+                target point with theta value
+            phi : float
+                target point with phi value
+
+            Returns
+            -------
+            float
+                value of brdf value
+
+            """
             # function that calculated 2d brdf from 1d using revolution assumption.
             angular_distance = np.sqrt(
                 (incidence - theta * np.cos(np.radians(phi))) ** 2 + (theta * np.sin(np.radians(phi))) ** 2
@@ -126,6 +186,19 @@ class BrdfStructure:
         self.reflectance = np.reshape(self.reflectance, (len(self.__incident_angles), len(self.__wavelengths)))
 
     def export(self, export_dir):
+        """
+        save the 4d brdf structure into a brdf file.
+
+        Parameters
+        ----------
+        export_dir : str
+            directory to be exported
+
+        Returns
+        -------
+
+
+        """
         self.__valid_dir(export_dir)
         file_name = os.path.join(export_dir, self.file_name)
         export = open(file_name, "w")
@@ -171,5 +244,4 @@ class BrdfStructure:
                 np.savetxt(
                     export, data_with_theta, format("%.3e"), delimiter="\t"
                 )  # 2d matrix is directly save thnaks to np.savetxt lib
-
         export.close()
