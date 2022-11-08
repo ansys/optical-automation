@@ -167,15 +167,15 @@ class MapStruct:
             for i in range(self.layers):
                 file_export.writelines("layer" + str(i) + "\n")
                 for wl in range(self.wNb):
-                    for x in range(self.xNb):
-                        for y in range(self.yNb):
+                    for y in range(self.yNb):
+                        for x in range(self.xNb):
                             file_export.writelines(str(self.data[i, x, y, wl]) + "\t")
                         file_export.writelines("\n")
         else:
             for i in range(self.layers):
                 file_export.writelines("layer" + str(i) + "\n")
-                for x in range(self.xNb):
-                    for y in range(self.yNb):
+                for y in range(self.yNb):
+                    for x in range(self.xNb):
                         file_export.writelines(str(self.data[i, x, y, 0]) + "\t")
                     file_export.writelines("\n")
         file_export.close()
