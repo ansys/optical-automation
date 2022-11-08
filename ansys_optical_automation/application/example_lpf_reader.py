@@ -34,16 +34,20 @@ def getfilename(extension, save=False):
 
 def compute_refactive_power(point_1, point_2, dir):
     """
+    function to compute refractive power of an optical object
+    input direction is along x-axis
     Parameters
     ----------
-    point_1
-    point_2
-    dir_1
-    dir_2
+    point_1 : list of x,y,z coordinates
+        starting position
+    point_2 : list of x,y,z coordinates
+        last impact of the ray
+    dir : list of x,y,z
+        last direction of the ray
 
     Returns
     -------
-
+    the refractive power of the system as float
 
     """
     dist = np.sqrt((point_1[1] - point_2[1]) ** 2 + (point_1[2] - point_2[2]) ** 2)
@@ -55,28 +59,40 @@ def compute_refactive_power(point_1, point_2, dir):
     return refractive_power
 
 
-def create_diopter_map(sequence_data, sequence_id, export_name, export_path=r"c:\temp"):
+def create_diopter_map(
+    lpf_object, sequence_id, export_name, export_path=r"c:\temp", map_size=[-900, 900, 600, 1200], map_res=[360, 120]
+):
     """
+    function to create a diopter map based on the simple refractive power computation
+    the map will be build based on the last impact yz position
     Parameters
     ----------
-    sequence_data
-    sequence_id
-    export_name
-    export_path
+    lpf_object : DpfLpfReader object
+        LPF reader object with loaded file
+    sequence_id : int
+        sequence id for which to create the diopter map
+    export_name : str
+        name of the exported XMP file
+    export_path : str
+        path to which to export the xmp
+    map_size : list of floats
+        [XMin, XMax, YMin, YMax] map dimensions
+    map_res : list of ints
+        resolution in [x,y]
 
     Returns
     -------
-
+    DpfXmpViewer object
 
     """
     refractive_power = []
-    for trace in sequence_data[sequence_id]:
+    for trace in lpf_object.sequences[sequence_id]:
         last_dir = [trace.LastDirection.Get(0), trace.LastDirection.Get(1), trace.LastDirection.Get(2)]
         point_1 = [trace.vImpacts.Get(1).Get(0), trace.vImpacts.Get(1).Get(1), trace.vImpacts.Get(1).Get(2)]
         point_2 = [
-            trace.vImpacts.Get(my_lpf.sequence_impacts[sequence_id] - 1).Get(0),
-            trace.vImpacts.Get(my_lpf.sequence_impacts[sequence_id] - 1).Get(1),
-            trace.vImpacts.Get(my_lpf.sequence_impacts[sequence_id] - 1).Get(2),
+            trace.vImpacts.Get(lpf_object.sequence_impacts[sequence_id] - 1).Get(0),
+            trace.vImpacts.Get(lpf_object.sequence_impacts[sequence_id] - 1).Get(1),
+            trace.vImpacts.Get(lpf_object.sequence_impacts[sequence_id] - 1).Get(2),
         ]
         temp_list = [
             round(point_2[0], 1),
@@ -86,7 +102,7 @@ def create_diopter_map(sequence_data, sequence_id, export_name, export_path=r"c:
         ]
         refractive_power.append(temp_list)
     my_list = refractive_power
-    diopter_map = MapStruct(3, 20, 9, 1, [-900, 900, 600, 1200], [360, 120])
+    diopter_map = MapStruct(3, 20, 9, 1, map_size, map_res)
     diopter_map.export_name = export_name
     data = np.zeros((360, 120), dtype=list)
     step_x = (900 - (-900)) / 360
@@ -122,5 +138,5 @@ file_name = getfilename("*.lpf")
 my_lpf = DpfLpfReader()
 my_lpf.open_file(file_name)
 my_lpf.retrieve_traces()
-xmp_trans = create_diopter_map(my_lpf.sequences, 1, "trans")
-xmp_trans = create_diopter_map(my_lpf.sequences, 2, "ghost")
+xmp_trans = create_diopter_map(my_lpf, 1, "trans")
+xmp_trans = create_diopter_map(my_lpf, 2, "ghost")
