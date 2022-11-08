@@ -266,10 +266,6 @@ class DpfXmpViewer(DataProcessingFramework):
                 if not self.dpf_instance.ExportPF(export_path):
                     msg = format + " export failed"
                     raise Exception(msg)
-            elif format == "pf":
-                if not self.dpf_instance.ExportPF(export_path):
-                    msg = format + " export failed"
-                    raise Exception(msg)
             elif format in ["ies", "ldt"]:
                 if not self.dpf_instance.ExportXMPtoIntensity(export_path):
                     msg = format + " export failed"
@@ -298,10 +294,11 @@ class DpfXmpViewer(DataProcessingFramework):
         -------
         for inc_data True: data matrix[wavelength[layer[x[y]]]]
         """
-        if not inc_data:
-            self.dpf_instance.ImportTXT(txt_path)
-        else:
-            self.dpf_instance.ImportTXT(txt_path)
+        import_response = self.dpf_instance.ImportTXT(txt_path)
+        if not import_response:
+            msg = "Provided text file cannot be imported, Please check your text file content"
+            raise ImportError(msg)
+        if inc_data:
             variant = automation.VARIANT(5)
             if self.dpf_instance.Maptype == 2 and self.dpf_instance.GetSampleCRI(0, 0, 2, pointer(variant)):
                 "account for spectral maps"
