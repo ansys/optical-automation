@@ -331,7 +331,9 @@ class DpfXmpViewer(DataProcessingFramework):
 
         Returns
         -------
-        for inc_data True: data matrix[wavelength[layer[x[y]]]]
+        MapStruct:
+            MapStruct created according to the text file.
+
         """
         import_response = self.dpf_instance.ImportTXT(txt_path)
         if not import_response:
