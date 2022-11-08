@@ -55,66 +55,72 @@ def compute_refactive_power(point_1, point_2, dir):
     return refractive_power
 
 
+def create_diopter_map(sequence_data, sequence_id, export_name, export_path=r"c:\temp"):
+    """
+    Parameters
+    ----------
+    sequence_data
+    sequence_id
+    export_name
+    export_path
+
+    Returns
+    -------
+
+
+    """
+    refractive_power = []
+    for trace in sequence_data[sequence_id]:
+        last_dir = [trace.LastDirection.Get(0), trace.LastDirection.Get(1), trace.LastDirection.Get(2)]
+        point_1 = [trace.vImpacts.Get(1).Get(0), trace.vImpacts.Get(1).Get(1), trace.vImpacts.Get(1).Get(2)]
+        point_2 = [
+            trace.vImpacts.Get(my_lpf.sequence_impacts[sequence_id] - 1).Get(0),
+            trace.vImpacts.Get(my_lpf.sequence_impacts[sequence_id] - 1).Get(1),
+            trace.vImpacts.Get(my_lpf.sequence_impacts[sequence_id] - 1).Get(2),
+        ]
+        temp_list = [
+            round(point_2[0], 1),
+            round(point_2[1], 1),
+            round(point_2[2], 1),
+            compute_refactive_power(point_1, point_2, last_dir),
+        ]
+        refractive_power.append(temp_list)
+    my_list = refractive_power
+    diopter_map = MapStruct(3, 20, 9, 1, [-900, 900, 600, 1200], [360, 120])
+    diopter_map.export_name = export_name
+    data = np.zeros((360, 120), dtype=list)
+    step_x = (900 - (-900)) / 360
+    step_y = (1200 - 600) / 120
+    for x in range(360):
+        for y in range(120):
+            data[x, y] = []
+    for item in my_list:
+        x_values = np.arange(-900.0, 900.0, step_x)
+        y_values = np.arange(600, 1200.0, step_y)
+        x_values = x_values.tolist()
+        y_values = y_values.tolist()
+        x_values.append(item[1])
+        y_values.append(item[2])
+        x_values.sort()
+        y_values.sort()
+        x = 361 - x_values.index(item[1])
+        y = 121 - y_values.index(item[2])
+        if not (x > 360 and y > 120):
+            data[x, y].append(item[3])
+
+    for x in range(360):
+        for y in range(120):
+            if len(data[x, y]) == 0:
+                diopter_map.data[0, x, y, 0] = 0
+            else:
+                diopter_map.data[0, x, y, 0] = sum(data[x, y]) / len(data[x, y])
+    xmp = diopter_map.export_to_xmp(export_path)
+    return xmp
+
+
 file_name = getfilename("*.lpf")
 my_lpf = DpfLpfReader()
 my_lpf.open_file(file_name)
-
-xmp_nb = my_lpf.dpf_instance.GetNbOfXMPs()
-print(my_lpf.trace_count)
-names = my_lpf.dpf_instance.GetSensorNames()
-for name in names:
-    print(name.Ptr())
-sequences = []
-sequence_tuple = []
 my_lpf.retrieve_traces()
-print(my_lpf.sequence_impacts)
-print(my_lpf.trace_count)
-refractive_power = []
-my_sequence = 1
-for trace in my_lpf.sequences[my_sequence]:
-    last_dir = [trace.LastDirection.Get(0), trace.LastDirection.Get(1), trace.LastDirection.Get(2)]
-    point_1 = [trace.vImpacts.Get(1).Get(0), trace.vImpacts.Get(1).Get(1), trace.vImpacts.Get(1).Get(2)]
-    point_2 = [
-        trace.vImpacts.Get(my_lpf.sequence_impacts[my_sequence] - 1).Get(0),
-        trace.vImpacts.Get(my_lpf.sequence_impacts[my_sequence] - 1).Get(1),
-        trace.vImpacts.Get(my_lpf.sequence_impacts[my_sequence] - 1).Get(2),
-    ]
-    temp_list = [
-        round(point_2[0], 1),
-        round(point_2[1], 1),
-        round(point_2[2], 1),
-        compute_refactive_power(point_1, point_2, last_dir),
-    ]
-    refractive_power.append(temp_list)
-# my_list = sorted(refractive_power, key=lambda x: (x[1], x[2]))
-my_list = refractive_power
-diopter_map = MapStruct(3, 20, 9, 1, [-900, 900, 600, 1200], [360, 120])
-# TODO rework needed here not very efficient and not working yet
-data = np.zeros((360, 120), dtype=list)
-step_x = (900 - (-900)) / 360
-step_y = (1200 - 600) / 120
-for x in range(360):
-    for y in range(120):
-        data[x, y] = []
-for item in my_list:
-    x_values = np.arange(-900.0, 900.0, step_x)
-    y_values = np.arange(600, 1200.0, step_y)
-    x_values = x_values.tolist()
-    y_values = y_values.tolist()
-    x_values.append(item[1])
-    y_values.append(item[2])
-    x_values.sort()
-    y_values.sort()
-    x = x_values.index(item[1]) - 1
-    y = y_values.index(item[2]) - 1
-    if not (x < 0 and y < 0):
-        data[x, y].append(item[3])
-
-for x in range(360):
-    for y in range(120):
-        if len(data[x, y]) == 0:
-            diopter_map.data[0, x, y, 0] = 0
-        else:
-            diopter_map.data[0, x, y, 0] = 1  # sum(data[x, y]) / len(data[x, y])
-
-xmp = diopter_map.export_to_xmp(r"c:\temp")
+xmp_trans = create_diopter_map(my_lpf.sequences, 1, "trans")
+xmp_trans = create_diopter_map(my_lpf.sequences, 2, "ghost")
