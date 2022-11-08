@@ -14,7 +14,7 @@ supported_unit_types = [0, 1, 9]
 
 
 class MapStruct:
-    def __init__(self, map_type, value_type, unit_type, axis_unit, size, resolution, wl_res=None, layers=1):
+    def __init__(self, map_type, value_type, unit_type, axis_unit, size, resolution, layers=1, wl_res=None):
         """
         Initialize the XMP MapStructure to create and edit XMP data.
         Currently only limited data is supported.
@@ -83,6 +83,7 @@ class MapStruct:
         self.yNb = int(abs(resolution[1]))
         self.width = size[1] - size[0]
         self.height = size[3] - size[2]
+        self.wl_res = wl_res
         self.comment = ""
         self.intensity_type = 3  # not supported
 
@@ -280,6 +281,44 @@ class DpfXmpViewer(DataProcessingFramework):
 
         return export_path
 
+    def __read_txt_export(self, xmp_map_struct, txt_path):
+        """
+        function to load txt content into a XmpStruct.
+
+        Parameters
+        ----------
+        xmp_map_struct : MapStruct
+            class of MapStruct
+        txt_path : str
+            text file directory
+
+        Returns
+        -------
+        MapStruct:
+            a MapStruct whose values are filled with content from text file provided.
+
+        """
+        with open(txt_path, "r") as file:
+            my_data = csv.reader(file, delimiter="\t")
+            if xmp_map_struct.wl_res is not None:
+                for i in range(9):
+                    next(my_data)
+                for layer_idx in range(xmp_map_struct.layers):
+                    for wavelength_idx in range(xmp_map_struct.wl_res[2] - 1):
+                        for xmp_value_idy in range(xmp_map_struct.yNb):
+                            line = next(my_data)
+                            for xmp_value_idx, xmp_value in enumerate(line):
+                                xmp_map_struct[layer_idx, xmp_value_idx, xmp_value_idy, wavelength_idx] = xmp_value
+            else:
+                for i in range(8):
+                    next(my_data)
+                for layer_idx in range(xmp_map_struct.layers):
+                    for xmp_value_idy in range(xmp_map_struct.yNb):
+                        line = next(my_data)
+                        for xmp_value_idx, xmp_value in enumerate(line):
+                            xmp_map_struct[layer_idx, xmp_value_idx, xmp_value_idy, 0] = xmp_value
+        return xmp_map_struct
+
     def read_txt_export(self, txt_path, inc_data=False):
         """
         Parameters
@@ -300,42 +339,41 @@ class DpfXmpViewer(DataProcessingFramework):
             raise ImportError(msg)
         if inc_data:
             variant = automation.VARIANT(5)
-            if self.dpf_instance.Maptype == 2 and self.dpf_instance.GetSampleCRI(0, 0, 2, pointer(variant)):
-                "account for spectral maps"
-                matrix = []
-                with open(txt_path, "r") as file:
-                    my_data = csv.reader(file, delimiter="\t")
-                    for i in range(9):
-                        next(my_data)
-                    for w in range(self.dpf_instance.WNb - 1):
-                        matrix.append([])
-                        for k in range(int(self.dpf_instance.YHeight / self.dpf_instance.YSampleHeight)):
-                            line = next(my_data)
-                            matrix[w].append(line)
-                            # print(line)
-                return matrix
+            xmp_maptype = self.dpf_instance.Maptype
+            xmp_value_type = self.dpf_instance.ValueType
+            xmp_unit_type = self.dpf_instance.UnitType
+            xmp_axis_unit = self.dpf_instance.GetAxisUnitName
+            xmp_size = [self.dpf_instance.XMin, self.dpf_instance.XMax, self.dpf_instance.YMin, self.dpf_instance.YMax]
+            xmp_resolution = [self.dpf_instance.XNb, self.dpf_instance.YNb]
+            xmp_layer = 1  # TODO get the number of layers from XMP using GetSelectedLayersUser method
+            if self.dpf_instance.Maptype == 2:
+                # this is a spectral map
+                if self.dpf_instance.GetSampleCRI(0, 0, 2, pointer(variant)):
+                    xmp_wl_res = [self.dpf_instance.WMin, self.dpf_instance.WMax, self.dpf_instance.WNb]
+                    xmp_map_struct = MapStruct(
+                        xmp_maptype,
+                        xmp_value_type,
+                        xmp_unit_type,
+                        xmp_axis_unit,
+                        xmp_size,
+                        xmp_resolution,
+                        xmp_layer,
+                        xmp_wl_res,
+                    )
+                    return self.__read_txt_export(xmp_map_struct, txt_path)
+                else:
+                    xmp_map_struct = MapStruct(
+                        xmp_maptype, xmp_value_type, xmp_unit_type, xmp_axis_unit, xmp_size, xmp_resolution, xmp_layer
+                    )
+                    return self.__read_txt_export(xmp_map_struct, txt_path)
             elif self.dpf_instance.Maptype == 3:
-                matrix = []
-                with open(txt_path, "r") as file:
-                    my_data = csv.reader(file, delimiter="\t")
-                    for i in range(8):
-                        next(my_data)
-                    for k in range(int(self.dpf_instance.YHeight / self.dpf_instance.YSampleHeight)):
-                        line = next(my_data)
-                        matrix.append(line)
-                return matrix
-            elif self.dpf_instance.Maptype == 2 and not self.dpf_instance.GetSampleCRI(0, 0, 2, pointer(variant)):
-                matrix = []
-                with open(txt_path, "r") as file:
-                    my_data = csv.reader(file, delimiter="\t")
-                    for i in range(9):
-                        next(my_data)
-                    for k in range(int(self.dpf_instance.YHeight / self.dpf_instance.YSampleHeight)):
-                        line = next(my_data)
-                        matrix.append(line)
-                return matrix
+                xmp_map_struct = MapStruct(
+                    xmp_maptype, xmp_value_type, xmp_unit_type, xmp_axis_unit, xmp_size, xmp_resolution, xmp_layer
+                )
+                return self.__read_txt_export(xmp_map_struct, txt_path)
             else:
-                return False
+                msg = "type of map are not supported currently"
+                raise ImportError(msg)
 
     def get_source_list(self):
         """
