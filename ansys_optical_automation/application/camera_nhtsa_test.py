@@ -293,10 +293,6 @@ def main():
         # Define Sim
         sim_cam = prepare_sim_setup("Camera", "Cam_Sim", part_names, camera_model)
         sim_cam.object.Compute()
-        # Save File
-        options = ExportOptions.Create()
-
-        DocumentSave.Execute(GetActivePart().Document.Path, options)
 
 
 main()
