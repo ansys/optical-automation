@@ -104,28 +104,28 @@ def create_diopter_map(
     my_list = refractive_power
     diopter_map = MapStruct(3, 20, 9, 1, map_size, map_res)
     diopter_map.export_name = export_name
-    data = np.zeros((360, 120), dtype=list)
-    step_x = (900 - (-900)) / 360
-    step_y = (1200 - 600) / 120
-    for x in range(360):
-        for y in range(120):
+    data = np.zeros((map_res[0], map_res[1]), dtype=list)
+    step_x = (map_size[1] - (map_size[0])) / map_res[0]
+    step_y = (map_size[3] - (map_size[2])) / map_res[1]
+    for x in range(map_res[0]):
+        for y in range(map_res[1]):
             data[x, y] = []
     for item in my_list:
-        x_values = np.arange(-900.0, 900.0, step_x)
-        y_values = np.arange(600, 1200.0, step_y)
+        x_values = np.arange(map_size[0], map_size[1], step_x)
+        y_values = np.arange(map_size[2], map_size[3], step_y)
         x_values = x_values.tolist()
         y_values = y_values.tolist()
         x_values.append(item[1])
         y_values.append(item[2])
         x_values.sort()
         y_values.sort()
-        x = 361 - x_values.index(item[1])
-        y = 121 - y_values.index(item[2])
-        if not (x > 360 and y > 120):
+        x = map_res[0] + 1 - x_values.index(item[1])
+        y = map_res[1] + 1 - y_values.index(item[2])
+        if not (x > map_res[0] and y > map_res[1]):
             data[x, y].append(item[3])
 
-    for x in range(360):
-        for y in range(120):
+    for x in range(map_res[0]):
+        for y in range(map_res[1]):
             if len(data[x, y]) == 0:
                 diopter_map.data[0, x, y, 0] = 0
             else:
@@ -139,4 +139,4 @@ my_lpf = DpfLpfReader()
 my_lpf.open_file(file_name)
 my_lpf.retrieve_traces()
 xmp_trans = create_diopter_map(my_lpf, 1, "trans")
-xmp_trans = create_diopter_map(my_lpf, 2, "ghost")
+xmp_trans = create_diopter_map(my_lpf, 2, "ghost", map_res=[180, 60])
