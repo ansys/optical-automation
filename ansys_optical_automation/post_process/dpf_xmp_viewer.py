@@ -9,12 +9,34 @@ from comtypes import pointer
 from ansys_optical_automation.post_process.dpf_base import DataProcessingFramework
 
 supported_map_types = [2, 3]
-supported_value_types = [0, 2, 20]
+supported_value_types = [0, 1, 2, 20]
 supported_unit_types = [0, 1, 9]
+axis_unit_types = [
+    "default",
+    "millimetre",
+    "degree",
+    "radian",
+    "feet",
+    "micrometer",
+    "nanometer",
+    "meter",
+    "percent",
+    "dB",
+    "invert millimeter",
+    "no unit",
+    "wave",
+    "centimeter",
+    "inch",
+    "milliradian",
+    "arc minute",
+    "arc second",
+]
 
 
 class MapStruct:
-    def __init__(self, map_type, value_type, unit_type, axis_unit, size, resolution, layers=1, wl_res=None):
+    def __init__(
+        self, map_type, value_type, intensity_type, unit_type, axis_unit, size, resolution, layers=1, wl_res=None
+    ):
         """
         Initialize the XMP MapStructure to create and edit XMP data.
         Currently only limited data is supported.
@@ -24,7 +46,7 @@ class MapStruct:
         map_type : int
             2 for spectral, 3 for extended
         value_type : int
-            0 for Irradiance, 2 for Radiance, 20 for refractive Power
+            0 for Irradiance, 1 for Intensity, 2 for Radiance, 20 for refractive Power
         unit_type : int
             0 for Radiometric, 1 for Photometric, 9 for Diopter
         axis_unit : int
@@ -45,12 +67,12 @@ class MapStruct:
         else:
             self.map_type = map_type
         if value_type not in supported_value_types:
-            msg = "Map type (value: " + str(map_type) + ") not supported"
+            msg = "Value type (value: " + str(value_type) + ") not supported"
             raise TypeError(msg)
         else:
             self.value_type = value_type
         if unit_type not in supported_unit_types:
-            msg = "Map type (value: " + str(map_type) + ") not supported"
+            msg = "Map type (value: " + str(unit_type) + ") not supported"
             raise TypeError(msg)
         else:
             self.unit_type = unit_type
@@ -70,7 +92,7 @@ class MapStruct:
             raise ValueError(msg)
 
         if axis_unit not in range(13):
-            msg = "Please provide a valid axis unit"
+            msg = "Please provide a valid axis unit (value: " + str(axis_unit)
             raise ValueError(msg)
         else:
             self.axis_unit = axis_unit
@@ -85,7 +107,7 @@ class MapStruct:
         self.height = size[3] - size[2]
         self.wl_res = wl_res
         self.comment = ""
-        self.intensity_type = 3  # not supported
+        self.intensity_type = intensity_type
 
         if layers <= 0 or layers != int(layers):
             msg = "Please provide a positive layer integer"
@@ -93,21 +115,28 @@ class MapStruct:
         else:
             self.layers = layers
             self.layer_powers = numpy.ones(self.layers)
-
-        if self.value_type == 2:
+        if self.map_type == 3:
             if wl_res is None:
-                msg = "Please provide Wavelength start end and resolution values for Radiance value type"
-                raise ValueError(msg)
+                self.data = numpy.zeros((self.layers, self.xNb, self.yNb, 1))
             elif len(wl_res) != 3 or wl_res[1] - wl_res[0] <= 0:
                 msg = "Please provide a valid wavelength range: \n" + str(wl_res) + "\n is not valid"
                 raise ValueError(msg)
-            self.wStart = wl_res[0]
-            self.wEnd = wl_res[1]
-            self.wNb = abs(int(wl_res[2]))
-            self.data = numpy.zeros((self.layers, self.xNb, self.yNb, self.wNb))
-        else:
-            self.data = numpy.zeros((self.layers, self.xNb, self.yNb, 1))
-
+            else:
+                self.wStart = wl_res[0]
+                self.wEnd = wl_res[1]
+                self.wNb = abs(int(wl_res[2]))
+                self.data = numpy.zeros((self.layers, self.xNb, self.yNb, self.wNb))
+        elif map_type == 2:
+            if wl_res is None:
+                self.data = numpy.zeros((self.layers, self.xNb, self.yNb, 4))
+            elif len(wl_res) != 3 or wl_res[1] - wl_res[0] <= 0:
+                msg = "Please provide a valid wavelength range: \n" + str(wl_res) + "\n is not valid"
+                raise ValueError(msg)
+            else:
+                self.wStart = wl_res[0]
+                self.wEnd = wl_res[1]
+                self.wNb = abs(int(wl_res[2]))
+                self.data = numpy.zeros((self.layers, self.xNb, self.yNb, self.wNb))
         self.export_name = "export_mapstruct"
 
     def valid_dir(self, str_path):
@@ -152,27 +181,70 @@ class MapStruct:
             str(self.xMin) + "\t" + str(self.xMax) + "\t" + str(self.yMin) + "\t" + str(self.yMax) + "\n"
         )
         file_export.writelines(str(self.xNb) + "\t" + str(self.yNb) + "\n")
-        if self.value_type == 2:
+
+        if self.map_type == 2 and self.wl_res is not None:
+            file_export.writelines(str(self.wStart) + "\t" + str(self.wEnd) + "\t" + str(self.wNb) + "\n")
+            str_layer = "SeparatedByLayer" + "\t" + str(self.layers)
+            for i in range(self.layers):
+                str_layer += "\t" + str(self.layer_powers[i]) + "\t" + str(self.layer_powers[i])
+            file_export.writelines(str_layer + "\n")
+        elif self.map_type == 2 and self.wl_res is None:
+            str_layer = "-1" + "\t" + "SeparatedByLayer" + "\t" + str(self.layers)
+            for i in range(self.layers):
+                str_layer += "\t" + str(self.layer_powers[i])
+            file_export.writelines(str_layer + "\n")
+        elif self.map_type == 3 and self.wl_res is not None:
             file_export.writelines(str(self.wStart) + "\t" + str(self.wEnd) + "\t" + str(self.wNb) + "\n")
             str_layer = str(self.layers)
             for i in range(self.layers):
                 str_layer += "\t" + str(self.layer_powers[i]) + "\t" + str(self.layer_powers[i])
-                # TODO do we need to do a radiometric conversion for it to work???
-        else:
+        elif self.map_type == 3 and self.wl_res is None:
             str_layer = str(self.layers)
             for i in range(self.layers):
                 str_layer += "\t" + str(self.layer_powers[i])
-        file_export.writelines(str_layer + "\n")
+            file_export.writelines(str_layer + "\n")
 
-        if self.value_type == 2:
+        if self.map_type == 2 and self.wl_res is not None:
             for i in range(self.layers):
                 file_export.writelines("layer" + str(i) + "\n")
                 for wl in range(self.wNb):
+                    if wl != 0:
+                        file_export.writelines("\n")
                     for y in range(self.yNb):
                         for x in range(self.xNb):
                             file_export.writelines(str(self.data[i, x, y, wl]) + "\t")
                         file_export.writelines("\n")
-        else:
+        elif self.map_type == 2 and self.wl_res is None:
+            str_layer = ""
+            for i in range(self.layers):
+                str_layer += str(self.layer_powers[i]) + "\t"
+            file_export.writelines(str_layer + "\n")
+            for i in range(self.layers):
+                file_export.writelines("layer" + str(i) + "\n")
+                for y in range(self.yNb):
+                    for x in range(self.xNb):
+                        file_export.writelines(
+                            str(self.data[i, x, y, 0])
+                            + "\t"
+                            + str(self.data[i, x, y, 1])
+                            + "\t"
+                            + str(self.data[i, x, y, 2])
+                            + "\t"
+                            + str(self.data[i, x, y, 3])
+                            + "\t"
+                        )
+                    file_export.writelines("\n")
+        elif self.map_type == 3 and self.wl_res is not None:
+            for i in range(self.layers):
+                file_export.writelines("layer" + str(i) + "\n")
+                for wl in range(self.wNb):
+                    if wl != 0:
+                        file_export.writelines("\n")
+                    for y in range(self.yNb):
+                        for x in range(self.xNb):
+                            file_export.writelines(str(self.data[i, x, y, wl]) + "\t")
+                        file_export.writelines("\n")
+        elif self.map_type == 3 and self.wl_res is None:
             for i in range(self.layers):
                 file_export.writelines("layer" + str(i) + "\n")
                 for y in range(self.yNb):
@@ -198,7 +270,7 @@ class MapStruct:
         xmp_file = os.path.join(export_path, self.export_name + ".xmp")
         self.__export_to_text(export_path)
         xmp.read_txt_export(txt_file)
-        os.remove(txt_file)
+        # os.remove(txt_file)
         xmp.dpf_instance.SaveFile(xmp_file)
         return xmp
 
@@ -242,7 +314,7 @@ class DpfXmpViewer(DataProcessingFramework):
         if self.dpf_instance.OpenFile(str_path):
             self.source_list = []
             if self.dpf_instance.MapType == 2 or self.dpf_instance.MapType == 3:
-                self.get_source_list()
+                self.__get_source_list()
         else:
             raise ImportError("Opening the file failed.")
 
@@ -254,9 +326,9 @@ class DpfXmpViewer(DataProcessingFramework):
         ----------
         format : str
             export format allowed values
-            ["txt", "png", "bmp", "jpg", "tiff", "pf", "ies", "ldt"]
+            ["txt", "png", "bmp", "jpg", "tiff", "pf", "ies", "ldt", "extended.txt"]
         """
-        allowed_exports = ["txt", "png", "bmp", "jpg", "tiff", "pf", "ies", "ldt"]
+        allowed_exports = ["txt", "png", "bmp", "jpg", "tiff", "pf", "ies", "ldt", "extended.txt"]
         if format in allowed_exports:
             export_path = self.file_path + "export." + format
             if format == "txt":
@@ -273,6 +345,10 @@ class DpfXmpViewer(DataProcessingFramework):
                     raise Exception(msg)
             elif format in ["png", "bmp", "jpg", "tiff"]:
                 if not self.dpf_instance.ExportXMPImage(export_path):
+                    msg = format + " export failed"
+                    raise Exception(msg)
+            if format == "extended.txt":
+                if not self.dpf_instance.ExtendedExportTXT(export_path, 1):
                     msg = format + " export failed"
                     raise Exception(msg)
         else:
@@ -300,23 +376,73 @@ class DpfXmpViewer(DataProcessingFramework):
         """
         with open(txt_path, "r") as file:
             my_data = csv.reader(file, delimiter="\t")
-            if xmp_map_struct.wl_res is not None:
-                for i in range(9):
-                    next(my_data)
+            if self.dpf_instance.Maptype == 2 and xmp_map_struct.wl_res is not None:
+                for i in range(8):
+                    line = next(my_data)
+                    if i == 6:
+                        if line[0] == "-1" and len(line) == 1:
+                            next(my_data)
                 for layer_idx in range(xmp_map_struct.layers):
-                    for wavelength_idx in range(xmp_map_struct.wl_res[2] - 1):
+                    next(my_data)
+                    for wavelength_idx in range(xmp_map_struct.wl_res[2]):
+                        if wavelength_idx != 0:
+                            next(my_data)
                         for xmp_value_idy in range(xmp_map_struct.yNb):
                             line = next(my_data)
                             for xmp_value_idx, xmp_value in enumerate(line):
-                                xmp_map_struct[layer_idx, xmp_value_idx, xmp_value_idy, wavelength_idx] = xmp_value
-            else:
+                                if xmp_value != "":
+                                    xmp_map_struct.data[
+                                        layer_idx, xmp_value_idx, xmp_value_idy, wavelength_idx
+                                    ] = xmp_value
+            elif self.dpf_instance.Maptype == 3 and xmp_map_struct.wl_res is not None:
                 for i in range(8):
-                    next(my_data)
+                    line = next(my_data)
+                    if i == 6:
+                        if line[0] == "-1" and len(line) == 1:
+                            next(my_data)
                 for layer_idx in range(xmp_map_struct.layers):
+                    next(my_data)
+                    for wavelength_idx in range(xmp_map_struct.wl_res[2]):
+                        if wavelength_idx != 0:
+                            next(my_data)
+                        for xmp_value_idy in range(xmp_map_struct.yNb):
+                            line = next(my_data)
+                            for xmp_value_idx, xmp_value in enumerate(line):
+                                if xmp_value != "":
+                                    xmp_map_struct.data[
+                                        layer_idx, xmp_value_idx, xmp_value_idy, wavelength_idx
+                                    ] = xmp_value
+            elif self.dpf_instance.Maptype == 3 and xmp_map_struct.wl_res is None:
+                for i in range(7):
+                    line = next(my_data)
+                    if i == 6:
+                        if line[0] == "-1" and len(line) == 1:
+                            next(my_data)
+                for layer_idx in range(xmp_map_struct.layers):
+                    line = next(my_data)
                     for xmp_value_idy in range(xmp_map_struct.yNb):
                         line = next(my_data)
                         for xmp_value_idx, xmp_value in enumerate(line):
-                            xmp_map_struct[layer_idx, xmp_value_idx, xmp_value_idy, 0] = xmp_value
+                            if xmp_value != "":
+                                xmp_map_struct.data[layer_idx, xmp_value_idx, xmp_value_idy, 0] = xmp_value
+            elif self.dpf_instance.Maptype == 2 and xmp_map_struct.wl_res is None:
+                for i in range(7):
+                    line = next(my_data)
+                    if i == 6:
+                        if line[0] == "-1" and len(line) == 1:
+                            next(my_data)
+                for layer_idx in range(xmp_map_struct.layers):
+                    line = next(my_data)
+                    for xmp_value_idy in range(xmp_map_struct.yNb):
+                        line = next(my_data)
+                        for xmp_value_idx, xmp_value in enumerate(line):
+                            if xmp_value != "":
+                                xmp_map_struct.data[
+                                    layer_idx, int(xmp_value_idx / 4), xmp_value_idy, xmp_value_idx % 4
+                                ] = xmp_value
+            else:
+                msg = "Currently not supported"
+                raise ImportError(msg)
         return xmp_map_struct
 
     def read_txt_export(self, txt_path, inc_data=False):
@@ -336,6 +462,8 @@ class DpfXmpViewer(DataProcessingFramework):
 
         """
         import_response = self.dpf_instance.ImportTXT(txt_path)
+        self.source_list = []
+        self.__get_source_list()
         if not import_response:
             msg = "Provided text file cannot be imported, Please check your text file content"
             raise ImportError(msg)
@@ -343,18 +471,20 @@ class DpfXmpViewer(DataProcessingFramework):
             variant = automation.VARIANT(5)
             xmp_maptype = self.dpf_instance.Maptype
             xmp_value_type = self.dpf_instance.ValueType
+            xmp_intensity_type = self.dpf_instance.GetIntensityType
             xmp_unit_type = self.dpf_instance.UnitType
-            xmp_axis_unit = self.dpf_instance.GetAxisUnitName
+            xmp_axis_unit = axis_unit_types.index(self.dpf_instance.GetAxisUnitName)
             xmp_size = [self.dpf_instance.XMin, self.dpf_instance.XMax, self.dpf_instance.YMin, self.dpf_instance.YMax]
             xmp_resolution = [self.dpf_instance.XNb, self.dpf_instance.YNb]
-            xmp_layer = 1  # TODO get the number of layers from XMP using GetSelectedLayersUser method
-            if self.dpf_instance.Maptype == 2:
-                # this is a spectral map
+            xmp_layer = len(self.source_list)
+            if xmp_maptype in supported_map_types:
                 if self.dpf_instance.GetSampleCRI(0, 0, 2, pointer(variant)):
+                    # this is a spectral map
                     xmp_wl_res = [self.dpf_instance.WMin, self.dpf_instance.WMax, self.dpf_instance.WNb]
                     xmp_map_struct = MapStruct(
                         xmp_maptype,
                         xmp_value_type,
+                        xmp_intensity_type,
                         xmp_unit_type,
                         xmp_axis_unit,
                         xmp_size,
@@ -365,19 +495,21 @@ class DpfXmpViewer(DataProcessingFramework):
                     return self.__read_txt_export(xmp_map_struct, txt_path)
                 else:
                     xmp_map_struct = MapStruct(
-                        xmp_maptype, xmp_value_type, xmp_unit_type, xmp_axis_unit, xmp_size, xmp_resolution, xmp_layer
+                        xmp_maptype,
+                        xmp_value_type,
+                        xmp_intensity_type,
+                        xmp_unit_type,
+                        xmp_axis_unit,
+                        xmp_size,
+                        xmp_resolution,
+                        xmp_layer,
                     )
                     return self.__read_txt_export(xmp_map_struct, txt_path)
-            elif self.dpf_instance.Maptype == 3:
-                xmp_map_struct = MapStruct(
-                    xmp_maptype, xmp_value_type, xmp_unit_type, xmp_axis_unit, xmp_size, xmp_resolution, xmp_layer
-                )
-                return self.__read_txt_export(xmp_map_struct, txt_path)
             else:
                 msg = "type of map are not supported currently"
                 raise ImportError(msg)
 
-    def get_source_list(self):
+    def __get_source_list(self):
         """
         Get the source list stored in the simulation result.
 
@@ -390,6 +522,7 @@ class DpfXmpViewer(DataProcessingFramework):
             raise Exception("IronPython not supported")
         else:
             if self.dpf_instance.MapType == 2 or self.dpf_instance.MapType == 3:
+                self.source_list = []
                 total_sources = self.dpf_instance.ExtendedGetNbSource
                 for layer in range(total_sources):
                     name = automation.VARIANT()

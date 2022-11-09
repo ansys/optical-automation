@@ -76,7 +76,7 @@ def main():
         xmp.dpf_instance.SaveFile(xmp_import_path)
         results_dict["xmp_import"].append(check_file_size(xmp_import_path))
         data = xmp.read_txt_export(txt_data, inc_data=True)
-        results_dict["xmp_import_data"].append(data)
+        results_dict["xmp_import_data"].append(data.data)
     results_dict["xmp_measures"] = []
     for i, comb in enumerate(xml_test_files):
         xmp.open_file(comb[0])
