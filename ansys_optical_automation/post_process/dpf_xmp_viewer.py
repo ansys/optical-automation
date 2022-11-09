@@ -270,7 +270,7 @@ class MapStruct:
         xmp_file = os.path.join(export_path, self.export_name + ".xmp")
         self.__export_to_text(export_path)
         xmp.read_txt_export(txt_file)
-        # os.remove(txt_file)
+        os.remove(txt_file)
         xmp.dpf_instance.SaveFile(xmp_file)
         return xmp
 
