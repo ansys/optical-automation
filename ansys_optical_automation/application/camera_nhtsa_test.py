@@ -1,6 +1,7 @@
 # Python Script, API Version = V21
 import os
 
+# import sys
 # repo_path=r"your repository location"
 # sys.path.append(repo_path)
 from ansys_optical_automation.speos_process.speos_sensors import Camera
