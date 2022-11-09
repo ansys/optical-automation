@@ -25,7 +25,8 @@ def vector_len(vec):
     compute vector length
     Parameters
     ----------
-    vec [x,y,z]
+    vec : list
+        [x,y,z]
 
     Returns
     -------
@@ -63,20 +64,24 @@ def create_ray(point, direction, wl, e):
     return my_ray
 
 
-step_size = 10
-x_min = -1500
-x_max = 1500
-y_min = -600
-y_max = 600
-x_range = np.arange(x_min, x_max, step_size)
-y_range = np.arange(y_min, y_max, step_size)
-file_path = r"c:\temp\ray.ray"
-my_rayfile = DpfRayfile(file_path=None)
-ray_number = 0
-for x in x_range:
-    for y in y_range:
-        my_rayfile.rays.append(create_ray([x + step_size / 2, y + step_size / 2, 0], [0, 0, 1], 0.555, 1))
-        ray_number += 1
-my_rayfile.set_ray_count(ray_number)
-my_rayfile.file_path = file_path
-my_rayfile.export_to_speos()
+def main():
+    step_size = 10
+    x_min = -1500
+    x_max = 1500
+    y_min = -600
+    y_max = 600
+    x_range = np.arange(x_min, x_max, step_size)
+    y_range = np.arange(y_min, y_max, step_size)
+    file_path = r"c:\temp\ray.ray"
+    my_rayfile = DpfRayfile(file_path=None)
+    ray_number = 0
+    for x in x_range:
+        for y in y_range:
+            my_rayfile.rays.append(create_ray([x + step_size / 2, y + step_size / 2, 0], [0, 0, 1], 0.555, 1))
+            ray_number += 1
+    my_rayfile.set_ray_count(ray_number)
+    my_rayfile.file_path = file_path
+    my_rayfile.export_to_speos()
+
+
+main()
