@@ -35,7 +35,17 @@ axis_unit_types = [
 
 class MapStruct:
     def __init__(
-        self, map_type, value_type, intensity_type, unit_type, axis_unit, size, resolution, layers=1, wl_res=None
+        self,
+        map_type,
+        value_type,
+        intensity_type,
+        unit_type,
+        axis_unit,
+        size,
+        resolution,
+        layers=1,
+        layer_name=None,
+        wl_res=None,
     ):
         """
         Initialize the XMP MapStructure to create and edit XMP data.
@@ -60,6 +70,8 @@ class MapStruct:
             [Wstart, Wend, wNb] wstart and end wavlength and the resolution
         layers : int
             number of layers please not power values need to be defined later
+        layer_name : list
+            list of str for the layer name
         """
         if map_type not in supported_map_types:
             msg = "Map type (value: " + str(map_type) + ") not supported"
@@ -113,8 +125,22 @@ class MapStruct:
             msg = "Please provide a positive layer integer"
             raise ValueError(msg)
         else:
+            print(
+                "Warning power values for layers are set to 1 and need to be manually"
+                "adjusted before export only 1 unit type is supported both will have the same value"
+            )
             self.layers = layers
             self.layer_powers = numpy.ones(self.layers)
+            if type(layer_name) is list:
+                if len(layer_name) < self.layers:
+                    self.layer_name = range(self.layers)
+                    print("layername list to short is overwritten")
+                else:
+                    self.layer_name = layer_name
+            else:
+                self.layer_name = range(self.layers)
+                print("Layernames not provided were overwritten")
+
         if self.map_type == 3:
             if wl_res is None:
                 self.data = numpy.zeros((self.layers, self.xNb, self.yNb, 1))
@@ -206,7 +232,10 @@ class MapStruct:
 
         if self.map_type == 2 and self.wl_res is not None:
             for i in range(self.layers):
-                file_export.writelines("layer" + str(i) + "\n")
+                if type(self.layer_name[i]) == str:
+                    file_export.writelines(self.layer_name[i] + "\n")
+                else:
+                    file_export.writelines("layer" + str(i) + "\n")
                 for wl in range(self.wNb):
                     if wl != 0:
                         file_export.writelines("\n")
@@ -220,7 +249,10 @@ class MapStruct:
                 str_layer += str(self.layer_powers[i]) + "\t"
             file_export.writelines(str_layer + "\n")
             for i in range(self.layers):
-                file_export.writelines("layer" + str(i) + "\n")
+                if type(self.layer_name[i]) == str:
+                    file_export.writelines(self.layer_name[i] + "\n")
+                else:
+                    file_export.writelines("layer" + str(i) + "\n")
                 for y in range(self.yNb):
                     for x in range(self.xNb):
                         file_export.writelines(
@@ -236,7 +268,10 @@ class MapStruct:
                     file_export.writelines("\n")
         elif self.map_type == 3 and self.wl_res is not None:
             for i in range(self.layers):
-                file_export.writelines("layer" + str(i) + "\n")
+                if type(self.layer_name[i]) == str:
+                    file_export.writelines(self.layer_name[i] + "\n")
+                else:
+                    file_export.writelines("layer" + str(i) + "\n")
                 for wl in range(self.wNb):
                     if wl != 0:
                         file_export.writelines("\n")
@@ -246,7 +281,10 @@ class MapStruct:
                         file_export.writelines("\n")
         elif self.map_type == 3 and self.wl_res is None:
             for i in range(self.layers):
-                file_export.writelines("layer" + str(i) + "\n")
+                if type(self.layer_name[i]) == str:
+                    file_export.writelines(self.layer_name[i] + "\n")
+                else:
+                    file_export.writelines("layer" + str(i) + "\n")
                 for y in range(self.yNb):
                     for x in range(self.xNb):
                         file_export.writelines(str(self.data[i, x, y, 0]) + "\t")
@@ -490,6 +528,7 @@ class DpfXmpViewer(DataProcessingFramework):
                         xmp_size,
                         xmp_resolution,
                         xmp_layer,
+                        self.source_list,
                         xmp_wl_res,
                     )
                     return self.__read_txt_export(xmp_map_struct, txt_path)
@@ -503,6 +542,7 @@ class DpfXmpViewer(DataProcessingFramework):
                         xmp_size,
                         xmp_resolution,
                         xmp_layer,
+                        layer_name=self.source_list,
                     )
                     return self.__read_txt_export(xmp_map_struct, txt_path)
             else:
