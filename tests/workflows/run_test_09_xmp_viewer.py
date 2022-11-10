@@ -45,7 +45,7 @@ def main():
         shutil.copyfile(file, os.path.join(work_directory, "mytest_xmp_" + str(i) + ".xmp"))
     xmp_files = glob.glob(os.path.join(work_directory, "*.xmp"))
     results_dict["source_list"] = []
-    allowed_exports = ["txt", "png", "bmp", "jpg", "tiff", "pf"]
+    allowed_exports = ["txt", "png", "bmp", "jpg", "tiff", "pf", "extended.txt"]
     special_exports = ["ies"]
     xmp = DpfXmpViewer()
     for export_type in allowed_exports:
@@ -76,7 +76,9 @@ def main():
         xmp.dpf_instance.SaveFile(xmp_import_path)
         results_dict["xmp_import"].append(check_file_size(xmp_import_path))
         data = xmp.read_txt_export(txt_data, inc_data=True)
-        results_dict["xmp_import_data"].append(data)
+        data.export_name = os.path.split(txt_data)[1]
+        data.export_to_xmp()
+        results_dict["xmp_import_data"].append(data.data.tolist())
     results_dict["xmp_measures"] = []
     for i, comb in enumerate(xml_test_files):
         xmp.open_file(comb[0])
