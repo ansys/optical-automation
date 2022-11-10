@@ -151,6 +151,18 @@ def main():
     results_dict["radiance_type_spectral"] = str(radiance_obj.SensorType)
     radiance.set_wavelength_resolution(11)
     results_dict["radiance_wavelength_resolution"] = str(radiance_obj.WavelengthResolution)
+    radiance.set_observer_type("observer")
+    results_dict["radiance_observer"] = str(radiance_obj.ObserverType)
+    radiance.set_observer_point(radiance.origin)
+    results_dict["radiance_observer_point"] = str(radiance_obj.ObserverPoint)
+    radiance.set_observer_directions(radiance.axes[1], radiance.axes[2])
+    results_dict["radiance_observer_FrontDirection"] = str(radiance_obj.FrontDirection)
+    results_dict["radiance_observer_TopDirection"] = str(radiance_obj.TopDirection)
+    radiance.set_observer_fov(horizontal_fov=200, vertical_fov=100, horizontal_sampling=2000, vertical_sampling=1000)
+    results_dict["horizontal_fov"] = str(radiance_obj.HPlane)
+    results_dict["vertical_fov"] = str(radiance_obj.VPlane)
+    results_dict["horizontal_sampling"] = str(radiance_obj.HNbSamples)
+    results_dict["vertical_sampling"] = str(radiance_obj.VNbSamples)
 
 
 results_dict = {}
