@@ -31,8 +31,8 @@ def main():
         + str(int(VFOV))
         + r"° field of view \n and 0.1° central resolution"
     )
-    SpaceClaim.Api.V21.Command.Execute("FlyThroughCamera")
-    SpaceClaim.Api.V21.Command.Execute("OrthographicCamera")
+    Radiance.Command.Execute("FlyThroughCamera")
+    Radiance.Command.Execute("OrthographicCamera")
 
 
 main()

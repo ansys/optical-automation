@@ -499,10 +499,23 @@ class RadianceSensor(Sensor):
             raise ValueError(error_message)
 
     def set_definition_type(self, definition_type):
+        """
+        set radiancec sensor definition type.
+
+        Parameters
+        ----------
+        definition_type : str
+            type as observer or frame
+
+        Returns
+        -------
+
+
+        """
         definition_type = definition_type.lower()
-        if definition_type == "observer":
+        if definition_type.lower() == "observer":
             self.speos_object.DefinitionFrom = self.speos_sim.SensorRadiance.EnumDefinitionFrom.Observer
-        elif definition_type == "frame":
+        elif definition_type.lower() == "frame":
             self.speos_object.DefinitionFrom = self.speos_sim.SensorRadiance.EnumDefinitionFrom.Frame
         else:
             error_message = "please provide a radiance type as observer or frame"
