@@ -21,7 +21,7 @@ class PreProcessingASP(BaseSCDM):
         SpaceClaim : SpaceClaim object
             SpaceClaim object.
         """
-        super(PreProcessingASP, self).__init__(SpaceClaim, ["V19", "V20", "V21"])
+        super(PreProcessingASP, self).__init__(SpaceClaim, ["V19", "V20", "V21", "V22", "V23"])
 
     def create_dict_by_color(self):
         """

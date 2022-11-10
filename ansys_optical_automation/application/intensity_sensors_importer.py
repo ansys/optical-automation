@@ -216,22 +216,22 @@ def apply_usesr_options(axys_sys, option_selected, type, speos_senor):
     axis_x = axes[0]
     axis_y = axes[1]
     axis_z = axes[2]
-    if option_selected == "Rear":
+    if option_selected == "Front":
         if type == "IESNATypeA":
             speos_senor.set_position(axes=[axis_z, axis_x], origin=axys_sys, y_reverse=True)
         else:
             speos_senor.set_position(axes=[axis_y, axis_z], origin=axys_sys, x_reverse=True)
-    elif option_selected == "Left":
+    elif option_selected == "Right":
         if type == "IESNATypeA":
             speos_senor.set_position(axes=[axis_z, axis_y], origin=axys_sys)
         else:
             speos_senor.set_position(axes=[axis_x, axis_z], origin=axys_sys, x_reverse=True)
-    elif option_selected == "Right":
+    elif option_selected == "Left":
         if type == "IESNATypeA":
             speos_senor.set_position(axes=[axis_z, axis_y], origin=axys_sys, y_reverse=True)
         else:
             speos_senor.set_position(axes=[axis_x, axis_z], origin=axys_sys)
-    elif option_selected == "Front":
+    elif option_selected == "Rear":
         if type == "IESNATypeA":
             speos_senor.set_position(axes=[axis_z, axis_x], origin=axys_sys)
         else:
@@ -277,14 +277,15 @@ def create_intensity_sensor(
     """
     sensor_obj = IntensitySensor(option_selected + "_" + sensor_name, SpeosSim, SpaceClaim)
     apply_usesr_options(sensor_origin, option_selected, sensor_type, sensor_obj)
-    sensor_obj.set_sampling(x_sampling=x_y_samplings[0], y_sampling=x_y_samplings[1])
     if layer is not None:
         sensor_obj.set_layer(layer)
     if sensor_type == "IESNATypeA":
         sensor_obj.set_format(sensor_format="IESNATypeA")
+        sensor_obj.set_sampling(x_sampling=x_y_samplings[0], y_sampling=x_y_samplings[1])
     if sensor_type == "XMP":
         sensor_obj.set_format(sensor_format="XMP")
         sensor_obj.set_range(x_mirrored=True, y_mirrored=True, x_start=-90, x_end=90, y_start=-90, y_end=90)
+        sensor_obj.set_sampling(x_sampling=x_y_samplings[0], y_sampling=x_y_samplings[1])
         sensor_obj.set_wavelength(w_sampling=w_sampling)
     if integration is not None:
         sensor_obj.set_integration_angle(integration)

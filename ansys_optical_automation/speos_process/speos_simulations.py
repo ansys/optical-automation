@@ -1,4 +1,3 @@
-# Python Script, API Version = V21
 import os
 
 from ansys_optical_automation.scdm_core.base import BaseSCDM
@@ -26,7 +25,7 @@ class Simulation(BaseSCDM):
         kind : str, optional
             Type of the simulation. Options are ``"inverse"``, ``"direct"``, and ``"interactive"``.
         """
-        super(Simulation, self).__init__(SpaceClaim, ["V19", "V20", "V21", "V22"])
+        super(Simulation, self).__init__(SpaceClaim, ["V19", "V20", "V21", "V22", "V23"])
         self.PreProcASP = PreProcessingASP(SpaceClaim)
         self.speos_sim = SpeosSim
         self.name = name
