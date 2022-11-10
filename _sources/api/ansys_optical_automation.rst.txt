@@ -9,10 +9,12 @@ Subpackages
 
    ansys_optical_automation.application
    ansys_optical_automation.interop_process
+   ansys_optical_automation.lumerical_core
    ansys_optical_automation.post_process
    ansys_optical_automation.scdm_core
    ansys_optical_automation.scdm_process
    ansys_optical_automation.speos_process
+   ansys_optical_automation.zemax_process
 
 Module contents
 ---------------

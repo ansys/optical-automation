@@ -37,7 +37,7 @@
     <script src="../_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="ansys_optical_automation.post_process package" href="ansys_optical_automation.post_process.html" />
+    <link rel="next" title="ansys_optical_automation.lumerical_core package" href="ansys_optical_automation.lumerical_core.html" />
     <link rel="prev" title="ansys_optical_automation.application package" href="ansys_optical_automation.application.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
@@ -134,6 +134,11 @@
       </a>
      </li>
      <li class="toctree-l3">
+      <a class="reference internal" href="ansys_optical_automation.lumerical_core.html">
+       ansys_optical_automation.lumerical_core package
+      </a>
+     </li>
+     <li class="toctree-l3">
       <a class="reference internal" href="ansys_optical_automation.post_process.html">
        ansys_optical_automation.post_process package
       </a>
@@ -151,6 +156,11 @@
      <li class="toctree-l3">
       <a class="reference internal" href="ansys_optical_automation.speos_process.html">
        ansys_optical_automation.speos_process package
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys_optical_automation.zemax_process.html">
+       ansys_optical_automation.zemax_process package
       </a>
      </li>
     </ul>
@@ -387,19 +397,28 @@ title="Print to PDF"
 <tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">export_file</span></code>([export_folder_dir, convert])</p></td>
 <td><p>this method generates a file to be exported Parameters ----------</p></td>
 </tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">export_to_speos</span></code>()</p></td>
+<td><p>this method convert the rayfile into speos format</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">export_to_zemax</span></code>()</p></td>
+<td><p>this method convert the rayfile into zemax format</p></td>
+</tr>
 <tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">load_content</span></code>()</p></td>
 <td><p>this method load the information from rayfile provided</p></td>
 </tr>
 <tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">open_file</span></code>(str_path)</p></td>
 <td><p>Open a file in DPF.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#ansys_optical_automation.interop_process.rayfile_converter.RayfileConverter.speos_to_zemax" title="ansys_optical_automation.interop_process.rayfile_converter.RayfileConverter.speos_to_zemax"><code class="xref py py-obj docutils literal notranslate"><span class="pre">speos_to_zemax</span></code></a>()</p></td>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_ray_count</span></code>(raynumber)</p></td>
+<td><p>redfine raynumber Parameters ---------- raynumber : int</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#ansys_optical_automation.interop_process.rayfile_converter.RayfileConverter.speos_to_zemax" title="ansys_optical_automation.interop_process.rayfile_converter.RayfileConverter.speos_to_zemax"><code class="xref py py-obj docutils literal notranslate"><span class="pre">speos_to_zemax</span></code></a>()</p></td>
 <td><p>this method will read the speos rayfile content and convert it to zemax format</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">valid_dir</span></code>(str_path)</p></td>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">valid_dir</span></code>(str_path)</p></td>
 <td><p>Check if a folder is present and, if not, create it.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#ansys_optical_automation.interop_process.rayfile_converter.RayfileConverter.zemax_to_speos" title="ansys_optical_automation.interop_process.rayfile_converter.RayfileConverter.zemax_to_speos"><code class="xref py py-obj docutils literal notranslate"><span class="pre">zemax_to_speos</span></code></a>()</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#ansys_optical_automation.interop_process.rayfile_converter.RayfileConverter.zemax_to_speos" title="ansys_optical_automation.interop_process.rayfile_converter.RayfileConverter.zemax_to_speos"><code class="xref py py-obj docutils literal notranslate"><span class="pre">zemax_to_speos</span></code></a>()</p></td>
 <td><p>this method convert the zemax rayfile into speos format</p></td>
 </tr>
 </tbody>
@@ -453,10 +472,10 @@ title="Print to PDF"
             <p class="prev-next-title">ansys_optical_automation.application package</p>
         </div>
     </a>
-    <a class='right-next' id="next-link" href="ansys_optical_automation.post_process.html" title="next page">
+    <a class='right-next' id="next-link" href="ansys_optical_automation.lumerical_core.html" title="next page">
     <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">ansys_optical_automation.post_process package</p>
+        <p class="prev-next-title">ansys_optical_automation.lumerical_core package</p>
     </div>
     <i class="fas fa-angle-right"></i>
     </a>

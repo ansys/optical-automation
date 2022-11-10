@@ -131,6 +131,11 @@
       </a>
      </li>
      <li class="toctree-l3">
+      <a class="reference internal" href="../../../api/ansys_optical_automation.lumerical_core.html">
+       ansys_optical_automation.lumerical_core package
+      </a>
+     </li>
+     <li class="toctree-l3">
       <a class="reference internal" href="../../../api/ansys_optical_automation.post_process.html">
        ansys_optical_automation.post_process package
       </a>
@@ -148,6 +153,11 @@
      <li class="toctree-l3">
       <a class="reference internal" href="../../../api/ansys_optical_automation.speos_process.html">
        ansys_optical_automation.speos_process package
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../api/ansys_optical_automation.zemax_process.html">
+       ansys_optical_automation.zemax_process package
       </a>
      </li>
     </ul>
@@ -275,7 +285,7 @@ title="Fullscreen mode"
 <span class="sd">        SpaceClaim : SpaceClaim object</span>
 <span class="sd">            SpaceClaim object.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="nb">super</span><span class="p">(</span><span class="n">Sensor</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">SpaceClaim</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;V19&quot;</span><span class="p">,</span> <span class="s2">&quot;V20&quot;</span><span class="p">,</span> <span class="s2">&quot;V21&quot;</span><span class="p">])</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">Sensor</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">SpaceClaim</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;V19&quot;</span><span class="p">,</span> <span class="s2">&quot;V20&quot;</span><span class="p">,</span> <span class="s2">&quot;V21&quot;</span><span class="p">,</span> <span class="s2">&quot;V22&quot;</span><span class="p">,</span> <span class="s2">&quot;V23&quot;</span><span class="p">])</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">speos_sim</span> <span class="o">=</span> <span class="n">SpeosSim</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">speos_object</span> <span class="o">=</span> <span class="kc">None</span>
@@ -454,6 +464,7 @@ title="Fullscreen mode"
             <span class="n">speos_object</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">speos_sim</span><span class="o">.</span><span class="n">SensorIntensity</span><span class="o">.</span><span class="n">Create</span><span class="p">()</span>
             <span class="n">speos_object</span><span class="o">.</span><span class="n">Name</span> <span class="o">=</span> <span class="n">name</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">speos_object</span> <span class="o">=</span> <span class="n">speos_object</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sensor_format</span> <span class="o">=</span> <span class="kc">None</span>
 
 <div class="viewcode-block" id="IntensitySensor.set_format"><a class="viewcode-back" href="../../../api/ansys_optical_automation.speos_process.html#ansys_optical_automation.speos_process.speos_sensors.IntensitySensor.set_format">[docs]</a>    <span class="k">def</span> <span class="nf">set_format</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sensor_format</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -467,16 +478,16 @@ title="Fullscreen mode"
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">sensor_format</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">NameError</span><span class="p">(</span><span class="s2">&quot;Format input not provided.&quot;</span><span class="p">)</span>
-        <span class="n">sensor_format</span> <span class="o">=</span> <span class="n">sensor_format</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
-        <span class="k">if</span> <span class="n">sensor_format</span> <span class="o">==</span> <span class="s2">&quot;xmp&quot;</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sensor_format</span> <span class="o">=</span> <span class="n">sensor_format</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">sensor_format</span> <span class="o">==</span> <span class="s2">&quot;xmp&quot;</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">speos_object</span><span class="o">.</span><span class="n">FormatType</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">speos_sim</span><span class="o">.</span><span class="n">SensorIntensity</span><span class="o">.</span><span class="n">EnumFormatType</span><span class="o">.</span><span class="n">XMP</span>
-        <span class="k">elif</span> <span class="n">sensor_format</span> <span class="o">==</span> <span class="s2">&quot;iesnatypea&quot;</span><span class="p">:</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">sensor_format</span> <span class="o">==</span> <span class="s2">&quot;iesnatypea&quot;</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">speos_object</span><span class="o">.</span><span class="n">FormatType</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">speos_sim</span><span class="o">.</span><span class="n">SensorIntensity</span><span class="o">.</span><span class="n">EnumFormatType</span><span class="o">.</span><span class="n">IESNATypeA</span>
-        <span class="k">elif</span> <span class="n">sensor_format</span> <span class="o">==</span> <span class="s2">&quot;iesnatypeb&quot;</span><span class="p">:</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">sensor_format</span> <span class="o">==</span> <span class="s2">&quot;iesnatypeb&quot;</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">speos_object</span><span class="o">.</span><span class="n">FormatType</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">speos_sim</span><span class="o">.</span><span class="n">SensorIntensity</span><span class="o">.</span><span class="n">EnumFormatType</span><span class="o">.</span><span class="n">IESNATypeB</span>
-        <span class="k">elif</span> <span class="n">sensor_format</span> <span class="o">==</span> <span class="s2">&quot;iesnatypec&quot;</span><span class="p">:</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">sensor_format</span> <span class="o">==</span> <span class="s2">&quot;iesnatypec&quot;</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">speos_object</span><span class="o">.</span><span class="n">FormatType</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">speos_sim</span><span class="o">.</span><span class="n">SensorIntensity</span><span class="o">.</span><span class="n">EnumFormatType</span><span class="o">.</span><span class="n">IESNATypeC</span>
-        <span class="k">elif</span> <span class="n">sensor_format</span> <span class="o">==</span> <span class="s2">&quot;eulumdat&quot;</span><span class="p">:</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">sensor_format</span> <span class="o">==</span> <span class="s2">&quot;eulumdat&quot;</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">speos_object</span><span class="o">.</span><span class="n">FormatType</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">speos_sim</span><span class="o">.</span><span class="n">SensorIntensity</span><span class="o">.</span><span class="n">EnumFormatType</span><span class="o">.</span><span class="n">Eulumdat</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Wrong input value. Choose from XMP, IESNATypeA, IESNATypeB, IESNATypeC or Eulumdat.&quot;</span><span class="p">)</span></div>
@@ -626,7 +637,20 @@ title="Fullscreen mode"
             <span class="bp">self</span><span class="o">.</span><span class="n">speos_object</span><span class="o">.</span><span class="n">LayerType</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">speos_sim</span><span class="o">.</span><span class="n">SensorIntensity</span><span class="o">.</span><span class="n">EnumLayerType</span><span class="p">,</span> <span class="s2">&quot;None&quot;</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">error_message</span> <span class="o">=</span> <span class="s2">&quot;Unsupported layer type. Supported types: source, face, sequence, none.&quot;</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">error_message</span><span class="p">)</span></div></div>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">error_message</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="IntensitySensor.set_integration_angle"><a class="viewcode-back" href="../../../api/ansys_optical_automation.speos_process.html#ansys_optical_automation.speos_process.speos_sensors.IntensitySensor.set_integration_angle">[docs]</a>    <span class="k">def</span> <span class="nf">set_integration_angle</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">integration_value</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        set integration angle of the radiance sensor</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        integration_value</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">sensor_format</span> <span class="o">==</span> <span class="s2">&quot;xmp&quot;</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">sensor_format</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Cannot assign integration values&quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">speos_object</span><span class="o">.</span><span class="n">IntegrationAngle</span> <span class="o">=</span> <span class="n">integration_value</span></div></div>
 
 
 <div class="viewcode-block" id="RadianceSensor"><a class="viewcode-back" href="../../../api/ansys_optical_automation.speos_process.html#ansys_optical_automation.speos_process.speos_sensors.RadianceSensor">[docs]</a><span class="k">class</span> <span class="nc">RadianceSensor</span><span class="p">(</span><span class="n">Sensor</span><span class="p">):</span>
@@ -729,6 +753,58 @@ title="Fullscreen mode"
             <span class="n">error_message</span> <span class="o">=</span> <span class="s2">&quot;please provide a radiance type as observer or focal&quot;</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">error_message</span><span class="p">)</span></div>
 
+<div class="viewcode-block" id="RadianceSensor.set_definition_type"><a class="viewcode-back" href="../../../api/ansys_optical_automation.speos_process.html#ansys_optical_automation.speos_process.speos_sensors.RadianceSensor.set_definition_type">[docs]</a>    <span class="k">def</span> <span class="nf">set_definition_type</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">definition_type</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        set radiancec sensor definition type.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        definition_type : str</span>
+<span class="sd">            type as observer or frame</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">definition_type</span> <span class="o">=</span> <span class="n">definition_type</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">definition_type</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;observer&quot;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">speos_object</span><span class="o">.</span><span class="n">DefinitionFrom</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">speos_sim</span><span class="o">.</span><span class="n">SensorRadiance</span><span class="o">.</span><span class="n">EnumDefinitionFrom</span><span class="o">.</span><span class="n">Observer</span>
+        <span class="k">elif</span> <span class="n">definition_type</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;frame&quot;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">speos_object</span><span class="o">.</span><span class="n">DefinitionFrom</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">speos_sim</span><span class="o">.</span><span class="n">SensorRadiance</span><span class="o">.</span><span class="n">EnumDefinitionFrom</span><span class="o">.</span><span class="n">Frame</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">error_message</span> <span class="o">=</span> <span class="s2">&quot;please provide a radiance type as observer or frame&quot;</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">error_message</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="RadianceSensor.set_xmp_template"><a class="viewcode-back" href="../../../api/ansys_optical_automation.speos_process.html#ansys_optical_automation.speos_process.speos_sensors.RadianceSensor.set_xmp_template">[docs]</a>    <span class="k">def</span> <span class="nf">set_xmp_template</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">xml_file</span><span class="p">,</span> <span class="n">take_dimension</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">take_display</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        set the xmp template.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        xml_file : str</span>
+<span class="sd">            path of xml file</span>
+<span class="sd">        take_dimension : bool</span>
+<span class="sd">            True if setting of dimension used from xml, otherwise False</span>
+<span class="sd">        take_display : bool</span>
+<span class="sd">            True if setting of XMP display used from xml, otherwise False</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">xml_file</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">speos_object</span><span class="o">.</span><span class="n">XMPTemplateFile</span> <span class="o">=</span> <span class="n">xml_file</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">msg</span> <span class="o">=</span> <span class="s2">&quot;Provided XML file is not found&quot;</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">take_dimension</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">speos_object</span><span class="o">.</span><span class="n">DimensionFromFile</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="k">if</span> <span class="n">take_display</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">speos_object</span><span class="o">.</span><span class="n">DisplayPropertiesFromFile</span> <span class="o">=</span> <span class="kc">True</span></div>
+
 <div class="viewcode-block" id="RadianceSensor.set_range"><a class="viewcode-back" href="../../../api/ansys_optical_automation.speos_process.html#ansys_optical_automation.speos_process.speos_sensors.RadianceSensor.set_range">[docs]</a>    <span class="k">def</span> <span class="nf">set_range</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x_start</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">x_end</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">y_start</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">y_end</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">x_mirrored</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">y_mirrored</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Set the sensor size.</span>
@@ -819,7 +895,45 @@ title="Fullscreen mode"
 <span class="sd">        ----------</span>
 <span class="sd">        integration_value</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">speos_object</span><span class="o">.</span><span class="n">IntegrationAngle</span> <span class="o">=</span> <span class="n">integration_value</span></div></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">speos_object</span><span class="o">.</span><span class="n">IntegrationAngle</span> <span class="o">=</span> <span class="n">integration_value</span></div>
+
+<div class="viewcode-block" id="RadianceSensor.set_observer_point"><a class="viewcode-back" href="../../../api/ansys_optical_automation.speos_process.html#ansys_optical_automation.speos_process.speos_sensors.RadianceSensor.set_observer_point">[docs]</a>    <span class="k">def</span> <span class="nf">set_observer_point</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">observer_point</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        set observer point of the radiance sensor (Definition from Observer)</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        observer_point : point or origin (coordinate system)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">speos_object</span><span class="o">.</span><span class="n">ObserverPoint</span><span class="o">.</span><span class="n">Set</span><span class="p">(</span><span class="n">observer_point</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="RadianceSensor.set_observer_directions"><a class="viewcode-back" href="../../../api/ansys_optical_automation.speos_process.html#ansys_optical_automation.speos_process.speos_sensors.RadianceSensor.set_observer_directions">[docs]</a>    <span class="k">def</span> <span class="nf">set_observer_directions</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">front_direction</span><span class="p">,</span> <span class="n">top_direction</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        set front and top directions of the radiance sensor (Definition from Observer)</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        front_direction : axis or line</span>
+<span class="sd">        top_direction : axis or line</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">speos_object</span><span class="o">.</span><span class="n">FrontDirection</span><span class="o">.</span><span class="n">Set</span><span class="p">(</span><span class="n">front_direction</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">speos_object</span><span class="o">.</span><span class="n">TopDirection</span><span class="o">.</span><span class="n">Set</span><span class="p">(</span><span class="n">top_direction</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="RadianceSensor.set_fov"><a class="viewcode-back" href="../../../api/ansys_optical_automation.speos_process.html#ansys_optical_automation.speos_process.speos_sensors.RadianceSensor.set_fov">[docs]</a>    <span class="k">def</span> <span class="nf">set_fov</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">horizontal_fov</span><span class="p">,</span> <span class="n">vertical_fov</span><span class="p">,</span> <span class="n">horizontal_sampling</span><span class="p">,</span> <span class="n">vertical_sampling</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        set field of view and sampling of the radiance sensor (Definition from Observer)</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        horizontal_fov : float</span>
+<span class="sd">        vertical_fov : float</span>
+<span class="sd">        horizontal_sampling : float</span>
+<span class="sd">        vertical_sampling : float</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">speos_object</span><span class="o">.</span><span class="n">HPlane</span> <span class="o">=</span> <span class="n">horizontal_fov</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">speos_object</span><span class="o">.</span><span class="n">VPlane</span> <span class="o">=</span> <span class="n">vertical_fov</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">speos_object</span><span class="o">.</span><span class="n">HNbSamples</span> <span class="o">=</span> <span class="n">horizontal_sampling</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">speos_object</span><span class="o">.</span><span class="n">VNbSamples</span> <span class="o">=</span> <span class="n">vertical_sampling</span></div></div>
 </pre></div>
 
               </div>

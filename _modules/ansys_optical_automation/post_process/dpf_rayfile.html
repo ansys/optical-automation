@@ -131,6 +131,11 @@
       </a>
      </li>
      <li class="toctree-l3">
+      <a class="reference internal" href="../../../api/ansys_optical_automation.lumerical_core.html">
+       ansys_optical_automation.lumerical_core package
+      </a>
+     </li>
+     <li class="toctree-l3">
       <a class="reference internal" href="../../../api/ansys_optical_automation.post_process.html">
        ansys_optical_automation.post_process package
       </a>
@@ -148,6 +153,11 @@
      <li class="toctree-l3">
       <a class="reference internal" href="../../../api/ansys_optical_automation.speos_process.html">
        ansys_optical_automation.speos_process package
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../api/ansys_optical_automation.zemax_process.html">
+       ansys_optical_automation.zemax_process package
       </a>
      </li>
     </ul>
@@ -452,16 +462,17 @@ title="Fullscreen mode"
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">file_path</span><span class="p">):</span>
         <span class="n">DataProcessingFramework</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">extension</span><span class="o">=</span><span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">conversion_extension</span><span class="o">.</span><span class="n">keys</span><span class="p">()))</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">open_file</span><span class="p">(</span><span class="n">file_path</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__ray_numb</span> <span class="o">=</span> <span class="mi">0</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__watt_value</span> <span class="o">=</span> <span class="mi">0</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__lumen_value</span> <span class="o">=</span> <span class="mi">0</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__rays</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">__binary</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__is_binary</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">identifier</span> <span class="o">=</span> <span class="mi">0</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">description</span> <span class="o">=</span> <span class="s2">&quot;description&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">source_flux</span> <span class="o">=</span> <span class="mi">0</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">load_content</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">file_path</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">open_file</span><span class="p">(</span><span class="n">file_path</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__binary</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__is_binary</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">load_content</span><span class="p">()</span>
 
     <span class="k">def</span> <span class="nf">__is_binary</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;this method checks if a file is binary</span>
@@ -506,6 +517,20 @@ title="Fullscreen mode"
         <span class="n">start_photopic</span> <span class="o">=</span> <span class="n">Photopic_Conversion_value</span><span class="p">[</span><span class="n">pos</span><span class="p">]</span>
         <span class="n">end_photopic</span> <span class="o">=</span> <span class="n">Photopic_Conversion_value</span><span class="p">[</span><span class="n">pos</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span>
         <span class="k">return</span> <span class="p">((</span><span class="n">wavelength</span> <span class="o">-</span> <span class="n">start_wave</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">end_wave</span> <span class="o">-</span> <span class="n">start_wave</span><span class="p">))</span> <span class="o">*</span> <span class="p">(</span><span class="n">end_photopic</span> <span class="o">-</span> <span class="n">start_photopic</span><span class="p">)</span> <span class="o">+</span> <span class="n">start_photopic</span>
+
+<div class="viewcode-block" id="DpfRayfile.set_ray_count"><a class="viewcode-back" href="../../../api/ansys_optical_automation.post_process.html#ansys_optical_automation.post_process.dpf_rayfile.DpfRayfile.set_ray_count">[docs]</a>    <span class="k">def</span> <span class="nf">set_ray_count</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">raynumber</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        redfine raynumber</span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        raynumber : int</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__ray_numb</span> <span class="o">=</span> <span class="n">raynumber</span></div>
 
 <div class="viewcode-block" id="DpfRayfile.load_content"><a class="viewcode-back" href="../../../api/ansys_optical_automation.post_process.html#ansys_optical_automation.post_process.dpf_rayfile.DpfRayfile.load_content">[docs]</a>    <span class="k">def</span> <span class="nf">load_content</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -610,12 +635,12 @@ title="Fullscreen mode"
                 <span class="n">m_dir</span> <span class="o">=</span> <span class="n">struct</span><span class="o">.</span><span class="n">unpack</span><span class="p">(</span><span class="s2">&quot;f&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">dpf_instance</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="mi">4</span><span class="p">))[</span><span class="mi">0</span><span class="p">]</span>
                 <span class="n">n_dir</span> <span class="o">=</span> <span class="n">struct</span><span class="o">.</span><span class="n">unpack</span><span class="p">(</span><span class="s2">&quot;f&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">dpf_instance</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="mi">4</span><span class="p">))[</span><span class="mi">0</span><span class="p">]</span>
                 <span class="n">wav</span> <span class="o">=</span> <span class="n">wavelength</span> <span class="k">if</span> <span class="n">wavelength</span> <span class="o">!=</span> <span class="mi">0</span> <span class="k">else</span> <span class="mi">550</span>
-                <span class="k">if</span> <span class="n">ray_format_type</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
-                    <span class="n">wav</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="n">struct</span><span class="o">.</span><span class="n">unpack</span><span class="p">(</span><span class="s2">&quot;f&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">dpf_instance</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="mi">4</span><span class="p">))[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">3</span><span class="p">)</span>
                 <span class="n">e</span> <span class="o">=</span> <span class="n">struct</span><span class="o">.</span><span class="n">unpack</span><span class="p">(</span><span class="s2">&quot;f&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">dpf_instance</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="mi">4</span><span class="p">))[</span><span class="mi">0</span><span class="p">]</span>
                 <span class="k">if</span> <span class="n">e</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
                     <span class="n">msg</span> <span class="o">=</span> <span class="s2">&quot;Error: ray power of &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">m_dir</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;th ray is &lt;= 0&quot;</span>
                     <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">ray_format_type</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+                    <span class="n">wav</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="n">struct</span><span class="o">.</span><span class="n">unpack</span><span class="p">(</span><span class="s2">&quot;f&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">dpf_instance</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="mi">4</span><span class="p">))[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">3</span><span class="p">)</span>
                 <span class="k">if</span> <span class="n">wav</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
                     <span class="n">msg</span> <span class="o">=</span> <span class="s2">&quot;Error: ray wavelength cannot be &lt;= 0&quot;</span>
                     <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
@@ -626,10 +651,15 @@ title="Fullscreen mode"
                 <span class="bp">self</span><span class="o">.</span><span class="n">__rays</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">DpfRay</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="n">l_dir</span><span class="p">,</span> <span class="n">m_dir</span><span class="p">,</span> <span class="n">n_dir</span><span class="p">,</span> <span class="n">wav</span><span class="p">,</span> <span class="n">e</span><span class="p">))</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">__binary</span><span class="p">:</span>
-                <span class="n">msg</span> <span class="o">=</span> <span class="s2">&quot;Non binary files not supported&quot;</span>
+                <span class="n">msg</span> <span class="o">=</span> <span class="s2">&quot;Non binary files not supported </span><span class="se">\n</span><span class="s2"> Filepath:&quot;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">file_path</span>
                 <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
-                <span class="n">msg</span> <span class="o">=</span> <span class="s2">&quot;Provided file type is not supported&quot;</span>
+                <span class="n">msg</span> <span class="o">=</span> <span class="p">(</span>
+                    <span class="s2">&quot;Provided file type is not supported </span><span class="se">\n</span><span class="s2"> Filepath: &quot;</span>
+                    <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">file_path</span>
+                    <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span>
+                    <span class="o">+</span> <span class="s2">&quot;For Speos rayfile you can try to open the file with the RayfileEditor and save the file&quot;</span>
+                <span class="p">)</span>
                 <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span></div>
 
     <span class="nd">@property</span>
@@ -675,6 +705,94 @@ title="Fullscreen mode"
 
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__rays</span>
+
+<div class="viewcode-block" id="DpfRayfile.export_to_zemax"><a class="viewcode-back" href="../../../api/ansys_optical_automation.post_process.html#ansys_optical_automation.post_process.dpf_rayfile.DpfRayfile.export_to_zemax">[docs]</a>    <span class="k">def</span> <span class="nf">export_to_zemax</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        this method convert the rayfile into zemax format</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        None</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">outfile</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">export_file</span><span class="p">()</span>
+        <span class="n">zemax_spectrum_file</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">outfile</span><span class="p">,</span> <span class="s2">&quot;wb&quot;</span><span class="p">)</span>
+        <span class="n">zemax_spectrum_file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">struct</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="s2">&quot;&lt;I&quot;</span><span class="p">,</span> <span class="mi">1010</span><span class="p">))</span>  <span class="c1"># Identifier</span>
+        <span class="n">zemax_spectrum_file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">struct</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="s2">&quot;&lt;I&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">rays_number</span><span class="p">))</span>  <span class="c1"># NbrRays</span>
+
+        <span class="n">description</span> <span class="o">=</span> <span class="s2">&quot;Converted from SPEOS .ray file.&quot;</span>
+        <span class="c1"># if len(description) &gt; 100:</span>
+        <span class="c1">#    description = description[:100]</span>
+        <span class="c1"># else:</span>
+        <span class="c1">#    description = description.ljust(100)</span>
+        <span class="n">description</span> <span class="o">=</span> <span class="n">description</span><span class="o">.</span><span class="n">ljust</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span>
+        <span class="n">zemax_spectrum_file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">description</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s2">&quot;ascii&quot;</span><span class="p">))</span>  <span class="c1"># Description</span>
+        <span class="n">zemax_spectrum_file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">struct</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="s2">&quot;f&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">radiometric_power</span><span class="p">))</span>  <span class="c1"># SourceFlux = radiometric flux in SPOES</span>
+        <span class="n">zemax_spectrum_file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">struct</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="s2">&quot;f&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">radiometric_power</span><span class="p">))</span>  <span class="c1"># RaySetFlux = radiometric flux in SPOES</span>
+        <span class="n">zemax_spectrum_file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">struct</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="s2">&quot;f&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>  <span class="c1"># Wavelength</span>
+        <span class="n">zemax_spectrum_file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">struct</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="s2">&quot;f&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>  <span class="c1"># InclinationBeg</span>
+        <span class="n">zemax_spectrum_file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">struct</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="s2">&quot;f&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>  <span class="c1"># InclinationEnd</span>
+        <span class="n">zemax_spectrum_file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">struct</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="s2">&quot;f&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>  <span class="c1"># AzimuthBeg</span>
+        <span class="n">zemax_spectrum_file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">struct</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="s2">&quot;f&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>  <span class="c1"># AzimuthEnd</span>
+        <span class="n">zemax_spectrum_file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">struct</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="s2">&quot;&lt;I&quot;</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>  <span class="c1"># DimensionUnits: M=0, IN=1, CM=2, FT=3, MM=4</span>
+        <span class="n">zemax_spectrum_file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">struct</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="s2">&quot;f&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>  <span class="c1"># LocX</span>
+        <span class="n">zemax_spectrum_file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">struct</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="s2">&quot;f&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>  <span class="c1"># LocY</span>
+        <span class="n">zemax_spectrum_file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">struct</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="s2">&quot;f&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>  <span class="c1"># LocZ</span>
+        <span class="n">zemax_spectrum_file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">struct</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="s2">&quot;f&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>  <span class="c1"># RotX</span>
+        <span class="n">zemax_spectrum_file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">struct</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="s2">&quot;f&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>  <span class="c1"># RotY</span>
+        <span class="n">zemax_spectrum_file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">struct</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="s2">&quot;f&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>  <span class="c1"># RotZ</span>
+        <span class="n">zemax_spectrum_file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">struct</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="s2">&quot;f&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>  <span class="c1"># ScaleX</span>
+        <span class="n">zemax_spectrum_file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">struct</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="s2">&quot;f&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>  <span class="c1"># ScaleY</span>
+        <span class="n">zemax_spectrum_file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">struct</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="s2">&quot;f&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>  <span class="c1"># ScaleZ</span>
+        <span class="n">zemax_spectrum_file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">struct</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="s2">&quot;f&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>  <span class="c1"># unused1 (float)</span>
+        <span class="n">zemax_spectrum_file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">struct</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="s2">&quot;f&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>  <span class="c1"># unused2 (float)</span>
+        <span class="n">zemax_spectrum_file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">struct</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="s2">&quot;f&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>  <span class="c1"># unused3 (float)</span>
+        <span class="n">zemax_spectrum_file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">struct</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="s2">&quot;f&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>  <span class="c1"># unused4 (float)</span>
+        <span class="n">zemax_spectrum_file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span>
+            <span class="n">struct</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="s2">&quot;&lt;I&quot;</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+        <span class="p">)</span>  <span class="c1"># ray_format_type is color since the SPEOS ray file always contains wavelength</span>
+        <span class="n">zemax_spectrum_file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">struct</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="s2">&quot;&lt;I&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>  <span class="c1"># flux_type is Watts</span>
+        <span class="n">zemax_spectrum_file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">struct</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="s2">&quot;&lt;I&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>  <span class="c1"># reversed1 (int)</span>
+        <span class="n">zemax_spectrum_file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">struct</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="s2">&quot;&lt;I&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>  <span class="c1"># reversed2 (int)</span>
+        <span class="k">for</span> <span class="n">ray</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">rays</span><span class="p">:</span>
+            <span class="n">zemax_spectrum_file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">struct</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="s2">&quot;f&quot;</span><span class="p">,</span> <span class="n">ray</span><span class="o">.</span><span class="n">coordinate_x</span><span class="p">))</span>  <span class="c1"># x</span>
+            <span class="n">zemax_spectrum_file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">struct</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="s2">&quot;f&quot;</span><span class="p">,</span> <span class="n">ray</span><span class="o">.</span><span class="n">coordinate_y</span><span class="p">))</span>  <span class="c1"># y</span>
+            <span class="n">zemax_spectrum_file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">struct</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="s2">&quot;f&quot;</span><span class="p">,</span> <span class="n">ray</span><span class="o">.</span><span class="n">coordinate_z</span><span class="p">))</span>  <span class="c1"># z</span>
+            <span class="n">zemax_spectrum_file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">struct</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="s2">&quot;f&quot;</span><span class="p">,</span> <span class="n">ray</span><span class="o">.</span><span class="n">radiation_l</span><span class="p">))</span>  <span class="c1"># l</span>
+            <span class="n">zemax_spectrum_file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">struct</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="s2">&quot;f&quot;</span><span class="p">,</span> <span class="n">ray</span><span class="o">.</span><span class="n">radiation_m</span><span class="p">))</span>  <span class="c1"># m</span>
+            <span class="n">zemax_spectrum_file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">struct</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="s2">&quot;f&quot;</span><span class="p">,</span> <span class="n">ray</span><span class="o">.</span><span class="n">radiation_n</span><span class="p">))</span>  <span class="c1"># n</span>
+            <span class="n">zemax_spectrum_file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">struct</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="s2">&quot;f&quot;</span><span class="p">,</span> <span class="n">ray</span><span class="o">.</span><span class="n">energy</span><span class="p">))</span>  <span class="c1"># flux (Watts)</span>
+            <span class="n">zemax_spectrum_file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">struct</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="s2">&quot;f&quot;</span><span class="p">,</span> <span class="n">ray</span><span class="o">.</span><span class="n">wavelength</span><span class="p">))</span>  <span class="c1"># wavelength</span>
+        <span class="n">zemax_spectrum_file</span><span class="o">.</span><span class="n">close</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="DpfRayfile.export_to_speos"><a class="viewcode-back" href="../../../api/ansys_optical_automation.post_process.html#ansys_optical_automation.post_process.dpf_rayfile.DpfRayfile.export_to_speos">[docs]</a>    <span class="k">def</span> <span class="nf">export_to_speos</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        this method convert the rayfile into speos format</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        None</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">outfile</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">export_file</span><span class="p">()</span>
+        <span class="n">speos_ray_file</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">outfile</span><span class="p">,</span> <span class="s2">&quot;wb&quot;</span><span class="p">)</span>
+        <span class="n">speos_ray_file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">struct</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="s2">&quot;f&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">radiometric_power</span><span class="p">))</span>
+        <span class="n">speos_ray_file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">struct</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="s2">&quot;f&quot;</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">))</span>
+        <span class="n">speos_ray_file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">struct</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="s2">&quot;f&quot;</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">))</span>
+        <span class="n">speos_ray_file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">struct</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="s2">&quot;f&quot;</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">))</span>
+        <span class="n">speos_ray_file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">struct</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="s2">&quot;f&quot;</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">))</span>
+        <span class="n">speos_ray_file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">struct</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="s2">&quot;f&quot;</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">))</span>
+        <span class="n">speos_ray_file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">struct</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="s2">&quot;f&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">photometric_power</span><span class="p">))</span>
+        <span class="k">for</span> <span class="n">ray</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">rays</span><span class="p">:</span>
+            <span class="n">speos_ray_file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">struct</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="s2">&quot;f&quot;</span><span class="p">,</span> <span class="n">ray</span><span class="o">.</span><span class="n">coordinate_x</span><span class="p">))</span>
+            <span class="n">speos_ray_file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">struct</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="s2">&quot;f&quot;</span><span class="p">,</span> <span class="n">ray</span><span class="o">.</span><span class="n">coordinate_y</span><span class="p">))</span>
+            <span class="n">speos_ray_file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">struct</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="s2">&quot;f&quot;</span><span class="p">,</span> <span class="n">ray</span><span class="o">.</span><span class="n">coordinate_z</span><span class="p">))</span>
+            <span class="n">speos_ray_file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">struct</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="s2">&quot;f&quot;</span><span class="p">,</span> <span class="n">ray</span><span class="o">.</span><span class="n">radiation_l</span><span class="p">))</span>
+            <span class="n">speos_ray_file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">struct</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="s2">&quot;f&quot;</span><span class="p">,</span> <span class="n">ray</span><span class="o">.</span><span class="n">radiation_m</span><span class="p">))</span>
+            <span class="n">speos_ray_file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">struct</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="s2">&quot;f&quot;</span><span class="p">,</span> <span class="n">ray</span><span class="o">.</span><span class="n">radiation_n</span><span class="p">))</span>
+            <span class="n">speos_ray_file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">struct</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="s2">&quot;f&quot;</span><span class="p">,</span> <span class="n">ray</span><span class="o">.</span><span class="n">wavelength</span> <span class="o">*</span> <span class="mi">1000</span><span class="p">))</span>
+            <span class="n">speos_ray_file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">struct</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="s2">&quot;f&quot;</span><span class="p">,</span> <span class="n">ray</span><span class="o">.</span><span class="n">energy</span><span class="p">))</span>
+        <span class="n">speos_ray_file</span><span class="o">.</span><span class="n">close</span><span class="p">()</span></div>
 
 <div class="viewcode-block" id="DpfRayfile.export_file"><a class="viewcode-back" href="../../../api/ansys_optical_automation.post_process.html#ansys_optical_automation.post_process.dpf_rayfile.DpfRayfile.export_file">[docs]</a>    <span class="k">def</span> <span class="nf">export_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">export_folder_dir</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">convert</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>

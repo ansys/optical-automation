@@ -131,6 +131,11 @@
       </a>
      </li>
      <li class="toctree-l3">
+      <a class="reference internal" href="../../../api/ansys_optical_automation.lumerical_core.html">
+       ansys_optical_automation.lumerical_core package
+      </a>
+     </li>
+     <li class="toctree-l3">
       <a class="reference internal" href="../../../api/ansys_optical_automation.post_process.html">
        ansys_optical_automation.post_process package
       </a>
@@ -148,6 +153,11 @@
      <li class="toctree-l3">
       <a class="reference internal" href="../../../api/ansys_optical_automation.speos_process.html">
        ansys_optical_automation.speos_process package
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../api/ansys_optical_automation.zemax_process.html">
+       ansys_optical_automation.zemax_process package
       </a>
      </li>
     </ul>
@@ -282,40 +292,98 @@ title="Fullscreen mode"
 
 <div class="viewcode-block" id="import_by_visual_status"><a class="viewcode-back" href="../../../api/ansys_optical_automation.application.html#ansys_optical_automation.application.led_importer.import_by_visual_status">[docs]</a><span class="k">def</span> <span class="nf">import_by_visual_status</span><span class="p">():</span>
     <span class="sd">&quot;&quot;&quot;Import a part based on the visual axis systems.&quot;&quot;&quot;</span>
-    <span class="k">if</span> <span class="ow">not</span> <span class="n">check_visual_status_dialog</span><span class="p">():</span>
-        <span class="k">return</span>
-    <span class="n">led_file</span> <span class="o">=</span> <span class="n">selection_dialog_window</span><span class="p">()</span>
-    <span class="k">if</span> <span class="ow">not</span> <span class="n">led_file</span><span class="p">:</span>
-        <span class="k">return</span>
+    <span class="n">led_file</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="k">if</span> <span class="n">mode</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">check_visual_status_dialog</span><span class="p">():</span>
+            <span class="k">return</span>
+        <span class="n">led_file</span> <span class="o">=</span> <span class="n">selection_dialog_window</span><span class="p">()</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">led_file</span><span class="p">:</span>
+            <span class="k">return</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">led_file</span> <span class="o">=</span> <span class="n">argsDict</span><span class="p">[</span><span class="s2">&quot;Part&quot;</span><span class="p">]</span>
     <span class="n">led_importer</span> <span class="o">=</span> <span class="n">ScdmIO</span><span class="p">(</span><span class="n">SpaceClaim</span><span class="p">)</span>
     <span class="k">for</span> <span class="n">component</span> <span class="ow">in</span> <span class="n">GetRootPart</span><span class="p">()</span><span class="o">.</span><span class="n">GetAllComponents</span><span class="p">():</span>
         <span class="n">component_name</span> <span class="o">=</span> <span class="n">component</span><span class="o">.</span><span class="n">GetName</span><span class="p">()</span>
         <span class="n">axis_system_list</span> <span class="o">=</span> <span class="n">led_importer</span><span class="o">.</span><span class="n">get_axis_systems_under_component</span><span class="p">(</span><span class="n">component</span><span class="p">)</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">axis_system_list</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
             <span class="k">continue</span>
-        <span class="n">led_importer</span><span class="o">.</span><span class="n">import_part_at_axis_system</span><span class="p">(</span><span class="n">led_file</span><span class="p">,</span> <span class="n">axis_system_list</span><span class="p">,</span> <span class="n">component_name</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span></div>
+        <span class="k">if</span> <span class="n">mode</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">led_importer</span><span class="o">.</span><span class="n">import_part_at_axis_system</span><span class="p">(</span><span class="n">led_file</span><span class="p">,</span> <span class="n">axis_system_list</span><span class="p">,</span> <span class="n">component_name</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">led_importer</span><span class="o">.</span><span class="n">import_part_at_axis_system</span><span class="p">(</span>
+                <span class="n">led_file</span><span class="p">,</span>
+                <span class="n">axis_system_list</span><span class="p">,</span>
+                <span class="n">component_name</span><span class="p">,</span>
+                <span class="n">anchor</span><span class="o">=</span><span class="kc">True</span> <span class="k">if</span> <span class="n">argsDict</span><span class="p">[</span><span class="s2">&quot;Anchor&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span> <span class="k">else</span> <span class="kc">False</span><span class="p">,</span>
+                <span class="n">lock</span><span class="o">=</span><span class="kc">True</span> <span class="k">if</span> <span class="n">argsDict</span><span class="p">[</span><span class="s2">&quot;Lock&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span> <span class="k">else</span> <span class="kc">False</span><span class="p">,</span>
+                <span class="n">internalize</span><span class="o">=</span><span class="kc">True</span> <span class="k">if</span> <span class="n">argsDict</span><span class="p">[</span><span class="s2">&quot;Internalize&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span> <span class="k">else</span> <span class="kc">False</span><span class="p">,</span>
+                <span class="n">speos_source_group</span><span class="o">=</span><span class="kc">True</span> <span class="k">if</span> <span class="n">argsDict</span><span class="p">[</span><span class="s2">&quot;Group&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span> <span class="k">else</span> <span class="kc">False</span><span class="p">,</span>
+            <span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="import_by_selection"><a class="viewcode-back" href="../../../api/ansys_optical_automation.application.html#ansys_optical_automation.application.led_importer.import_by_selection">[docs]</a><span class="k">def</span> <span class="nf">import_by_selection</span><span class="p">():</span>
     <span class="sd">&quot;&quot;&quot;Import a SCDM project on the selected axis.&quot;&quot;&quot;</span>
-    <span class="n">led_file</span> <span class="o">=</span> <span class="n">selection_dialog_window</span><span class="p">()</span>
-    <span class="k">if</span> <span class="ow">not</span> <span class="n">led_file</span><span class="p">:</span>
-        <span class="k">return</span>
+    <span class="n">axis_system_list</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">led_file</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="k">if</span> <span class="n">mode</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">led_file</span> <span class="o">=</span> <span class="n">selection_dialog_window</span><span class="p">()</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">led_file</span><span class="p">:</span>
+            <span class="k">return</span>
 
-    <span class="n">axis_system_selection</span> <span class="o">=</span> <span class="n">Selection</span><span class="o">.</span><span class="n">GetActive</span><span class="p">()</span>
-    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">axis_system_selection</span><span class="o">.</span><span class="n">GetItems</span><span class="p">[</span><span class="n">ICoordinateSystem</span><span class="p">]())</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-        <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
-            <span class="n">input_return</span> <span class="o">=</span> <span class="n">InputHelper</span><span class="o">.</span><span class="n">PauseAndGetInput</span><span class="p">(</span><span class="s2">&quot;Select the axis that you want to import the part onto.&quot;</span><span class="p">)</span>
-            <span class="k">if</span> <span class="ow">not</span> <span class="n">input_return</span><span class="o">.</span><span class="n">Success</span><span class="p">:</span>
-                <span class="k">return</span>
-            <span class="n">axis_system_selection</span> <span class="o">=</span> <span class="n">input_return</span><span class="o">.</span><span class="n">PrimarySelection</span>
-            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">axis_system_selection</span><span class="o">.</span><span class="n">GetItems</span><span class="p">[</span><span class="n">ICoordinateSystem</span><span class="p">]())</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-                <span class="n">MessageBox</span><span class="o">.</span><span class="n">Show</span><span class="p">(</span><span class="s2">&quot;To import the part, the selection must contain at least one axis system.&quot;</span><span class="p">)</span>
-                <span class="k">continue</span>
-            <span class="k">break</span>
-    <span class="n">axis_system_list</span> <span class="o">=</span> <span class="n">axis_system_selection</span><span class="o">.</span><span class="n">GetItems</span><span class="p">[</span><span class="n">ICoordinateSystem</span><span class="p">]()</span>
+        <span class="n">axis_system_selection</span> <span class="o">=</span> <span class="n">Selection</span><span class="o">.</span><span class="n">GetActive</span><span class="p">()</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">axis_system_selection</span><span class="o">.</span><span class="n">GetItems</span><span class="p">[</span><span class="n">ICoordinateSystem</span><span class="p">]())</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+                <span class="n">input_return</span> <span class="o">=</span> <span class="n">InputHelper</span><span class="o">.</span><span class="n">PauseAndGetInput</span><span class="p">(</span><span class="s2">&quot;Select the axis that you want to import the part onto.&quot;</span><span class="p">)</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">input_return</span><span class="o">.</span><span class="n">Success</span><span class="p">:</span>
+                    <span class="k">return</span>
+                <span class="n">axis_system_selection</span> <span class="o">=</span> <span class="n">input_return</span><span class="o">.</span><span class="n">PrimarySelection</span>
+                <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">axis_system_selection</span><span class="o">.</span><span class="n">GetItems</span><span class="p">[</span><span class="n">ICoordinateSystem</span><span class="p">]())</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="n">MessageBox</span><span class="o">.</span><span class="n">Show</span><span class="p">(</span><span class="s2">&quot;To import the part, the selection must contain at least one axis system.&quot;</span><span class="p">)</span>
+                    <span class="k">continue</span>
+                <span class="k">break</span>
+        <span class="n">axis_system_list</span> <span class="o">=</span> <span class="n">axis_system_selection</span><span class="o">.</span><span class="n">GetItems</span><span class="p">[</span><span class="n">ICoordinateSystem</span><span class="p">]()</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">axis_system_list</span> <span class="o">=</span> <span class="n">argsDict</span><span class="p">[</span><span class="s2">&quot;Coordinates&quot;</span><span class="p">]</span>
+        <span class="n">led_file</span> <span class="o">=</span> <span class="n">argsDict</span><span class="p">[</span><span class="s2">&quot;Part&quot;</span><span class="p">]</span>
     <span class="n">led_importer</span> <span class="o">=</span> <span class="n">ScdmIO</span><span class="p">(</span><span class="n">SpaceClaim</span><span class="p">)</span>
-    <span class="n">led_importer</span><span class="o">.</span><span class="n">import_part_at_axis_system</span><span class="p">(</span><span class="n">led_file</span><span class="p">,</span> <span class="n">axis_system_list</span><span class="p">,</span> <span class="n">anchor</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">lock</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">internalize</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></div>
+    <span class="k">if</span> <span class="n">mode</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">led_importer</span><span class="o">.</span><span class="n">import_part_at_axis_system</span><span class="p">(</span><span class="n">led_file</span><span class="p">,</span> <span class="n">axis_system_list</span><span class="p">,</span> <span class="n">anchor</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">lock</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">internalize</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">led_importer</span><span class="o">.</span><span class="n">import_part_at_axis_system</span><span class="p">(</span>
+            <span class="n">led_file</span><span class="p">,</span>
+            <span class="n">axis_system_list</span><span class="p">,</span>
+            <span class="n">anchor</span><span class="o">=</span><span class="kc">True</span> <span class="k">if</span> <span class="n">argsDict</span><span class="p">[</span><span class="s2">&quot;Anchor&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span> <span class="k">else</span> <span class="kc">False</span><span class="p">,</span>
+            <span class="n">lock</span><span class="o">=</span><span class="kc">True</span> <span class="k">if</span> <span class="n">argsDict</span><span class="p">[</span><span class="s2">&quot;Lock&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span> <span class="k">else</span> <span class="kc">False</span><span class="p">,</span>
+            <span class="n">internalize</span><span class="o">=</span><span class="kc">True</span> <span class="k">if</span> <span class="n">argsDict</span><span class="p">[</span><span class="s2">&quot;Internalize&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span> <span class="k">else</span> <span class="kc">False</span><span class="p">,</span>
+            <span class="n">speos_source_group</span><span class="o">=</span><span class="kc">True</span> <span class="k">if</span> <span class="n">argsDict</span><span class="p">[</span><span class="s2">&quot;Group&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span> <span class="k">else</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="main"><a class="viewcode-back" href="../../../api/ansys_optical_automation.application.html#ansys_optical_automation.application.led_importer.main">[docs]</a><span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    main run function to create led_importer.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">global</span> <span class="n">mode</span>
+    <span class="n">mode</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">argsDict</span>
+        <span class="n">mode</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+        <span class="n">mode</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="k">if</span> <span class="n">mode</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Please select one of the following methods preferred for import&quot;</span><span class="p">)</span>
+        <span class="c1"># import_by_selection()</span>
+        <span class="c1"># import_by_visual_status()</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">argsDict</span><span class="p">[</span><span class="s2">&quot;Coordinates&quot;</span><span class="p">])</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">import_by_visual_status</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">import_by_selection</span><span class="p">()</span></div>
+
+
+<span class="n">main</span><span class="p">()</span>
 </pre></div>
 
               </div>

@@ -37,6 +37,7 @@
     <script src="../_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="ansys_optical_automation.zemax_process package" href="ansys_optical_automation.zemax_process.html" />
     <link rel="prev" title="ansys_optical_automation.scdm_process package" href="ansys_optical_automation.scdm_process.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
@@ -133,6 +134,11 @@
       </a>
      </li>
      <li class="toctree-l3">
+      <a class="reference internal" href="ansys_optical_automation.lumerical_core.html">
+       ansys_optical_automation.lumerical_core package
+      </a>
+     </li>
+     <li class="toctree-l3">
       <a class="reference internal" href="ansys_optical_automation.post_process.html">
        ansys_optical_automation.post_process package
       </a>
@@ -150,6 +156,11 @@
      <li class="toctree-l3 current active">
       <a class="current reference internal" href="#">
        ansys_optical_automation.speos_process package
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys_optical_automation.zemax_process.html">
+       ansys_optical_automation.zemax_process package
       </a>
      </li>
     </ul>
@@ -376,27 +387,30 @@ title="Print to PDF"
 <col style="width: 90%" />
 </colgroup>
 <tbody>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">find_axes</span></code>([origin])</p></td>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">convert_object_version</span></code>(obj)</p></td>
+<td><p>Function to convert Speos returns from latest to used API version Parameters ---------- obj : SpeosSelectedObject</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">find_axes</span></code>([origin])</p></td>
 <td><p>Find a component with the same name as the sensor, look in it for an axis system and an origin point (if available), and save them as properties in self.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#ansys_optical_automation.speos_process.speos_sensors.Camera.set_distortion" title="ansys_optical_automation.speos_process.speos_sensors.Camera.set_distortion"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_distortion</span></code></a>(distortion_file_name)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#ansys_optical_automation.speos_process.speos_sensors.Camera.set_distortion" title="ansys_optical_automation.speos_process.speos_sensors.Camera.set_distortion"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_distortion</span></code></a>(distortion_file_name)</p></td>
 <td><p><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p></p></dd>
 </dl>
 </p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_position</span></code>([x_reverse, y_reverse, origin, ...])</p></td>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_position</span></code>([x_reverse, y_reverse, origin, ...])</p></td>
 <td><p>Set the origin and x and y directions of the sensor.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#ansys_optical_automation.speos_process.speos_sensors.Camera.set_sensitivity" title="ansys_optical_automation.speos_process.speos_sensors.Camera.set_sensitivity"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_sensitivity</span></code></a>(color, sensitivity_file_name)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#ansys_optical_automation.speos_process.speos_sensors.Camera.set_sensitivity" title="ansys_optical_automation.speos_process.speos_sensors.Camera.set_sensitivity"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_sensitivity</span></code></a>(color, sensitivity_file_name)</p></td>
 <td><p><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p></p></dd>
 </dl>
 </p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#ansys_optical_automation.speos_process.speos_sensors.Camera.set_transmittance" title="ansys_optical_automation.speos_process.speos_sensors.Camera.set_transmittance"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_transmittance</span></code></a>(transmittance_file_name)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#ansys_optical_automation.speos_process.speos_sensors.Camera.set_transmittance" title="ansys_optical_automation.speos_process.speos_sensors.Camera.set_transmittance"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_transmittance</span></code></a>(transmittance_file_name)</p></td>
 <td><p><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p></p></dd>
@@ -460,11 +474,17 @@ title="Print to PDF"
 <col style="width: 90%" />
 </colgroup>
 <tbody>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">find_axes</span></code>([origin])</p></td>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">convert_object_version</span></code>(obj)</p></td>
+<td><p>Function to convert Speos returns from latest to used API version Parameters ---------- obj : SpeosSelectedObject</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">find_axes</span></code>([origin])</p></td>
 <td><p>Find a component with the same name as the sensor, look in it for an axis system and an origin point (if available), and save them as properties in self.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#ansys_optical_automation.speos_process.speos_sensors.IntensitySensor.set_format" title="ansys_optical_automation.speos_process.speos_sensors.IntensitySensor.set_format"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_format</span></code></a>([sensor_format])</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#ansys_optical_automation.speos_process.speos_sensors.IntensitySensor.set_format" title="ansys_optical_automation.speos_process.speos_sensors.IntensitySensor.set_format"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_format</span></code></a>([sensor_format])</p></td>
 <td><p>Set the sensor format.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#ansys_optical_automation.speos_process.speos_sensors.IntensitySensor.set_integration_angle" title="ansys_optical_automation.speos_process.speos_sensors.IntensitySensor.set_integration_angle"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_integration_angle</span></code></a>(integration_value)</p></td>
+<td><p>set integration angle of the radiance sensor</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#ansys_optical_automation.speos_process.speos_sensors.IntensitySensor.set_layer" title="ansys_optical_automation.speos_process.speos_sensors.IntensitySensor.set_layer"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_layer</span></code></a>(layer_type)</p></td>
 <td><p>Set the layer type of the sensor.</p></td>
@@ -499,6 +519,19 @@ title="Print to PDF"
 <dt><strong>sensor_format</strong><span class="classifier">str</span></dt><dd><p>Format of the sensor. Options are <code class="docutils literal notranslate"><span class="pre">&quot;XMP&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;IESNATypeA&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;IESNATypeB&quot;</span></code>,
 <code class="docutils literal notranslate"><span class="pre">&quot;IESNATypeC&quot;</span></code>, and <code class="docutils literal notranslate"><span class="pre">&quot;Eulumdat&quot;</span></code>.</p>
 </dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ansys_optical_automation.speos_process.speos_sensors.IntensitySensor.set_integration_angle">
+<span class="sig-name descname"><span class="pre">set_integration_angle</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">integration_value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ansys_optical_automation/speos_process/speos_sensors.html#IntensitySensor.set_integration_angle"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ansys_optical_automation.speos_process.speos_sensors.IntensitySensor.set_integration_angle" title="Permalink to this definition">#</a></dt>
+<dd><p>set integration angle of the radiance sensor</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>integration_value</strong></dt><dd></dd>
 </dl>
 </dd>
 </dl>
@@ -631,41 +664,75 @@ The default is <code class="docutils literal notranslate"><span class="pre">None
 <col style="width: 90%" />
 </colgroup>
 <tbody>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">find_axes</span></code>([origin])</p></td>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">convert_object_version</span></code>(obj)</p></td>
+<td><p>Function to convert Speos returns from latest to used API version Parameters ---------- obj : SpeosSelectedObject</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">find_axes</span></code>([origin])</p></td>
 <td><p>Find a component with the same name as the sensor, look in it for an axis system and an origin point (if available), and save them as properties in self.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#ansys_optical_automation.speos_process.speos_sensors.RadianceSensor.set_definition_type" title="ansys_optical_automation.speos_process.speos_sensors.RadianceSensor.set_definition_type"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_definition_type</span></code></a>(definition_type)</p></td>
+<td><p>set radiancec sensor definition type.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#ansys_optical_automation.speos_process.speos_sensors.RadianceSensor.set_focal_value" title="ansys_optical_automation.speos_process.speos_sensors.RadianceSensor.set_focal_value"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_focal_value</span></code></a>(focal_value)</p></td>
 <td><p>Set focal value of the radiance sensor</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#ansys_optical_automation.speos_process.speos_sensors.RadianceSensor.set_integration_angle" title="ansys_optical_automation.speos_process.speos_sensors.RadianceSensor.set_integration_angle"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_integration_angle</span></code></a>(integration_value)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#ansys_optical_automation.speos_process.speos_sensors.RadianceSensor.set_fov" title="ansys_optical_automation.speos_process.speos_sensors.RadianceSensor.set_fov"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_fov</span></code></a>(horizontal_fov, vertical_fov, ...)</p></td>
+<td><p>set field of view and sampling of the radiance sensor (Definition from Observer)</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#ansys_optical_automation.speos_process.speos_sensors.RadianceSensor.set_integration_angle" title="ansys_optical_automation.speos_process.speos_sensors.RadianceSensor.set_integration_angle"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_integration_angle</span></code></a>(integration_value)</p></td>
 <td><p>set integration angle of the radiance sensor</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#ansys_optical_automation.speos_process.speos_sensors.RadianceSensor.set_layer" title="ansys_optical_automation.speos_process.speos_sensors.RadianceSensor.set_layer"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_layer</span></code></a>(layer_type)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#ansys_optical_automation.speos_process.speos_sensors.RadianceSensor.set_layer" title="ansys_optical_automation.speos_process.speos_sensors.RadianceSensor.set_layer"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_layer</span></code></a>(layer_type)</p></td>
 <td><p>set the layer type of the radiance sensor</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#ansys_optical_automation.speos_process.speos_sensors.RadianceSensor.set_observer_type" title="ansys_optical_automation.speos_process.speos_sensors.RadianceSensor.set_observer_type"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_observer_type</span></code></a>(observer_type)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#ansys_optical_automation.speos_process.speos_sensors.RadianceSensor.set_observer_directions" title="ansys_optical_automation.speos_process.speos_sensors.RadianceSensor.set_observer_directions"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_observer_directions</span></code></a>(front_direction, ...)</p></td>
+<td><p>set front and top directions of the radiance sensor (Definition from Observer)</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#ansys_optical_automation.speos_process.speos_sensors.RadianceSensor.set_observer_point" title="ansys_optical_automation.speos_process.speos_sensors.RadianceSensor.set_observer_point"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_observer_point</span></code></a>(observer_point)</p></td>
+<td><p>set observer point of the radiance sensor (Definition from Observer)</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#ansys_optical_automation.speos_process.speos_sensors.RadianceSensor.set_observer_type" title="ansys_optical_automation.speos_process.speos_sensors.RadianceSensor.set_observer_type"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_observer_type</span></code></a>(observer_type)</p></td>
 <td><p>set observer type of the radiance sensor</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_position</span></code>([x_reverse, y_reverse, origin, ...])</p></td>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_position</span></code>([x_reverse, y_reverse, origin, ...])</p></td>
 <td><p>Set the origin and x and y directions of the sensor.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#ansys_optical_automation.speos_process.speos_sensors.RadianceSensor.set_range" title="ansys_optical_automation.speos_process.speos_sensors.RadianceSensor.set_range"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_range</span></code></a>([x_start, x_end, y_start, y_end, ...])</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#ansys_optical_automation.speos_process.speos_sensors.RadianceSensor.set_range" title="ansys_optical_automation.speos_process.speos_sensors.RadianceSensor.set_range"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_range</span></code></a>([x_start, x_end, y_start, y_end, ...])</p></td>
 <td><p>Set the sensor size.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#ansys_optical_automation.speos_process.speos_sensors.RadianceSensor.set_resolution" title="ansys_optical_automation.speos_process.speos_sensors.RadianceSensor.set_resolution"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_resolution</span></code></a>(x_resolution, y_resolution)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#ansys_optical_automation.speos_process.speos_sensors.RadianceSensor.set_resolution" title="ansys_optical_automation.speos_process.speos_sensors.RadianceSensor.set_resolution"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_resolution</span></code></a>(x_resolution, y_resolution)</p></td>
 <td><p>set x and y resolution of the radiance sensor</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#ansys_optical_automation.speos_process.speos_sensors.RadianceSensor.set_sampling" title="ansys_optical_automation.speos_process.speos_sensors.RadianceSensor.set_sampling"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_sampling</span></code></a>(x_sampling, y_sampling)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#ansys_optical_automation.speos_process.speos_sensors.RadianceSensor.set_sampling" title="ansys_optical_automation.speos_process.speos_sensors.RadianceSensor.set_sampling"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_sampling</span></code></a>(x_sampling, y_sampling)</p></td>
 <td><p>set x and y sampling of the radiance sensor</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#ansys_optical_automation.speos_process.speos_sensors.RadianceSensor.set_type" title="ansys_optical_automation.speos_process.speos_sensors.RadianceSensor.set_type"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_type</span></code></a>(sensor_type)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#ansys_optical_automation.speos_process.speos_sensors.RadianceSensor.set_type" title="ansys_optical_automation.speos_process.speos_sensors.RadianceSensor.set_type"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_type</span></code></a>(sensor_type)</p></td>
 <td><p>set type of the radiance sensor</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#ansys_optical_automation.speos_process.speos_sensors.RadianceSensor.set_wavelength_resolution" title="ansys_optical_automation.speos_process.speos_sensors.RadianceSensor.set_wavelength_resolution"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_wavelength_resolution</span></code></a>(resolution)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#ansys_optical_automation.speos_process.speos_sensors.RadianceSensor.set_wavelength_resolution" title="ansys_optical_automation.speos_process.speos_sensors.RadianceSensor.set_wavelength_resolution"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_wavelength_resolution</span></code></a>(resolution)</p></td>
 <td><p>set wavelength resolution of the radiance sensor</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#ansys_optical_automation.speos_process.speos_sensors.RadianceSensor.set_xmp_template" title="ansys_optical_automation.speos_process.speos_sensors.RadianceSensor.set_xmp_template"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_xmp_template</span></code></a>(xml_file[, take_dimension, ...])</p></td>
+<td><p>set the xmp template.</p></td>
 </tr>
 </tbody>
 </table>
+<dl class="py method">
+<dt class="sig sig-object py" id="ansys_optical_automation.speos_process.speos_sensors.RadianceSensor.set_definition_type">
+<span class="sig-name descname"><span class="pre">set_definition_type</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">definition_type</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ansys_optical_automation/speos_process/speos_sensors.html#RadianceSensor.set_definition_type"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ansys_optical_automation.speos_process.speos_sensors.RadianceSensor.set_definition_type" title="Permalink to this definition">#</a></dt>
+<dd><p>set radiancec sensor definition type.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>definition_type</strong><span class="classifier">str</span></dt><dd><p>type as observer or frame</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"></dd>
+</dl>
+</dd></dl>
+
 <dl class="py method">
 <dt class="sig sig-object py" id="ansys_optical_automation.speos_process.speos_sensors.RadianceSensor.set_focal_value">
 <span class="sig-name descname"><span class="pre">set_focal_value</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">focal_value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ansys_optical_automation/speos_process/speos_sensors.html#RadianceSensor.set_focal_value"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ansys_optical_automation.speos_process.speos_sensors.RadianceSensor.set_focal_value" title="Permalink to this definition">#</a></dt>
@@ -674,6 +741,22 @@ The default is <code class="docutils literal notranslate"><span class="pre">None
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><dl class="simple">
 <dt><strong>focal_value</strong><span class="classifier">float</span></dt><dd></dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ansys_optical_automation.speos_process.speos_sensors.RadianceSensor.set_fov">
+<span class="sig-name descname"><span class="pre">set_fov</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">horizontal_fov</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vertical_fov</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">horizontal_sampling</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vertical_sampling</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ansys_optical_automation/speos_process/speos_sensors.html#RadianceSensor.set_fov"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ansys_optical_automation.speos_process.speos_sensors.RadianceSensor.set_fov" title="Permalink to this definition">#</a></dt>
+<dd><p>set field of view and sampling of the radiance sensor (Definition from Observer)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>horizontal_fov</strong><span class="classifier">float</span></dt><dd></dd>
+<dt><strong>vertical_fov</strong><span class="classifier">float</span></dt><dd></dd>
+<dt><strong>horizontal_sampling</strong><span class="classifier">float</span></dt><dd></dd>
+<dt><strong>vertical_sampling</strong><span class="classifier">float</span></dt><dd></dd>
 </dl>
 </dd>
 </dl>
@@ -700,6 +783,33 @@ The default is <code class="docutils literal notranslate"><span class="pre">None
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><dl class="simple">
 <dt><strong>layer_type</strong><span class="classifier">str</span></dt><dd></dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ansys_optical_automation.speos_process.speos_sensors.RadianceSensor.set_observer_directions">
+<span class="sig-name descname"><span class="pre">set_observer_directions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">front_direction</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">top_direction</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ansys_optical_automation/speos_process/speos_sensors.html#RadianceSensor.set_observer_directions"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ansys_optical_automation.speos_process.speos_sensors.RadianceSensor.set_observer_directions" title="Permalink to this definition">#</a></dt>
+<dd><p>set front and top directions of the radiance sensor (Definition from Observer)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>front_direction</strong><span class="classifier">axis or line</span></dt><dd></dd>
+<dt><strong>top_direction</strong><span class="classifier">axis or line</span></dt><dd></dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ansys_optical_automation.speos_process.speos_sensors.RadianceSensor.set_observer_point">
+<span class="sig-name descname"><span class="pre">set_observer_point</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">observer_point</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ansys_optical_automation/speos_process/speos_sensors.html#RadianceSensor.set_observer_point"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ansys_optical_automation.speos_process.speos_sensors.RadianceSensor.set_observer_point" title="Permalink to this definition">#</a></dt>
+<dd><p>set observer point of the radiance sensor (Definition from Observer)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>observer_point</strong><span class="classifier">point or origin (coordinate system)</span></dt><dd></dd>
 </dl>
 </dd>
 </dl>
@@ -802,6 +912,26 @@ The default is <code class="docutils literal notranslate"><span class="pre">Fals
 </dl>
 </dd></dl>
 
+<dl class="py method">
+<dt class="sig sig-object py" id="ansys_optical_automation.speos_process.speos_sensors.RadianceSensor.set_xmp_template">
+<span class="sig-name descname"><span class="pre">set_xmp_template</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">xml_file</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">take_dimension</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">take_display</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ansys_optical_automation/speos_process/speos_sensors.html#RadianceSensor.set_xmp_template"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ansys_optical_automation.speos_process.speos_sensors.RadianceSensor.set_xmp_template" title="Permalink to this definition">#</a></dt>
+<dd><p>set the xmp template.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>xml_file</strong><span class="classifier">str</span></dt><dd><p>path of xml file</p>
+</dd>
+<dt><strong>take_dimension</strong><span class="classifier">bool</span></dt><dd><p>True if setting of dimension used from xml, otherwise False</p>
+</dd>
+<dt><strong>take_display</strong><span class="classifier">bool</span></dt><dd><p>True if setting of XMP display used from xml, otherwise False</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"></dd>
+</dl>
+</dd></dl>
+
 </dd></dl>
 
 <dl class="py class">
@@ -818,10 +948,13 @@ It shouldn’t be used by itself. Subclasses should be used instead.</p>
 <col style="width: 90%" />
 </colgroup>
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#ansys_optical_automation.speos_process.speos_sensors.Sensor.find_axes" title="ansys_optical_automation.speos_process.speos_sensors.Sensor.find_axes"><code class="xref py py-obj docutils literal notranslate"><span class="pre">find_axes</span></code></a>([origin])</p></td>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">convert_object_version</span></code>(obj)</p></td>
+<td><p>Function to convert Speos returns from latest to used API version Parameters ---------- obj : SpeosSelectedObject</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#ansys_optical_automation.speos_process.speos_sensors.Sensor.find_axes" title="ansys_optical_automation.speos_process.speos_sensors.Sensor.find_axes"><code class="xref py py-obj docutils literal notranslate"><span class="pre">find_axes</span></code></a>([origin])</p></td>
 <td><p>Find a component with the same name as the sensor, look in it for an axis system and an origin point (if available), and save them as properties in self.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#ansys_optical_automation.speos_process.speos_sensors.Sensor.set_position" title="ansys_optical_automation.speos_process.speos_sensors.Sensor.set_position"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_position</span></code></a>([x_reverse, y_reverse, origin, ...])</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#ansys_optical_automation.speos_process.speos_sensors.Sensor.set_position" title="ansys_optical_automation.speos_process.speos_sensors.Sensor.set_position"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_position</span></code></a>([x_reverse, y_reverse, origin, ...])</p></td>
 <td><p>Set the origin and x and y directions of the sensor.</p></td>
 </tr>
 </tbody>
@@ -885,31 +1018,34 @@ Elumdat intensity sensors, provide the polar-axis and V0/H0-axis instead.</p>
 <tr class="row-odd"><td><p><a class="reference internal" href="#ansys_optical_automation.speos_process.speos_simulations.Simulation.add_sensor" title="ansys_optical_automation.speos_process.speos_simulations.Simulation.add_sensor"><code class="xref py py-obj docutils literal notranslate"><span class="pre">add_sensor</span></code></a>(sensor_name)</p></td>
 <td><p>Add a sensor to the simulation.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#ansys_optical_automation.speos_process.speos_simulations.Simulation.define_geometries" title="ansys_optical_automation.speos_process.speos_simulations.Simulation.define_geometries"><code class="xref py py-obj docutils literal notranslate"><span class="pre">define_geometries</span></code></a>()</p></td>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">convert_object_version</span></code>(obj)</p></td>
+<td><p>Function to convert Speos returns from latest to used API version Parameters ---------- obj : SpeosSelectedObject</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#ansys_optical_automation.speos_process.speos_simulations.Simulation.define_geometries" title="ansys_optical_automation.speos_process.speos_simulations.Simulation.define_geometries"><code class="xref py py-obj docutils literal notranslate"><span class="pre">define_geometries</span></code></a>()</p></td>
 <td><p>Add all bodies from the simulation's list of bodies (self.my_bodies) to the simulation geometries.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#ansys_optical_automation.speos_process.speos_simulations.Simulation.export_grid" title="ansys_optical_automation.speos_process.speos_simulations.Simulation.export_grid"><code class="xref py py-obj docutils literal notranslate"><span class="pre">export_grid</span></code></a>(sensor_name)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#ansys_optical_automation.speos_process.speos_simulations.Simulation.export_grid" title="ansys_optical_automation.speos_process.speos_simulations.Simulation.export_grid"><code class="xref py py-obj docutils literal notranslate"><span class="pre">export_grid</span></code></a>(sensor_name)</p></td>
 <td><p>Export the projected grid as a SpaceClaim component.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#ansys_optical_automation.speos_process.speos_simulations.Simulation.linked_export_simulation" title="ansys_optical_automation.speos_process.speos_simulations.Simulation.linked_export_simulation"><code class="xref py py-obj docutils literal notranslate"><span class="pre">linked_export_simulation</span></code></a>()</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#ansys_optical_automation.speos_process.speos_simulations.Simulation.linked_export_simulation" title="ansys_optical_automation.speos_process.speos_simulations.Simulation.linked_export_simulation"><code class="xref py py-obj docutils literal notranslate"><span class="pre">linked_export_simulation</span></code></a>()</p></td>
 <td><p>method to do a linked export</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#ansys_optical_automation.speos_process.speos_simulations.Simulation.run_simulation" title="ansys_optical_automation.speos_process.speos_simulations.Simulation.run_simulation"><code class="xref py py-obj docutils literal notranslate"><span class="pre">run_simulation</span></code></a>()</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#ansys_optical_automation.speos_process.speos_simulations.Simulation.run_simulation" title="ansys_optical_automation.speos_process.speos_simulations.Simulation.run_simulation"><code class="xref py py-obj docutils literal notranslate"><span class="pre">run_simulation</span></code></a>()</p></td>
 <td><p>Run a simulation on the local CPU.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#ansys_optical_automation.speos_process.speos_simulations.Simulation.save_grid" title="ansys_optical_automation.speos_process.speos_simulations.Simulation.save_grid"><code class="xref py py-obj docutils literal notranslate"><span class="pre">save_grid</span></code></a>(sensor_name, save_name)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#ansys_optical_automation.speos_process.speos_simulations.Simulation.save_grid" title="ansys_optical_automation.speos_process.speos_simulations.Simulation.save_grid"><code class="xref py py-obj docutils literal notranslate"><span class="pre">save_grid</span></code></a>(sensor_name, save_name)</p></td>
 <td><p># TODO Save components in the main script in SpaceClaim.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#ansys_optical_automation.speos_process.speos_simulations.Simulation.select_geometrical_sets" title="ansys_optical_automation.speos_process.speos_simulations.Simulation.select_geometrical_sets"><code class="xref py py-obj docutils literal notranslate"><span class="pre">select_geometrical_sets</span></code></a>(geosets_list)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#ansys_optical_automation.speos_process.speos_simulations.Simulation.select_geometrical_sets" title="ansys_optical_automation.speos_process.speos_simulations.Simulation.select_geometrical_sets"><code class="xref py py-obj docutils literal notranslate"><span class="pre">select_geometrical_sets</span></code></a>(geosets_list)</p></td>
 <td><p>Add all geometries from a list of Catia geometrical sets to the simulation's list of bodies.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#ansys_optical_automation.speos_process.speos_simulations.Simulation.select_geometries" title="ansys_optical_automation.speos_process.speos_simulations.Simulation.select_geometries"><code class="xref py py-obj docutils literal notranslate"><span class="pre">select_geometries</span></code></a>(component_list)</p></td>
-<td><p>Add all geometries from components provided in a component list to the simulation's list of bodies.</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#ansys_optical_automation.speos_process.speos_simulations.Simulation.select_geometries" title="ansys_optical_automation.speos_process.speos_simulations.Simulation.select_geometries"><code class="xref py py-obj docutils literal notranslate"><span class="pre">select_geometries</span></code></a>(component_list)</p></td>
+<td><p>Add all Mesh bodies and Design bodies from components provided in a component list to the simulation's list of bodies.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#ansys_optical_automation.speos_process.speos_simulations.Simulation.set_grid_params" title="ansys_optical_automation.speos_process.speos_simulations.Simulation.set_grid_params"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_grid_params</span></code></a>([primary_step, ...])</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#ansys_optical_automation.speos_process.speos_simulations.Simulation.set_grid_params" title="ansys_optical_automation.speos_process.speos_simulations.Simulation.set_grid_params"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_grid_params</span></code></a>([primary_step, ...])</p></td>
 <td><p>Set the parameters of the projected grid for the generated camera.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#ansys_optical_automation.speos_process.speos_simulations.Simulation.set_rays_limit" title="ansys_optical_automation.speos_process.speos_simulations.Simulation.set_rays_limit"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_rays_limit</span></code></a>(rays)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#ansys_optical_automation.speos_process.speos_simulations.Simulation.set_rays_limit" title="ansys_optical_automation.speos_process.speos_simulations.Simulation.set_rays_limit"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_rays_limit</span></code></a>(rays)</p></td>
 <td><p>Set the computation limit either by a maximum number of rays (for direct and inverse simulations) or by a maximum number passes (for inverse simulations).</p></td>
 </tr>
 </tbody>
@@ -993,7 +1129,8 @@ of bodies.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="ansys_optical_automation.speos_process.speos_simulations.Simulation.select_geometries">
 <span class="sig-name descname"><span class="pre">select_geometries</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">component_list</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ansys_optical_automation/speos_process/speos_simulations.html#Simulation.select_geometries"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ansys_optical_automation.speos_process.speos_simulations.Simulation.select_geometries" title="Permalink to this definition">#</a></dt>
-<dd><p>Add all geometries from components provided in a component list to the simulation’s list of bodies.</p>
+<dd><p>Add all Mesh bodies and Design bodies from components provided in a component list to the simulation’s list
+of bodies.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><dl class="simple">
@@ -1065,6 +1202,13 @@ inverse simulations) or by a maximum number passes (for inverse simulations).</p
             <p class="prev-next-subtitle">previous</p>
             <p class="prev-next-title">ansys_optical_automation.scdm_process package</p>
         </div>
+    </a>
+    <a class='right-next' id="next-link" href="ansys_optical_automation.zemax_process.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">ansys_optical_automation.zemax_process package</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
     </a>
 </div>
             </footer>

@@ -134,6 +134,11 @@
       </a>
      </li>
      <li class="toctree-l3">
+      <a class="reference internal" href="ansys_optical_automation.lumerical_core.html">
+       ansys_optical_automation.lumerical_core package
+      </a>
+     </li>
+     <li class="toctree-l3">
       <a class="reference internal" href="ansys_optical_automation.post_process.html">
        ansys_optical_automation.post_process package
       </a>
@@ -151,6 +156,11 @@
      <li class="toctree-l3">
       <a class="reference internal" href="ansys_optical_automation.speos_process.html">
        ansys_optical_automation.speos_process package
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys_optical_automation.zemax_process.html">
+       ansys_optical_automation.zemax_process package
       </a>
      </li>
     </ul>
@@ -405,10 +415,13 @@ Speos materials.</p>
 <tr class="row-even"><td><p><a class="reference internal" href="#ansys_optical_automation.scdm_process.material_from_csv.MaterialsFromCSV.apply_geo_to_material" title="ansys_optical_automation.scdm_process.material_from_csv.MaterialsFromCSV.apply_geo_to_material"><code class="xref py py-obj docutils literal notranslate"><span class="pre">apply_geo_to_material</span></code></a>()</p></td>
 <td><p>Apply material according to the material definition.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#ansys_optical_automation.scdm_process.material_from_csv.MaterialsFromCSV.create_speos_material" title="ansys_optical_automation.scdm_process.material_from_csv.MaterialsFromCSV.create_speos_material"><code class="xref py py-obj docutils literal notranslate"><span class="pre">create_speos_material</span></code></a>(csv_path, work_directory)</p></td>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">convert_object_version</span></code>(obj)</p></td>
+<td><p>Function to convert Speos returns from latest to used API version Parameters ---------- obj : SpeosSelectedObject</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#ansys_optical_automation.scdm_process.material_from_csv.MaterialsFromCSV.create_speos_material" title="ansys_optical_automation.scdm_process.material_from_csv.MaterialsFromCSV.create_speos_material"><code class="xref py py-obj docutils literal notranslate"><span class="pre">create_speos_material</span></code></a>(csv_path, work_directory)</p></td>
 <td><p>Read a CSV file and create an OP.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#ansys_optical_automation.scdm_process.material_from_csv.MaterialsFromCSV.get_total_layers" title="ansys_optical_automation.scdm_process.material_from_csv.MaterialsFromCSV.get_total_layers"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_total_layers</span></code></a>()</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#ansys_optical_automation.scdm_process.material_from_csv.MaterialsFromCSV.get_total_layers" title="ansys_optical_automation.scdm_process.material_from_csv.MaterialsFromCSV.get_total_layers"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_total_layers</span></code></a>()</p></td>
 <td><p>Get the names of all layers in the project.</p></td>
 </tr>
 </tbody>
@@ -473,7 +486,10 @@ Speos materials.</p>
 <col style="width: 90%" />
 </colgroup>
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#ansys_optical_automation.scdm_process.material_from_layers.SynchLayersMaterials.sync_op_from_layers" title="ansys_optical_automation.scdm_process.material_from_layers.SynchLayersMaterials.sync_op_from_layers"><code class="xref py py-obj docutils literal notranslate"><span class="pre">sync_op_from_layers</span></code></a>()</p></td>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">convert_object_version</span></code>(obj)</p></td>
+<td><p>Function to convert Speos returns from latest to used API version Parameters ---------- obj : SpeosSelectedObject</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#ansys_optical_automation.scdm_process.material_from_layers.SynchLayersMaterials.sync_op_from_layers" title="ansys_optical_automation.scdm_process.material_from_layers.SynchLayersMaterials.sync_op_from_layers"><code class="xref py py-obj docutils literal notranslate"><span class="pre">sync_op_from_layers</span></code></a>()</p></td>
 <td><p>Sync Speos volume optical materials based on the information of layers.</p></td>
 </tr>
 </tbody>
@@ -510,31 +526,34 @@ at a time.</p>
 <tr class="row-even"><td><p><a class="reference internal" href="#ansys_optical_automation.scdm_process.preprocessing_library.PreProcessingASP.check_volume_conflict" title="ansys_optical_automation.scdm_process.preprocessing_library.PreProcessingASP.check_volume_conflict"><code class="xref py py-obj docutils literal notranslate"><span class="pre">check_volume_conflict</span></code></a>()</p></td>
 <td><p>Check for volume conflict, returning two lists of conflicting bodies.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#ansys_optical_automation.scdm_process.preprocessing_library.PreProcessingASP.create_dict_by_color" title="ansys_optical_automation.scdm_process.preprocessing_library.PreProcessingASP.create_dict_by_color"><code class="xref py py-obj docutils literal notranslate"><span class="pre">create_dict_by_color</span></code></a>()</p></td>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">convert_object_version</span></code>(obj)</p></td>
+<td><p>Function to convert Speos returns from latest to used API version Parameters ---------- obj : SpeosSelectedObject</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#ansys_optical_automation.scdm_process.preprocessing_library.PreProcessingASP.create_dict_by_color" title="ansys_optical_automation.scdm_process.preprocessing_library.PreProcessingASP.create_dict_by_color"><code class="xref py py-obj docutils literal notranslate"><span class="pre">create_dict_by_color</span></code></a>()</p></td>
 <td><p>Create a dictionary for named selection generation, stitching one element per color.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#ansys_optical_automation.scdm_process.preprocessing_library.PreProcessingASP.create_dict_by_material" title="ansys_optical_automation.scdm_process.preprocessing_library.PreProcessingASP.create_dict_by_material"><code class="xref py py-obj docutils literal notranslate"><span class="pre">create_dict_by_material</span></code></a>()</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#ansys_optical_automation.scdm_process.preprocessing_library.PreProcessingASP.create_dict_by_material" title="ansys_optical_automation.scdm_process.preprocessing_library.PreProcessingASP.create_dict_by_material"><code class="xref py py-obj docutils literal notranslate"><span class="pre">create_dict_by_material</span></code></a>()</p></td>
 <td><p>Create a dictionary for materials defined in Catia.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#ansys_optical_automation.scdm_process.preprocessing_library.PreProcessingASP.create_named_selection" title="ansys_optical_automation.scdm_process.preprocessing_library.PreProcessingASP.create_named_selection"><code class="xref py py-obj docutils literal notranslate"><span class="pre">create_named_selection</span></code></a>(conversion_dict)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#ansys_optical_automation.scdm_process.preprocessing_library.PreProcessingASP.create_named_selection" title="ansys_optical_automation.scdm_process.preprocessing_library.PreProcessingASP.create_named_selection"><code class="xref py py-obj docutils literal notranslate"><span class="pre">create_named_selection</span></code></a>(conversion_dict)</p></td>
 <td><p>Create a named selection from a dictionary.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#ansys_optical_automation.scdm_process.preprocessing_library.PreProcessingASP.find_component" title="ansys_optical_automation.scdm_process.preprocessing_library.PreProcessingASP.find_component"><code class="xref py py-obj docutils literal notranslate"><span class="pre">find_component</span></code></a>(component_name)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#ansys_optical_automation.scdm_process.preprocessing_library.PreProcessingASP.find_component" title="ansys_optical_automation.scdm_process.preprocessing_library.PreProcessingASP.find_component"><code class="xref py py-obj docutils literal notranslate"><span class="pre">find_component</span></code></a>(component_name)</p></td>
 <td><p>Find all components with a given name.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#ansys_optical_automation.scdm_process.preprocessing_library.PreProcessingASP.geo_sets_conversion" title="ansys_optical_automation.scdm_process.preprocessing_library.PreProcessingASP.geo_sets_conversion"><code class="xref py py-obj docutils literal notranslate"><span class="pre">geo_sets_conversion</span></code></a>(part)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#ansys_optical_automation.scdm_process.preprocessing_library.PreProcessingASP.geo_sets_conversion" title="ansys_optical_automation.scdm_process.preprocessing_library.PreProcessingASP.geo_sets_conversion"><code class="xref py py-obj docutils literal notranslate"><span class="pre">geo_sets_conversion</span></code></a>(part)</p></td>
 <td><p>Get Catia geometrical set as a named selection.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#ansys_optical_automation.scdm_process.preprocessing_library.PreProcessingASP.remove_duplicates" title="ansys_optical_automation.scdm_process.preprocessing_library.PreProcessingASP.remove_duplicates"><code class="xref py py-obj docutils literal notranslate"><span class="pre">remove_duplicates</span></code></a>(comp)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#ansys_optical_automation.scdm_process.preprocessing_library.PreProcessingASP.remove_duplicates" title="ansys_optical_automation.scdm_process.preprocessing_library.PreProcessingASP.remove_duplicates"><code class="xref py py-obj docutils literal notranslate"><span class="pre">remove_duplicates</span></code></a>(comp)</p></td>
 <td><p>Remove duplicated surfaces with a given component.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#ansys_optical_automation.scdm_process.preprocessing_library.PreProcessingASP.resolve_volume_conflict" title="ansys_optical_automation.scdm_process.preprocessing_library.PreProcessingASP.resolve_volume_conflict"><code class="xref py py-obj docutils literal notranslate"><span class="pre">resolve_volume_conflict</span></code></a>()</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#ansys_optical_automation.scdm_process.preprocessing_library.PreProcessingASP.resolve_volume_conflict" title="ansys_optical_automation.scdm_process.preprocessing_library.PreProcessingASP.resolve_volume_conflict"><code class="xref py py-obj docutils literal notranslate"><span class="pre">resolve_volume_conflict</span></code></a>()</p></td>
 <td><p>Resolve volume conflict based on the material definition.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#ansys_optical_automation.scdm_process.preprocessing_library.PreProcessingASP.stitch" title="ansys_optical_automation.scdm_process.preprocessing_library.PreProcessingASP.stitch"><code class="xref py py-obj docutils literal notranslate"><span class="pre">stitch</span></code></a>(conversion_dict)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#ansys_optical_automation.scdm_process.preprocessing_library.PreProcessingASP.stitch" title="ansys_optical_automation.scdm_process.preprocessing_library.PreProcessingASP.stitch"><code class="xref py py-obj docutils literal notranslate"><span class="pre">stitch</span></code></a>(conversion_dict)</p></td>
 <td><p>Stitch all bodies based on a dictionary.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#ansys_optical_automation.scdm_process.preprocessing_library.PreProcessingASP.stitch_comp" title="ansys_optical_automation.scdm_process.preprocessing_library.PreProcessingASP.stitch_comp"><code class="xref py py-obj docutils literal notranslate"><span class="pre">stitch_comp</span></code></a>(comp, max_group_limit)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#ansys_optical_automation.scdm_process.preprocessing_library.PreProcessingASP.stitch_comp" title="ansys_optical_automation.scdm_process.preprocessing_library.PreProcessingASP.stitch_comp"><code class="xref py py-obj docutils literal notranslate"><span class="pre">stitch_comp</span></code></a>(comp, max_group_limit)</p></td>
 <td><p>Stitch according to component structure.</p></td>
 </tr>
 </tbody>
@@ -698,10 +717,13 @@ group by group whose seize is defined by group size</p>
 <col style="width: 90%" />
 </colgroup>
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#ansys_optical_automation.scdm_process.scdm_io.ScdmIO.get_axis_systems_under_component" title="ansys_optical_automation.scdm_process.scdm_io.ScdmIO.get_axis_systems_under_component"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_axis_systems_under_component</span></code></a>(component)</p></td>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">convert_object_version</span></code>(obj)</p></td>
+<td><p>Function to convert Speos returns from latest to used API version Parameters ---------- obj : SpeosSelectedObject</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#ansys_optical_automation.scdm_process.scdm_io.ScdmIO.get_axis_systems_under_component" title="ansys_optical_automation.scdm_process.scdm_io.ScdmIO.get_axis_systems_under_component"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_axis_systems_under_component</span></code></a>(component)</p></td>
 <td><p>Get the axis system under a component.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#ansys_optical_automation.scdm_process.scdm_io.ScdmIO.import_part_at_axis_system" title="ansys_optical_automation.scdm_process.scdm_io.ScdmIO.import_part_at_axis_system"><code class="xref py py-obj docutils literal notranslate"><span class="pre">import_part_at_axis_system</span></code></a>(external_part, ...)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#ansys_optical_automation.scdm_process.scdm_io.ScdmIO.import_part_at_axis_system" title="ansys_optical_automation.scdm_process.scdm_io.ScdmIO.import_part_at_axis_system"><code class="xref py py-obj docutils literal notranslate"><span class="pre">import_part_at_axis_system</span></code></a>(external_part, ...)</p></td>
 <td><p>Import component at a given axis system.</p></td>
 </tr>
 </tbody>

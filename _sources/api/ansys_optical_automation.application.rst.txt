@@ -4,6 +4,46 @@ ansys\_optical\_automation.application package
 Submodules
 ----------
 
+ansys\_optical\_automation.application.camera\_nhtsa\_test module
+-----------------------------------------------------------------
+
+.. automodule:: ansys_optical_automation.application.camera_nhtsa_test
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+ansys\_optical\_automation.application.example\_create\_gaussian\_diopter\_map module
+-------------------------------------------------------------------------------------
+
+.. automodule:: ansys_optical_automation.application.example_create_gaussian_diopter_map
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+ansys\_optical\_automation.application.example\_create\_rayfile module
+----------------------------------------------------------------------
+
+.. automodule:: ansys_optical_automation.application.example_create_rayfile
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+ansys\_optical\_automation.application.export\_measures module
+--------------------------------------------------------------
+
+.. automodule:: ansys_optical_automation.application.export_measures
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+ansys\_optical\_automation.application.intensity\_sensors\_importer module
+--------------------------------------------------------------------------
+
+.. automodule:: ansys_optical_automation.application.intensity_sensors_importer
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 ansys\_optical\_automation.application.led\_importer module
 -----------------------------------------------------------
 
@@ -20,10 +60,34 @@ ansys\_optical\_automation.application.multi\_sim\_exporter module
    :undoc-members:
    :show-inheritance:
 
+ansys\_optical\_automation.application.radiance\_from\_view module
+------------------------------------------------------------------
+
+.. automodule:: ansys_optical_automation.application.radiance_from_view
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+ansys\_optical\_automation.application.rayfile\_converter\_example module
+-------------------------------------------------------------------------
+
+.. automodule:: ansys_optical_automation.application.rayfile_converter_example
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 ansys\_optical\_automation.application.sensor\_importer module
 --------------------------------------------------------------
 
 .. automodule:: ansys_optical_automation.application.sensor_importer
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+ansys\_optical\_automation.application.stack\_convert\_to\_speos module
+-----------------------------------------------------------------------
+
+.. automodule:: ansys_optical_automation.application.stack_convert_to_speos
    :members:
    :undoc-members:
    :show-inheritance:

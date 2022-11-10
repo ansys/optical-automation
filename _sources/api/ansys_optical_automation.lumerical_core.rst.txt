@@ -1,0 +1,21 @@
+ansys\_optical\_automation.lumerical\_core package
+==================================================
+
+Submodules
+----------
+
+ansys\_optical\_automation.lumerical\_core.utils module
+-------------------------------------------------------
+
+.. automodule:: ansys_optical_automation.lumerical_core.utils
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Module contents
+---------------
+
+.. automodule:: ansys_optical_automation.lumerical_core
+   :members:
+   :undoc-members:
+   :show-inheritance:

@@ -28,6 +28,22 @@ ansys\_optical\_automation.post\_process.dpf\_rayfile module
    :undoc-members:
    :show-inheritance:
 
+ansys\_optical\_automation.post\_process.dpf\_stack module
+----------------------------------------------------------
+
+.. automodule:: ansys_optical_automation.post_process.dpf_stack
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+ansys\_optical\_automation.post\_process.dpf\_xmp\_viewer module
+----------------------------------------------------------------
+
+.. automodule:: ansys_optical_automation.post_process.dpf_xmp_viewer
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 Module contents
 ---------------
 

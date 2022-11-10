@@ -131,6 +131,11 @@
       </a>
      </li>
      <li class="toctree-l3">
+      <a class="reference internal" href="../../../api/ansys_optical_automation.lumerical_core.html">
+       ansys_optical_automation.lumerical_core package
+      </a>
+     </li>
+     <li class="toctree-l3">
       <a class="reference internal" href="../../../api/ansys_optical_automation.post_process.html">
        ansys_optical_automation.post_process package
       </a>
@@ -148,6 +153,11 @@
      <li class="toctree-l3">
       <a class="reference internal" href="../../../api/ansys_optical_automation.speos_process.html">
        ansys_optical_automation.speos_process package
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../api/ansys_optical_automation.zemax_process.html">
+       ansys_optical_automation.zemax_process package
       </a>
      </li>
     </ul>
@@ -293,6 +303,7 @@ title="Fullscreen mode"
         <span class="bp">self</span><span class="o">.</span><span class="n">BodySelection</span> <span class="o">=</span> <span class="n">scdm_api</span><span class="o">.</span><span class="n">Scripting</span><span class="o">.</span><span class="n">Selection</span><span class="o">.</span><span class="n">BodySelection</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">CloseDocument</span> <span class="o">=</span> <span class="n">scdm_api</span><span class="o">.</span><span class="n">Scripting</span><span class="o">.</span><span class="n">Helpers</span><span class="o">.</span><span class="n">DocumentHelper</span><span class="o">.</span><span class="n">CloseDocument</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">ColorHelper</span> <span class="o">=</span> <span class="n">scdm_api</span><span class="o">.</span><span class="n">Scripting</span><span class="o">.</span><span class="n">Helpers</span><span class="o">.</span><span class="n">ColorHelper</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">Command</span> <span class="o">=</span> <span class="n">scdm_api</span><span class="o">.</span><span class="n">Command</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">ComponentHelper</span> <span class="o">=</span> <span class="n">scdm_api</span><span class="o">.</span><span class="n">Scripting</span><span class="o">.</span><span class="n">Helpers</span><span class="o">.</span><span class="n">ComponentHelper</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">ComponentExtensions</span> <span class="o">=</span> <span class="n">scdm_api</span><span class="o">.</span><span class="n">Scripting</span><span class="o">.</span><span class="n">Extensions</span><span class="o">.</span><span class="n">ComponentExtensions</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">Copy</span> <span class="o">=</span> <span class="n">scdm_api</span><span class="o">.</span><span class="n">Scripting</span><span class="o">.</span><span class="n">Commands</span><span class="o">.</span><span class="n">Copy</span>
@@ -309,6 +320,7 @@ title="Fullscreen mode"
         <span class="bp">self</span><span class="o">.</span><span class="n">ICoordinateAxis</span> <span class="o">=</span> <span class="n">scdm_api</span><span class="o">.</span><span class="n">ICoordinateAxis</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">ICoordinateSystem</span> <span class="o">=</span> <span class="n">scdm_api</span><span class="o">.</span><span class="n">ICoordinateSystem</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">IDesignBody</span> <span class="o">=</span> <span class="n">scdm_api</span><span class="o">.</span><span class="n">IDesignBody</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">IDesignMesh</span> <span class="o">=</span> <span class="n">scdm_api</span><span class="o">.</span><span class="n">IDesignMesh</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">IDesignCurve</span> <span class="o">=</span> <span class="n">scdm_api</span><span class="o">.</span><span class="n">IDesignCurve</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">IPart</span> <span class="o">=</span> <span class="n">scdm_api</span><span class="o">.</span><span class="n">IPart</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">Layers</span> <span class="o">=</span> <span class="n">scdm_api</span><span class="o">.</span><span class="n">Scripting</span><span class="o">.</span><span class="n">Commands</span><span class="o">.</span><span class="n">Layers</span>
@@ -318,7 +330,23 @@ title="Fullscreen mode"
         <span class="bp">self</span><span class="o">.</span><span class="n">Selection</span> <span class="o">=</span> <span class="n">scdm_api</span><span class="o">.</span><span class="n">Scripting</span><span class="o">.</span><span class="n">Selection</span><span class="o">.</span><span class="n">Selection</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">SetName</span> <span class="o">=</span> <span class="n">scdm_api</span><span class="o">.</span><span class="n">Scripting</span><span class="o">.</span><span class="n">Helpers</span><span class="o">.</span><span class="n">ComponentHelper</span><span class="o">.</span><span class="n">SetName</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">StitchFaces</span> <span class="o">=</span> <span class="n">scdm_api</span><span class="o">.</span><span class="n">Scripting</span><span class="o">.</span><span class="n">Commands</span><span class="o">.</span><span class="n">StitchFaces</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">ViewHelper</span> <span class="o">=</span> <span class="n">scdm_api</span><span class="o">.</span><span class="n">Scripting</span><span class="o">.</span><span class="n">Helpers</span><span class="o">.</span><span class="n">ViewHelper</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ViewHelper</span> <span class="o">=</span> <span class="n">scdm_api</span><span class="o">.</span><span class="n">Scripting</span><span class="o">.</span><span class="n">Helpers</span><span class="o">.</span><span class="n">ViewHelper</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">Window</span> <span class="o">=</span> <span class="n">scdm_api</span><span class="o">.</span><span class="n">Window</span>
+
+<div class="viewcode-block" id="BaseSCDM.convert_object_version"><a class="viewcode-back" href="../../../api/ansys_optical_automation.scdm_core.html#ansys_optical_automation.scdm_core.base.BaseSCDM.convert_object_version">[docs]</a>    <span class="k">def</span> <span class="nf">convert_object_version</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obj</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Function to convert Speos returns from latest to used API version</span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        obj : SpeosSelectedObject</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        Object in used API version</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">doc</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">Window</span><span class="o">.</span><span class="n">ActiveWindow</span><span class="o">.</span><span class="n">Document</span>
+        <span class="n">res</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">scdm_api</span><span class="o">.</span><span class="n">Moniker</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">scdm_api</span><span class="o">.</span><span class="n">IDocObject</span><span class="p">]</span><span class="o">.</span><span class="n">FromString</span><span class="p">(</span><span class="n">obj</span><span class="o">.</span><span class="n">Moniker</span><span class="o">.</span><span class="n">ToString</span><span class="p">())</span><span class="o">.</span><span class="n">Resolve</span><span class="p">(</span><span class="n">doc</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">res</span></div></div>
 </pre></div>
 
               </div>

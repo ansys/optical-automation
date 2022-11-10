@@ -131,6 +131,11 @@
       </a>
      </li>
      <li class="toctree-l3">
+      <a class="reference internal" href="../../../api/ansys_optical_automation.lumerical_core.html">
+       ansys_optical_automation.lumerical_core package
+      </a>
+     </li>
+     <li class="toctree-l3">
       <a class="reference internal" href="../../../api/ansys_optical_automation.post_process.html">
        ansys_optical_automation.post_process package
       </a>
@@ -148,6 +153,11 @@
      <li class="toctree-l3">
       <a class="reference internal" href="../../../api/ansys_optical_automation.speos_process.html">
        ansys_optical_automation.speos_process package
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../api/ansys_optical_automation.zemax_process.html">
+       ansys_optical_automation.zemax_process package
       </a>
      </li>
     </ul>
@@ -254,7 +264,7 @@ title="Fullscreen mode"
 
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="n">application_list</span> <span class="o">=</span> <span class="s2">&quot;HDRIViewer.Application&quot;</span>
+    <span class="n">application_list</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;HDRIViewer.Application&quot;</span><span class="p">,</span> <span class="s2">&quot;XMPViewer.Application&quot;</span><span class="p">]</span>
     <span class="n">binary_format</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;.ray&quot;</span><span class="p">,</span> <span class="s2">&quot;.dat&quot;</span><span class="p">,</span> <span class="s2">&quot;.sdf&quot;</span><span class="p">}</span>
     <span class="n">text_format</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;.spectrum&quot;</span><span class="p">,</span> <span class="s2">&quot;.spcd&quot;</span><span class="p">}</span>
 
@@ -274,12 +284,14 @@ title="Fullscreen mode"
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">application</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">application</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">application_list</span><span class="p">:</span>
                 <span class="k">if</span> <span class="s2">&quot;Iron&quot;</span> <span class="ow">in</span> <span class="n">sys</span><span class="o">.</span><span class="n">version</span><span class="p">:</span>
+                    <span class="kn">import</span> <span class="nn">System</span>
+
                     <span class="n">instance_type</span> <span class="o">=</span> <span class="n">System</span><span class="o">.</span><span class="n">Type</span><span class="o">.</span><span class="n">GetTypeFromProgID</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">application</span><span class="p">)</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">dpf_instance</span> <span class="o">=</span> <span class="n">System</span><span class="o">.</span><span class="n">Activator</span><span class="o">.</span><span class="n">CreateInstance</span><span class="p">(</span><span class="n">instance_type</span><span class="p">)</span>
                 <span class="k">else</span><span class="p">:</span>
-                    <span class="kn">import</span> <span class="nn">win32com.client</span> <span class="k">as</span> <span class="nn">win32</span>
+                    <span class="kn">from</span> <span class="nn">comtypes.client</span> <span class="kn">import</span> <span class="n">CreateObject</span>
 
-                    <span class="bp">self</span><span class="o">.</span><span class="n">dpf_instance</span> <span class="o">=</span> <span class="n">win32</span><span class="o">.</span><span class="n">Dispatch</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">application</span><span class="p">)</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">dpf_instance</span> <span class="o">=</span> <span class="n">CreateObject</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">application</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="k">raise</span> <span class="ne">ImportError</span><span class="p">(</span><span class="s2">&quot;Application is not supported.&quot;</span><span class="p">)</span>
 

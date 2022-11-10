@@ -1,0 +1,499 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ansys_optical_automation.zemax_process.base &#8212; Ansys Optical Automation  documentation</title>
+    
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="../../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css" />
+    <link rel="stylesheet" href="../../../_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css" />
+    
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
+
+    <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+    <script src="../../../_static/jquery.js"></script>
+    <script src="../../../_static/underscore.js"></script>
+    <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/clipboard.min.js"></script>
+    <script src="../../../_static/copybutton.js"></script>
+    <script src="../../../_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
+<!-- Checkboxes to toggle the left sidebar -->
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle navigation sidebar">
+<label class="overlay overlay-navbar" for="__navigation">
+    <div class="visually-hidden">Toggle navigation sidebar</div>
+</label>
+<!-- Checkboxes to toggle the in-page toc -->
+<input type="checkbox" class="sidebar-toggle" name="__page-toc" id="__page-toc" aria-label="Toggle in-page Table of Contents">
+<label class="overlay overlay-pagetoc" for="__page-toc">
+    <div class="visually-hidden">Toggle in-page Table of Contents</div>
+</label>
+<!-- Headers at the top -->
+<div class="announcement header-item noprint"></div>
+<div class="header header-item noprint"></div>
+
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<!-- Sidebar -->
+<div class="bd-sidebar noprint" id="site-navigation">
+    <div class="bd-sidebar__content">
+        <div class="bd-sidebar__top"><div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="../../../index.html">
+      
+      
+      
+      <h1 class="site-logo" id="site-title">Ansys Optical Automation  documentation</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="../../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        <ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../resources/install.html">
+   Installation
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../resources/CONTRIBUTE.html">
+   Contribute
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Index:
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../../../api/modules.html">
+   ansys_optical_automation
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
+  <label for="toctree-checkbox-1">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../../api/ansys_optical_automation.html">
+     ansys_optical_automation package
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/>
+    <label for="toctree-checkbox-2">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../api/ansys_optical_automation.application.html">
+       ansys_optical_automation.application package
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../api/ansys_optical_automation.interop_process.html">
+       ansys_optical_automation.interop_process package
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../api/ansys_optical_automation.lumerical_core.html">
+       ansys_optical_automation.lumerical_core package
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../api/ansys_optical_automation.post_process.html">
+       ansys_optical_automation.post_process package
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../api/ansys_optical_automation.scdm_core.html">
+       ansys_optical_automation.scdm_core package
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../api/ansys_optical_automation.scdm_process.html">
+       ansys_optical_automation.scdm_process package
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../api/ansys_optical_automation.speos_process.html">
+       ansys_optical_automation.speos_process package
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../api/ansys_optical_automation.zemax_process.html">
+       ansys_optical_automation.zemax_process package
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+    </div>
+</nav></div>
+        <div class="bd-sidebar__bottom">
+             <!-- To handle the deprecated key -->
+            
+            <div class="navbar_extra_footer">
+            Theme by the <a href="https://ebp.jupyterbook.org">Executable Book Project</a>
+            </div>
+            
+        </div>
+    </div>
+    <div id="rtd-footer-container"></div>
+</div>
+
+
+          
+
+
+          
+<!-- A tiny helper pixel to detect if we've scrolled -->
+<div class="sbt-scroll-pixel-helper"></div>
+<!-- Main content -->
+<div class="col py-0 content-container">
+    
+    <div class="header-article row sticky-top noprint">
+        
+
+
+
+<div class="col py-1 d-flex header-article-main">
+    <div class="header-article__left">
+        
+        <label for="__navigation"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="right"
+title="Toggle navigation"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-bars"></i>
+  </span>
+
+</label>
+
+        
+    </div>
+    <div class="header-article__right">
+<button onclick="toggleFullScreen()"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="bottom"
+title="Fullscreen mode"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+    </div>
+</div>
+
+<!-- Table of contents -->
+<div class="col-md-3 bd-toc show noprint">
+</div>
+    </div>
+    <div class="article row">
+        <div class="col pl-md-3 pl-lg-5 content-container">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1></h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                    </div>
+                </div>
+            </div>
+            <main id="main-content" role="main">
+                
+              <div>
+                
+  <h1>Source code for ansys_optical_automation.zemax_process.base</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">from</span> <span class="nn">itertools</span> <span class="kn">import</span> <span class="n">islice</span>
+
+
+<div class="viewcode-block" id="BaseZOS"><a class="viewcode-back" href="../../../api/ansys_optical_automation.zemax_process.html#ansys_optical_automation.zemax_process.base.BaseZOS">[docs]</a><span class="k">class</span> <span class="nc">BaseZOS</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Basic Class structure to start Zemax Opticstudio</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="BaseZOS.LicenseException"><a class="viewcode-back" href="../../../api/ansys_optical_automation.zemax_process.html#ansys_optical_automation.zemax_process.base.BaseZOS.LicenseException">[docs]</a>    <span class="k">class</span> <span class="nc">LicenseException</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
+        <span class="k">pass</span></div>
+
+<div class="viewcode-block" id="BaseZOS.ConnectionException"><a class="viewcode-back" href="../../../api/ansys_optical_automation.zemax_process.html#ansys_optical_automation.zemax_process.base.BaseZOS.ConnectionException">[docs]</a>    <span class="k">class</span> <span class="nc">ConnectionException</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
+        <span class="k">pass</span></div>
+
+<div class="viewcode-block" id="BaseZOS.InitializationException"><a class="viewcode-back" href="../../../api/ansys_optical_automation.zemax_process.html#ansys_optical_automation.zemax_process.base.BaseZOS.InitializationException">[docs]</a>    <span class="k">class</span> <span class="nc">InitializationException</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
+        <span class="k">pass</span></div>
+
+<div class="viewcode-block" id="BaseZOS.SystemNotPresentException"><a class="viewcode-back" href="../../../api/ansys_optical_automation.zemax_process.html#ansys_optical_automation.zemax_process.base.BaseZOS.SystemNotPresentException">[docs]</a>    <span class="k">class</span> <span class="nc">SystemNotPresentException</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
+        <span class="k">pass</span></div>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        function that initializes the connection to OpticStudio</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        path</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        None</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># determine location of ZOSAPI_NetHelper.dll &amp; add as reference</span>
+        <span class="kn">import</span> <span class="nn">clr</span>
+
+        <span class="n">program_data</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;Programdata&quot;</span><span class="p">]</span>
+        <span class="n">net_helper</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">program_data</span><span class="p">,</span> <span class="s2">&quot;Zemax&quot;</span><span class="p">,</span> <span class="sa">r</span><span class="s2">&quot;ZOS-API\Libraries\ZOSAPI_NetHelper.dll&quot;</span><span class="p">)</span>
+        <span class="n">clr</span><span class="o">.</span><span class="n">AddReference</span><span class="p">(</span><span class="n">net_helper</span><span class="p">)</span>
+        <span class="kn">import</span> <span class="nn">ZOSAPI_NetHelper</span>
+
+        <span class="c1"># Find the installed version of OpticStudio</span>
+        <span class="k">if</span> <span class="n">path</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">is_initialized</span> <span class="o">=</span> <span class="n">ZOSAPI_NetHelper</span><span class="o">.</span><span class="n">ZOSAPI_Initializer</span><span class="o">.</span><span class="n">Initialize</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># Note -- uncomment the following line to use a custom initialization path</span>
+            <span class="n">is_initialized</span> <span class="o">=</span> <span class="n">ZOSAPI_NetHelper</span><span class="o">.</span><span class="n">ZOSAPI_Initializer</span><span class="o">.</span><span class="n">Initialize</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+
+        <span class="c1"># determine the ZOS root directory</span>
+        <span class="k">if</span> <span class="n">is_initialized</span><span class="p">:</span>
+            <span class="n">zemax_directory</span> <span class="o">=</span> <span class="n">ZOSAPI_NetHelper</span><span class="o">.</span><span class="n">ZOSAPI_Initializer</span><span class="o">.</span><span class="n">GetZemaxDirectory</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">BaseZOS</span><span class="o">.</span><span class="n">InitializationException</span><span class="p">(</span><span class="s2">&quot;Unable to locate Zemax OpticStudio.  Try using a hard-coded path.&quot;</span><span class="p">)</span>
+
+        <span class="c1"># add ZOS-API referencecs</span>
+        <span class="n">clr</span><span class="o">.</span><span class="n">AddReference</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">sep</span><span class="p">,</span> <span class="n">zemax_directory</span><span class="p">,</span> <span class="s2">&quot;ZOSAPI.dll&quot;</span><span class="p">))</span>
+        <span class="n">clr</span><span class="o">.</span><span class="n">AddReference</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">sep</span><span class="p">,</span> <span class="n">zemax_directory</span><span class="p">,</span> <span class="s2">&quot;ZOSAPI_Interfaces.dll&quot;</span><span class="p">))</span>
+        <span class="kn">import</span> <span class="nn">ZOSAPI</span>
+
+        <span class="c1"># create a reference to the API namespace</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">zosapi</span> <span class="o">=</span> <span class="n">ZOSAPI</span>
+
+        <span class="c1"># Create the initial connection class</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">the_connection</span> <span class="o">=</span> <span class="n">ZOSAPI</span><span class="o">.</span><span class="n">ZOSAPI_Connection</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">the_connection</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">BaseZOS</span><span class="o">.</span><span class="n">ConnectionException</span><span class="p">(</span><span class="s2">&quot;Unable to initialize .NET connection to ZOSAPI&quot;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">the_application</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">the_connection</span><span class="o">.</span><span class="n">CreateNewApplication</span><span class="p">()</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">the_application</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">BaseZOS</span><span class="o">.</span><span class="n">InitializationException</span><span class="p">(</span><span class="s2">&quot;Unable to acquire ZOSAPI application&quot;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">the_application</span><span class="o">.</span><span class="n">IsValidLicenseForAPI</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">BaseZOS</span><span class="o">.</span><span class="n">LicenseException</span><span class="p">(</span><span class="s2">&quot;License is not valid for ZOSAPI use&quot;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">the_system</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">the_application</span><span class="o">.</span><span class="n">PrimarySystem</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">the_system</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">BaseZOS</span><span class="o">.</span><span class="n">SystemNotPresentException</span><span class="p">(</span><span class="s2">&quot;Unable to acquire Primary system&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__del__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        function to shut down the OpticStudio process</span>
+<span class="sd">        It cleans up the connection to OpticStudio.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        None</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">the_application</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">the_application</span><span class="o">.</span><span class="n">CloseApplication</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">the_application</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">the_connection</span> <span class="o">=</span> <span class="kc">None</span>
+
+<div class="viewcode-block" id="BaseZOS.open_file"><a class="viewcode-back" href="../../../api/ansys_optical_automation.zemax_process.html#ansys_optical_automation.zemax_process.base.BaseZOS.open_file">[docs]</a>    <span class="k">def</span> <span class="nf">open_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">file_path</span><span class="p">,</span> <span class="n">save_if_needed</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        function to open a file</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        file_path : str</span>
+<span class="sd">            String to the zemax zos file</span>
+<span class="sd">        save_if_needed : boolean</span>
+<span class="sd">            distinguish if to save already opened file before open a new one</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">the_system</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">BaseZOS</span><span class="o">.</span><span class="n">SystemNotPresentException</span><span class="p">(</span><span class="s2">&quot;Unable to acquire Primary system&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">the_system</span><span class="o">.</span><span class="n">LoadFile</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span> <span class="n">save_if_needed</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="BaseZOS.close_file"><a class="viewcode-back" href="../../../api/ansys_optical_automation.zemax_process.html#ansys_optical_automation.zemax_process.base.BaseZOS.close_file">[docs]</a>    <span class="k">def</span> <span class="nf">close_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">save</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        close open file</span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        save : bool</span>
+<span class="sd">        defines if to save already open file</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        None</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">the_system</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">BaseZOS</span><span class="o">.</span><span class="n">SystemNotPresentException</span><span class="p">(</span><span class="s2">&quot;Unable to acquire Primary system&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">the_system</span><span class="o">.</span><span class="n">Close</span><span class="p">(</span><span class="n">save</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="BaseZOS.samples_dir"><a class="viewcode-back" href="../../../api/ansys_optical_automation.zemax_process.html#ansys_optical_automation.zemax_process.base.BaseZOS.samples_dir">[docs]</a>    <span class="k">def</span> <span class="nf">samples_dir</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        gets the full path for the current user&#39;s samples directory</span>
+<span class="sd">        by default: in the &quot;My Documents\\Zemax\\Samples\\folder&quot;</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        None</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        The user&#39;s samples files directory</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">the_application</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">BaseZOS</span><span class="o">.</span><span class="n">InitializationException</span><span class="p">(</span><span class="s2">&quot;Unable to acquire ZOSAPI application&quot;</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">the_application</span><span class="o">.</span><span class="n">SamplesDir</span></div>
+
+<div class="viewcode-block" id="BaseZOS.example_constants"><a class="viewcode-back" href="../../../api/ansys_optical_automation.zemax_process.html#ansys_optical_automation.zemax_process.base.BaseZOS.example_constants">[docs]</a>    <span class="k">def</span> <span class="nf">example_constants</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        gets the license status type</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        the license type</span>
+<span class="sd">        It can be premium, professional, standard or invalid.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">the_application</span><span class="o">.</span><span class="n">LicenseStatus</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">zosapi</span><span class="o">.</span><span class="n">LicenseStatusType</span><span class="o">.</span><span class="n">PremiumEdition</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s2">&quot;Premium&quot;</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">the_application</span><span class="o">.</span><span class="n">LicenseStatus</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">zosapi</span><span class="o">.</span><span class="n">LicenseStatusTypeProfessionalEdition</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s2">&quot;Professional&quot;</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">the_application</span><span class="o">.</span><span class="n">LicenseStatus</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">zosapi</span><span class="o">.</span><span class="n">LicenseStatusTypeStandardEdition</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s2">&quot;Standard&quot;</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s2">&quot;Invalid&quot;</span></div>
+
+<div class="viewcode-block" id="BaseZOS.reshape"><a class="viewcode-back" href="../../../api/ansys_optical_automation.zemax_process.html#ansys_optical_automation.zemax_process.base.BaseZOS.reshape">[docs]</a>    <span class="k">def</span> <span class="nf">reshape</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">transpose</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Converts a System.Double[,] to a 2D list for plotting or post processing</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        data : System.Double[,] data directly from ZOS-API</span>
+<span class="sd">        x : x width of new 2D list [use var.GetLength(0) for dimension]</span>
+<span class="sd">        y : y width of new 2D list [use var.GetLength(1) for dimension]</span>
+<span class="sd">        transpose : transposes data; needed for some multi-dimensional line series data</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        res : 2D list; can be directly used with Matplotlib or converted to</span>
+<span class="sd">            a numpy array using numpy.asarray(res)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="nb">list</span><span class="p">:</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+        <span class="n">var_lst</span> <span class="o">=</span> <span class="p">[</span><span class="n">y</span><span class="p">]</span> <span class="o">*</span> <span class="n">x</span>
+        <span class="n">it</span> <span class="o">=</span> <span class="nb">iter</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+        <span class="n">res</span> <span class="o">=</span> <span class="p">[</span><span class="nb">list</span><span class="p">(</span><span class="n">islice</span><span class="p">(</span><span class="n">it</span><span class="p">,</span> <span class="n">i</span><span class="p">))</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">var_lst</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">transpose</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">res</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">res</span></div>
+
+<div class="viewcode-block" id="BaseZOS.transpose"><a class="viewcode-back" href="../../../api/ansys_optical_automation.zemax_process.html#ansys_optical_automation.zemax_process.base.BaseZOS.transpose">[docs]</a>    <span class="k">def</span> <span class="nf">transpose</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Transposes a 2D list (Python3.x or greater).</span>
+
+<span class="sd">        Useful for converting mutli-dimensional line series (i.e. FFT PSF)</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        data : Python native list (if using System.Data[,] object reshape first)</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        res : transposed 2D list</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="nb">list</span><span class="p">:</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">list</span><span class="p">,</span> <span class="nb">zip</span><span class="p">(</span><span class="o">*</span><span class="n">data</span><span class="p">)))</span></div></div>
+</pre></div>
+
+              </div>
+              
+            </main>
+            <footer class="footer-article noprint">
+                
+    <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+</div>
+            </footer>
+        </div>
+    </div>
+    <div class="footer-content row">
+        <footer class="col footer"><p>
+  
+    By Ansys Inc.<br/>
+  
+      &copy; Copyright (c) 2022 ANSYS, Inc. All rights reserved.<br/>
+</p>
+        </footer>
+    </div>
+    
+</div>
+
+
+      </div>
+    </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+
+
+  </body>
+</html>

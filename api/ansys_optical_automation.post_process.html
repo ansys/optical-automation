@@ -38,7 +38,7 @@
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="ansys_optical_automation.scdm_core package" href="ansys_optical_automation.scdm_core.html" />
-    <link rel="prev" title="ansys_optical_automation.interop_process package" href="ansys_optical_automation.interop_process.html" />
+    <link rel="prev" title="ansys_optical_automation.lumerical_core package" href="ansys_optical_automation.lumerical_core.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
     
@@ -133,6 +133,11 @@
        ansys_optical_automation.interop_process package
       </a>
      </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys_optical_automation.lumerical_core.html">
+       ansys_optical_automation.lumerical_core package
+      </a>
+     </li>
      <li class="toctree-l3 current active">
       <a class="current reference internal" href="#">
        ansys_optical_automation.post_process package
@@ -151,6 +156,11 @@
      <li class="toctree-l3">
       <a class="reference internal" href="ansys_optical_automation.speos_process.html">
        ansys_optical_automation.speos_process package
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="ansys_optical_automation.zemax_process.html">
+       ansys_optical_automation.zemax_process package
       </a>
      </li>
     </ul>
@@ -310,6 +320,16 @@ title="Print to PDF"
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#ansys-optical-automation-post-process-dpf-stack-module">
+   ansys_optical_automation.post_process.dpf_stack module
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#ansys-optical-automation-post-process-dpf-xmp-viewer-module">
+   ansys_optical_automation.post_process.dpf_xmp_viewer module
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#module-ansys_optical_automation.post_process">
    Module contents
   </a>
@@ -351,6 +371,16 @@ title="Print to PDF"
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#module-ansys_optical_automation.post_process.dpf_rayfile">
    ansys_optical_automation.post_process.dpf_rayfile module
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#ansys-optical-automation-post-process-dpf-stack-module">
+   ansys_optical_automation.post_process.dpf_stack module
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#ansys-optical-automation-post-process-dpf-xmp-viewer-module">
+   ansys_optical_automation.post_process.dpf_xmp_viewer module
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
@@ -401,7 +431,7 @@ title="Print to PDF"
 </table>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="ansys_optical_automation.post_process.dpf_base.DataProcessingFramework.application_list">
-<span class="sig-name descname"><span class="pre">application_list</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'HDRIViewer.Application'</span></em><a class="headerlink" href="#ansys_optical_automation.post_process.dpf_base.DataProcessingFramework.application_list" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">application_list</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">['HDRIViewer.Application',</span> <span class="pre">'XMPViewer.Application']</span></em><a class="headerlink" href="#ansys_optical_automation.post_process.dpf_base.DataProcessingFramework.application_list" title="Permalink to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
@@ -685,13 +715,22 @@ Returns:</p>
 <tr class="row-even"><td><p><a class="reference internal" href="#ansys_optical_automation.post_process.dpf_rayfile.DpfRayfile.export_file" title="ansys_optical_automation.post_process.dpf_rayfile.DpfRayfile.export_file"><code class="xref py py-obj docutils literal notranslate"><span class="pre">export_file</span></code></a>([export_folder_dir, convert])</p></td>
 <td><p>this method generates a file to be exported Parameters ----------</p></td>
 </tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#ansys_optical_automation.post_process.dpf_rayfile.DpfRayfile.export_to_speos" title="ansys_optical_automation.post_process.dpf_rayfile.DpfRayfile.export_to_speos"><code class="xref py py-obj docutils literal notranslate"><span class="pre">export_to_speos</span></code></a>()</p></td>
+<td><p>this method convert the rayfile into speos format</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#ansys_optical_automation.post_process.dpf_rayfile.DpfRayfile.export_to_zemax" title="ansys_optical_automation.post_process.dpf_rayfile.DpfRayfile.export_to_zemax"><code class="xref py py-obj docutils literal notranslate"><span class="pre">export_to_zemax</span></code></a>()</p></td>
+<td><p>this method convert the rayfile into zemax format</p></td>
+</tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#ansys_optical_automation.post_process.dpf_rayfile.DpfRayfile.load_content" title="ansys_optical_automation.post_process.dpf_rayfile.DpfRayfile.load_content"><code class="xref py py-obj docutils literal notranslate"><span class="pre">load_content</span></code></a>()</p></td>
 <td><p>this method load the information from rayfile provided</p></td>
 </tr>
 <tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">open_file</span></code>(str_path)</p></td>
 <td><p>Open a file in DPF.</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">valid_dir</span></code>(str_path)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#ansys_optical_automation.post_process.dpf_rayfile.DpfRayfile.set_ray_count" title="ansys_optical_automation.post_process.dpf_rayfile.DpfRayfile.set_ray_count"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_ray_count</span></code></a>(raynumber)</p></td>
+<td><p>redfine raynumber Parameters ---------- raynumber : int</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">valid_dir</span></code>(str_path)</p></td>
 <td><p>Check if a folder is present and, if not, create it.</p></td>
 </tr>
 </tbody>
@@ -715,6 +754,32 @@ Parameters
 </dl>
 <dl class="simple">
 <dt>outfile: str</dt><dd><p>output file</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ansys_optical_automation.post_process.dpf_rayfile.DpfRayfile.export_to_speos">
+<span class="sig-name descname"><span class="pre">export_to_speos</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ansys_optical_automation/post_process/dpf_rayfile.html#DpfRayfile.export_to_speos"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ansys_optical_automation.post_process.dpf_rayfile.DpfRayfile.export_to_speos" title="Permalink to this definition">#</a></dt>
+<dd><p>this method convert the rayfile into speos format</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><dl class="simple">
+<dt>None</dt><dd></dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ansys_optical_automation.post_process.dpf_rayfile.DpfRayfile.export_to_zemax">
+<span class="sig-name descname"><span class="pre">export_to_zemax</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ansys_optical_automation/post_process/dpf_rayfile.html#DpfRayfile.export_to_zemax"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ansys_optical_automation.post_process.dpf_rayfile.DpfRayfile.export_to_zemax" title="Permalink to this definition">#</a></dt>
+<dd><p>this method convert the rayfile into zemax format</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><dl class="simple">
+<dt>None</dt><dd></dd>
+</dl>
 </dd>
 </dl>
 </dd></dl>
@@ -769,8 +834,27 @@ Returns:</p>
 </div></blockquote>
 </dd></dl>
 
+<dl class="py method">
+<dt class="sig sig-object py" id="ansys_optical_automation.post_process.dpf_rayfile.DpfRayfile.set_ray_count">
+<span class="sig-name descname"><span class="pre">set_ray_count</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">raynumber</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ansys_optical_automation/post_process/dpf_rayfile.html#DpfRayfile.set_ray_count"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ansys_optical_automation.post_process.dpf_rayfile.DpfRayfile.set_ray_count" title="Permalink to this definition">#</a></dt>
+<dd><p>redfine raynumber
+Parameters
+———-
+raynumber : int</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"></dd>
+</dl>
 </dd></dl>
 
+</dd></dl>
+
+</section>
+<section id="ansys-optical-automation-post-process-dpf-stack-module">
+<h2>ansys_optical_automation.post_process.dpf_stack module<a class="headerlink" href="#ansys-optical-automation-post-process-dpf-stack-module" title="Permalink to this headline">#</a></h2>
+</section>
+<section id="ansys-optical-automation-post-process-dpf-xmp-viewer-module">
+<h2>ansys_optical_automation.post_process.dpf_xmp_viewer module<a class="headerlink" href="#ansys-optical-automation-post-process-dpf-xmp-viewer-module" title="Permalink to this headline">#</a></h2>
 </section>
 <section id="module-ansys_optical_automation.post_process">
 <span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-ansys_optical_automation.post_process" title="Permalink to this headline">#</a></h2>
@@ -785,11 +869,11 @@ Returns:</p>
                 
     <!-- Previous / next buttons -->
 <div class='prev-next-area'>
-    <a class='left-prev' id="prev-link" href="ansys_optical_automation.interop_process.html" title="previous page">
+    <a class='left-prev' id="prev-link" href="ansys_optical_automation.lumerical_core.html" title="previous page">
         <i class="fas fa-angle-left"></i>
         <div class="prev-next-info">
             <p class="prev-next-subtitle">previous</p>
-            <p class="prev-next-title">ansys_optical_automation.interop_process package</p>
+            <p class="prev-next-title">ansys_optical_automation.lumerical_core package</p>
         </div>
     </a>
     <a class='right-next' id="next-link" href="ansys_optical_automation.scdm_core.html" title="next page">

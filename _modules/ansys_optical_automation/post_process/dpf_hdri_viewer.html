@@ -131,6 +131,11 @@
       </a>
      </li>
      <li class="toctree-l3">
+      <a class="reference internal" href="../../../api/ansys_optical_automation.lumerical_core.html">
+       ansys_optical_automation.lumerical_core package
+      </a>
+     </li>
+     <li class="toctree-l3">
       <a class="reference internal" href="../../../api/ansys_optical_automation.post_process.html">
        ansys_optical_automation.post_process package
       </a>
@@ -148,6 +153,11 @@
      <li class="toctree-l3">
       <a class="reference internal" href="../../../api/ansys_optical_automation.speos_process.html">
        ansys_optical_automation.speos_process package
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../api/ansys_optical_automation.zemax_process.html">
+       ansys_optical_automation.zemax_process package
       </a>
      </li>
     </ul>
@@ -309,6 +319,7 @@ title="Fullscreen mode"
                     <span class="bp">self</span><span class="o">.</span><span class="n">dpf_instance</span><span class="o">.</span><span class="n">Show</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">dpf_instance</span><span class="o">.</span><span class="n">ExportObserverImage</span><span class="p">(</span>
                         <span class="n">export_path</span>
+                        <span class="o">+</span> <span class="sa">r</span><span class="s2">&quot;\image&quot;</span>
                         <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">degrees</span><span class="p">([</span><span class="n">phi_angles</span><span class="p">[</span><span class="n">count</span><span class="p">]]))</span>
                         <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">degrees</span><span class="p">([</span><span class="n">theta_angles</span><span class="p">[</span><span class="n">count</span><span class="p">]]))</span>
                         <span class="o">+</span> <span class="s2">&quot;.JPG&quot;</span>
@@ -339,42 +350,44 @@ title="Fullscreen mode"
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">export_path</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">export_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">file_path</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">valid_dir</span><span class="p">(</span><span class="n">export_path</span><span class="p">)</span>
-        <span class="n">export_path</span> <span class="o">+=</span> <span class="s2">&quot;</span><span class="se">\\</span><span class="s2">&quot;</span>
 
         <span class="k">if</span> <span class="n">config_ids</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="s2">&quot;Export all configurations&quot;</span>
             <span class="n">config_ids</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dpf_instance</span><span class="o">.</span><span class="n">GetNbConfigurations</span>
             <span class="k">for</span> <span class="n">config</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">config_ids</span><span class="p">):</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">dpf_instance</span><span class="o">.</span><span class="n">SetConfigurationById</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">__export_vr_view</span><span class="p">(</span><span class="n">export_path</span><span class="p">,</span> <span class="n">phi_angles</span><span class="p">,</span> <span class="n">theta_angles</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">valid_dir</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">export_path</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">config</span><span class="p">)))</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">__export_vr_view</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">export_path</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">config</span><span class="p">)),</span> <span class="n">phi_angles</span><span class="p">,</span> <span class="n">theta_angles</span><span class="p">)</span>
 
         <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">config_ids</span><span class="p">,</span> <span class="nb">int</span><span class="p">):</span>
             <span class="k">try</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">dpf_instance</span><span class="o">.</span><span class="n">SetConfigurationById</span><span class="p">(</span><span class="n">config_ids</span><span class="p">)</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">__export_vr_view</span><span class="p">(</span><span class="n">export_path</span><span class="p">,</span> <span class="n">phi_angles</span><span class="p">,</span> <span class="n">theta_angles</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">valid_dir</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">export_path</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">config_ids</span><span class="p">)))</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">__export_vr_view</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">export_path</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">config_ids</span><span class="p">)),</span> <span class="n">phi_angles</span><span class="p">,</span> <span class="n">theta_angles</span><span class="p">)</span>
             <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
                 <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">config_ids</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot; a non valid ID exists in the file </span><span class="se">\n</span><span class="s2"> Details: &quot;</span> <span class="o">+</span> <span class="n">e</span><span class="p">)</span>
 
         <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">config_ids</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
             <span class="k">try</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">dpf_instance</span><span class="o">.</span><span class="n">SetConfigurationByName</span><span class="p">(</span><span class="n">config_ids</span><span class="p">)</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">__export_vr_view</span><span class="p">(</span><span class="n">export_path</span><span class="p">,</span> <span class="n">phi_angles</span><span class="p">,</span> <span class="n">theta_angles</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">valid_dir</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">export_path</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">config_ids</span><span class="p">)))</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">__export_vr_view</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">export_path</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">config_ids</span><span class="p">)),</span> <span class="n">phi_angles</span><span class="p">,</span> <span class="n">theta_angles</span><span class="p">)</span>
             <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
                 <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">config_ids</span> <span class="o">+</span> <span class="s2">&quot; does not exist in the file </span><span class="se">\n</span><span class="s2"> Details: &quot;</span> <span class="o">+</span> <span class="n">e</span><span class="p">)</span>
 
         <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">config_ids</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
             <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">config_ids</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">valid_dir</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">export_path</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">item</span><span class="p">)))</span>
                 <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">config_ids</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="nb">int</span><span class="p">):</span>
                     <span class="k">try</span><span class="p">:</span>
                         <span class="bp">self</span><span class="o">.</span><span class="n">dpf_instance</span><span class="o">.</span><span class="n">SetConfigurationById</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
-                        <span class="bp">self</span><span class="o">.</span><span class="n">__export_vr_view</span><span class="p">(</span><span class="n">export_path</span><span class="p">,</span> <span class="n">phi_angles</span><span class="p">,</span> <span class="n">theta_angles</span><span class="p">)</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">__export_vr_view</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">export_path</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">item</span><span class="p">)),</span> <span class="n">phi_angles</span><span class="p">,</span> <span class="n">theta_angles</span><span class="p">)</span>
                     <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
                         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">item</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot; a non valid ID exists in the file </span><span class="se">\n</span><span class="s2"> Details: &quot;</span> <span class="o">+</span> <span class="n">e</span><span class="p">)</span>
                 <span class="k">else</span><span class="p">:</span>
                     <span class="k">try</span><span class="p">:</span>
                         <span class="bp">self</span><span class="o">.</span><span class="n">dpf_instance</span><span class="o">.</span><span class="n">SetConfigurationByName</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
-                        <span class="bp">self</span><span class="o">.</span><span class="n">__export_vr_view</span><span class="p">(</span><span class="n">export_path</span><span class="p">,</span> <span class="n">phi_angles</span><span class="p">,</span> <span class="n">theta_angles</span><span class="p">)</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">__export_vr_view</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">export_path</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">item</span><span class="p">)),</span> <span class="n">phi_angles</span><span class="p">,</span> <span class="n">theta_angles</span><span class="p">)</span>
                     <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
                         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">item</span> <span class="o">+</span> <span class="s2">&quot; does not exist in the file </span><span class="se">\n</span><span class="s2"> Details: &quot;</span> <span class="o">+</span> <span class="n">e</span><span class="p">)</span></div></div>
 </pre></div>
