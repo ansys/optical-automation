@@ -32,17 +32,49 @@ def getfilename(extension, save=False):
     return file_path
 
 
-def compute_refactive_power(point_1, point_2, dir):
+def vector_multi(vec1, vec2):
+    """
+    function to multiply to vectors
+    Parameters
+    ----------
+    vec1 : list
+        [x,y,z]
+    vec2 : list
+        [x,y,z]
+    Returns
+    -------
+    int
+    """
+    return vec1[0] * vec2[0] + vec1[1] * vec2[1] + vec1[2] * vec2[2]
+
+
+def vector_len(vec):
+    """
+    compute vector length
+    Parameters
+    ----------
+    vec : list
+        [x,y,z]
+
+    Returns
+    -------
+    float
+
+    """
+    return np.sqrt(vec[0] ** 2 + vec[1] ** 2 + vec[2] ** 2)
+
+
+def compute_refactive_power(point_1, point_2, dir_out, dir_in=[0, 0, 1]):
     """
     function to compute refractive power of an optical object
-    input direction is along x-axis
+    input direction is along z-axis
     Parameters
     ----------
     point_1 : list of x,y,z coordinates
         starting position
     point_2 : list of x,y,z coordinates
         last impact of the ray
-    dir : list of x,y,z
+    dir_out : list of x,y,z
         last direction of the ray
 
     Returns
@@ -50,11 +82,18 @@ def compute_refactive_power(point_1, point_2, dir):
     the refractive power of the system as float
 
     """
-    dist = np.sqrt((point_1[1] - point_2[1]) ** 2 + (point_1[2] - point_2[2]) ** 2)
-    height = dist / dir[2]
-    angle = np.pi / 2 - np.arccos(dir[2] / np.sqrt(dir[0] ** 2 + dir[1] ** 2 + dir[2] ** 2))
+    if dir_in not in [[0, 0, 1], [0, 1, 0], [1, 0, 0]]:
+        raise ValueError("dir in needs to be to an major axis direction")
+    dist = np.sqrt(
+        0 ** dir_in[0] * (point_1[0] - point_2[0]) ** 2
+        + 0 ** dir_in[1] * (point_1[1] - point_2[1]) ** 2
+        + 0 ** dir_in[2] * (point_1[2] - point_2[2]) ** 2
+    )
+
+    height = dist / vector_multi(dir_in, dir_out)
+    angle = np.pi / 2 - np.arccos(vector_multi(dir_in, dir_out) / (vector_len(dir_in) * vector_len(dir_out)))
     refractive_power = 1 / (
-        np.sqrt((height * dir[0]) ** 2 + (height * dir[1]) ** 2 + (height * dir[2]) ** 2) * np.cos(angle)
+        np.sqrt((height * dir_out[0]) ** 2 + (height * dir_out[1]) ** 2 + (height * dir_out[2]) ** 2) * np.cos(angle)
     )
     return refractive_power
 
