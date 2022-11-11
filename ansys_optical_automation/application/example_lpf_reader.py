@@ -137,7 +137,7 @@ def create_diopter_map(
             round(point_2[0], 1),
             round(point_2[1], 1),
             round(point_2[2], 1),
-            compute_refactive_power(point_1, point_2, last_dir),
+            compute_refactive_power(point_1, point_2, last_dir, dir_in=[1, 0, 0]),
         ]
         refractive_power.append(temp_list)
     my_list = refractive_power
