@@ -1,17 +1,33 @@
 import os
 import sys
 
-# better versioning to be done later
-speosInstallationPath = os.path.join(os.environ.get("AWP_ROOT231"), r"Optical Products\Speos\bin")
-sys.path.append(speosInstallationPath)
 
-import IllumineCore_pywrap
-import IllumineSpeos_pywrap
+class DpfLpfTraces:
+    def __init__(self, trace, order_type):
+        self.trace_list = [trace]
+        self.order_type = order_type
+
+    def add_trace(self, trace):
+        self.trace_list.append(trace)
 
 
 class DpfLpfReader:
-    def __init__(self):
-        self.dpf_instance = IllumineSpeos_pywrap.CLpfFileReader()
+    def __init__(self, speos_version):
+        if speos_version not in [231]:
+            msg = "Speos API {} is not supported.".format(speos_version)
+            raise ValueError(msg)
+        speos_installation_path = os.path.join(
+            os.environ.get("AWP_ROOT" + str(speos_version)), r"Optical Products\Speos\bin"
+        )
+        sys.path.append(speos_installation_path)
+
+        import IllumineCore_pywrap
+        import IllumineSpeos_pywrap
+
+        self.pdf_core = IllumineCore_pywrap
+        self.pdf_speos = IllumineSpeos_pywrap
+
+        self.dpf_instance = self.pdf_speos.CLpfFileReader()
         self.traces = []
         self.trace_count = 0
         self.sequence_faces = []
@@ -30,12 +46,11 @@ class DpfLpfReader:
 
 
         """
-        lpf_file = IllumineCore_pywrap.Path(str_path)
+        lpf_file = self.pdf_core.Path(str_path)
         error = self.dpf_instance.InitLpfFileName(lpf_file)
         self.error_manager(error)
 
-    @staticmethod
-    def error_manager(error):
+    def error_manager(self, error):
         """
         function to retrieve errors from LPF reader
          if no error found returns none
@@ -51,7 +66,7 @@ class DpfLpfReader:
         """
         if error.Ptr() is not None:
             # Retrieve and print error message
-            error_message = IllumineSpeos_pywrap.COptString()
+            error_message = self.pdf_speos.COptString()
             error.Ptr().GetErrorMessage(error_message)
             error_message = error_message.ToOptisString().Ptr()
             raise ChildProcessError(error_message)
@@ -66,7 +81,7 @@ class DpfLpfReader:
 
         """
         self.trace_count = self.dpf_instance.GetNbOfTraces()
-        ray_path_vector = IllumineSpeos_pywrap.Vector_COptRayPath()
+        ray_path_vector = self.pdf_speos.Vector_COptRayPath()
         ray_path_vector.Resize(self.trace_count)
         error = self.dpf_instance.GetRayPathBundle(ray_path_vector.ToSpan())
         self.error_manager(error)
