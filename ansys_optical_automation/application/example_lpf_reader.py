@@ -141,7 +141,7 @@ def create_diopter_map(
         ]
         refractive_power.append(temp_list)
     my_list = refractive_power
-    diopter_map = MapStruct(3, 20, 9, 1, map_size, map_res)
+    diopter_map = MapStruct(3, 20, 2, 9, 1, map_size, map_res)
     diopter_map.export_name = export_name
     data = np.zeros((map_res[0], map_res[1]), dtype=list)
     step_x = (map_size[1] - (map_size[0])) / map_res[0]
@@ -174,7 +174,7 @@ def create_diopter_map(
 
 
 file_name = getfilename("*.lpf")
-my_lpf = DpfLpfReader()
+my_lpf = DpfLpfReader(231)
 my_lpf.open_file(file_name)
 my_lpf.retrieve_traces()
 xmp_trans = create_diopter_map(my_lpf, 1, "trans")
