@@ -1,3 +1,4 @@
+import math
 import tkinter as tk
 from tkinter import filedialog
 
@@ -32,7 +33,7 @@ def getfilename(extension, save=False):
     return file_path
 
 
-def vector_multi(vec1, vec2):
+def dot_product(vec1, vec2):
     """
     function to multiply to vectors
     Parameters
@@ -61,15 +62,17 @@ def vector_len(vec):
     float
 
     """
-    return np.sqrt(vec[0] ** 2 + vec[1] ** 2 + vec[2] ** 2)
+    return math.sqrt(vec[0] ** 2 + vec[1] ** 2 + vec[2] ** 2)
 
 
-def compute_refactive_power(point_1, point_2, dir_out, dir_in=[0, 0, 1]):
+def compute_refactive_power(point_1, point_2, dir_out, dir_in):
     """
     function to compute refractive power of an optical object
     input direction is along z-axis
     Parameters
     ----------
+    dir_in: list
+        lighting incoming direction
     point_1 : list of x,y,z coordinates
         starting position
     point_2 : list of x,y,z coordinates
@@ -84,22 +87,17 @@ def compute_refactive_power(point_1, point_2, dir_out, dir_in=[0, 0, 1]):
     """
     if dir_in not in [[0, 0, 1], [0, 1, 0], [1, 0, 0]]:
         raise ValueError("dir in needs to be to an major axis direction")
-    dist = np.sqrt(
-        0 ** dir_in[0] * (point_1[0] - point_2[0]) ** 2
-        + 0 ** dir_in[1] * (point_1[1] - point_2[1]) ** 2
-        + 0 ** dir_in[2] * (point_1[2] - point_2[2]) ** 2
-    )
-
-    height = dist / vector_multi(dir_in, dir_out)
-    angle = np.pi / 2 - np.arccos(vector_multi(dir_in, dir_out) / (vector_len(dir_in) * vector_len(dir_out)))
+    dist = math.sqrt((point_1[0] - point_2[0]) ** 2 + (point_1[1] - point_2[1]) ** 2 + (point_1[2] - point_2[2]) ** 2)
+    height = dist / dot_product(dir_in, dir_out)
+    cos_angle = dot_product(dir_in, dir_out) / (vector_len(dir_in) * vector_len(dir_out))
     refractive_power = 1 / (
-        np.sqrt((height * dir_out[0]) ** 2 + (height * dir_out[1]) ** 2 + (height * dir_out[2]) ** 2) * np.cos(angle)
+        math.sqrt((height * dir_out[0]) ** 2 + (height * dir_out[1]) ** 2 + (height * dir_out[2]) ** 2) * cos_angle
     )
     return refractive_power
 
 
 def create_diopter_map(
-    lpf_object, sequence_id, export_name, export_path=r"c:\temp", map_size=[-900, 900, 600, 1200], map_res=[360, 120]
+    lpf_object, sequence_id, export_name, export_path=r"c:\temp", map_size=[-60, 60, -40, 40], map_res=[50, 50]
 ):
     """
     function to create a diopter map based on the simple refractive power computation
@@ -124,6 +122,7 @@ def create_diopter_map(
     DpfXmpViewer object
 
     """
+    # TODO current sensor x align with global y, sensor y aligns with global z
     refractive_power = []
     for trace in lpf_object.sequences[sequence_id]:
         last_dir = [trace.LastDirection.Get(0), trace.LastDirection.Get(1), trace.LastDirection.Get(2)]

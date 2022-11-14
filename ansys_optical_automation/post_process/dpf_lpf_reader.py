@@ -81,11 +81,10 @@ class DpfLpfReader:
 
         """
         self.trace_count = self.dpf_instance.GetNbOfTraces()
-        ray_path_vector = self.pdf_speos.Vector_COptRayPath()
-        ray_path_vector.Resize(self.trace_count)
-        error = self.dpf_instance.GetRayPathBundle(ray_path_vector.ToSpan())
+        self.traces = self.pdf_speos.Vector_COptRayPath()
+        self.traces.Resize(self.trace_count)
+        error = self.dpf_instance.GetRayPathBundle(self.traces.ToSpan())
         self.error_manager(error)
-        self.traces = ray_path_vector
         if by_sequence:
             for ray in self.traces:
                 if ray.vUniqueFaceIds in self.sequence_faces:
