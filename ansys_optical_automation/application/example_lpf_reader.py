@@ -146,7 +146,7 @@ def create_diopter_map(lpf_object, sequence_id, export_name, export_path, map_si
     DpfXmpViewer object
 
     """
-    # TODO current sensor x align with global y, sensor y aligns with global z
+
     refractive_power = []
     for trace in lpf_object.sequences[sequence_id]:
         dir_out = [trace.LastDirection.Get(0), trace.LastDirection.Get(1), trace.LastDirection.Get(2)]
@@ -176,6 +176,7 @@ def create_diopter_map(lpf_object, sequence_id, export_name, export_path, map_si
     for x in range(map_res[0]):
         for y in range(map_res[1]):
             data[x, y] = []
+    # TODO current sensor x align with global y, sensor y aligns with global z
     for item in refractive_power:
         x_idx = math.floor((item[1] - map_size[0]) / step_x)
         y_idx = math.floor((item[2] - map_size[2]) / step_y)
@@ -197,6 +198,7 @@ file_name = getfilename("*.lpf")
 my_lpf = DpfLpfReader(231)
 my_lpf.open_file(file_name)
 my_lpf.retrieve_traces()
+# TODO current sensor x align with global y, sensor y aligns with global z
 xmp_size = [-my_lpf.trace_boundary[1], my_lpf.trace_boundary[1], -my_lpf.trace_boundary[2], my_lpf.trace_boundary[2]]
 create_diopter_map(my_lpf, 1, "trans", r"c:\temp", xmp_size, [50, 50])
 create_diopter_map(my_lpf, 2, "ghost", r"c:\temp", xmp_size, [50, 50])
