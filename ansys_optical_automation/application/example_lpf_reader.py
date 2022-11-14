@@ -33,36 +33,56 @@ def getfilename(extension, save=False):
     return file_path
 
 
-def dot_product(vec1, vec2):
+def dot_product(vector1, vector2):
     """
     function to multiply to vectors
     Parameters
     ----------
-    vec1 : list
+    vector1 : list
         [x,y,z]
-    vec2 : list
+    vector2 : list
         [x,y,z]
     Returns
     -------
     int
     """
-    return vec1[0] * vec2[0] + vec1[1] * vec2[1] + vec1[2] * vec2[2]
+    return vector1[0] * vector2[0] + vector1[1] * vector2[1] + vector1[2] * vector2[2]
 
 
-def vector_len(vec):
+def vector_normalize(vector):
+    """
+    get normalized vector.
+
+    Parameters
+    ----------
+    vector : list
+        [x,y,z]
+
+    Returns
+    -------
+    list
+        list representing normalized vector
+
+    """
+    vector_magnitude = vector_len(vector)
+    return [item / vector_magnitude for item in vector]
+
+
+def vector_len(vector):
     """
     compute vector length
     Parameters
     ----------
-    vec : list
+    vector : list
         [x,y,z]
 
     Returns
     -------
     float
+        length of a vector
 
     """
-    return math.sqrt(vec[0] ** 2 + vec[1] ** 2 + vec[2] ** 2)
+    return math.sqrt(vector[0] ** 2 + vector[1] ** 2 + vector[2] ** 2)
 
 
 def compute_refactive_power(point_1, point_2, dir_out, dir_in):
@@ -87,11 +107,17 @@ def compute_refactive_power(point_1, point_2, dir_out, dir_in):
     """
     if dir_in not in [[0, 0, 1], [0, 1, 0], [1, 0, 0]]:
         raise ValueError("dir in needs to be to an major axis direction")
-    dist = math.sqrt((point_1[0] - point_2[0]) ** 2 + (point_1[1] - point_2[1]) ** 2 + (point_1[2] - point_2[2]) ** 2)
+    dist = math.sqrt(
+        0 ** dir_in[0] * (point_1[0] - point_2[0]) ** 2
+        + 0 ** dir_in[1] * (point_1[1] - point_2[1]) ** 2
+        + 0 ** dir_in[2] * (point_1[2] - point_2[2]) ** 2
+    )
+
     height = dist / dot_product(dir_in, dir_out)
-    cos_angle = dot_product(dir_in, dir_out) / (vector_len(dir_in) * vector_len(dir_out))
+    angle = math.pi / 2 - np.arccos(dot_product(dir_in, dir_out) / (vector_len(dir_in) * vector_len(dir_out)))
     refractive_power = 1 / (
-        math.sqrt((height * dir_out[0]) ** 2 + (height * dir_out[1]) ** 2 + (height * dir_out[2]) ** 2) * cos_angle
+        math.sqrt((height * dir_out[0]) ** 2 + (height * dir_out[1]) ** 2 + (height * dir_out[2]) ** 2)
+        * math.cos(angle)
     )
     return refractive_power
 
