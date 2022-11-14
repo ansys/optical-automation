@@ -17,7 +17,7 @@ class DpfHdriViewer(DataProcessingFramework):
         DataProcessingFramework.__init__(
             self, extension=(".speos360", ".optisvr", ".xmp"), application="HDRIViewer.Application"
         )
-        self.source_list = []
+        self.source_list = self.get_source_list()
 
     def get_source_list(self):
         """
@@ -28,6 +28,7 @@ class DpfHdriViewer(DataProcessingFramework):
         list
             List of sources available in the postprocessing file.
         """
+        self.source_list = []
         if self.dpf_instance is not None:
             total_sources = self.dpf_instance.GetNbSources
             for layer in range(total_sources):
@@ -135,3 +136,57 @@ class DpfHdriViewer(DataProcessingFramework):
                         self.__export_vr_view(os.path.join(export_path, str(item)), phi_angles, theta_angles)
                     except Exception as e:
                         raise ValueError(item + " does not exist in the file \n Details: " + e)
+
+    def set_source_power(self, source, value):
+        """
+        Set the source with power value provided.
+
+        Parameters
+        ----------
+        source : int/str
+            source defined by id or name.
+        value : float
+            source power.
+
+        Returns
+        -------
+
+
+        """
+        if isinstance(source, int):
+            if source >= len(self.source_list):
+                msg = "source requested does not exist"
+                raise ValueError(msg)
+            self.dpf_instance.SetSourcePowerById(source, value)
+        else:
+            if source not in self.source_list:
+                msg = "source requested does not exist"
+                raise ValueError(msg)
+            self.dpf_instance.SetSourcePowerByName(source, value)
+
+    def set_source_ratio(self, source, value):
+        """
+        Set the source with power ratio value provided.
+
+        Parameters
+        ----------
+        source : int/str
+            source defined by id or name
+        value : float
+            source power ratio
+
+        Returns
+        -------
+
+
+        """
+        if isinstance(source, int):
+            if source >= len(self.source_list):
+                msg = "source requested does not exist"
+                raise ValueError(msg)
+            self.dpf_instance.SetSourceRatioById(source, value)
+        else:
+            if source not in self.source_list:
+                msg = "source requested does not exist"
+                raise ValueError(msg)
+            self.dpf_instance.SetSourceRatioByName(source, value)
