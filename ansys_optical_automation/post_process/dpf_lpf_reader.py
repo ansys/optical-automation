@@ -33,6 +33,7 @@ class DpfLpfReader:
         self.sequence_faces = []
         self.sequence_impacts = []
         self.sequences = []
+        self.trace_boundary = [0, 0, 0]
 
     def open_file(self, str_path):
         """
@@ -87,6 +88,10 @@ class DpfLpfReader:
         self.error_manager(error)
         if by_sequence:
             for ray in self.traces:
+                start_point = [ray.vImpacts.Get(0).Get(0), ray.vImpacts.Get(0).Get(1), ray.vImpacts.Get(0).Get(2)]
+                self.trace_boundary[0] = max(self.trace_boundary[0], abs(start_point[0]))
+                self.trace_boundary[1] = max(self.trace_boundary[1], abs(start_point[1]))
+                self.trace_boundary[2] = max(self.trace_boundary[2], abs(start_point[2]))
                 if ray.vUniqueFaceIds in self.sequence_faces:
                     self.sequences[self.sequence_faces.index(ray.vUniqueFaceIds)].append(ray)
                 else:
