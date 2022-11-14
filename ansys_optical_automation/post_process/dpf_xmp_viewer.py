@@ -34,6 +34,8 @@ axis_unit_types = [
 
 
 class MapStruct:
+    """Provides a DPF to represent the data stored in an Ansys Speos XMP file"""
+
     def __init__(
         self,
         map_type,
@@ -315,7 +317,7 @@ class MapStruct:
 
 class DpfXmpViewer(DataProcessingFramework):
     """
-    Provides for launching Speos postprocessing software, Virtual reality lab.
+    Provides for launching Speos postprocessing software, XMP Viewer.
 
     This framework is used to interact with the software and automatically perform
     analysis and postprocessing on the simulation results
