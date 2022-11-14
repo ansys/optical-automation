@@ -122,9 +122,7 @@ def compute_refactive_power(point_1, point_2, dir_out, dir_in):
     return refractive_power
 
 
-def create_diopter_map(
-    lpf_object, sequence_id, export_name, export_path=r"c:\temp", map_size=[-60, 60, -40, 40], map_res=[50, 50]
-):
+def create_diopter_map(lpf_object, sequence_id, export_name, export_path, map_size, map_res):
     """
     function to create a diopter map based on the simple refractive power computation
     the map will be build based on the last impact yz position
@@ -151,7 +149,13 @@ def create_diopter_map(
     # TODO current sensor x align with global y, sensor y aligns with global z
     refractive_power = []
     for trace in lpf_object.sequences[sequence_id]:
-        last_dir = [trace.LastDirection.Get(0), trace.LastDirection.Get(1), trace.LastDirection.Get(2)]
+        dir_out = [trace.LastDirection.Get(0), trace.LastDirection.Get(1), trace.LastDirection.Get(2)]
+        vector_in = [
+            trace.vImpacts.Get(0).Get(0) - trace.vImpacts.Get(1).Get(0),
+            trace.vImpacts.Get(0).Get(1) - trace.vImpacts.Get(1).Get(1),
+            trace.vImpacts.Get(0).Get(2) - trace.vImpacts.Get(1).Get(2),
+        ]
+        dir_in = vector_normalize(vector_in)
         point_1 = [trace.vImpacts.Get(1).Get(0), trace.vImpacts.Get(1).Get(1), trace.vImpacts.Get(1).Get(2)]
         point_2 = [
             trace.vImpacts.Get(lpf_object.sequence_impacts[sequence_id] - 1).Get(0),
@@ -162,12 +166,11 @@ def create_diopter_map(
             round(point_2[0], 1),
             round(point_2[1], 1),
             round(point_2[2], 1),
-            compute_refactive_power(point_1, point_2, last_dir, dir_in=[1, 0, 0]),
+            compute_refactive_power(point_1, point_2, dir_out, dir_in),
         ]
         refractive_power.append(temp_list)
     my_list = refractive_power
     diopter_map = MapStruct(3, 20, 2, 9, 1, map_size, map_res)
-    diopter_map.export_name = export_name
     data = np.zeros((map_res[0], map_res[1]), dtype=list)
     step_x = (map_size[1] - (map_size[0])) / map_res[0]
     step_y = (map_size[3] - (map_size[2])) / map_res[1]
@@ -194,6 +197,7 @@ def create_diopter_map(
                 diopter_map.data[0, x, y, 0] = 0
             else:
                 diopter_map.data[0, x, y, 0] = sum(data[x, y]) / len(data[x, y])
+    diopter_map.export_name = export_name
     xmp = diopter_map.export_to_xmp(export_path)
     return xmp
 
@@ -202,5 +206,6 @@ file_name = getfilename("*.lpf")
 my_lpf = DpfLpfReader(231)
 my_lpf.open_file(file_name)
 my_lpf.retrieve_traces()
-xmp_trans = create_diopter_map(my_lpf, 1, "trans")
-xmp_trans = create_diopter_map(my_lpf, 2, "ghost", map_res=[180, 60])
+xmp_size = [-my_lpf.trace_boundary[1], my_lpf.trace_boundary[1], -my_lpf.trace_boundary[2], my_lpf.trace_boundary[2]]
+create_diopter_map(my_lpf, 1, "trans", r"c:\temp", xmp_size, [50, 50])
+create_diopter_map(my_lpf, 2, "ghost", r"c:\temp", xmp_size, [180, 60])
