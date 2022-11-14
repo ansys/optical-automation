@@ -23,7 +23,7 @@ jobs:
     - name: Sphinx documentation
       run: |
           cd doc
-          sphinx-apidoc -o api ../ansys_optical_automation
+          sphinx-apidoc -o api ../ansys_optical_automation ../ansys_optical_automation/application/* -f
           make html
           touch _build/html/.nojekyll
     
