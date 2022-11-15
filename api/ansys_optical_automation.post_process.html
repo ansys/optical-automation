@@ -320,7 +320,7 @@ title="Print to PDF"
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#ansys-optical-automation-post-process-dpf-xmp-viewer-module">
+  <a class="reference internal nav-link" href="#module-ansys_optical_automation.post_process.dpf_xmp_viewer">
    ansys_optical_automation.post_process.dpf_xmp_viewer module
   </a>
  </li>
@@ -374,7 +374,7 @@ title="Print to PDF"
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#ansys-optical-automation-post-process-dpf-xmp-viewer-module">
+  <a class="reference internal nav-link" href="#module-ansys_optical_automation.post_process.dpf_xmp_viewer">
    ansys_optical_automation.post_process.dpf_xmp_viewer module
   </a>
  </li>
@@ -900,8 +900,218 @@ raynumber : int</p>
 </dd></dl>
 
 </section>
-<section id="ansys-optical-automation-post-process-dpf-xmp-viewer-module">
-<h2>ansys_optical_automation.post_process.dpf_xmp_viewer module<a class="headerlink" href="#ansys-optical-automation-post-process-dpf-xmp-viewer-module" title="Permalink to this headline">#</a></h2>
+<section id="module-ansys_optical_automation.post_process.dpf_xmp_viewer">
+<span id="ansys-optical-automation-post-process-dpf-xmp-viewer-module"></span><h2>ansys_optical_automation.post_process.dpf_xmp_viewer module<a class="headerlink" href="#module-ansys_optical_automation.post_process.dpf_xmp_viewer" title="Permalink to this headline">#</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="ansys_optical_automation.post_process.dpf_xmp_viewer.DpfXmpViewer">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">ansys_optical_automation.post_process.dpf_xmp_viewer.</span></span><span class="sig-name descname"><span class="pre">DpfXmpViewer</span></span><a class="reference internal" href="../_modules/ansys_optical_automation/post_process/dpf_xmp_viewer.html#DpfXmpViewer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ansys_optical_automation.post_process.dpf_xmp_viewer.DpfXmpViewer" title="Permalink to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#ansys_optical_automation.post_process.dpf_base.DataProcessingFramework" title="ansys_optical_automation.post_process.dpf_base.DataProcessingFramework"><code class="xref py py-class docutils literal notranslate"><span class="pre">ansys_optical_automation.post_process.dpf_base.DataProcessingFramework</span></code></a></p>
+<p>Provides for launching Speos postprocessing software, XMP Viewer.</p>
+<p>This framework is used to interact with the software and automatically perform
+analysis and postprocessing on the simulation results</p>
+<p class="rubric">Methods</p>
+<table class="autosummary longtable table autosummary">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">close</span></code>()</p></td>
+<td><p>Function to close open files and applications</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#ansys_optical_automation.post_process.dpf_xmp_viewer.DpfXmpViewer.export" title="ansys_optical_automation.post_process.dpf_xmp_viewer.DpfXmpViewer.export"><code class="xref py py-obj docutils literal notranslate"><span class="pre">export</span></code></a>([format])</p></td>
+<td><p>function to export an XMP map to another format</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#ansys_optical_automation.post_process.dpf_xmp_viewer.DpfXmpViewer.export_template_measures" title="ansys_optical_automation.post_process.dpf_xmp_viewer.DpfXmpViewer.export_template_measures"><code class="xref py py-obj docutils literal notranslate"><span class="pre">export_template_measures</span></code></a>(template_path, ...)</p></td>
+<td><p>Function to import measurement tamplate and export measures as text Parameters ---------- template_path : str     path to XML template file export_path : str     path to measurement text export</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#ansys_optical_automation.post_process.dpf_xmp_viewer.DpfXmpViewer.open_file" title="ansys_optical_automation.post_process.dpf_xmp_viewer.DpfXmpViewer.open_file"><code class="xref py py-obj docutils literal notranslate"><span class="pre">open_file</span></code></a>(str_path)</p></td>
+<td><p>Open a file in DPF.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#ansys_optical_automation.post_process.dpf_xmp_viewer.DpfXmpViewer.read_txt_export" title="ansys_optical_automation.post_process.dpf_xmp_viewer.DpfXmpViewer.read_txt_export"><code class="xref py py-obj docutils literal notranslate"><span class="pre">read_txt_export</span></code></a>(txt_path[, inc_data])</p></td>
+<td><p><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p></p></dd>
+</dl>
+</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#ansys_optical_automation.post_process.dpf_xmp_viewer.DpfXmpViewer.rect_export_spectrum" title="ansys_optical_automation.post_process.dpf_xmp_viewer.DpfXmpViewer.rect_export_spectrum"><code class="xref py py-obj docutils literal notranslate"><span class="pre">rect_export_spectrum</span></code></a>(x_pos, y_pos, width, height)</p></td>
+<td><p><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p></p></dd>
+</dl>
+</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">valid_dir</span></code>(str_path)</p></td>
+<td><p>Check if a folder is present and, if not, create it.</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py method">
+<dt class="sig sig-object py" id="ansys_optical_automation.post_process.dpf_xmp_viewer.DpfXmpViewer.export">
+<span class="sig-name descname"><span class="pre">export</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">format</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'txt'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ansys_optical_automation/post_process/dpf_xmp_viewer.html#DpfXmpViewer.export"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ansys_optical_automation.post_process.dpf_xmp_viewer.DpfXmpViewer.export" title="Permalink to this definition">#</a></dt>
+<dd><p>function to export an XMP map to another format</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>format</strong><span class="classifier">str</span></dt><dd><p>export format allowed values
+[“txt”, “png”, “bmp”, “jpg”, “tiff”, “pf”, “ies”, “ldt”, “extended.txt”]</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ansys_optical_automation.post_process.dpf_xmp_viewer.DpfXmpViewer.export_template_measures">
+<span class="sig-name descname"><span class="pre">export_template_measures</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">template_path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">export_path</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ansys_optical_automation/post_process/dpf_xmp_viewer.html#DpfXmpViewer.export_template_measures"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ansys_optical_automation.post_process.dpf_xmp_viewer.DpfXmpViewer.export_template_measures" title="Permalink to this definition">#</a></dt>
+<dd><p>Function to import measurement tamplate and export measures as text
+Parameters
+———-
+template_path : str</p>
+<blockquote>
+<div><p>path to XML template file</p>
+</div></blockquote>
+<dl class="simple">
+<dt>export_path<span class="classifier">str</span></dt><dd><p>path to measurement text export</p>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><dl class="simple">
+<dt>None</dt><dd></dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ansys_optical_automation.post_process.dpf_xmp_viewer.DpfXmpViewer.open_file">
+<span class="sig-name descname"><span class="pre">open_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">str_path</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ansys_optical_automation/post_process/dpf_xmp_viewer.html#DpfXmpViewer.open_file"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ansys_optical_automation.post_process.dpf_xmp_viewer.DpfXmpViewer.open_file" title="Permalink to this definition">#</a></dt>
+<dd><p>Open a file in DPF.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>str_path</strong><span class="classifier">str</span></dt><dd><p>Path for the file to open. For example, <code class="docutils literal notranslate"><span class="pre">r&quot;C:\temp\Test.speos360&quot;</span></code>.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt>None</dt><dd></dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ansys_optical_automation.post_process.dpf_xmp_viewer.DpfXmpViewer.read_txt_export">
+<span class="sig-name descname"><span class="pre">read_txt_export</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">txt_path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">inc_data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ansys_optical_automation/post_process/dpf_xmp_viewer.html#DpfXmpViewer.read_txt_export"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ansys_optical_automation.post_process.dpf_xmp_viewer.DpfXmpViewer.read_txt_export" title="Permalink to this definition">#</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>txt_path</strong><span class="classifier">str</span></dt><dd><p>string pointing to the textfile</p>
+</dd>
+<dt><strong>inc_data</strong><span class="classifier">bool</span></dt><dd><p>Boolean to determine if to include data matrix as list
+currently not working correctly</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt>MapStruct:</dt><dd><p>MapStruct created according to the text file.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ansys_optical_automation.post_process.dpf_xmp_viewer.DpfXmpViewer.rect_export_spectrum">
+<span class="sig-name descname"><span class="pre">rect_export_spectrum</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x_pos</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_pos</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">width</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">height</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ansys_optical_automation/post_process/dpf_xmp_viewer.html#DpfXmpViewer.rect_export_spectrum"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ansys_optical_automation.post_process.dpf_xmp_viewer.DpfXmpViewer.rect_export_spectrum" title="Permalink to this definition">#</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>x_pos</strong><span class="classifier">float</span></dt><dd><p>x position of rectangle</p>
+</dd>
+<dt><strong>y_pos</strong><span class="classifier">float</span></dt><dd><p>y position of rectangle</p>
+</dd>
+<dt><strong>width</strong><span class="classifier">float</span></dt><dd><p>width or rectangle</p>
+</dd>
+<dt><strong>height</strong><span class="classifier">float</span></dt><dd><p>height of rectangle</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt>return list of wavelength and list of energy values</dt><dd></dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="ansys_optical_automation.post_process.dpf_xmp_viewer.MapStruct">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">ansys_optical_automation.post_process.dpf_xmp_viewer.</span></span><span class="sig-name descname"><span class="pre">MapStruct</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">map_type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value_type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">intensity_type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">unit_type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">axis_unit</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">size</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">resolution</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">layers</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">layer_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wl_res</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ansys_optical_automation/post_process/dpf_xmp_viewer.html#MapStruct"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ansys_optical_automation.post_process.dpf_xmp_viewer.MapStruct" title="Permalink to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Provides a DPF to represent the data stored in an Ansys Speos XMP file</p>
+<p class="rubric">Methods</p>
+<table class="autosummary longtable table autosummary">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#ansys_optical_automation.post_process.dpf_xmp_viewer.MapStruct.export_to_xmp" title="ansys_optical_automation.post_process.dpf_xmp_viewer.MapStruct.export_to_xmp"><code class="xref py py-obj docutils literal notranslate"><span class="pre">export_to_xmp</span></code></a>([export_path])</p></td>
+<td><p>this function exports the current mapstruct in the dir defined as Mapstruct.xmp. Parameters ---------- export_path: str     path to be exported. Default at C:  emp.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#ansys_optical_automation.post_process.dpf_xmp_viewer.MapStruct.valid_dir" title="ansys_optical_automation.post_process.dpf_xmp_viewer.MapStruct.valid_dir"><code class="xref py py-obj docutils literal notranslate"><span class="pre">valid_dir</span></code></a>(str_path)</p></td>
+<td><p>Check if a folder is present and, if not, create it.</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py method">
+<dt class="sig sig-object py" id="ansys_optical_automation.post_process.dpf_xmp_viewer.MapStruct.export_to_xmp">
+<span class="sig-name descname"><span class="pre">export_to_xmp</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">export_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'C:\\temp'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ansys_optical_automation/post_process/dpf_xmp_viewer.html#MapStruct.export_to_xmp"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ansys_optical_automation.post_process.dpf_xmp_viewer.MapStruct.export_to_xmp" title="Permalink to this definition">#</a></dt>
+<dd><p>this function exports the current mapstruct in the dir defined as Mapstruct.xmp.
+Parameters
+———-
+export_path: str</p>
+<blockquote>
+<div><p>path to be exported. Default at C:  emp</p>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><dl class="simple">
+<dt>DpfXmpViewer object</dt><dd></dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ansys_optical_automation.post_process.dpf_xmp_viewer.MapStruct.valid_dir">
+<span class="sig-name descname"><span class="pre">valid_dir</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">str_path</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ansys_optical_automation/post_process/dpf_xmp_viewer.html#MapStruct.valid_dir"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ansys_optical_automation.post_process.dpf_xmp_viewer.MapStruct.valid_dir" title="Permalink to this definition">#</a></dt>
+<dd><p>Check if a folder is present and, if not, create it.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>str_path</strong><span class="classifier">str</span></dt><dd><p>Path for the folder to validate or create. For example, <code class="docutils literal notranslate"><span class="pre">r&quot;C:\temp&quot;</span></code>.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt>None</dt><dd></dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
 </section>
 <section id="module-ansys_optical_automation.post_process">
 <span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-ansys_optical_automation.post_process" title="Permalink to this headline">#</a></h2>
