@@ -25,6 +25,8 @@ def create_movie_sensors(focus, frame_number, trajectory, global_normal, sensor_
 
     Parameters
     ----------
+    focus : SpaceClaim point
+        point defines focus point
     frame_number : int
         number of frames of movie.
     trajectory : SpaceClaim Curve
