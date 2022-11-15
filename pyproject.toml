@@ -34,7 +34,6 @@ docs = [
     "sphinx-copybutton",
     "sphinx-panels",
     "numpydoc",
-    "winreg",
 ]
 
 [project.urls]

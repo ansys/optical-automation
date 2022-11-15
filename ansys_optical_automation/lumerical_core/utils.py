@@ -1,5 +1,9 @@
 import os
-import winreg
+
+try:
+    import winreg
+except ImportError:
+    pass
 
 
 def get_lumerical_install_location(version):
