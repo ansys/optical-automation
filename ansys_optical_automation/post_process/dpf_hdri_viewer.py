@@ -17,7 +17,7 @@ class DpfHdriViewer(DataProcessingFramework):
         DataProcessingFramework.__init__(
             self, extension=(".speos360", ".optisvr", ".xmp"), application="HDRIViewer.Application"
         )
-        self.source_list = self.get_source_list()
+        self.source_list = []
 
     def get_source_list(self):
         """
