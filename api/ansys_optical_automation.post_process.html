@@ -315,7 +315,7 @@ title="Print to PDF"
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#ansys-optical-automation-post-process-dpf-stack-module">
+  <a class="reference internal nav-link" href="#module-ansys_optical_automation.post_process.dpf_stack">
    ansys_optical_automation.post_process.dpf_stack module
   </a>
  </li>
@@ -369,7 +369,7 @@ title="Print to PDF"
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#ansys-optical-automation-post-process-dpf-stack-module">
+  <a class="reference internal nav-link" href="#module-ansys_optical_automation.post_process.dpf_stack">
    ansys_optical_automation.post_process.dpf_stack module
   </a>
  </li>
@@ -845,8 +845,60 @@ raynumber : int</p>
 </dd></dl>
 
 </section>
-<section id="ansys-optical-automation-post-process-dpf-stack-module">
-<h2>ansys_optical_automation.post_process.dpf_stack module<a class="headerlink" href="#ansys-optical-automation-post-process-dpf-stack-module" title="Permalink to this headline">#</a></h2>
+<section id="module-ansys_optical_automation.post_process.dpf_stack">
+<span id="ansys-optical-automation-post-process-dpf-stack-module"></span><h2>ansys_optical_automation.post_process.dpf_stack module<a class="headerlink" href="#module-ansys_optical_automation.post_process.dpf_stack" title="Permalink to this headline">#</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="ansys_optical_automation.post_process.dpf_stack.DpfStack">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">ansys_optical_automation.post_process.dpf_stack.</span></span><span class="sig-name descname"><span class="pre">DpfStack</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">version</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ansys_optical_automation/post_process/dpf_stack.html#DpfStack"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ansys_optical_automation.post_process.dpf_stack.DpfStack" title="Permalink to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Provides DPF (Data Processing Framework).</p>
+<p>The class contains opening and saving functionalities to allow interacting between stack and speos and zemax.</p>
+<p class="rubric">Methods</p>
+<table class="autosummary longtable table autosummary">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#ansys_optical_automation.post_process.dpf_stack.DpfStack.convert_stack_to_speos" title="ansys_optical_automation.post_process.dpf_stack.DpfStack.convert_stack_to_speos"><code class="xref py py-obj docutils literal notranslate"><span class="pre">convert_stack_to_speos</span></code></a>()</p></td>
+<td><p>conver the stack result into required information by speos coated file.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#ansys_optical_automation.post_process.dpf_stack.DpfStack.convert_stack_to_zemax" title="ansys_optical_automation.post_process.dpf_stack.DpfStack.convert_stack_to_zemax"><code class="xref py py-obj docutils literal notranslate"><span class="pre">convert_stack_to_zemax</span></code></a>()</p></td>
+<td><p>conver the stack result into required information by Zemax .dat coating file.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#ansys_optical_automation.post_process.dpf_stack.DpfStack.open_file" title="ansys_optical_automation.post_process.dpf_stack.DpfStack.open_file"><code class="xref py py-obj docutils literal notranslate"><span class="pre">open_file</span></code></a>(stack_file)</p></td>
+<td><p>Open a stack file.</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py method">
+<dt class="sig sig-object py" id="ansys_optical_automation.post_process.dpf_stack.DpfStack.convert_stack_to_speos">
+<span class="sig-name descname"><span class="pre">convert_stack_to_speos</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ansys_optical_automation/post_process/dpf_stack.html#DpfStack.convert_stack_to_speos"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ansys_optical_automation.post_process.dpf_stack.DpfStack.convert_stack_to_speos" title="Permalink to this definition">#</a></dt>
+<dd><p>conver the stack result into required information by speos coated file.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ansys_optical_automation.post_process.dpf_stack.DpfStack.convert_stack_to_zemax">
+<span class="sig-name descname"><span class="pre">convert_stack_to_zemax</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ansys_optical_automation/post_process/dpf_stack.html#DpfStack.convert_stack_to_zemax"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ansys_optical_automation.post_process.dpf_stack.DpfStack.convert_stack_to_zemax" title="Permalink to this definition">#</a></dt>
+<dd><p>conver the stack result into required information by Zemax .dat coating file.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ansys_optical_automation.post_process.dpf_stack.DpfStack.open_file">
+<span class="sig-name descname"><span class="pre">open_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">stack_file</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ansys_optical_automation/post_process/dpf_stack.html#DpfStack.open_file"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ansys_optical_automation.post_process.dpf_stack.DpfStack.open_file" title="Permalink to this definition">#</a></dt>
+<dd><p>Open a stack file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>stack_file</strong><span class="classifier">str</span></dt><dd><p>directory of stack file</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
 </section>
 <section id="ansys-optical-automation-post-process-dpf-xmp-viewer-module">
 <h2>ansys_optical_automation.post_process.dpf_xmp_viewer module<a class="headerlink" href="#ansys-optical-automation-post-process-dpf-xmp-viewer-module" title="Permalink to this headline">#</a></h2>
