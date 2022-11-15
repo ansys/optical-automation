@@ -3,8 +3,12 @@ import os
 import sys
 
 import numpy
-from comtypes import automation
-from comtypes import pointer
+
+try:
+    from comtypes import automation
+    from comtypes import pointer
+except ImportError:
+    pass
 
 from ansys_optical_automation.post_process.dpf_base import DataProcessingFramework
 
