@@ -4,7 +4,11 @@ import sys
 
 import numpy
 
-try:
+if "nt" in os.name:
+    from comtypes import automation
+    from comtypes import pointer
+else:
+    pass
     from comtypes import automation
     from comtypes import pointer
 except ImportError:
