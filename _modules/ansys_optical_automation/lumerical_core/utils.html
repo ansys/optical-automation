@@ -250,9 +250,9 @@ title="Fullscreen mode"
   <h1>Source code for ansys_optical_automation.lumerical_core.utils</h1><div class="highlight"><pre>
 <span></span><span class="kn">import</span> <span class="nn">os</span>
 
-<span class="k">try</span><span class="p">:</span>
+<span class="k">if</span> <span class="s2">&quot;nt&quot;</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">name</span><span class="p">:</span>
     <span class="kn">import</span> <span class="nn">winreg</span>
-<span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+<span class="k">else</span><span class="p">:</span>
     <span class="k">pass</span>
 
 
