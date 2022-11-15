@@ -1,8 +1,8 @@
 import os
 
-try:
+if "nt" in os.name:
     import winreg
-except ImportError:
+else:
     pass
 
 
