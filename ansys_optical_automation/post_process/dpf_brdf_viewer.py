@@ -100,7 +100,7 @@ class BrdfStructure:
         # calculation of integrande as from from samples
         r = nquad(f, [[0, math.pi / 2], [0, 2 * math.pi]], opts=[{"epsabs": 0.1}, {"epsabs": 0.1}])
         # reflectance calculaiton thanks to nquad lib
-        return r[0] * 100  # return reflectance as percentage
+        return min(r[0] * 100, 100)  # return reflectance as percentage
 
     def convert(self, sampling=1):
         """
