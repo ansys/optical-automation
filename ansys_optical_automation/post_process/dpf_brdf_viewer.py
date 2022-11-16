@@ -14,7 +14,7 @@ class BrdfMeasurementPoint:
     no phi dependency for measured brdf
     """
 
-    def __init__(self, input_incidence: float, input_wavelength: float, input_theta: float, input_brdf: float) -> None:
+    def __init__(self, input_incidence, input_wavelength, input_theta, input_brdf):
         self.incidence = input_incidence
         self.wavelength = input_wavelength
         self.theta = input_theta
