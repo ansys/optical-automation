@@ -679,3 +679,17 @@ class RadianceSensor(Sensor):
         self.speos_object.VPlane = vertical_fov
         self.speos_object.HNbSamples = horizontal_sampling
         self.speos_object.VNbSamples = vertical_sampling
+
+
+class LightFieldSensor(Sensor):
+    def __ini__(self, name, SpeosSim, SpaceClaim):
+        super(LightFieldSensor, self).__init__(name, SpeosSim, SpaceClaim)
+        speos_object = self.speos_sim.SensorIntensity.Find(self.name)
+        if not speos_object:
+            speos_object = self.speos_sim.LightFieldSensor.Create()
+            speos_object.Name = name
+        self.speos_object = speos_object
+
+    def set_faces(self, selection):
+        face_selection = self.Selection.Create(selection)
+        self.speos_sim.sensorLightField.OrientedFaces.Set(face_selection.Items)
