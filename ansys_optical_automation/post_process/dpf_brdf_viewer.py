@@ -32,7 +32,7 @@ class BrdfStructure:
         if not all(360 < item < 830 for item in wavelength_list):
             raise ValueError("Please provide correct wavelengths in range between 360 and 830nm ")
         self.__wavelengths = wavelength_list
-        self.incident_angles = None
+        self.__incident_angles = []
         self.__theta_1d_ressampled = None
         self.__phi_1d_ressampled = None
         self.measurement_2d_brdf = []
@@ -148,11 +148,12 @@ class BrdfStructure:
                 incidence + angular_distance
             )
 
-        # self.__theta_1d_ressampled = np.linspace(0, 90, int(90 / sampling + 1))
-        # self.__phi_1d_ressampled = np.linspace(0, 360, int(360 / sampling + 1))
-
+        if len(self.__incident_angles) == 0:
+            for measurement in self.measurement_2d_brdf:
+                if measurement.incidence not in self.__incident_angles:
+                    self.__incident_angles.append(measurement.incidence)
         # mesh grid for direct 2d matrix calculation
-        for incidence in self.incident_angles:
+        for incidence in self.__incident_angles:
             for wavelength in self.__wavelengths:
                 brdf_1d, theta_max = self.brdf_1d_function(wavelength, incidence)
                 self.__theta_1d_ressampled = np.linspace(0, 90, int(90 / sampling + 1))
@@ -167,7 +168,7 @@ class BrdfStructure:
         self.brdf = np.reshape(
             self.brdf,
             (
-                len(self.incident_angles),
+                len(self.__incident_angles),
                 len(self.__wavelengths),
                 2 * int(180 / sampling + 1) - 1,
                 int(90 / sampling + 1),
@@ -177,7 +178,7 @@ class BrdfStructure:
             msg = "All NULL values at brdf structure, please provide valid inputs"
             raise ValueError(msg)
         self.brdf = np.moveaxis(self.brdf, 2, 3)
-        self.reflectance = np.reshape(self.reflectance, (len(self.incident_angles), len(self.__wavelengths)))
+        self.reflectance = np.reshape(self.reflectance, (len(self.__incident_angles), len(self.__wavelengths)))
 
     def export(self, export_dir):
         """
@@ -211,14 +212,14 @@ class BrdfStructure:
             "%d\t%d\n" % (self.brdf.shape[0], self.brdf.shape[1])
         )  # Number of incident angles and Number of wavelength samples (in nanometer)
         np.savetxt(
-            export, [self.incident_angles], format("%.3f"), footer="\n", newline="", delimiter="\t", comments=""
+            export, [self.__incident_angles], format("%.3f"), footer="\n", newline="", delimiter="\t", comments=""
         )  # List of the incident angles.
         np.savetxt(
             export, [self.__wavelengths], format("%.1f"), footer="\n", newline="", delimiter="\t", comments=""
         )  # List of wavelength
 
         # Write BRDF tables
-        for incidence in range(len(self.incident_angles)):
+        for incidence in range(len(self.__incident_angles)):
             for wavelength in range(len(self.__wavelengths)):
                 export.write("%f\n" % self.reflectance[incidence, wavelength])  # reflectance
                 export.write("%d\t%d\n" % np.shape(self.brdf)[2:])
