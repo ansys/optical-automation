@@ -180,7 +180,7 @@ class BrdfStructure:
         self.brdf = np.moveaxis(self.brdf, 2, 3)
         self.reflectance = np.reshape(self.reflectance, (len(self.__incident_angles), len(self.__wavelengths)))
 
-    def export(self, export_dir):
+    def export_to_speos(self, export_dir):
         """
         save the 4d brdf structure into a brdf file.
 

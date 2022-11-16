@@ -38,7 +38,7 @@ def convert_export(input_csv, output_path):
                     )
             FirstRow = False
         brdf_data.convert(sampling=1)
-        brdf_data.export(output_path)
+        brdf_data.export_to_speos(output_path)
 
 
 def main():
