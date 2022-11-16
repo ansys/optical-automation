@@ -96,7 +96,6 @@ class BrdfStructure:
         """
         theta_rad, phi_rad = np.radians(theta), np.radians(phi)  # samples on which integrande is known
         integrande = (1 / math.pi) * brdf * np.sin(theta_rad)  # *theta for polar integration
-
         f = interpolate.interp2d(theta_rad, phi_rad, integrande, kind="linear", bounds_error=False, fill_value=0)
         # calculation of integrande as from from samples
         r = nquad(f, [[0, math.pi / 2], [0, 2 * math.pi]], opts=[{"epsabs": 0.1}, {"epsabs": 0.1}])
@@ -149,16 +148,22 @@ class BrdfStructure:
                 incidence + angular_distance
             )
 
-        self.__theta_1d_ressampled = np.linspace(0, 90, int(90 / sampling + 1))
-        self.__phi_1d_ressampled = np.linspace(0, 360, int(360 / sampling + 1))
-        theta_2d_ressampled, phi_2d_ressampled = np.meshgrid(self.__theta_1d_ressampled, self.__phi_1d_ressampled)
+        # self.__theta_1d_ressampled = np.linspace(0, 90, int(90 / sampling + 1))
+        # self.__phi_1d_ressampled = np.linspace(0, 360, int(360 / sampling + 1))
+
         # mesh grid for direct 2d matrix calculation
-        for incidence in self.__incident_angles:
+        for incidence in self.incident_angles:
             for wavelength in self.__wavelengths:
-                print("Current:", incidence, wavelength)
                 brdf_1d, theta_max = self.brdf_1d_function(wavelength, incidence)
+                self.__theta_1d_ressampled = np.linspace(0, 90, int(90 / sampling + 1))
+                self.__phi_1d_ressampled = np.linspace(0, 360, int(360 / sampling + 1))
+                theta_2d_ressampled, phi_2d_ressampled = np.meshgrid(
+                    self.__theta_1d_ressampled, self.__phi_1d_ressampled
+                )
                 self.brdf.append(brdf_2d_function(theta_2d_ressampled, phi_2d_ressampled))
-                self.reflectance.append(self.__brdf_reflectance(theta_2d_ressampled, phi_2d_ressampled, self.brdf[-1]))
+                self.reflectance.append(
+                    self.__brdf_reflectance(self.__theta_1d_ressampled, self.__phi_1d_ressampled, self.brdf[-1])
+                )
         self.brdf = np.reshape(
             self.brdf,
             (
