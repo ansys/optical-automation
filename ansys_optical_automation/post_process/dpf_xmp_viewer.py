@@ -3,8 +3,12 @@ import os
 import sys
 
 import numpy
-from comtypes import automation
-from comtypes import pointer
+
+if "nt" in os.name:
+    from comtypes import automation
+    from comtypes import pointer
+else:
+    pass
 
 from ansys_optical_automation.post_process.dpf_base import DataProcessingFramework
 

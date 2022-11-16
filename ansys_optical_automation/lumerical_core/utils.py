@@ -1,5 +1,9 @@
 import os
-import winreg
+
+if "nt" in os.name:
+    import winreg
+else:
+    pass
 
 
 def get_lumerical_install_location(version):
