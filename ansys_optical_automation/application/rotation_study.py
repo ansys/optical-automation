@@ -25,8 +25,8 @@ def rotation_study(theta_inc, phi_inc, source, simulation):
     speos_sun = SpeosSim.SourceAmbientNaturalLight.Find(source)
     speos_sun.SunType = SpeosSim.SourceAmbientNaturalLight.EnumSunType.Manual
     speos_sim = SpeosSim.SimulationInverse.Find(simulation)
-    for theta in range(10, 80, theta_inc):
-        for phi in range(0, 350, phi_inc):
+    for theta in range(theta_inc, 90, theta_inc):
+        for phi in range(0, 360, phi_inc):
             x = math.sin(DEG(theta)) * math.sin(DEG(phi))
             y = math.sin(DEG(theta)) * math.cos(DEG(phi))
             z = math.cos(DEG(theta))
@@ -62,7 +62,7 @@ def main():
         raise ValueError(error_message)
     theta_inc = argsDict["theta_increment"]
     phi_inc = argsDict["phi_increment"]
-    speos_light = "Natural Light.1"
+    speos_light = argsDict["speos source"]
     speos_simulation = argsDict["speos_simulation"][0]
     rotation_study(theta_inc, phi_inc, speos_light, speos_simulation)
 
