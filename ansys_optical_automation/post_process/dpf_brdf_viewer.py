@@ -23,7 +23,7 @@ class BrdfMeasurementPoint:
 
 class BrdfStructure:
     """
-    class of brdf
+    class of BRDF contains method to host and convert 2d reflectance brdf values into 3d brdf file.
     """
 
     def __init__(self, wavelength_list):
