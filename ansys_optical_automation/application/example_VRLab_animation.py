@@ -87,6 +87,7 @@ def animation_run(speos_file, csv_file):
 def main():
     """
     main function to run Observer VR animation.
+    Currently, this application only supports running from python console.
 
     Returns
     -------
