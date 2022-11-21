@@ -39,6 +39,7 @@ class GeometryProperties(BaseSCDM):
             self.speos_object.Geometries.Set(selection.Items)
 
 
+# TODO add unittest
 class LocalMeshing(GeometryProperties):
     """
     Provides methods for defining the Speos LocalMeshing.
