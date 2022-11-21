@@ -682,14 +682,169 @@ class RadianceSensor(Sensor):
 
 
 class LightFieldSensor(Sensor):
+    """
+    LightFieldSensor has to be computed after its definition by using command like this: object.Compute()
+    """
+
     def __ini__(self, name, SpeosSim, SpaceClaim):
         super(LightFieldSensor, self).__init__(name, SpeosSim, SpaceClaim)
-        speos_object = self.speos_sim.SensorIntensity.Find(self.name)
+        speos_object = self.speos_sim.SensorLightField.Find(self.name)
         if not speos_object:
-            speos_object = self.speos_sim.LightFieldSensor.Create()
+            speos_object = self.speos_sim.SensorLightField.Create()
             speos_object.Name = name
         self.speos_object = speos_object
 
     def set_faces(self, selection):
+        # TODO please correct this method and comment section
+        """
+        Make the faces selection and apply them in Lightfield Sensor
+        Parameters
+        ----------
+        selection : active selection
+            return a list?
+
+        Returns
+        -------
+
+
+        """
         face_selection = self.Selection.Create(selection)
-        self.speos_sim.sensorLightField.OrientedFaces.Set(face_selection.Items)
+        self.speos_sim.SensorLightField.OrientedFaces.Set(face_selection.Items)
+
+    def set_type(self, sensor_type):
+        # TODO double check if everything is fine: Just a copy/past from Radiance sensor set_type function with small
+        #  adaptations
+        """
+        Set Sensor Type for Lightfield sensor. Only Radiometric, Photometric and Spectral are available for it.
+        Parameters
+        ----------
+        sensor_type : str
+            return the stype of sensor
+
+        Returns
+        -------
+
+
+        """
+        sensor_type = sensor_type.lower()
+        if sensor_type == "photometric":
+            self.speos_object.SensorType = self.speos_sim.SensorLightfield.EnumSensorType.Photometric
+        elif sensor_type == "radiometric":
+            self.speos_object.SensorType = self.speos_sim.SensorLightfield.EnumSensorType.Radiometric
+        elif sensor_type == "spectral":
+            self.speos_object.SensorType = self.speos_sim.SensorLightfield.EnumSensorType.Spectral
+        else:
+            error_message = "please provide a valid Lightfield sensor type"
+            raise ValueError(error_message)
+
+    def set_sampling(self, incident_sampling=None, azimuth_sampling=None):
+        """Set the number of samples on the axes.
+
+        Parameters
+        ----------
+        incident_sampling : int, optionl
+            Number of samples on the incident angle. The default is ``None``.
+        azimuth_sampling : int
+            Number of samples on the azimuth_sampling. The default is ``None``.
+        """
+        if not incident_sampling and not azimuth_sampling:
+            raise NameError("No inputs provided.")
+        if incident_sampling:
+            self.speos_object.IncidentAngleSamples = incident_sampling
+        if azimuth_sampling:
+            self.speos_object.AzimuthAngleNbSamples = azimuth_sampling
+
+
+class LocalMeshing(BaseSCDM):
+    # TODO Revue its position into the repo, not sure LocalMeshing Class has to be into sensor .py file and in
+    #  Lightfield branch.
+    """
+    Provides methods for local meshing
+    """
+
+    def __ini__(self, name, SpeosSim, SpaceClaim):
+        super(LocalMeshing, self).__init__(name, SpeosSim, SpaceClaim)
+        speos_object = self.speos_sim.LocalMeshing.Find(self.name)
+        if not speos_object:
+            speos_object = self.speos_sim.LocalMeshing.Create()
+            speos_object.Name = name
+        self.speos_object = speos_object
+
+    def set_faces(self, selection):
+        # TODO same as set_faces in Lightfield Class
+        """
+        Make the faces selection and apply them in Local Meshing
+        Parameters
+        ----------
+        selection : active selection
+            return a list?
+
+        Returns
+        -------
+
+
+        """
+        face_selection = self.Selection.Create(selection)
+        self.speos_sim.LocalMeshing.Geometries.Set(face_selection.Items)
+
+    def set_Sag(self, sag_mode, sag_value):
+        """
+        Define Sag Mode and apply a value on it.
+        Parameters
+        ----------
+        sag_mode : str
+        In Sag Meshing, 3 kind of modes are available.
+
+        sag_value : int or float
+        Meshing value. Depending of sag_mode value, sag_value might be a int or a float.
+
+        Returns
+        -------
+
+
+        """
+        sag_mode = sag_mode.lower()
+        if sag_mode == "Proportional to Face size":
+            self.speos_object.MeshingSagMode = self.speos_sim.LocalMeshing.EnumMeshingSagMode.ProportionalFace
+            int(sag_value)
+            self.speos_sim.LocalMeshing.MeshingSagValue = sag_value
+        elif sag_mode == "Proportional to Body size":
+            self.speos_object.MeshingSagMode = self.speos_sim.LocalMeshing.EnumMeshingSagMode.ProportionalBody
+            int(sag_value)
+            self.speos_sim.LocalMeshing.MeshingSagValue = sag_value
+        elif sag_mode == "Fixed":
+            self.speos_object.MeshingSagMode = self.speos_sim.LocalMeshing.EnumMeshingSagMode.Fixed
+            float(sag_value)
+            self.speos_sim.LocalMeshing.MeshingSagValue = sag_value
+        else:
+            error_message = "please provide a valid Sag Mode"
+            raise ValueError(error_message)
+
+    def set_Step(self, step_mode, step_value):
+        """
+        Parameters
+        ----------
+        step_mode
+        step_value
+
+        Returns
+        -------
+
+
+        """
+        step_mode = step_mode.lower()
+        if step_mode == "Proportional to Face size":
+            self.speos_object.MeshingStepMode = self.speos_sim.LocalMeshing.EnumMeshingStepMode.ProportionalFace
+            int(step_value)
+            self.speos_sim.LocalMeshing.MeshingStepValue = step_value
+        elif step_mode == "Proportional to Body size":
+            self.speos_object.MeshingStepMode = self.speos_sim.LocalMeshing.EnumMeshingStepMode.ProportionalBody
+            int(step_value)
+            self.speos_sim.LocalMeshing.MeshingStepValue = step_value
+        elif step_mode == "Fixed":
+            self.speos_object.MeshingStepMode = self.speos_sim.LocalMeshing.EnumMeshingStepMode.Fixed
+            float(step_value)
+            self.speos_sim.LocalMeshing.MeshingStepValue = step_value
+        else:
+            error_message = "please provide a valid Sag Mode"
+            raise ValueError(error_message)
