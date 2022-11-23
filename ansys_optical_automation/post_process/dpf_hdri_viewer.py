@@ -1,5 +1,7 @@
+import csv
 import math
 import os
+import time
 
 from ansys_optical_automation.post_process.dpf_base import DataProcessingFramework
 
@@ -190,3 +192,51 @@ class DpfHdriViewer(DataProcessingFramework):
                 msg = "source requested does not exist"
                 raise ValueError(msg)
             self.dpf_instance.SetSourceRatioByName(source, value)
+
+    def timeline_animation_run(self, csv_file):
+        """
+        function to run animation in observer result.
+
+        Parameters
+        ----------
+        csv_file : str
+            file path of time line csv file
+
+        Returns
+        -------
+
+
+        """
+        source_list = self.source_list if len(self.source_list) != 0 else self.get_source_list()
+        csv_source_list = []
+        csv_source_animation = []
+        with open(csv_file) as file:
+            content = csv.reader(file, delimiter=",")
+            First_Row = True
+            for row in content:
+                if First_Row:
+                    csv_source_list = [item for item in row][1:]
+                else:
+                    csv_source_animation.append([float(item) for item in row])
+                First_Row = False
+        animation_time_step = csv_source_animation[1][0] - csv_source_animation[0][0]
+        if len(csv_source_list) != len(source_list):
+            msg = "selected timeline csv file does not match with the speos vr file"
+            raise ImportError(msg)
+
+        if set(csv_source_list) != set(source_list):
+            print("will assume source using index")
+            self.dpf_instance.Show(1)
+            while True:
+                for csv_source_config in csv_source_animation:
+                    for source_idx, source in enumerate(csv_source_list):
+                        self.set_source_power(source_idx, csv_source_config[source_idx + 1])
+                    time.sleep(animation_time_step)
+        else:
+            print("will use name to set source in animation")
+            self.dpf_instance.Show(1)
+            while True:
+                for csv_source_config in csv_source_animation:
+                    for source_idx, source in enumerate(csv_source_list):
+                        self.set_source_power(source, csv_source_config[source_idx + 1])
+                    time.sleep(animation_time_step)
