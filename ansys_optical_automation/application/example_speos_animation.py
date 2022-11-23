@@ -99,13 +99,94 @@ def main():
     """
     main function to this application of create movie from ansys speos.
     """
-    frame = 60  # to be defined by user input
-    trajectory = GetRootPart().Curves[0]  # to be defined by user selection
-    global_normal = Vector.Create(0, 1, 0).Direction.UnitVector  # to be defined by user selection
-    focus_point = Point.Create(0, 0, 0)  # to be defined by user selection
-    export = False  # to be defined by user selection
-    reference_sensor = SpeosSim.SensorRadiance.Find("Ref")  # to be defined by user selection
-    reference_simulation = SpeosSim.SimulationInverse.Find("Inverse.1")  # to be defined by user selection
+    frame = 1
+    InputHelper.PauseAndGetInput("Please provide frame rate", frame)  # frame rate to be provided by user
+    frame = int(frame)
+
+    trajectory = None
+    response = InputHelper.PauseAndGetInput(
+        "Please select a curve for camera trajectory"
+    )  # curve selection to be defined by user selection
+    if response.Success:
+        selection = response.PrimarySelection
+        if selection.GetItems[IDesignCurve]().Count != 1:
+            MessageBox.Show("Please select 1 curve")
+            return
+        trajectory = selection.GetItems[IDesignCurve]()[0]
+    else:
+        return
+
+    global_normal = None
+    response = InputHelper.PauseAndGetInput(
+        "Please select a axis for global zenith direction"
+    )  # axis selection to be defined by user selection
+    if response.Success:
+        selection = response.PrimarySelection
+        if selection.GetItems[ICoordinateAxis]().Count != 1:
+            MessageBox.Show("Please select 1 axis")
+            return
+        global_normal = selection.GetItems[ICoordinateAxis]()[0]
+        global_normal = global_normal.Shape.Geometry.Direction.UnitVector
+    else:
+        return
+
+    focus_point = None
+    response = InputHelper.PauseAndGetInput(
+        "Please select a axis for coordinate system for camera focus point"
+    )  # coordinate system selection to be defined by user selection
+    if response.Success:
+        selection = response.PrimarySelection
+        if selection.GetItems[ICoordinateSystem]().Count != 1:
+            MessageBox.Show("Please select 1 axis")
+            return
+        focus_point = selection.GetItems[ICoordinateSystem]()[0]
+        focus_point = Point.Create(focus_point.Frame.Origin.X, focus_point.Frame.Origin.Y, focus_point.Frame.Origin.Z)
+    else:
+        return
+
+    export = False
+    response = InputHelper.PauseAndGetInput(
+        "Please select true if to export, other false to not export"
+    )  # to be defined by user selection
+    if response.Success:
+        export = True
+    else:
+        export = False
+
+    reference_sensor = None
+    response = InputHelper.PauseAndGetInput(
+        "Please select a radiane sensor for animation simulation"
+    )  # radiance sensor to be defined by user selection
+    if response.Success:
+        selection = response.PrimarySelection
+        if selection.Count != 1:
+            MessageBox.Show("Please select 1 selection")
+            return
+        radiance_sensor_name = selection.Items[0].Name
+        if not SpeosSim.SensorRadiance.Find("Ref"):
+            MessageBox.Show("Please select radiance sensor")
+            return
+        reference_sensor = SpeosSim.SensorRadiance.Find(radiance_sensor_name)
+    else:
+        return
+
+    reference_simulation = None
+    response = InputHelper.PauseAndGetInput(
+        "Please select a inverse simulation for animation simulation"
+    )  # inverse simulation to be defined by user selection
+    if response.Success:
+        selection = response.PrimarySelection
+        if selection.Count != 1:
+            MessageBox.Show("Please select 1 selection")
+            return
+        reference_simulation_name = selection.Items[0].Name
+        if not SpeosSim.SensorRadiance.Find("Ref"):
+            MessageBox.Show("Please select inverse simulation")
+            return
+        reference_simulation = SpeosSim.SimulationInverse.Find(reference_simulation_name)
+    else:
+        return
+
     sensor_list = create_movie_sensors(focus_point, frame, trajectory, global_normal, reference_sensor)
     create_movie_simulation(sensor_list, reference_simulation, export)
 
