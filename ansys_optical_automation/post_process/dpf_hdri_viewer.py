@@ -155,6 +155,8 @@ class DpfHdriViewer(DataProcessingFramework):
 
 
         """
+        if len(self.source_list) == 0:
+            self.source_list = self.get_source_list()
         if isinstance(source, int):
             if source >= len(self.source_list):
                 msg = "source requested does not exist"
@@ -182,6 +184,8 @@ class DpfHdriViewer(DataProcessingFramework):
 
 
         """
+        if len(self.source_list) == 0:
+            self.source_list = self.get_source_list()
         if isinstance(source, int):
             if source >= len(self.source_list):
                 msg = "source requested does not exist"
