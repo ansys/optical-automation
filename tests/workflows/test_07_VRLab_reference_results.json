@@ -3,5 +3,9 @@
         "test_07_vrlab_export_image_0_0.jpg": 485,
         "test_07_vrlab_export_image_1_0.jpg": 514,
         "test_07_vrlab_export_image_2_0.jpg": 542
-    }
+    },
+    "VR_set_source_idx_power": true,
+    "VR_set_source_name_power": true,
+    "VR_set_source_idx_ratio": true,
+    "VR_set_source_name_ratio": true
 }

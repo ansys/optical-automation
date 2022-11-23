@@ -34,6 +34,27 @@ def main():
     dpf.export_vr_views(export_path=work_directory, config_ids=0)
     vr_exported_list = check_images_exported(os.path.join(work_directory, str(0)))
     results_dict["VRImages"] = vr_exported_list
+    try:
+        dpf.set_source_power(0, 20)
+        results_dict["VR_set_source_idx_power"] = True
+    except Exception:
+        results_dict["VR_set_source_idx_power"] = False
+    try:
+        dpf.set_source_power("Product1 - LEDs_A_hor", 20)
+        results_dict["VR_set_source_name_power"] = True
+    except Exception:
+        results_dict["VR_set_source_name_power"] = False
+
+    try:
+        dpf.set_source_ratio(0, 2)
+        results_dict["VR_set_source_idx_ratio"] = True
+    except Exception:
+        results_dict["VR_set_source_idx_ratio"] = False
+    try:
+        dpf.set_source_ratio("Product1 - LEDs_A_hor", 2)
+        results_dict["VR_set_source_name_ratio"] = True
+    except Exception:
+        results_dict["VR_set_source_name_ratio"] = False
     dpf.close()
     return results_dict
 
