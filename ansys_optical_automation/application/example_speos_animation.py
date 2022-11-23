@@ -1,4 +1,5 @@
 from ansys_optical_automation.speos_process.speos_sensors import RadianceSensor
+from ansys_optical_automation.speos_process.speos_simulations import Simulation
 
 
 def dot_product(vector1, vector2):
@@ -85,23 +86,26 @@ def create_movie_simulation(sensor_list, simulation_ref, export=False):
 
 
     """
-    simulation = simulation_ref.Clone()
+    simulation = simulation_ref.object.Clone()
     simulation.Name = "Movie"
+    simulation = Simulation("Movie", SpeosSim, SpaceClaim, "inverse")
     sel = Selection.Create(sensor_list)
-    simulation.Sensors.Set(sel.Items)
+    simulation.object.Sensors.Set(sel.Items)
     if export is False:
-        simulation.Compute()
+        simulation.run_simulation()
     else:
-        print("to export")
+        simulation.linked_export_simulation()
 
 
 def main():
     """
     main function to this application of create movie from ansys speos.
     """
-    frame = 1
+    frame = 2
     InputHelper.PauseAndGetInput("Please provide frame rate", frame)  # frame rate to be provided by user
     frame = int(frame)
+    if frame <= 1:
+        MessageBox.Show("Please provide at least 2 frames")
 
     trajectory = None
     response = InputHelper.PauseAndGetInput(
@@ -155,7 +159,7 @@ def main():
 
     reference_sensor = None
     response = InputHelper.PauseAndGetInput(
-        "Please select a radiane sensor for animation simulation"
+        "Please select a radiance sensor for animation simulation"
     )  # radiance sensor to be defined by user selection
     if response.Success:
         selection = response.PrimarySelection
@@ -183,7 +187,7 @@ def main():
         if not SpeosSim.SimulationInverse.Find(reference_simulation_name):
             MessageBox.Show("Please select inverse simulation")
             return
-        reference_simulation = SpeosSim.SimulationInverse.Find(reference_simulation_name)
+        reference_simulation = Simulation(reference_simulation_name, SpeosSim, SpaceClaim, "inverse")
     else:
         return
 
