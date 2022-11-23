@@ -1,8 +1,9 @@
 import math
+import os
 import time
 
 
-def rotation_study(theta_inc, phi_inc, source, simulation):
+def rotation_study(theta_inc, phi_inc, source, simulation, export_dir):
     """
     function to apply rotation light source study and export simulation
 
@@ -13,15 +14,20 @@ def rotation_study(theta_inc, phi_inc, source, simulation):
     phi_inc : float
         phi increment
     source : str
-        name of speos source
+        name of speos Ambient Natural Light source
     simulation : str
         name of speos simulation
+    export_dir : str
+        direcotry to export simulations
 
     Returns
     -------
 
 
     """
+    if not SpeosSim.SourceAmbientNaturalLight.Find(source):
+        msg = "This application only supports ambient natural light source"
+        raise ValueError(msg)
     speos_sun = SpeosSim.SourceAmbientNaturalLight.Find(source)
     speos_sun.SunType = SpeosSim.SourceAmbientNaturalLight.EnumSunType.Manual
     speos_sim = SpeosSim.SimulationInverse.Find(simulation)
@@ -34,7 +40,7 @@ def rotation_study(theta_inc, phi_inc, source, simulation):
             speos_sun.Name = theta.ToString() + "_" + phi.ToString()
             speos_sun.SunDirection.Set(sun_direction)
             time.sleep(1)
-            speos_sim.Export(r"D:\\" + theta.ToString() + "_" + phi.ToString())
+            speos_sim.Export(os.path.join(export_dir, theta.ToString() + "_" + phi.ToString()))
             sun_direction.Delete()
     speos_sun.Name = source
 
@@ -62,9 +68,10 @@ def main():
         raise ValueError(error_message)
     theta_inc = argsDict["theta_increment"]
     phi_inc = argsDict["phi_increment"]
-    speos_light = argsDict["speos source"]
+    speos_light = argsDict["speos_source"]
     speos_simulation = argsDict["speos_simulation"][0]
-    rotation_study(theta_inc, phi_inc, speos_light, speos_simulation)
+    export_path = argsDict["export_path"]
+    rotation_study(theta_inc, phi_inc, speos_light, speos_simulation, export_path)
 
 
 main()
