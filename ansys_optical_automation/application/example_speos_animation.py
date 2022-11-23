@@ -163,7 +163,7 @@ def main():
             MessageBox.Show("Please select 1 selection")
             return
         radiance_sensor_name = selection.Items[0].Name
-        if not SpeosSim.SensorRadiance.Find("Ref"):
+        if not SpeosSim.SensorRadiance.Find(radiance_sensor_name):
             MessageBox.Show("Please select radiance sensor")
             return
         reference_sensor = SpeosSim.SensorRadiance.Find(radiance_sensor_name)
@@ -180,7 +180,7 @@ def main():
             MessageBox.Show("Please select 1 selection")
             return
         reference_simulation_name = selection.Items[0].Name
-        if not SpeosSim.SensorRadiance.Find("Ref"):
+        if not SpeosSim.SimulationInverse.Find(reference_simulation_name):
             MessageBox.Show("Please select inverse simulation")
             return
         reference_simulation = SpeosSim.SimulationInverse.Find(reference_simulation_name)
