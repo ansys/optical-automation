@@ -2,15 +2,6 @@ import os
 import sys
 
 
-class DpfLpfTraces:
-    def __init__(self, trace, order_type):
-        self.trace_list = [trace]
-        self.order_type = order_type
-
-    def add_trace(self, trace):
-        self.trace_list.append(trace)
-
-
 class DpfLpfReader:
     def __init__(self, speos_version):
         if speos_version not in [231]:
@@ -34,6 +25,7 @@ class DpfLpfReader:
         self.sequence_impacts = []
         self.sequences = []
         self.trace_boundary = [0, 0, 0]
+        "@todo add min max for boundarie for non symetric usage"
 
     def open_file(self, str_path):
         """
