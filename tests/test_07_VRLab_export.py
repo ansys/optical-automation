@@ -63,3 +63,39 @@ class TestVRLabExportAPI:
         res = self.results.get("VRImages", None)
         ref = self.reference_results["VRImages"]
         assert res == ref
+
+    def test_02_check_set_source_power_by_name(self):
+        """
+        Check set_source power method is working with name provided
+        Returns: None
+        """
+        res = self.results.get("VR_set_source_name_power", None)
+        ref = self.reference_results["VR_set_source_name_power"]
+        assert res == ref
+
+    def test_03_check_set_source_power_by_index(self):
+        """
+        Check set_source power method is working with index provided
+        Returns: None
+        """
+        res = self.results.get("VR_set_source_idx_power", None)
+        ref = self.reference_results["VR_set_source_idx_power"]
+        assert res == ref
+
+    def test_04_check_set_source_ratio_by_name(self):
+        """
+        Check set_source ratio method is working with name provided
+        Returns: None
+        """
+        res = self.results.get("VR_set_source_name_ratio", None)
+        ref = self.reference_results["VR_set_source_name_ratio"]
+        assert res == ref
+
+    def test_05_check_set_source_ratio_by_index(self):
+        """
+        Check set_source ratio method is working with index provided
+        Returns: None
+        """
+        res = self.results.get("VR_set_source_idx_ratio", None)
+        ref = self.reference_results["VR_set_source_idx_ratio"]
+        assert res == ref

@@ -30,7 +30,7 @@ class Sensor(BaseSCDM):
         SpaceClaim : SpaceClaim object
             SpaceClaim object.
         """
-        super(Sensor, self).__init__(SpaceClaim, ["V19", "V20", "V21"])
+        super(Sensor, self).__init__(SpaceClaim, ["V19", "V20", "V21", "V22", "V23"])
         self.name = name
         self.speos_sim = SpeosSim
         self.speos_object = None
@@ -209,6 +209,7 @@ class IntensitySensor(Sensor):
             speos_object = self.speos_sim.SensorIntensity.Create()
             speos_object.Name = name
         self.speos_object = speos_object
+        self.sensor_format = None
 
     def set_format(self, sensor_format=None):
         """
@@ -222,16 +223,16 @@ class IntensitySensor(Sensor):
         """
         if not sensor_format:
             raise NameError("Format input not provided.")
-        sensor_format = sensor_format.lower()
-        if sensor_format == "xmp":
+        self.sensor_format = sensor_format.lower()
+        if self.sensor_format == "xmp":
             self.speos_object.FormatType = self.speos_sim.SensorIntensity.EnumFormatType.XMP
-        elif sensor_format == "iesnatypea":
+        elif self.sensor_format == "iesnatypea":
             self.speos_object.FormatType = self.speos_sim.SensorIntensity.EnumFormatType.IESNATypeA
-        elif sensor_format == "iesnatypeb":
+        elif self.sensor_format == "iesnatypeb":
             self.speos_object.FormatType = self.speos_sim.SensorIntensity.EnumFormatType.IESNATypeB
-        elif sensor_format == "iesnatypec":
+        elif self.sensor_format == "iesnatypec":
             self.speos_object.FormatType = self.speos_sim.SensorIntensity.EnumFormatType.IESNATypeC
-        elif sensor_format == "eulumdat":
+        elif self.sensor_format == "eulumdat":
             self.speos_object.FormatType = self.speos_sim.SensorIntensity.EnumFormatType.Eulumdat
         else:
             raise ValueError("Wrong input value. Choose from XMP, IESNATypeA, IESNATypeB, IESNATypeC or Eulumdat.")
@@ -383,6 +384,19 @@ class IntensitySensor(Sensor):
             error_message = "Unsupported layer type. Supported types: source, face, sequence, none."
             raise ValueError(error_message)
 
+    def set_integration_angle(self, integration_value):
+        """
+        set integration angle of the radiance sensor
+
+        Parameters
+        ----------
+        integration_value
+        """
+        if self.sensor_format == "xmp" or self.sensor_format is None:
+            raise ValueError("Cannot assign integration values")
+        else:
+            self.speos_object.IntegrationAngle = integration_value
+
 
 class RadianceSensor(Sensor):
     """
@@ -484,6 +498,58 @@ class RadianceSensor(Sensor):
             error_message = "please provide a radiance type as observer or focal"
             raise ValueError(error_message)
 
+    def set_definition_type(self, definition_type):
+        """
+        set radiancec sensor definition type.
+
+        Parameters
+        ----------
+        definition_type : str
+            type as observer or frame
+
+        Returns
+        -------
+
+
+        """
+        definition_type = definition_type.lower()
+        if definition_type.lower() == "observer":
+            self.speos_object.DefinitionFrom = self.speos_sim.SensorRadiance.EnumDefinitionFrom.Observer
+        elif definition_type.lower() == "frame":
+            self.speos_object.DefinitionFrom = self.speos_sim.SensorRadiance.EnumDefinitionFrom.Frame
+        else:
+            error_message = "please provide a radiance type as observer or frame"
+            raise ValueError(error_message)
+
+    def set_xmp_template(self, xml_file, take_dimension=False, take_display=False):
+        """
+        set the xmp template.
+
+        Parameters
+        ----------
+        xml_file : str
+            path of xml file
+        take_dimension : bool
+            True if setting of dimension used from xml, otherwise False
+        take_display : bool
+            True if setting of XMP display used from xml, otherwise False
+
+        Returns
+        -------
+
+
+        """
+        if os.path.isfile(xml_file):
+            self.speos_object.XMPTemplateFile = xml_file
+        else:
+            msg = "Provided XML file is not found"
+            raise ValueError(msg)
+
+        if take_dimension:
+            self.speos_object.DimensionFromFile = True
+        if take_display:
+            self.speos_object.DisplayPropertiesFromFile = True
+
     def set_range(self, x_start=None, x_end=None, y_start=None, y_end=None, x_mirrored=False, y_mirrored=False):
         """
         Set the sensor size.
@@ -575,3 +641,41 @@ class RadianceSensor(Sensor):
         integration_value
         """
         self.speos_object.IntegrationAngle = integration_value
+
+    def set_observer_point(self, observer_point):
+        """
+        set observer point of the radiance sensor (Definition from Observer)
+
+        Parameters
+        ----------
+        observer_point : point or origin (coordinate system)
+        """
+        self.speos_object.ObserverPoint.Set(observer_point)
+
+    def set_observer_directions(self, front_direction, top_direction):
+        """
+        set front and top directions of the radiance sensor (Definition from Observer)
+
+        Parameters
+        ----------
+        front_direction : axis or line
+        top_direction : axis or line
+        """
+        self.speos_object.FrontDirection.Set(front_direction)
+        self.speos_object.TopDirection.Set(top_direction)
+
+    def set_fov(self, horizontal_fov, vertical_fov, horizontal_sampling, vertical_sampling):
+        """
+        set field of view and sampling of the radiance sensor (Definition from Observer)
+
+        Parameters
+        ----------
+        horizontal_fov : float
+        vertical_fov : float
+        horizontal_sampling : float
+        vertical_sampling : float
+        """
+        self.speos_object.HPlane = horizontal_fov
+        self.speos_object.VPlane = vertical_fov
+        self.speos_object.HNbSamples = horizontal_sampling
+        self.speos_object.VNbSamples = vertical_sampling
