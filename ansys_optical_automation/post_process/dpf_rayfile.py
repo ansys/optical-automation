@@ -313,6 +313,9 @@ class DpfRayfile(DataProcessingFramework):
                 if abs(raylen - 1) > 1e-3:
                     msg = "Error: Vector length of " + str(ray_idx) + "the ray is unusual (" + str(raylen) + ")"
                     raise ValueError(msg)
+                if e < 0:
+                    msg="Error: ray power of " + str(m_dir) + "th ray is < 0"
+                    raise ValueError(msg)
                 elif e == 0:
                     print('The ' + str(ray_idx) + ' th ray has 0 flux! \n Ray was removed from data')
                     self.__ray_numb -= 1
