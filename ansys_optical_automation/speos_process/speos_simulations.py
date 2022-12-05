@@ -269,10 +269,19 @@ class Simulation(BaseSCDM):
         )
         return sim_path
 
-    def append_source(self, source_selection):
+    def append_source(simulation_name):
+        speos_source_list = []
+        for items in GetRootPart().CustomObjects:
+            if items.Type == "SPEOS_SC.SIM.SpeosWrapperSourceSurface":
+                speos_source_list.append(items)
+            if items.Type == "SPEOS_SC.SIM.SpeosWrapperSourceRayFile":
+                speos_source_list.append(items)
+            else:
+                print("No Light source found")
 
-        speos_sources_list = []
-        for items in self.GetRootPart.CustomObjects:
-            if items.Type == "Sources":
-                speos_sources_list.append(items)
-        return speos_sources_list
+        Direct_Sim = SpeosSim.SimulationDirect.Find(simulation_name)
+        for source_index in range(Direct_Sim.Sources.Count):
+            source_sim = Direct_Sim.Sources.Item[source_index]
+            speos_source_list.append(source_sim)
+        Direct_Sim.Sources.Set(speos_source_list)
+        return speos_source_list
