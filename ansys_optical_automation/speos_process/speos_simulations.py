@@ -268,3 +268,11 @@ class Simulation(BaseSCDM):
             save_path, r"SPEOS isolated files", os.path.basename(doc_path).split(".")[0], export_name, export_name
         )
         return sim_path
+
+    def append_source(self, source_selection):
+
+        speos_sources_list = []
+        for items in self.GetRootPart.CustomObjects:
+            if items.Type == "Sources":
+                speos_sources_list.append(items)
+        return speos_sources_list

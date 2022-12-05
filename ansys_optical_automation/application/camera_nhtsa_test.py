@@ -116,8 +116,8 @@ def define_camera(
 def prepare_sim_setup(cam_name, sim_name, part_names, cam_model):
     """
     Prepares a simulation model based on the given input:
-    creates/edits the Camera with name cam_name based on the predefined Ccam_model,
-        positions it at axissystem "Cam_pos_1"
+    creates/edits the Camera with name cam_name based on the predefined Cam_model,
+        positions it at axis system "Cam_pos_1"
     creates/edits the Simulation with name sim_name
     adds all geometries of the parts given in part_names
     Parameters
