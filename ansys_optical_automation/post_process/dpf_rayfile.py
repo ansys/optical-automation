@@ -291,9 +291,6 @@ class DpfRayfile(DataProcessingFramework):
                 n_dir = struct.unpack("f", self.dpf_instance.read(4))[0]
                 wav = round(struct.unpack("f", self.dpf_instance.read(4))[0] * 0.001, 3)
                 e = struct.unpack("f", self.dpf_instance.read(4))[0]
-                if e <= 0:
-                    msg = "Error: ray power of ray of " + str(ray_idx) + " cannot be <= 0"
-                    raise ValueError(msg)
                 if wav <= 0:
                     msg = "Error: ray wavelength of ray of " + str(ray_idx) + "cannot be <= 0"
                     raise ValueError(msg)
@@ -301,7 +298,11 @@ class DpfRayfile(DataProcessingFramework):
                 if abs(raylen - 1) > 1e-3:
                     msg = "Error: Vector length of " + str(ray_idx) + "the ray is unusual (" + str(raylen) + ")"
                     raise ValueError(msg)
-                self.__rays.append(DpfRay(x, y, z, l_dir, m_dir, n_dir, wav, e))
+                elif e == 0:
+                    print('The ' + str(ray_idx) + ' th ray has 0 flux! \n Ray was removed from data')
+                    self.__ray_numb -= 1
+                else:
+                    self.__rays.append(DpfRay(x, y, z, l_dir, m_dir, n_dir, wav, e))
             self.dpf_instance.close()
         elif (rayfile_type == "dat" or rayfile_type == "sdf") and self.__binary:
             self.identifier = int.from_bytes(
@@ -368,9 +369,6 @@ class DpfRayfile(DataProcessingFramework):
                 if ray_format_type == 2:
                     wav = round(struct.unpack("f", self.dpf_instance.read(4))[0], 3)
                 e = struct.unpack("f", self.dpf_instance.read(4))[0]
-                if e <= 0:
-                    msg = "Error: ray power of " + str(m_dir) + "th ray is <= 0"
-                    raise ValueError(msg)
                 if wav <= 0:
                     msg = "Error: ray wavelength cannot be <= 0"
                     raise ValueError(msg)
@@ -378,7 +376,16 @@ class DpfRayfile(DataProcessingFramework):
                 if abs(raylen - 1) > 1e-3:
                     msg = "Erorr: Vector length of " + str(m_dir) + "th ray is unusual (" + str(raylen) + ")"
                     raise ValueError(msg)
-                self.__rays.append(DpfRay(x, y, z, l_dir, m_dir, n_dir, wav, e))
+                # Check ray energy:
+                if e < 0:
+                    msg = "Error: ray power of " + str(m_dir) + "th ray is < 0"
+                    raise ValueError(msg)
+                elif e == 0:
+                    print('The ' + str(ray_idx) + ' th ray has 0 flux! \n Ray was removed from data')
+                    self.__ray_number -= 1
+                else:
+                    self.__rays.append(DpfRay(x, y, z, l_dir, m_dir, n_dir, wav, e))
+
         else:
             if not self.__binary:
                 msg = "Non binary files not supported"
