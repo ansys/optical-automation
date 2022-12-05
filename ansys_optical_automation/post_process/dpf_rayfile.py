@@ -317,7 +317,7 @@ class DpfRayfile(DataProcessingFramework):
                     msg = "Error: ray power of " + str(m_dir) + "th ray is < 0"
                     raise ValueError(msg)
                 elif e == 0:
-                    print('The ' + str(ray_idx) + ' th ray has 0 flux! \n Ray was removed from data')
+                    print("The " + str(ray_idx) + " th ray has 0 flux! \n This Ray was removed from data")
                     self.__ray_numb -= 1
                 else:
                     self.__rays.append(DpfRay(x, y, z, l_dir, m_dir, n_dir, wav, e))
@@ -399,7 +399,7 @@ class DpfRayfile(DataProcessingFramework):
                     msg = "Error: ray power of " + str(m_dir) + "th ray is < 0"
                     raise ValueError(msg)
                 elif e == 0:
-                    print('The ' + str(ray_idx) + ' th ray has 0 flux! \n Ray was removed from data')
+                    print("The " + str(ray_idx) + " th ray has 0 flux! \n This Ray was removed from data")
                     self.__ray_number -= 1
                 else:
                     self.__rays.append(DpfRay(x, y, z, l_dir, m_dir, n_dir, wav, e))
