@@ -270,6 +270,12 @@ class Simulation(BaseSCDM):
         return sim_path
 
     def append_source(simulation_name):
+        """
+        Append a list of source in a simulation.
+        Returns
+        -------
+
+        """
         speos_source_list = []
         for items in GetRootPart().CustomObjects:
             if items.Type == "SPEOS_SC.SIM.SpeosWrapperSourceSurface":

@@ -753,3 +753,20 @@ class LightFieldSensor(Sensor):
             self.speos_object.IncidentAngleSamples = incident_sampling
         if azimuth_sampling:
             self.speos_object.AzimuthAngleNbSamples = azimuth_sampling
+
+    def set_resolution(self, incident_resolution=None, azimuth_resolution=None):
+        """Set the number of samples on the axes.
+
+        Parameters
+        ----------
+        incident_resolution : int, optionl
+            Number of resolution on the incident angle. The default is ``None``.
+        azimuth_resolution : int
+            Number of resolution on the azimuth_sampling. The default is ``None``.
+        """
+        if not incident_resolution and not azimuth_resolution:
+            raise NameError("No inputs provided.")
+        if incident_resolution:
+            self.speos_object.IncidentAngleResolution = incident_resolution
+        if azimuth_resolution:
+            self.speos_object.AzimuthAngleResolution = azimuth_resolution

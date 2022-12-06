@@ -1,5 +1,9 @@
 # Python Script, API Version = V23
-
+"""
+The aim of this script is to convert any type of lightsource (surface and rayfile source currently) into Lightfield one.
+12/2022 V1.0 capabilities :
+ -
+"""
 from ansys_optical_automation.speos_process.speos_sensors import LightFieldSensor
 from ansys_optical_automation.speos_process.speos_sensors import LocalMeshing
 
