@@ -10,7 +10,7 @@ class GeometryProperties(BaseSCDM):
     """
 
     def __init__(self, name, SpeosSim, SpaceClaim):
-        super(BaseSCDM, self).__init__(SpaceClaim, ["V19", "V20", "V21", "V22", "V23"])
+        super(GeometryProperties, self).__init__(SpaceClaim, ["V19", "V20", "V21", "V22", "V23"])
         self.speos_sim = SpeosSim
         self.name = name
         self.speos_object = None
