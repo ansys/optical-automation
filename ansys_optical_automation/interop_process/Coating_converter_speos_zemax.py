@@ -6,6 +6,7 @@ import shutil
 import numpy as np
 
 from ansys_optical_automation.zemax_process.base import BaseZOS
+from comtypes.client import CreateObject
 
 def main():
 
@@ -291,10 +292,14 @@ def main():
                     if nb_errors == 0:
                        os.remove(Errorfullfilename)
 
-    # Write the coating files
-
-
-
+                    # Create the BSDF180 that combines the two coatings
+                    BSDFViewer = CreateObject("SimpleBSDFSurfaceViewer.Application")
+                    # Builds BSDF 180
+                    BSDFViewer.BuildBSDF180(Coatingfullfilename1, Coatingfullfilename2)
+                    BSDF180filename = str(coating_name) + '_' + str(Material_2) + '_' + str(Material_1) + '.bsdf180'
+                    BSDF180fullfilename = Coatingfolder + '\\' + BSDF180filename
+                    # Save BSDF180
+                    BSDFViewer.SaveFile(BSDF180fullfilename)
 
 
     os.remove(DestinationFile)
@@ -304,5 +309,7 @@ def main():
     # this until you need to.
     del zos
     zos = None
+
+
 
 main()
