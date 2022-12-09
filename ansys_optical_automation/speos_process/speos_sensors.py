@@ -686,7 +686,7 @@ class LightFieldSensor(Sensor):
     LightFieldSensor has to be computed after its definition by using command like this: object.Compute()
     """
 
-    def __ini__(self, name, SpeosSim, SpaceClaim):
+    def __init__(self, name, SpeosSim, SpaceClaim):
         super(LightFieldSensor, self).__init__(name, SpeosSim, SpaceClaim)
         speos_object = self.speos_sim.SensorLightField.Find(self.name)
         if not speos_object:

@@ -22,7 +22,7 @@ class SourceLightField(Source):
     """
 
     def __init__(self, name, SpeosSim, SpaceClaim):
-        super(Source, self).__init__(name, SpeosSim, SpaceClaim)
+        super(SourceLightField, self).__init__(name, SpeosSim, SpaceClaim)
         if self.speos_sim.SourceLightField.Find(self.name):
             self.speos_object = self.speos_sim.SourceLightField.Find(self.name)
         else:
