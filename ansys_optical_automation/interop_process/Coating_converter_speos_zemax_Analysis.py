@@ -37,9 +37,10 @@ def main():
     #Coating substrates
     #We could also read a Zemax file and extract coatings directly with the substrates
     #Here we extract two coatings per substrates: Substrate -> AIR and AIR -> SubstrateN-SK16
-    SubstrateCatalog = "SCHOTT"
-    SubstrateName = ("N-SK16", "N-SF56", "SF4")
+    SubstrateCatalog = "HOYA"
+    #SubstrateName = ("N-SK16", "N-SF56", "SF4")
     #SubstrateName = ("N-SK16")
+    SubstrateName = ("TAF1","E-F1")
 
     #Number of digits
     Nb_digits = 6
@@ -58,9 +59,6 @@ def main():
     DestinationFile=coatingDir+'\\'+Coatingfilename
     #print(DestinationFile)
     shutil.copy(Coatingfullfilename,DestinationFile)
-    # Check the material catalog
-    if not TheSystem.SystemData.MaterialCatalogs.IsCatalogInUse(SubstrateCatalog):
-        TheSystem.SystemData.MaterialCatalogs.AddCatalog(SubstrateCatalog)
     # Make new file
     testFile = sampleDir+ '\coating.zos'
     #print(testFile)
@@ -74,6 +72,9 @@ def main():
     TheLDE = TheSystem.LDE
     Surface_0 = TheLDE.GetSurfaceAt(0)
     Surface_1 = TheLDE.GetSurfaceAt(1)
+    # Check the material catalog
+    if not TheSystem.SystemData.MaterialCatalogs.IsCatalogInUse(SubstrateCatalog):
+        TheSystem.SystemData.MaterialCatalogs.AddCatalog(SubstrateCatalog)
     CoatingList = Surface_1.CoatingData.GetAvailableCoatings()
     CoatingList_Length = CoatingList.Length
     wave = 1
