@@ -192,7 +192,31 @@ def main():
                     fileID1.write("\n")
                     fileID2.write("\n")
 
-    #               % --------------------------------------------------------
+
+                    #--------------------------------------------------------------------------------------------------
+                    # Reading from the analysis
+                    # No access to the settings so:
+                    # - the incident angles should be set by default from 0 to 90
+                    # - the surface should be set to 1
+                    # --------------------------------------------------------------------------------------------------
+                    My_Transmission_vs_angle = TheSystem.Analyses.New_Analysis(
+                        ZOSAPI.Analysis.AnalysisIDM.TransmissionvsAngle)
+                    My_Transmission_vs_angle.ApplyAndWaitForCompletion()
+                    My_Transmission_vs_angle_results = My_Transmission_vs_angle.GetResults()
+                    Resultfullfilename = Coatingfolder + '\\My_Transmission_vs_angle_result.txt'
+                    My_Transmission_vs_angle_results.GetTextFile(Resultfullfilename)
+
+
+
+
+
+
+
+
+
+
+
+                    #               % --------------------------------------------------------
     #               % Method 1 --> doesn't catch error messages
     #               % Using directly CODA operand without going through the
     #               % merit function
