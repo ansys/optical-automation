@@ -681,13 +681,13 @@ class RadianceSensor(Sensor):
         self.speos_object.VNbSamples = vertical_sampling
 
 
-class LightFieldSensor(Sensor):
+class SensorLightField(Sensor):
     """
     LightFieldSensor has to be computed after its definition by using command like this: object.Compute()
     """
 
     def __init__(self, name, SpeosSim, SpaceClaim):
-        super(LightFieldSensor, self).__init__(name, SpeosSim, SpaceClaim)
+        super(SensorLightField, self).__init__(name, SpeosSim, SpaceClaim)
         speos_object = self.speos_sim.SensorLightField.Find(self.name)
         if not speos_object:
             speos_object = self.speos_sim.SensorLightField.Create()
