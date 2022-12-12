@@ -65,7 +65,7 @@ def vector_normalize(vector):
 
     """
     vector_magnitude = vector_len(vector)
-    return [item / vector_magnitude for item in vector]
+    return [round(item / vector_magnitude, 1) for item in vector]
 
 
 def vector_len(vector):
