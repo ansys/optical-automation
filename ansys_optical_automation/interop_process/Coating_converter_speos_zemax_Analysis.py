@@ -30,6 +30,13 @@ def main():
     nb_wavelength = 5
     # Wavelength unit in Speos in um
     speos_wavelength_units_um = 1000
+
+    # --------------------------------------------------------------------------------------------------
+    # Reading from the analysis
+    # No access to the settings so:
+    # - the incident angles should be set by default from 0 to 90
+    # - the surface should be set to 1
+    # --------------------------------------------------------------------------------------------------
     # AngleOfIncidence_min = 0
     # AngleOfIncidence_max = 90
     # nb_angle_of_incidence = 91
@@ -91,23 +98,9 @@ def main():
         material_2_name = "AIR"
         material_2 = ''
 
-        # Open the material catalog and check the wavelength ranges
-        my_material_catalog = the_system.Tools.OpenMaterialsCatalog()
-        my_material_catalog.SelectedCatalog = substrate_catalog
-        my_material_catalog.SelectedMaterial = material_1
-        material_1_minwave = my_material_catalog.MinimumWavelength
-        material_1_maxwave = my_material_catalog.MaximumWavelength
-        my_material_catalog.Close()
-
-        if material_1_minwave > user_wavelength_min:
-            wavelength_min = material_1_minwave
-        else:
-            wavelength_min = user_wavelength_min
-        if user_wavelength_max > material_1_maxwave:
-            wavelength_max = material_1_maxwave
-        else:
-            wavelength_max = user_wavelength_max
-        wavelength_delta = (wavelength_max - wavelength_min) / (nb_wavelength - 1)
+        wavelength_min, wavelength_max, wavelength_delta = check_wavelength_range(the_system, substrate_catalog,
+                                                                                  material_1, user_wavelength_min,
+                                                                                  user_wavelength_max, nb_wavelength)
 
         for i in range(coating_list_length):
             # print(coating_list[i])
@@ -134,46 +127,15 @@ def main():
                     wavelength = round(wavelength_min + wavelength_index * (wavelength_max - wavelength_min) / (
                             nb_wavelength - 1), 3)
                     the_system.SystemData.Wavelengths.GetWavelength(wave).Wavelength = wavelength
-                    #--------------------------------------------------------------------------------------------------
-                    # Reading from the analysis
-                    # No access to the settings so:
-                    # - the incident angles should be set by default from 0 to 90
-                    # - the surface should be set to 1
-                    # --------------------------------------------------------------------------------------------------
                     # the_system.Save()
 
-                    my_transmission_vs_angle = the_system.Analyses.New_Analysis(
-                        zosapi.Analysis.AnalysisIDM.TransmissionvsAngle)
-                    my_transmission_vs_angle.ApplyAndWaitForCompletion()
-                    my_transmission_vs_angle_results = my_transmission_vs_angle.GetResults()
                     resultfullfilename = coatingfolder + '\\My_Transmission_vs_angle_' + name1 + '.txt'
-                    bool_result = my_transmission_vs_angle_results.GetTextFile(resultfullfilename)
+                    bool_result = make_transmission_vs_angle_analysis(zosapi, the_system, resultfullfilename)
                     # if bool_result == False:
-                        # print("The result file was not created!")
-                    my_transmission_vs_angle.Close()
+                    # print("The result file was not created!")
 
-                    # Reading the transmission file
-                    bfile = io.open(resultfullfilename, 'r', encoding='utf-16-le')
-                    header_line = bfile.readline()
-                    while header_line[1:10].strip() != 'Angle':
-                        header_line = bfile.readline()
-                    # Now reading the content
-                    # Angle S - Reflect P - Reflect S - Transmit    P - Transmit
-                    index_angle_of_incidence = 0
-                    data_line = 'start'
-                    while not len(data_line) == 1:
-                        data_line = bfile.readline()
-                        data_line = data_line.split('\t')
-                        data_line = data_line[0:5] #only keeping the first 5 values
-                        #Miss 3 lines
-                        for index_line in range(skip_lines):
-                            bfile.readline()
-                        coating_data.append(data_line)
-                        index_angle_of_incidence = index_angle_of_incidence + 1
-                        # print(index_angle_of_incidence)
-                        # nb_angle_of_incidence = len(coating_data)
-                    nb_angle_of_incidence = index_angle_of_incidence - 1
-                    bfile.close()
+                    nb_angle_of_incidence, coating_data = read_transmission_vs_angle_result(resultfullfilename,skip_lines,coating_data)
+
 
                 # Writing the file
                 file_id1.write('OPTIS - Coated surface file v1.0\n')
@@ -219,45 +181,14 @@ def main():
                     wavelength = round(wavelength_min + wavelength_index * (wavelength_max - wavelength_min) / (
                             nb_wavelength - 1), 3)
                     the_system.SystemData.Wavelengths.GetWavelength(wave).Wavelength = wavelength
-                    # --------------------------------------------------------------------------------------------------
-                    # Reading from the analysis
-                    # No access to the settings so:
-                    # - the incident angles should be set by default from 0 to 90
-                    # - the surface should be set to 1
-                    # --------------------------------------------------------------------------------------------------
-                    # From AIR TO SUBSTRATE
-                    # Need to loop for all wavelength
-                    my_transmission_vs_angle = the_system.Analyses.New_Analysis(
-                        zosapi.Analysis.AnalysisIDM.TransmissionvsAngle)
-                    my_transmission_vs_angle.ApplyAndWaitForCompletion()
-                    my_transmission_vs_angle_results = my_transmission_vs_angle.GetResults()
-                    resultfullfilename2 = coatingfolder + '\\My_Transmission_vs_angle_' + name2 + '.txt'
-                    bool_result = my_transmission_vs_angle_results.GetTextFile(resultfullfilename2)
-                    # if bool_result == False:
-                    #    print("The result file was not created!")
-                    my_transmission_vs_angle.Close()
 
-                    # Reading the transmission file
-                    # bfile = open(resultfullfilename, 'r')
-                    bfile = io.open(resultfullfilename2, 'r', encoding='utf-16-le')
-                    header_line = bfile.readline()
-                    while header_line[1:10].strip() != 'Angle':
-                        header_line = bfile.readline()
-                    # Now reading the content
-                    # Angle S - Reflect P - Reflect S - Transmit    P - Transmit
-                    index_angle_of_incidence = 0
-                    data_line = 'start'
-                    while not len(data_line) == 1:
-                        data_line = bfile.readline()
-                        data_line = data_line.split('\t')
-                        data_line = data_line[0:5]  # only keeping the first 5 values
-                        # Miss 3 lines
-                        for index_line in range(skip_lines):
-                            bfile.readline()
-                        coating_data.append(data_line)
-                        index_angle_of_incidence = index_angle_of_incidence + 1
-                    nb_angle_of_incidence = index_angle_of_incidence - 1
-                    bfile.close()
+                    resultfullfilename2 = coatingfolder + '\\My_Transmission_vs_angle_' + name2 + '.txt'
+                    bool_result = make_transmission_vs_angle_analysis(zosapi, the_system, resultfullfilename2)
+                    # if bool_result == False:
+                    # print("The result file was not created!")
+
+                    nb_angle_of_incidence, coating_data = read_transmission_vs_angle_result(resultfullfilename2,
+                                                                                            skip_lines, coating_data)
 
                 # Writing the file
                 file_id2.write('OPTIS - Coated surface file v1.0\n')
@@ -293,15 +224,10 @@ def main():
                 os.remove(resultfullfilename2)
 
                 # Create the BSDF180 that combines the two coatings
-                bsdf_viewer = CreateObject("SimpleBSDFSurfaceViewer.Application")
-                # Builds BSDF 180
-                bsdf_viewer.BuildBSDF180(coatingfullfilename1, coatingfullfilename2)
                 bsdf180filename = str(coating_name) + '_' + str(material_2_name) + '_' + str(material_1) + '.bsdf180'
                 bsdf180fullfilename = coatingfolder + '\\' + bsdf180filename
-                # Save BSDF180
-                bsdf_viewer.SaveFile(bsdf180fullfilename)
+                make_bsdf180(coatingfullfilename1,coatingfullfilename2,bsdf180fullfilename)
                 print("File " + bsdf180filename + " created\n")
-
 
     os.remove(destination_file)
     os.remove(test_file)
@@ -310,6 +236,151 @@ def main():
     # this until you need to.
     del zos
     zos = None
+
+def make_bsdf180(coatingfullfilename1,coatingfullfilename2,bsdf180fullfilename):
+    """
+    function that makes a bsdf180 from 2 coating files.
+
+    Parameters
+    ----------
+    coatingfullfilename1 : string
+        Path of coating 1
+    coatingfullfilename2 : string
+        Path of coating 2
+    bsdf180fullfilename : string
+        Path of the bsdf180
+
+    Returns
+    -------
+    Nothing
+
+    """
+    # Create the BSDF180 that combines the two coatings
+    bsdf_viewer = CreateObject("SimpleBSDFSurfaceViewer.Application")
+    # Builds BSDF 180
+    bsdf_viewer.BuildBSDF180(coatingfullfilename1, coatingfullfilename2)
+    bsdf_viewer.SaveFile(bsdf180fullfilename)
+
+def check_wavelength_range(the_system,substrate_catalog,material_1,user_wavelength_min,user_wavelength_max,nb_wavelength):
+    """
+    function that checks that the user wavelength range is within the material wavelength range
+
+    Parameters
+    ----------
+    the_system : ZOSAPI.IOpticalSystem Interface Reference
+    substrate_catalog : string
+        Material catalog
+    material_1 : string
+        Material
+    user_wavelength_min : float
+        User wavelength min
+    user_wavelength_max : float
+        User wavelength min
+    nb_wavelength: integer
+        Number of wavelengths
+
+    Returns
+    -------
+    wavelength_min: float
+        Minimum wavelength
+    wavelength_max: float
+        Maximum wavelength
+    wavelength_delta: float
+        Wavelength delta
+
+    """
+
+    # Open the material catalog and check the wavelength ranges
+    my_material_catalog = the_system.Tools.OpenMaterialsCatalog()
+    my_material_catalog.SelectedCatalog = substrate_catalog
+    my_material_catalog.SelectedMaterial = material_1
+    material_1_minwave = my_material_catalog.MinimumWavelength
+    material_1_maxwave = my_material_catalog.MaximumWavelength
+    my_material_catalog.Close()
+
+    if material_1_minwave > user_wavelength_min:
+        wavelength_min = material_1_minwave
+    else:
+        wavelength_min = user_wavelength_min
+    if user_wavelength_max > material_1_maxwave:
+        wavelength_max = material_1_maxwave
+    else:
+        wavelength_max = user_wavelength_max
+    wavelength_delta = (wavelength_max - wavelength_min) / (nb_wavelength - 1)
+
+    return wavelength_min, wavelength_max, wavelength_delta
+
+def make_transmission_vs_angle_analysis(zosapi,the_system,resultfullfilename):
+    """
+    function that checks that the user wavelength range is within the material wavelength range
+
+    Parameters
+    ----------
+    zosapi:
+    the_system : ZOSAPI.IOpticalSystem Interface Reference
+    resultfullfilename : string
+        Path of result file
+
+    Returns
+    -------
+    bool_result: boolean
+        True if result file is created
+
+    """
+    my_transmission_vs_angle = the_system.Analyses.New_Analysis(
+        zosapi.Analysis.AnalysisIDM.TransmissionvsAngle)
+    my_transmission_vs_angle.ApplyAndWaitForCompletion()
+    my_transmission_vs_angle_results = my_transmission_vs_angle.GetResults()
+    bool_result = my_transmission_vs_angle_results.GetTextFile(resultfullfilename)
+    my_transmission_vs_angle.Close()
+
+    return bool_result
+
+def read_transmission_vs_angle_result(resultfullfilename,skip_lines,coating_data):
+    """
+        function that reads the result file from the transmission vs angle analysis
+
+        Parameters
+        ----------
+        resultfullfilename : string
+            Path of result file
+        skip_lines : integer
+            number of lines that are ignored at each loop
+        coating_data : integer
+            list that contains the results
+
+        Returns
+        -------
+        nb_angle_of_incidence: integer
+            Number of angle of incidences in the result
+        coating_data : integer
+            list that contains the results
+
+        """
+    # Reading the transmission file
+    bfile = io.open(resultfullfilename, 'r', encoding='utf-16-le')
+    header_line = bfile.readline()
+    while header_line[1:10].strip() != 'Angle':
+        header_line = bfile.readline()
+    # Now reading the content
+    # Angle S - Reflect P - Reflect S - Transmit    P - Transmit
+    index_angle_of_incidence = 0
+    data_line = 'start'
+    while not len(data_line) == 1:
+        data_line = bfile.readline()
+        data_line = data_line.split('\t')
+        data_line = data_line[0:5]  # only keeping the first 5 values
+        # Miss 3 lines
+        for index_line in range(skip_lines):
+            bfile.readline()
+        coating_data.append(data_line)
+        index_angle_of_incidence = index_angle_of_incidence + 1
+        # print(index_angle_of_incidence)
+        # nb_angle_of_incidence = len(coating_data)
+    nb_angle_of_incidence = index_angle_of_incidence - 1
+    bfile.close()
+
+    return nb_angle_of_incidence, coating_data
 
 
 main()
