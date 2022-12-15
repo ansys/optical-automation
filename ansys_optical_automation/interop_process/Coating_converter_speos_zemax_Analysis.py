@@ -11,231 +11,24 @@ from comtypes.client import CreateObject
 
 def main():
 
-    zos = BaseZOS()
-    
-    # load local variables
-    zosapi = zos.zosapi
-    the_application = zos.the_application
-    the_system = zos.the_system
-    
-    # Insert Code Here
- 
-    
-    #-------------------------------------------------------------------------------------------------
     # USER INPUT
     coatingfilename = "Meopta_CoatingFileExample.dat"
     coatingfolder = r"C:\Data\PROJECTS\MEOPTA_COATING\COATINGS"
     user_wavelength_min = 0.31
     user_wavelength_max = 0.9
     nb_wavelength = 5
-    # Wavelength unit in Speos in um
-    speos_wavelength_units_um = 1000
-
-    # --------------------------------------------------------------------------------------------------
-    # Reading from the analysis
-    # No access to the settings so:
-    # - the incident angles should be set by default from 0 to 90
-    # - the surface should be set to 1
-    # --------------------------------------------------------------------------------------------------
-    # AngleOfIncidence_min = 0
-    # AngleOfIncidence_max = 90
-    # nb_angle_of_incidence = 91
-
-    #Coating substrates
-    #We could also read a Zemax file and extract coatings directly with the substrates
-    #Here we extract two coatings per substrates: Substrate -> AIR and AIR -> SubstrateN-SK16
-    substrate_catalog = "HOYA"
-    #substrate_name = ("N-SK16", "N-SF56", "SF4")
-    #substrate_name = ("N-SK16")
-    substrate_name = ("TAF1","E-F1")
-
-    #Number of digits
-    nb_digits = 6
+    speos_wavelength_units_um = 1000  # Wavelength unit in Speos in um
+    # Coating substrates: 2 coatings are extracted per substrates: air -> substrate and substrate -> air
+    substrate_catalog = "SCHOTT"
+    substrate_name = ("N-SK16", "N-SF56", "SF4")
+    nb_digits = 6  # Number of digits
     skip_lines = 4
-    
-    #-------------------------------------------------------------------------------------------------
 
-    myformat = '{:.'+str(nb_digits)+'f}'
-    coatingfullfilename = coatingfolder+'\\'+ coatingfilename
-    print(coatingfullfilename)
+    convert_coating_zemax_speos(coatingfilename, coatingfolder,
+                                    substrate_catalog, substrate_name,
+                                    user_wavelength_min, user_wavelength_max, nb_wavelength, speos_wavelength_units_um,
+                                    nb_digits, skip_lines)
 
-    # Set up primary optical system
-    the_system = the_application.PrimarySystem;
-    sample_dir = the_application.SamplesDir;
-    coating_dir = the_application.CoatingDir;
-    destination_file=coating_dir+'\\'+coatingfilename
-    #print(destination_file)
-    shutil.copy(coatingfullfilename,destination_file)
-    # Make new file
-    test_file = sample_dir + '\coating.zos'
-    #print(test_file)
-    the_system.New(False)
-    the_system.SaveAs(test_file)
-    # Coating catalog
-    the_system.SystemData.Files.CoatingFile = coatingfilename
-    # Aperture
-    the_system_data = the_system.SystemData
-    the_system_data.Aperture.ApertureValue = 1
-    the_lde = the_system.LDE
-    surface_0 = the_lde.GetSurfaceAt(0)
-    surface_1 = the_lde.GetSurfaceAt(1)
-    # Check the material catalog
-    if not the_system.SystemData.MaterialCatalogs.IsCatalogInUse(substrate_catalog):
-        the_system.SystemData.MaterialCatalogs.AddCatalog(substrate_catalog)
-    coating_list = surface_1.CoatingData.GetAvailableCoatings()
-    coating_list_length = coating_list.Length
-    wave = 1
-    the_system.Save()
-    
-    # % TABLE coating? Can be checked with number of layers
-    # % TestSurface.CoatingData.NumberOfLayers = 0 --> TABLE
-    # % TestSurface.CoatingData.NumberOfLayers <> 0 --> COAT
-    # % If it is a TABLE coating --> direct conversion
-    # % If it is a COAT coating --> need to use a method to convert
-
-    for j in range(len(substrate_name)):
-        material_1 = substrate_name[j]
-        material_2_name = "AIR"
-        material_2 = ''
-
-        wavelength_min, wavelength_max, wavelength_delta = check_wavelength_range(the_system, substrate_catalog,
-                                                                                  material_1, user_wavelength_min,
-                                                                                  user_wavelength_max, nb_wavelength)
-
-        for i in range(coating_list_length):
-            # print(coating_list[i])
-            coating_name = coating_list[i]
-            if not coating_name == 'None':
-                name1 = str(coating_name) + '_' + str(material_2_name) + '_' + str(material_1)
-                name2 = str(coating_name) + '_' + str(material_1) + '_' + str(material_2_name)
-                coatingfilename1 = name1 + '.coated'
-                coatingfilename2 = name2 + '.coated'
-                coatingfullfilename1 = coatingfolder + '\\' + coatingfilename1
-                coatingfullfilename2 = coatingfolder + '\\' + coatingfilename2
-                file_id1 = open(coatingfullfilename1,'w')
-                file_id2 = open(coatingfullfilename2, 'w')
-
-                coating_data = list()
-
-                # From AIR TO SUBSTRATE
-                surface_0.Material = material_2  # AIR
-                surface_1.Material = material_1
-                surface_1.Coating = coating_name
-
-                # Need to loop for all wavelength
-                for wavelength_index in range(nb_wavelength):
-                    wavelength = round(wavelength_min + wavelength_index * (wavelength_max - wavelength_min) / (
-                            nb_wavelength - 1), 3)
-                    the_system.SystemData.Wavelengths.GetWavelength(wave).Wavelength = wavelength
-                    # the_system.Save()
-
-                    resultfullfilename = coatingfolder + '\\My_Transmission_vs_angle_' + name1 + '.txt'
-                    bool_result = make_transmission_vs_angle_analysis(zosapi, the_system, resultfullfilename)
-                    # if bool_result == False:
-                    # print("The result file was not created!")
-
-                    nb_angle_of_incidence, coating_data = read_transmission_vs_angle_result(resultfullfilename,skip_lines,coating_data)
-
-
-                # Writing the file
-                file_id1.write('OPTIS - Coated surface file v1.0\n')
-                file_id1.write(name1 + "\n")
-                file_id1.write(str(nb_angle_of_incidence) + " " + str(nb_wavelength) + "\n")
-
-                #1st line
-                for wavelength_index in range(nb_wavelength):
-                    wavelength = round(wavelength_min + wavelength_index * (wavelength_max - wavelength_min) / (
-                            nb_wavelength - 1), 3)
-                    file_id1.write("\t" + " " + myformat.format(speos_wavelength_units_um * wavelength) + " " + "\t")
-                file_id1.write("\n")
-                #Loop to read the data
-                for angle_index in range(nb_angle_of_incidence):
-                    #1st column: angle of incidence
-                    angleofincidence = float(coating_data[angle_index][0])
-                    file_id1.write(myformat.format(angleofincidence) + ' \t')
-                    for wavelength_index in range(nb_wavelength):
-                        offset = angle_index+wavelength_index*(nb_angle_of_incidence+1)
-                        reflectance_ppol_1 = float(coating_data[offset][2])
-                        transmittance_ppol_1 = float(coating_data[offset][4])
-                        file_id1.write(myformat.format(100 * reflectance_ppol_1) + '\t' + myformat.format(
-                            100 * transmittance_ppol_1) + '\t')
-                    file_id1.write("\n\t")
-                    for wavelength_index in range(nb_wavelength):
-                        offset = angle_index+wavelength_index*(nb_angle_of_incidence+1)
-                        reflectance_spol_1 = float(coating_data[offset][1])
-                        transmittance_spol_1 = float(coating_data[offset][3])
-                        file_id1.write(myformat.format(100 * reflectance_spol_1) + "\t" + myformat.format(
-                            100 * transmittance_spol_1) + "\t")
-                    file_id1.write("\n")
-                file_id1.close()
-                print("File " + coatingfilename1 + " created")
-                coating_data.clear()
-                os.remove(resultfullfilename)
-
-                # from SUBSTRATE to AIR
-                surface_0.Material = material_1
-                surface_1.Material = material_2 #AIR
-                surface_1.Coating = coating_name
-
-                for wavelength_index in range(nb_wavelength):
-                    wavelength = round(wavelength_min + wavelength_index * (wavelength_max - wavelength_min) / (
-                            nb_wavelength - 1), 3)
-                    the_system.SystemData.Wavelengths.GetWavelength(wave).Wavelength = wavelength
-
-                    resultfullfilename2 = coatingfolder + '\\My_Transmission_vs_angle_' + name2 + '.txt'
-                    bool_result = make_transmission_vs_angle_analysis(zosapi, the_system, resultfullfilename2)
-                    # if bool_result == False:
-                    # print("The result file was not created!")
-
-                    nb_angle_of_incidence, coating_data = read_transmission_vs_angle_result(resultfullfilename2,
-                                                                                            skip_lines, coating_data)
-
-                # Writing the file
-                file_id2.write('OPTIS - Coated surface file v1.0\n')
-                file_id2.write(name2 + "\n")
-                file_id2.write(str(nb_angle_of_incidence) + " " + str(nb_wavelength) + "\n")
-                for wavelength_index in range(nb_wavelength):
-                    wavelength = round(wavelength_min + wavelength_index * (wavelength_max - wavelength_min) / (
-                            nb_wavelength - 1), 3)
-                    file_id2.write("\t" + " " + myformat.format(speos_wavelength_units_um * wavelength) + " " + "\t")
-                file_id2.write("\n")
-
-                for angle_index in range(nb_angle_of_incidence):
-                    # 1st column: angle of incidence
-                    angleofincidence = float(coating_data[angle_index][0])
-                    file_id2.write(myformat.format(angleofincidence) + ' \t')
-                    for wavelength_index in range(nb_wavelength):
-                        offset = angle_index + wavelength_index * (nb_angle_of_incidence + 1)
-                        reflectance_ppol_1 = float(coating_data[offset][2])
-                        transmittance_ppol_1 = float(coating_data[offset][4])
-                        file_id2.write(myformat.format(100 * reflectance_ppol_1) + '\t' + myformat.format(
-                            100 * transmittance_ppol_1) + '\t')
-                    file_id2.write("\n\t")
-                    for wavelength_index in range(nb_wavelength):
-                        offset = angle_index + wavelength_index * (nb_angle_of_incidence + 1)
-                        reflectance_spol_1 = float(coating_data[offset][1])
-                        transmittance_spol_1 = float(coating_data[offset][3])
-                        file_id2.write(myformat.format(100 * reflectance_spol_1) + "\t" + myformat.format(
-                            100 * transmittance_spol_1) + "\t")
-                    file_id2.write("\n")
-                file_id2.close()
-                print("File " + coatingfilename2 + " created")
-                coating_data.clear()
-                os.remove(resultfullfilename2)
-
-                # Create the BSDF180 that combines the two coatings
-                bsdf180filename = str(coating_name) + '_' + str(material_2_name) + '_' + str(material_1) + '.bsdf180'
-                bsdf180fullfilename = coatingfolder + '\\' + bsdf180filename
-                make_bsdf180(coatingfullfilename1,coatingfullfilename2,bsdf180fullfilename)
-                print("File " + bsdf180filename + " created\n")
-
-    os.remove(destination_file)
-    os.remove(test_file)
-    # This will clean up the connection to OpticStudio.
-    # Note that it closes down the server instance of OpticStudio, so you for maximum performance do not do
-    # this until you need to.
-    del zos
-    zos = None
 
 def make_bsdf180(coatingfullfilename1,coatingfullfilename2,bsdf180fullfilename):
     """
@@ -338,25 +131,25 @@ def make_transmission_vs_angle_analysis(zosapi,the_system,resultfullfilename):
 
 def read_transmission_vs_angle_result(resultfullfilename,skip_lines,coating_data):
     """
-        function that reads the result file from the transmission vs angle analysis
+    function that reads the result file from the transmission vs angle analysis
 
-        Parameters
-        ----------
-        resultfullfilename : string
-            Path of result file
-        skip_lines : integer
-            number of lines that are ignored at each loop
-        coating_data : integer
-            list that contains the results
+    Parameters
+    ----------
+    resultfullfilename : string
+        Path of result file
+    skip_lines : integer
+        number of lines that are ignored at each loop
+    coating_data : integer
+        list that contains the results
 
-        Returns
-        -------
-        nb_angle_of_incidence: integer
-            Number of angle of incidences in the result
-        coating_data : integer
-            list that contains the results
+    Returns
+    -------
+    nb_angle_of_incidence: integer
+        Number of angle of incidences in the result
+    coating_data : integer
+        list that contains the results
 
-        """
+    """
     # Reading the transmission file
     bfile = io.open(resultfullfilename, 'r', encoding='utf-16-le')
     header_line = bfile.readline()
@@ -381,6 +174,242 @@ def read_transmission_vs_angle_result(resultfullfilename,skip_lines,coating_data
     bfile.close()
 
     return nb_angle_of_incidence, coating_data
+
+
+def write_speos_coating_file(file_id1, name1,
+                         nb_digits, nb_angle_of_incidence,
+                         nb_wavelength, wavelength_min, wavelength_max, speos_wavelength_units_um,
+                         coating_data):
+    """
+    function that writes the speos coating file from the data read in the transmission vs angle analysis
+
+    Parameters
+    ----------
+    file_id1 : integer
+        File identifier
+    name1 : string
+        name of the coating
+    nb_angle_of_incidence : integer
+        Number of angles of incidences
+    nb_wavelength : integer
+        Number of wavelengths
+    wavelength_min : float
+        Minimum wavelength
+    wavelength_max : float
+        Maximum wavelength
+    speos_wavelength_units_um : integer
+        Conversion value to go from speos units to um. For example if speos is in nm, it is 1000
+    coating_data : list
+        list that contains the results
+
+    Returns
+    -------
+
+    """
+    myformat = '{:.' + str(nb_digits) + 'f}'
+
+    # Writing the file
+    file_id1.write('OPTIS - Coated surface file v1.0\n')
+    file_id1.write(name1 + "\n")
+    file_id1.write(str(nb_angle_of_incidence) + " " + str(nb_wavelength) + "\n")
+
+    # 1st line
+    for wavelength_index in range(nb_wavelength):
+        wavelength = round(wavelength_min + wavelength_index * (wavelength_max - wavelength_min) / (
+                nb_wavelength - 1), 3)
+        file_id1.write("\t" + " " + myformat.format(speos_wavelength_units_um * wavelength) + " " + "\t")
+    file_id1.write("\n")
+    # Loop to read the data
+    for angle_index in range(nb_angle_of_incidence):
+        # 1st column: angle of incidence
+        angleofincidence = float(coating_data[angle_index][0])
+        file_id1.write(myformat.format(angleofincidence) + ' \t')
+        for wavelength_index in range(nb_wavelength):
+            offset = angle_index + wavelength_index * (nb_angle_of_incidence + 1)
+            reflectance_ppol_1 = float(coating_data[offset][2])
+            transmittance_ppol_1 = float(coating_data[offset][4])
+            file_id1.write(myformat.format(100 * reflectance_ppol_1) + '\t' + myformat.format(
+                100 * transmittance_ppol_1) + '\t')
+        file_id1.write("\n\t")
+        for wavelength_index in range(nb_wavelength):
+            offset = angle_index + wavelength_index * (nb_angle_of_incidence + 1)
+            reflectance_spol_1 = float(coating_data[offset][1])
+            transmittance_spol_1 = float(coating_data[offset][3])
+            file_id1.write(myformat.format(100 * reflectance_spol_1) + "\t" + myformat.format(
+                100 * transmittance_spol_1) + "\t")
+        file_id1.write("\n")
+    file_id1.close()
+    # print("File " + coatingfilename1 + " created")
+    coating_data.clear()
+    # os.remove(resultfullfilename)
+
+
+def convert_coating_zemax_speos(coatingfilename, coatingfolder,
+        substrate_catalog,substrate_name,
+        user_wavelength_min, user_wavelength_max, nb_wavelength, speos_wavelength_units_um,
+        nb_digits, skip_lines):
+    """
+        function that converts a Zemax coating / substrate into a speos coating file and a bsdf180
+        The function reads the data from the Transmission vs Angle analysis
+        The settings are not implemented in ZOS-API for this analysis.
+        So the settings by default should be set to
+        - incident angles  from 0 to 90
+        - surface to 1
+
+        Parameters
+        ----------
+        coatingfilename : string
+            Name of the coating file to convert
+        coatingfolder : string
+            Path to the coating file
+        substrate_catalog : string
+            Catalog of the materials
+        substrate_name : string
+            Name of the materials
+        user_wavelength_min : float
+            Minimum user wavelength
+        user_wavelength_max : float
+            Maximum user wavelength
+        nb_wavelength = integer
+            Number of wavelengths
+        speos_wavelength_units_um : integer
+            Conversion value to go from speos units to um. For example if speos is in nm, it is 1000
+        nb_digits : integer
+            Number of digits of the converted data
+        skip_lines: integer
+            number of lines that are ignored at each loop - angle of incidence resolution
+        Returns
+        -------
+
+        """
+
+    zos = BaseZOS()
+    # load local variables
+    zosapi = zos.zosapi
+    the_application = zos.the_application
+    the_system = zos.the_system
+
+    coatingfullfilename = coatingfolder + '\\' + coatingfilename
+    print(coatingfullfilename)
+
+    # Set up primary optical system
+    the_system = the_application.PrimarySystem;
+    sample_dir = the_application.SamplesDir;
+    coating_dir = the_application.CoatingDir;
+    destination_file = coating_dir + '\\' + coatingfilename
+    # print(destination_file)
+    shutil.copy(coatingfullfilename, destination_file)
+    # Make new file
+    test_file = sample_dir + '\coating.zos'
+    # print(test_file)
+    the_system.New(False)
+    the_system.SaveAs(test_file)
+    # Coating catalog
+    the_system.SystemData.Files.CoatingFile = coatingfilename
+    # Aperture
+    the_system_data = the_system.SystemData
+    the_system_data.Aperture.ApertureValue = 1
+    the_lde = the_system.LDE
+    surface_0 = the_lde.GetSurfaceAt(0)
+    surface_1 = the_lde.GetSurfaceAt(1)
+    # Check the material catalog
+    if not the_system.SystemData.MaterialCatalogs.IsCatalogInUse(substrate_catalog):
+        the_system.SystemData.MaterialCatalogs.AddCatalog(substrate_catalog)
+    coating_list = surface_1.CoatingData.GetAvailableCoatings()
+    coating_list_length = coating_list.Length
+    wave = 1
+    the_system.Save()
+
+    # Check if the user wavelengths are within the wavelength range of the substrates
+    for j in range(len(substrate_name)):
+        material_1 = substrate_name[j]
+        material_2_name = "AIR"
+        material_2 = ''
+        wavelength_min, wavelength_max, wavelength_delta = check_wavelength_range(the_system, substrate_catalog,
+                                                                                  material_1, user_wavelength_min,
+                                                                                  user_wavelength_max, nb_wavelength)
+
+        # Read the coatings in the coating file
+        for i in range(coating_list_length):
+            # print(coating_list[i])
+            coating_name = coating_list[i]
+            if not coating_name == 'None':
+                name1 = str(coating_name) + '_' + str(material_2_name) + '_' + str(material_1)
+                name2 = str(coating_name) + '_' + str(material_1) + '_' + str(material_2_name)
+                coatingfilename1 = name1 + '.coated'
+                coatingfilename2 = name2 + '.coated'
+                coatingfullfilename1 = coatingfolder + '\\' + coatingfilename1
+                coatingfullfilename2 = coatingfolder + '\\' + coatingfilename2
+                file_id1 = open(coatingfullfilename1, 'w')
+                file_id2 = open(coatingfullfilename2, 'w')
+
+                coating_data = list()
+
+                # Extract coating data when going from air to substrate
+                surface_0.Material = material_2  # AIR
+                surface_1.Material = material_1
+                surface_1.Coating = coating_name
+
+                # Need to loop for all wavelength
+                for wavelength_index in range(nb_wavelength):
+                    wavelength = round(wavelength_min + wavelength_index * (wavelength_max - wavelength_min) / (
+                            nb_wavelength - 1), 3)
+                    the_system.SystemData.Wavelengths.GetWavelength(wave).Wavelength = wavelength
+                    # the_system.Save()
+
+                    resultfullfilename = coatingfolder + '\\My_Transmission_vs_angle_' + name1 + '.txt'
+                    bool_result = make_transmission_vs_angle_analysis(zosapi, the_system, resultfullfilename)
+                    # if bool_result == False:
+                    # print("The result file was not created!")
+
+                    nb_angle_of_incidence, coating_data = read_transmission_vs_angle_result(resultfullfilename, skip_lines,
+                                                                                            coating_data)
+
+                write_speos_coating_file(file_id1, name1,
+                                         nb_digits, nb_angle_of_incidence,
+                                         nb_wavelength, wavelength_min, wavelength_max, speos_wavelength_units_um,
+                                         coating_data)
+                print("File " + coatingfilename1 + " created")
+                os.remove(resultfullfilename)
+
+                # Extract coating data when going from substrate to air
+                surface_0.Material = material_1
+                surface_1.Material = material_2  # AIR
+                surface_1.Coating = coating_name
+
+                for wavelength_index in range(nb_wavelength):
+                    wavelength = round(wavelength_min + wavelength_index * (wavelength_max - wavelength_min) / (
+                            nb_wavelength - 1), 3)
+                    the_system.SystemData.Wavelengths.GetWavelength(wave).Wavelength = wavelength
+
+                    resultfullfilename2 = coatingfolder + '\\My_Transmission_vs_angle_' + name2 + '.txt'
+                    bool_result = make_transmission_vs_angle_analysis(zosapi, the_system, resultfullfilename2)
+                    # if bool_result == False:
+                    # print("The result file was not created!")
+
+                    nb_angle_of_incidence, coating_data = read_transmission_vs_angle_result(resultfullfilename2,
+                                                                                            skip_lines, coating_data)
+
+                write_speos_coating_file(file_id2, name2,
+                                         nb_digits, nb_angle_of_incidence,
+                                         nb_wavelength, wavelength_min, wavelength_max, speos_wavelength_units_um,
+                                         coating_data)
+                print("File " + coatingfilename2 + " created")
+                os.remove(resultfullfilename2)
+
+                # Create the BSDF180 that combines the two coatings
+                bsdf180filename = str(coating_name) + '_' + str(material_2_name) + '_' + str(material_1) + '.bsdf180'
+                bsdf180fullfilename = coatingfolder + '\\' + bsdf180filename
+                make_bsdf180(coatingfullfilename1, coatingfullfilename2, bsdf180fullfilename)
+                print("File " + bsdf180filename + " created\n")
+
+    os.remove(destination_file)
+    os.remove(test_file)
+    # This will clean up the connection to OpticStudio.
+    # Note that it closes down the server instance of OpticStudio, so you for maximum performance do not do
+    # this until you need to.
+    del zos
+    zos = None
 
 
 main()
