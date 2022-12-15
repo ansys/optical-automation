@@ -1,5 +1,3 @@
-import math
-
 import clr, os, winreg
 from itertools import islice
 import shutil
@@ -265,7 +263,7 @@ def convert_coating_zemax_speos(coatingfilename, coatingfolder,
         substrate_catalog : string
             Catalog of the materials
         substrate_name : string
-            Name of the materials
+            Names of the materials
         user_wavelength_min : float
             Minimum user wavelength
         user_wavelength_max : float
