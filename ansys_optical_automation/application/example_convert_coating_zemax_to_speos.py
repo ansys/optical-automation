@@ -6,8 +6,8 @@ from ansys_optical_automation.interop_process.Coating_converter_speos_zemax_Anal
 
 
 # USER INPUT
-coatingfilename = "Meopta_CoatingFileExample.dat"
-coatingfolder = r"C:\Data\PROJECTS\MEOPTA_COATING\COATINGS"
+coatingfilename = "CoatingFileExample.dat"
+coatingfolder = r"C:\Data\Zemax\Coatings"
 user_wavelength_min = 0.31
 user_wavelength_max = 0.9
 nb_wavelength = 5
