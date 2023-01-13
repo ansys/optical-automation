@@ -277,7 +277,8 @@ class Coating_converter_speos_zemax_Analysis():
         coating_dir = the_application.CoatingDir
         destination_file = coating_dir + '\\' + coatingfilename
         # print(destination_file)
-        shutil.copy(coatingfullfilename, destination_file)
+        if not coatingfullfilename.lower() == destination_file.lower():
+            shutil.copy(coatingfullfilename, destination_file)
         # Make new file
         test_file = sample_dir + '\coating.zos'
         # print(test_file)
@@ -317,8 +318,11 @@ class Coating_converter_speos_zemax_Analysis():
                     name2 = str(coating_name) + '_' + str(material_1) + '_' + str(material_2_name)
                     coatingfilename1 = name1 + '.coated'
                     coatingfilename2 = name2 + '.coated'
-                    coatingfullfilename1 = coatingfolder + '\\' + coatingfilename1
-                    coatingfullfilename2 = coatingfolder + '\\' + coatingfilename2
+                    coatingfolder_speos = coatingfolder + '\\Speos'
+                    if not (os.path.exists(coatingfolder_speos) and os.path.isdir(coatingfolder_speos)):
+                        os.makedirs(coatingfolder_speos)
+                    coatingfullfilename1 = coatingfolder_speos + '\\' + coatingfilename1
+                    coatingfullfilename2 = coatingfolder_speos + '\\' + coatingfilename2
                     file_id1 = open(coatingfullfilename1, 'w')
                     file_id2 = open(coatingfullfilename2, 'w')
 
@@ -378,7 +382,7 @@ class Coating_converter_speos_zemax_Analysis():
 
                     # Create the BSDF180 that combines the two coatings
                     bsdf180filename = str(coating_name) + '_' + str(material_2_name) + '_' + str(material_1) + '.bsdf180'
-                    bsdf180fullfilename = coatingfolder + '\\' + bsdf180filename
+                    bsdf180fullfilename = coatingfolder_speos + '\\' + bsdf180filename
                     self.make_bsdf180(coatingfullfilename1, coatingfullfilename2, bsdf180fullfilename)
                     print("File " + bsdf180filename + " created\n")
 
