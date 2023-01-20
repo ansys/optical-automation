@@ -1,3 +1,4 @@
 {
-    "coating_convert_bsdf180": true
+    "coating1_convert_coated": true,
+    "coating2_convert_coated": true
 }

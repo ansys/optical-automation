@@ -16,14 +16,16 @@ from ansys_optical_automation.interop_process.Coating_converter_speos_zemax_Anal
 from tests.config import SCDM_VERSION
 
 coating_file = os.path.join(unittest_path, "example_models", "test_12_coating.dat")
-coating_file_reference = os.path.join(unittest_path, "example_models", "test_12_coating_reference.bsdf180")
+bsdf180_file_reference = os.path.join(unittest_path, "example_models", "test_12_coating_reference.bsdf180")
+coating1_file_reference = os.path.join(unittest_path, "example_models", "test_12_coating_air_substrate_reference.coated")
+coating2_file_reference = os.path.join(unittest_path, "example_models", "test_12_coating_substrate_air_reference.coated")
 results_json = os.path.join(unittest_path, "test_12_coatingfile_results.json")
 results_dict = {}
 
 work_directory = os.path.join(unittest_path, "coatingfile")
 
 
-def check_converted_coatingfile(coatingfile_path, file_type):
+def check_converted_coated_coatingfile(coatingfile_path, file_type):
     """
     function to compare the coatingfile with its reference
     Parameters
@@ -42,10 +44,10 @@ def check_converted_coatingfile(coatingfile_path, file_type):
     """
     file_path = os.path.splitext(coatingfile_path)[0].lower() + "." + file_type
     reference_file = os.path.splitext(coatingfile_path)[0].lower() + "_reference." + file_type
-    reference = open(reference_file, "br")
+    reference = open(reference_file, "r")
     reference_data = reference.read()
     reference.close()
-    input_coating_file = open(coatingfile_path, "br")
+    input_coating_file = open(coatingfile_path, "r")
     input_coating_file_data = input_coating_file.read()
     input_coating_file.close()
     return reference_data == input_coating_file_data
@@ -55,9 +57,13 @@ def main():
     os.mkdir(work_directory)
     # test01
     test_file = os.path.join(work_directory, "test_12_coating.dat")
-    test_reference = os.path.join(work_directory, "test12_coating_reference.bsdf180")
+    test_bsdf180_reference = os.path.join(work_directory, "test12_coating_reference.bsdf180")
+    test_coating1_reference = os.path.join(work_directory, "test_12_coating1_reference.coated")
+    test_coating2_reference = os.path.join(work_directory, "test_12_coating2_reference.coated")
     shutil.copyfile(coating_file, test_file)
-    shutil.copyfile(coating_file_reference, test_reference)
+    shutil.copyfile(bsdf180_file_reference, test_bsdf180_reference)
+    shutil.copyfile(coating1_file_reference, test_coating1_reference)
+    shutil.copyfile(coating2_file_reference, test_coating2_reference)
 
     coatingfilename = "test_12_coating.dat"
     coatingfolder = work_directory
@@ -75,16 +81,25 @@ def main():
                                            nb_wavelength, speos_wavelength_units_um,
                                            nb_digits,
                                            skip_lines)
-    speos_test_file = coatingfolder + "\\Speos\\" + "COATING_MULTIPLELAYERS_AIR_N-BK7.bsdf180"
-    renamed_test_file = os.path.join(work_directory, "test_12_coating.bsdf180")
-    shutil.copyfile(speos_test_file, renamed_test_file)
+    speos_bsdf180_test_file = coatingfolder + "\\Speos\\" + "COATING_MULTIPLELAYERS_AIR_N-BK7.bsdf180"
+    speos_coating1_test_file = coatingfolder + "\\Speos\\" + "COATING_MULTIPLELAYERS_AIR_N-BK7.coated"
+    speos_coating2_test_file = coatingfolder + "\\Speos\\" + "COATING_MULTIPLELAYERS_N-BK7_AIR.coated"
+    bsdf180_test_file = os.path.join(work_directory, "test_12_coating.bsdf180")
+    coating1_test_file = os.path.join(work_directory, "test_12_coating1.coated")
+    coating2_test_file = os.path.join(work_directory, "test_12_coating2.coated")
+    shutil.copyfile(speos_bsdf180_test_file, bsdf180_test_file)
+    shutil.copyfile(speos_coating1_test_file, coating1_test_file)
+    shutil.copyfile(speos_coating2_test_file, coating2_test_file)
 
-    results_dict["coating_convert_bsdf180"] = check_converted_coatingfile(test_file, "bsdf180")
-    shutil.rmtree(coatingfolder + "\\Speos")
+    results_dict["coating1_convert_coated"] = check_converted_coated_coatingfile(coating1_test_file, "coated")
+    results_dict["coating2_convert_coated"] = check_converted_coated_coatingfile(coating2_test_file, "coated")
+    #No check of bsdf180 for now
     os.remove(test_file)
-    os.remove(test_reference)
+    os.remove(test_bsdf180_reference)
+    os.remove(test_coating1_reference)
+    os.remove(test_coating2_reference)
     os.remove(os.path.splitext(test_file)[0].lower() + ".bsdf180")
-
+    shutil.rmtree(work_directory)
 
 def unittest_run():
     try:

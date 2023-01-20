@@ -44,12 +44,22 @@ class TestCoatingfileAPI:
         if os.path.isfile(self.results_file):
             os.remove(self.results_file)
 
-    def test_01_convert_coating_to_bsdf180(self):
+    def test_01_convert_coating_to_coating1(self):
         """
-        Verify coating to bsdf180 conversion works correctly.
+        Verify coating to coating1.coated conversion works correctly.
         Returns:
         -------
         None
         """
-        res = self.results.get("coating_convert_bsdf180", None)
+        res = self.results.get("coating1_convert_coated", None)
+        assert res is True
+
+    def test_01_convert_coating_to_coating2(self):
+        """
+        Verify coating to coating2.coated conversion works correctly.
+        Returns:
+        -------
+        None
+        """
+        res = self.results.get("coating2_convert_coated", None)
         assert res is True
