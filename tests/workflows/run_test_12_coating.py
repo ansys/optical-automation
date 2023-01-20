@@ -17,10 +17,10 @@ from tests.config import SCDM_VERSION
 
 coating_file = os.path.join(unittest_path, "example_models", "test_12_coating.dat")
 coating_file_reference = os.path.join(unittest_path, "example_models", "test_12_coating_reference.bsdf180")
-results_json = os.path.join(unittest_path, "test_12_coating_results.json")
+results_json = os.path.join(unittest_path, "test_12_coatingfile_results.json")
 results_dict = {}
 
-work_directory = os.path.join(unittest_path, "rayfile")
+work_directory = os.path.join(unittest_path, "coatingfile")
 
 
 def check_converted_coatingfile(coatingfile_path, file_type):
@@ -61,7 +61,7 @@ def main():
 
     coatingfilename = "test_12_coating.dat"
     coatingfolder = work_directory
-    user_wavelength_min = 0.
+    user_wavelength_min = 0.31
     user_wavelength_max = 0.9
     nb_wavelength = 5
     speos_wavelength_units_um = 1000
@@ -75,11 +75,12 @@ def main():
                                            nb_wavelength, speos_wavelength_units_um,
                                            nb_digits,
                                            skip_lines)
-    speos_test_file = coatingfolder + "\\Speos\\" + "test12_COATING_MULTIPLELAYERS_AIR_N-BK7.bsdf180"
+    speos_test_file = coatingfolder + "\\Speos\\" + "COATING_MULTIPLELAYERS_AIR_N-BK7.bsdf180"
     renamed_test_file = os.path.join(work_directory, "test_12_coating.bsdf180")
     shutil.copyfile(speos_test_file, renamed_test_file)
 
     results_dict["coating_convert_bsdf180"] = check_converted_coatingfile(test_file, "bsdf180")
+    shutil.rmtree(coatingfolder + "\\Speos")
     os.remove(test_file)
     os.remove(test_reference)
     os.remove(os.path.splitext(test_file)[0].lower() + ".bsdf180")
