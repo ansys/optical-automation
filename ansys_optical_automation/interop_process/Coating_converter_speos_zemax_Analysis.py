@@ -277,8 +277,10 @@ class Coating_converter_speos_zemax_Analysis():
         coating_dir = the_application.CoatingDir
         destination_file = coating_dir + '\\' + coatingfilename
         # print(destination_file)
+        bool_copy = 0
         if not coatingfullfilename.lower() == destination_file.lower():
             shutil.copy(coatingfullfilename, destination_file)
+            bool_copy = 1
         # Make new file
         test_file = sample_dir + '\coating.zos'
         # print(test_file)
@@ -386,7 +388,8 @@ class Coating_converter_speos_zemax_Analysis():
                     self.make_bsdf180(coatingfullfilename1, coatingfullfilename2, bsdf180fullfilename)
                     print("File " + bsdf180filename + " created\n")
 
-        os.remove(destination_file)
+        if bool_copy == 1:
+            os.remove(destination_file)
         os.remove(test_file)
         # This will clean up the connection to OpticStudio.
         # Note that it closes down the server instance of OpticStudio, so you for maximum performance do not do

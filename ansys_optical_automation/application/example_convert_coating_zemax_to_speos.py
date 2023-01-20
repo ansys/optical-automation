@@ -14,7 +14,8 @@ nb_wavelength = 5
 speos_wavelength_units_um = 1000  # Wavelength unit in Speos in um
 # Coating substrates: 2 coatings are extracted per substrates: air -> substrate and substrate -> air
 substrate_catalog = "SCHOTT"
-substrate_name = ("N-SK16", "N-SF56", "SF4")
+# substrate_name = ["N-SK16", "N-SF56", "SF4"]
+substrate_name = ["N-BK7"]
 nb_digits = 6  # Number of digits
 skip_lines = 4 # Zemax returns 401 points when reading the R/T analysis. skip_lines = 4 means we read only 81 points
 
