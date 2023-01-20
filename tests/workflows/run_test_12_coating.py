@@ -61,7 +61,7 @@ def main():
 
     coatingfilename = "test_12_coating.dat"
     coatingfolder = work_directory
-    user_wavelength_min = 0.31
+    user_wavelength_min = 0.
     user_wavelength_max = 0.9
     nb_wavelength = 5
     speos_wavelength_units_um = 1000
