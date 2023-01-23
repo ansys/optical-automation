@@ -8,7 +8,7 @@ unittest_path = os.path.dirname(os.path.realpath(__file__))
 lib_path = os.path.dirname(unittest_path)
 sys.path.append(lib_path)
 
-from ansys_optical_automation.interop_process.CoatingConverter import CoatingConverter
+from ansys_optical_automation.interop_process.coating_converter import CoatingConverter
 
 # from ansys_optical_automation.scdm_core.utils import get_speos_core
 # from ansys_optical_automation.zemax_process.base import BaseZOS
@@ -89,9 +89,9 @@ def main():
         nb_digits,
         skip_lines,
     )
-    speos_bsdf180_test_file = coatingfolder + "\\Speos\\" + "COATING_MULTIPLELAYERS_AIR_N-BK7.bsdf180"
-    speos_coating1_test_file = coatingfolder + "\\Speos\\" + "COATING_MULTIPLELAYERS_AIR_N-BK7.coated"
-    speos_coating2_test_file = coatingfolder + "\\Speos\\" + "COATING_MULTIPLELAYERS_N-BK7_AIR.coated"
+    speos_bsdf180_test_file = os.path.join(coatingfolder, "Speos", "COATING_MULTIPLELAYERS_AIR_N-BK7.bsdf180")
+    speos_coating1_test_file = os.path.join(coatingfolder, "Speos", "COATING_MULTIPLELAYERS_AIR_N-BK7.coated")
+    speos_coating2_test_file = os.path.join(coatingfolder, "Speos", "COATING_MULTIPLELAYERS_N-BK7_AIR.coated")
     bsdf180_test_file = os.path.join(work_directory, "test_12_coating.bsdf180")
     coating1_test_file = os.path.join(work_directory, "test_12_coating1.coated")
     coating2_test_file = os.path.join(work_directory, "test_12_coating2.coated")
