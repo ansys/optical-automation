@@ -268,8 +268,8 @@ class Coating_converter_speos_zemax_Analysis:
             Path to the coating file
         substrate_catalog : string
             Catalog of the materials
-        substrate_name : string
-            Names of the materials
+        substrate_name : list of names
+            List containing the names of the materials
         user_wavelength_min : float
             Minimum user wavelength
         user_wavelength_max : float
