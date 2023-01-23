@@ -132,7 +132,7 @@ class CoatingConverter:
                             wavelength_min + wavelength_index * (wavelength_max - wavelength_min) / (nb_wavelength - 1),
                             3,
                         )
-                        the_system.SystemData.Wavelengths.GetWavelength(wave).Wavelength = wavelength
+                        self.the_system.SystemData.Wavelengths.GetWavelength(wave).Wavelength = wavelength
                         # the_system.Save()
 
                         resultfullfilename = coatingfolder + "\\My_Transmission_vs_angle_" + name1 + ".txt"
@@ -168,7 +168,7 @@ class CoatingConverter:
                             wavelength_min + wavelength_index * (wavelength_max - wavelength_min) / (nb_wavelength - 1),
                             3,
                         )
-                        the_system.SystemData.Wavelengths.GetWavelength(wave).Wavelength = wavelength
+                        self.the_system.SystemData.Wavelengths.GetWavelength(wave).Wavelength = wavelength
 
                         resultfullfilename2 = coatingfolder + "\\My_Transmission_vs_angle_" + name2 + ".txt"
                         # bool_result = self.make_transmission_vs_angle_analysis(zosapi,
@@ -273,14 +273,8 @@ class CoatingConverter:
         material_1_maxwave = my_material_catalog.MaximumWavelength
         my_material_catalog.Close()
 
-        if material_1_minwave > user_wavelength_min:
-            wavelength_min = material_1_minwave
-        else:
-            wavelength_min = user_wavelength_min
-        if user_wavelength_max > material_1_maxwave:
-            wavelength_max = material_1_maxwave
-        else:
-            wavelength_max = user_wavelength_max
+        wavelength_min = min(material_1_minwave, user_wavelength_min)
+        wavelength_max = max(material_1_maxwave, user_wavelength_max)
         wavelength_delta = (wavelength_max - wavelength_min) / (nb_wavelength - 1)
 
         return wavelength_min, wavelength_max, wavelength_delta
