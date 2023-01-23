@@ -1,8 +1,6 @@
-import glob
 import json
 import os
 import shutil
-import subprocess
 import sys
 import traceback
 
@@ -10,15 +8,21 @@ unittest_path = os.path.dirname(os.path.realpath(__file__))
 lib_path = os.path.dirname(unittest_path)
 sys.path.append(lib_path)
 
-from ansys_optical_automation.interop_process.Coating_converter_speos_zemax_Analysis import Coating_converter_speos_zemax_Analysis
+from ansys_optical_automation.interop_process.Coating_converter_speos_zemax_Analysis import (
+    Coating_converter_speos_zemax_Analysis,
+)
+
 # from ansys_optical_automation.scdm_core.utils import get_speos_core
 # from ansys_optical_automation.zemax_process.base import BaseZOS
-from tests.config import SCDM_VERSION
 
 coating_file = os.path.join(unittest_path, "example_models", "test_12_coating.dat")
 bsdf180_file_reference = os.path.join(unittest_path, "example_models", "test_12_coating_reference.bsdf180")
-coating1_file_reference = os.path.join(unittest_path, "example_models", "test_12_coating_air_substrate_reference.coated")
-coating2_file_reference = os.path.join(unittest_path, "example_models", "test_12_coating_substrate_air_reference.coated")
+coating1_file_reference = os.path.join(
+    unittest_path, "example_models", "test_12_coating_air_substrate_reference.coated"
+)
+coating2_file_reference = os.path.join(
+    unittest_path, "example_models", "test_12_coating_substrate_air_reference.coated"
+)
 results_json = os.path.join(unittest_path, "test_12_coatingfile_results.json")
 results_dict = {}
 
@@ -42,7 +46,6 @@ def check_converted_coated_coatingfile(coatingfile_path, file_type):
 
 
     """
-    file_path = os.path.splitext(coatingfile_path)[0].lower() + "." + file_type
     reference_file = os.path.splitext(coatingfile_path)[0].lower() + "_reference." + file_type
     reference = open(reference_file, "r")
     reference_data = reference.read()
@@ -75,12 +78,18 @@ def main():
     substrate_name = ["N-BK7"]
     nb_digits = 6
     skip_lines = 4
-    Coating_converter_speos_zemax_Analysis(coatingfilename, coatingfolder,
-                                           substrate_catalog, substrate_name,
-                                           user_wavelength_min, user_wavelength_max,
-                                           nb_wavelength, speos_wavelength_units_um,
-                                           nb_digits,
-                                           skip_lines)
+    Coating_converter_speos_zemax_Analysis(
+        coatingfilename,
+        coatingfolder,
+        substrate_catalog,
+        substrate_name,
+        user_wavelength_min,
+        user_wavelength_max,
+        nb_wavelength,
+        speos_wavelength_units_um,
+        nb_digits,
+        skip_lines,
+    )
     speos_bsdf180_test_file = coatingfolder + "\\Speos\\" + "COATING_MULTIPLELAYERS_AIR_N-BK7.bsdf180"
     speos_coating1_test_file = coatingfolder + "\\Speos\\" + "COATING_MULTIPLELAYERS_AIR_N-BK7.coated"
     speos_coating2_test_file = coatingfolder + "\\Speos\\" + "COATING_MULTIPLELAYERS_N-BK7_AIR.coated"
@@ -93,13 +102,14 @@ def main():
 
     results_dict["coating1_convert_coated"] = check_converted_coated_coatingfile(coating1_test_file, "coated")
     results_dict["coating2_convert_coated"] = check_converted_coated_coatingfile(coating2_test_file, "coated")
-    #No check of bsdf180 for now
+    # No check of bsdf180 for now
     os.remove(test_file)
     os.remove(test_bsdf180_reference)
     os.remove(test_coating1_reference)
     os.remove(test_coating2_reference)
     os.remove(os.path.splitext(test_file)[0].lower() + ".bsdf180")
     shutil.rmtree(work_directory)
+
 
 def unittest_run():
     try:

@@ -1,9 +1,8 @@
-import numpy as np
-
 # repo_path=r"your repository location"
 # sys.path.append(repo_path)
-from ansys_optical_automation.interop_process.Coating_converter_speos_zemax_Analysis import Coating_converter_speos_zemax_Analysis
-
+from ansys_optical_automation.interop_process.Coating_converter_speos_zemax_Analysis import (
+    Coating_converter_speos_zemax_Analysis,
+)
 
 # USER INPUT
 coatingfilename = "CoatingFileExample.dat"
@@ -17,11 +16,17 @@ substrate_catalog = "SCHOTT"
 # substrate_name = ["N-SK16", "N-SF56", "SF4"]
 substrate_name = ["N-BK7"]
 nb_digits = 6  # Number of digits
-skip_lines = 4 # Zemax returns 401 points when reading the R/T analysis. skip_lines = 4 means we read only 81 points
+skip_lines = 4  # Zemax returns 401 points when reading the R/T analysis. skip_lines = 4 means we read only 81 points
 
-Coating_converter_speos_zemax_Analysis(coatingfilename, coatingfolder,
-                                       substrate_catalog, substrate_name,
-                                       user_wavelength_min, user_wavelength_max,
-                                       nb_wavelength, speos_wavelength_units_um,
-                                       nb_digits,
-                                       skip_lines)
+Coating_converter_speos_zemax_Analysis(
+    coatingfilename,
+    coatingfolder,
+    substrate_catalog,
+    substrate_name,
+    user_wavelength_min,
+    user_wavelength_max,
+    nb_wavelength,
+    speos_wavelength_units_um,
+    nb_digits,
+    skip_lines,
+)
