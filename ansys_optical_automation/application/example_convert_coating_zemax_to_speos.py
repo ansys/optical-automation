@@ -1,8 +1,6 @@
 # repo_path=r"your repository location"
 # sys.path.append(repo_path)
-from ansys_optical_automation.interop_process.Coating_converter_speos_zemax_Analysis import (
-    Coating_converter_speos_zemax_Analysis,
-)
+from ansys_optical_automation.interop_process.coating_converter import CoatingConverter
 
 # USER INPUT
 coatingfilename = "CoatingFileExample.dat"
@@ -18,7 +16,7 @@ substrate_name = ["N-BK7"]
 nb_digits = 6  # Number of digits
 skip_lines = 4  # Zemax returns 401 points when reading the R/T analysis. skip_lines = 4 means we read only 81 points
 
-Coating_converter_speos_zemax_Analysis(
+CoatingConverter(
     coatingfilename,
     coatingfolder,
     substrate_catalog,

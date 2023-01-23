@@ -8,9 +8,7 @@ unittest_path = os.path.dirname(os.path.realpath(__file__))
 lib_path = os.path.dirname(unittest_path)
 sys.path.append(lib_path)
 
-from ansys_optical_automation.interop_process.Coating_converter_speos_zemax_Analysis import (
-    Coating_converter_speos_zemax_Analysis,
-)
+from ansys_optical_automation.interop_process.CoatingConverter import CoatingConverter
 
 # from ansys_optical_automation.scdm_core.utils import get_speos_core
 # from ansys_optical_automation.zemax_process.base import BaseZOS
@@ -79,7 +77,7 @@ def main():
     substrate_name = ["N-BK7"]
     nb_digits = 6
     skip_lines = 4
-    Coating_converter_speos_zemax_Analysis(
+    CoatingConverter(
         coatingfilename,
         coatingfolder,
         substrate_catalog,
