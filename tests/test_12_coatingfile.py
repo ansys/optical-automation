@@ -54,7 +54,7 @@ class TestCoatingfileAPI:
         res = self.results.get("coating1_convert_coated", None)
         assert res is True
 
-    def test_01_convert_coating_to_coating2(self):
+    def test_02_convert_coating_to_coating2(self):
         """
         Verify coating to coating2.coated conversion works correctly.
         Returns:
