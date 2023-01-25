@@ -2,8 +2,6 @@ import io
 import os
 import shutil
 
-from comtypes.client import CreateObject
-
 from ansys_optical_automation.zemax_process.base import BaseZOS
 
 
@@ -154,6 +152,8 @@ class CoatingConverter:
 
         """
         # Create the BSDF180 that combines the two coatings
+        from comtypes.client import CreateObject
+
         bsdf_viewer = CreateObject("SimpleBSDFSurfaceViewer.Application")
         # Builds BSDF 180
         bsdf_viewer.BuildBSDF180(coating_file_1, coating_file_2)
