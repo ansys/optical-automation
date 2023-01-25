@@ -154,7 +154,7 @@ class CoatingConverter:
         # Create the BSDF180 that combines the two coatings
         from comtypes.client import CreateObject
 
-        bsdf_viewer = CreateObject("SimpleBSDFSurfaceViewer.Application")
+        bsdf_viewer = CreateObject("SimpleBSDFSurfaceViewer.Application222")
         # Builds BSDF 180
         bsdf_viewer.BuildBSDF180(coating_file_1, coating_file_2)
         bsdf_viewer.SaveFile(speos_bsdf180)
