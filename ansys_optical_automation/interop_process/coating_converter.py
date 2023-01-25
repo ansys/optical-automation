@@ -33,9 +33,13 @@ class CoatingConverter:
         self.coatingfolder = coatingfolder
         self.substrate_catalog = substrate_catalog
         self.substrate_names = substrate_names
+
         self.zos = BaseZOS()
         self.the_system = self.zos.the_application.PrimarySystem
         self.bool_copy = 0
+
+        # Defining a test file
+        TestFile = coatingfolder + '\\coating.zos'
 
         # Set up primary optical system
         coating_dir = self.zos.the_application.CoatingDir
@@ -58,7 +62,7 @@ class CoatingConverter:
         if not self.the_system.SystemData.MaterialCatalogs.IsCatalogInUse(substrate_catalog):
             self.the_system.SystemData.MaterialCatalogs.AddCatalog(substrate_catalog)
         self.coating_list = self.surface_1.CoatingData.GetAvailableCoatings()
-        self.the_system.Save()
+        self.the_system.SaveAs(TestFile)
 
     def convert_zemax_to_speos(self, wavelength_min, wavelength_max, nb_wavelength, unit, nb_digits, skip_lines):
         # Check if the user wavelengths are within the wavelength range of the substrates
@@ -66,7 +70,7 @@ class CoatingConverter:
             material_2_name = "AIR"
             material_2 = ""
             wavelength_min, wavelength_max = self.__check_wavelength_range(
-                substrate_name, wavelength_min, wavelength_max, nb_wavelength
+                substrate_name, wavelength_min, wavelength_max
             )
 
             # Read the coatings in the coating file
@@ -190,7 +194,7 @@ class CoatingConverter:
 
         return wavelength_min, wavelength_max
 
-    def __check_transmission_vs_angle_result(self, result_file_dir, skip_lines):
+    def __check_transmission_vs_angle_result(self, coating_data, result_file_dir, skip_lines):
         """
         function that reads the result file from the transmission vs angle analysis
 
@@ -221,7 +225,6 @@ class CoatingConverter:
             msg = "cannot checks that the user wavelength range is within the material wavelength range"
             raise ValueError(msg)
 
-        coating_data = []
         # Reading the transmission file
         bfile = io.open(result_file_dir, "r", encoding="utf-16-le")
         header_line = bfile.readline()
@@ -283,7 +286,8 @@ class CoatingConverter:
         coating_file_output = open(coating_file_dir, "w")
 
         # Need to loop for all wavelength
-        coating_data = None
+        #coating_data = None
+        coating_data = []
         wavelength_delta = (wavelength_max - wavelength_min) / (nb_wavelength - 1)
         for wavelength_index in range(nb_wavelength):
             wavelength = round(wavelength_min + wavelength_index * wavelength_delta, 3)
@@ -291,7 +295,7 @@ class CoatingConverter:
             # the_system.Save()
 
             result_file_dir = os.path.join(self.coatingfolder, "My_Transmission_vs_angle_" + coating_file_name + ".txt")
-            nb_angle_of_incidence, coating_data = self.__check_transmission_vs_angle_result(result_file_dir, skip_lines)
+            nb_angle_of_incidence, coating_data = self.__check_transmission_vs_angle_result(coating_data,result_file_dir, skip_lines)
 
         myformat = "{:." + str(nb_digits) + "f}"
 

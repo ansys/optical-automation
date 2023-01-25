@@ -27,25 +27,26 @@ results_dict = {}
 work_directory = os.path.join(unittest_path, "coatingfile")
 
 
-def check_converted_coated_coatingfile(coatingfile_path, file_type):
+def check_converted_coated_coatingfile(coatingfile_path):
     """
     function to compare the coatingfile with its reference
     Parameters
     ----------
-    coatingfile_path : str
-        path to rayfile
-    result_dic : dict
-        result dictionary containing the unittest results
-    key : str
-        name of the dictionary key for the test
+    coatingfile_path : string
+        full path to the coating file
 
     Returns
+    -------
+    reference_data : string
+        text of the coating file
     -------
 
 
     """
     # file_path = os.path.splitext(coatingfile_path)[0].lower() + "." + file_type
-    reference_file = os.path.splitext(coatingfile_path)[0].lower() + "_reference." + file_type
+    file_name = os.path.splitext(coatingfile_path)[0].lower()
+    file_extension = os.path.splitext(coatingfile_path)[1].lower()
+    reference_file = file_name + "_reference" + file_extension
     reference = open(reference_file, "r")
     reference_data = reference.read()
     reference.close()
@@ -77,18 +78,15 @@ def main():
     substrate_name = ["N-BK7"]
     nb_digits = 6
     skip_lines = 4
-    CoatingConverter(
+    mycoatingtest = CoatingConverter(
         coatingfilename,
         coatingfolder,
         substrate_catalog,
-        substrate_name,
-        user_wavelength_min,
-        user_wavelength_max,
-        nb_wavelength,
-        speos_wavelength_units_um,
-        nb_digits,
-        skip_lines,
+        substrate_name
     )
+    CoatingConverter.convert_zemax_to_speos(mycoatingtest, user_wavelength_min, user_wavelength_max, nb_wavelength,
+                                            speos_wavelength_units_um, nb_digits, skip_lines)
+
     speos_bsdf180_test_file = os.path.join(coatingfolder, "Speos", "COATING_MULTIPLELAYERS_AIR_N-BK7.bsdf180")
     speos_coating1_test_file = os.path.join(coatingfolder, "Speos", "COATING_MULTIPLELAYERS_AIR_N-BK7.coated")
     speos_coating2_test_file = os.path.join(coatingfolder, "Speos", "COATING_MULTIPLELAYERS_N-BK7_AIR.coated")
@@ -99,14 +97,14 @@ def main():
     shutil.copyfile(speos_coating1_test_file, coating1_test_file)
     shutil.copyfile(speos_coating2_test_file, coating2_test_file)
 
-    results_dict["coating1_convert_coated"] = check_converted_coated_coatingfile(coating1_test_file, "coated")
-    results_dict["coating2_convert_coated"] = check_converted_coated_coatingfile(coating2_test_file, "coated")
+    results_dict["coating1_convert_coated"] = check_converted_coated_coatingfile(coating1_test_file)
+    results_dict["coating2_convert_coated"] = check_converted_coated_coatingfile(coating2_test_file)
     # No check of bsdf180 for now
-    os.remove(test_file)
-    os.remove(test_bsdf180_reference)
-    os.remove(test_coating1_reference)
-    os.remove(test_coating2_reference)
-    os.remove(os.path.splitext(test_file)[0].lower() + ".bsdf180")
+    # os.remove(test_file)
+    # os.remove(test_bsdf180_reference)
+    # os.remove(test_coating1_reference)
+    # os.remove(test_coating2_reference)
+    # os.remove(os.path.splitext(test_file)[0].lower() + ".bsdf180")
     shutil.rmtree(work_directory)
 
 

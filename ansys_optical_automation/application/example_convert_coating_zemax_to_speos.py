@@ -16,15 +16,13 @@ substrate_name = ["N-BK7"]
 nb_digits = 6  # Number of digits
 skip_lines = 4  # Zemax returns 401 points when reading the R/T analysis. skip_lines = 4 means we read only 81 points
 
-CoatingConverter(
+mycoatingtest = CoatingConverter(
     coatingfilename,
     coatingfolder,
     substrate_catalog,
-    substrate_name,
-    user_wavelength_min,
-    user_wavelength_max,
-    nb_wavelength,
-    speos_wavelength_units_um,
-    nb_digits,
-    skip_lines,
+    substrate_name
 )
+CoatingConverter.convert_zemax_to_speos(mycoatingtest, user_wavelength_min, user_wavelength_max, nb_wavelength,
+                                        speos_wavelength_units_um, nb_digits, skip_lines)
+
+
