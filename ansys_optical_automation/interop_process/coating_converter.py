@@ -39,7 +39,7 @@ class CoatingConverter:
         self.bool_copy = 0
 
         # Defining a test file
-        TestFile = coatingfolder + '\\coating.zos'
+        TestFile = coatingfolder + "\\coating.zos"
 
         # Set up primary optical system
         coating_dir = self.zos.the_application.CoatingDir
@@ -286,7 +286,7 @@ class CoatingConverter:
         coating_file_output = open(coating_file_dir, "w")
 
         # Need to loop for all wavelength
-        #coating_data = None
+        # coating_data = None
         coating_data = []
         wavelength_delta = (wavelength_max - wavelength_min) / (nb_wavelength - 1)
         for wavelength_index in range(nb_wavelength):
@@ -295,7 +295,9 @@ class CoatingConverter:
             # the_system.Save()
 
             result_file_dir = os.path.join(self.coatingfolder, "My_Transmission_vs_angle_" + coating_file_name + ".txt")
-            nb_angle_of_incidence, coating_data = self.__check_transmission_vs_angle_result(coating_data,result_file_dir, skip_lines)
+            nb_angle_of_incidence, coating_data = self.__check_transmission_vs_angle_result(
+                coating_data, result_file_dir, skip_lines
+            )
 
         myformat = "{:." + str(nb_digits) + "f}"
 

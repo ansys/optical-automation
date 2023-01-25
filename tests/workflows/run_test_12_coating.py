@@ -41,7 +41,6 @@ def check_converted_coated_coatingfile(coatingfile_path):
         text of the coating file
     -------
 
-
     """
     # file_path = os.path.splitext(coatingfile_path)[0].lower() + "." + file_type
     file_name = os.path.splitext(coatingfile_path)[0].lower()
@@ -78,14 +77,16 @@ def main():
     substrate_name = ["N-BK7"]
     nb_digits = 6
     skip_lines = 4
-    mycoatingtest = CoatingConverter(
-        coatingfilename,
-        coatingfolder,
-        substrate_catalog,
-        substrate_name
+    mycoatingtest = CoatingConverter(coatingfilename, coatingfolder, substrate_catalog, substrate_name)
+    CoatingConverter.convert_zemax_to_speos(
+        mycoatingtest,
+        user_wavelength_min,
+        user_wavelength_max,
+        nb_wavelength,
+        speos_wavelength_units_um,
+        nb_digits,
+        skip_lines,
     )
-    CoatingConverter.convert_zemax_to_speos(mycoatingtest, user_wavelength_min, user_wavelength_max, nb_wavelength,
-                                            speos_wavelength_units_um, nb_digits, skip_lines)
 
     speos_bsdf180_test_file = os.path.join(coatingfolder, "Speos", "COATING_MULTIPLELAYERS_AIR_N-BK7.bsdf180")
     speos_coating1_test_file = os.path.join(coatingfolder, "Speos", "COATING_MULTIPLELAYERS_AIR_N-BK7.coated")
