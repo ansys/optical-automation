@@ -2,9 +2,10 @@ import io
 import os
 import shutil
 
-#from ansys_optical_automation.post_process.dpf_base import DataProcessingFramework
-from ansys_optical_automation.zemax_process.base import BaseZOS
 from comtypes.client import CreateObject
+
+# from ansys_optical_automation.post_process.dpf_base import DataProcessingFramework
+from ansys_optical_automation.zemax_process.base import BaseZOS
 
 
 class CoatingConverter:
@@ -64,8 +65,9 @@ class CoatingConverter:
         self.coating_list = self.surface_1.CoatingData.GetAvailableCoatings()
         self.the_system.SaveAs(TestFile)
 
-    def convert_zemax_to_speos(self, wavelength_min, wavelength_max, nb_wavelength, unit, nb_digits, skip_lines,
-                               bool_bsdf180):
+    def convert_zemax_to_speos(
+        self, wavelength_min, wavelength_max, nb_wavelength, unit, nb_digits, skip_lines, bool_bsdf180
+    ):
         """
         function that converts a Zemax coating / substrate into a speos coating file and a bsdf180
 
@@ -177,9 +179,9 @@ class CoatingConverter:
 
         """
         # Create the BSDF180 that combines the two coatings
-        #bsdf_viewer = DataProcessingFramework(extension=".bsdf180", application="SimpleBSDFSurfaceViewer.Application")
-        #bsdf_viewer.dpf_instance.BuildBSDF180(coating_file_1, coating_file_2)
-        #bsdf_viewer.dpf_instance.SaveFile(speos_bsdf180)
+        # bsdf_viewer = DataProcessingFramework(extension=".bsdf180", application="SimpleBSDFSurfaceViewer.Application")
+        # bsdf_viewer.dpf_instance.BuildBSDF180(coating_file_1, coating_file_2)
+        # bsdf_viewer.dpf_instance.SaveFile(speos_bsdf180)
 
         bsdf_viewer = CreateObject("SimpleBSDFSurfaceViewer.Application222")
         # # Builds BSDF 180

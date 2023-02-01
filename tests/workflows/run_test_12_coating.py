@@ -87,7 +87,7 @@ def main():
         speos_wavelength_units_um,
         nb_digits,
         skip_lines,
-        bool_bsdf180
+        bool_bsdf180,
     )
 
     if bool_bsdf180 == 1:
