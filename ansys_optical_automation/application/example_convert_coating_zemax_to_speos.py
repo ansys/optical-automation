@@ -15,6 +15,7 @@ substrate_catalog = "SCHOTT"
 substrate_name = ["N-BK7"]
 nb_digits = 6  # Number of digits
 skip_lines = 4  # Zemax returns 401 points when reading the R/T analysis. skip_lines = 4 means we read only 81 points
+bool_bsdf180 = 1 # 1 to create the bsdf180
 
 mycoatingtest = CoatingConverter(coatingfilename, coatingfolder, substrate_catalog, substrate_name)
 CoatingConverter.convert_zemax_to_speos(
@@ -25,4 +26,5 @@ CoatingConverter.convert_zemax_to_speos(
     speos_wavelength_units_um,
     nb_digits,
     skip_lines,
+    bool_bsdf180
 )

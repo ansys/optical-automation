@@ -63,7 +63,29 @@ class CoatingConverter:
         self.coating_list = self.surface_1.CoatingData.GetAvailableCoatings()
         self.the_system.SaveAs(TestFile)
 
-    def convert_zemax_to_speos(self, wavelength_min, wavelength_max, nb_wavelength, unit, nb_digits, skip_lines):
+    def convert_zemax_to_speos(self, wavelength_min, wavelength_max, nb_wavelength, unit, nb_digits, skip_lines,
+                               bool_bsdf180):
+        """
+        function that converts a Zemax coating / substrate into a speos coating file and a bsdf180
+
+        Parameters
+        ----------
+        wavelength_min : float
+            Minimum wavelength
+        wavelength_max : float
+            Maximum wavelength
+        nb_wavelength : integer
+            Number of wavelengths
+        unit : integer
+            Conversion value to go from speos units to um. For example if speos is in nm, it is 1000
+        nb_digits : integer
+            Number of digits in the speos coating file
+        skip_lines : integer
+            number of lines to skip when reading the data from the transmission analysis
+        bool_bsdf180 : boolean
+            1 to create a bsdf180 / 0 otherwise
+
+        """
         # Check if the user wavelengths are within the wavelength range of the substrates
         for substrate_name in self.substrate_names:
             material_2_name = "AIR"
@@ -123,8 +145,9 @@ class CoatingConverter:
                     bsdf180file_dir = os.path.join(coatingfolder_speos, bsdf180filename)
                     coating_file_1_dir = os.path.join(self.coatingfolder, "Speos", coating_file_1)
                     coating_file_2_dir = os.path.join(self.coatingfolder, "Speos", coating_file_2)
-                    self.__make_bsdf180(coating_file_1_dir, coating_file_2_dir, bsdf180file_dir)
-                    print("File " + bsdf180filename + " created\n")
+                    if bool_bsdf180 == 1:
+                        self.__make_bsdf180(coating_file_1_dir, coating_file_2_dir, bsdf180file_dir)
+                        print("File " + bsdf180filename + " created\n")
 
         if self.bool_copy == 1:
             os.remove(self.coating_file)

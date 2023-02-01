@@ -77,6 +77,7 @@ def main():
     substrate_name = ["N-BK7"]
     nb_digits = 6
     skip_lines = 4
+    bool_bsdf180 = 0
     mycoatingtest = CoatingConverter(coatingfilename, coatingfolder, substrate_catalog, substrate_name)
     CoatingConverter.convert_zemax_to_speos(
         mycoatingtest,
@@ -86,15 +87,18 @@ def main():
         speos_wavelength_units_um,
         nb_digits,
         skip_lines,
+        bool_bsdf180
     )
 
-    speos_bsdf180_test_file = os.path.join(coatingfolder, "Speos", "COATING_MULTIPLELAYERS_AIR_N-BK7.bsdf180")
+    if bool_bsdf180 == 1:
+        speos_bsdf180_test_file = os.path.join(coatingfolder, "Speos", "COATING_MULTIPLELAYERS_AIR_N-BK7.bsdf180")
+        bsdf180_test_file = os.path.join(work_directory, "test_12_coating.bsdf180")
+        shutil.copyfile(speos_bsdf180_test_file, bsdf180_test_file)
+
     speos_coating1_test_file = os.path.join(coatingfolder, "Speos", "COATING_MULTIPLELAYERS_AIR_N-BK7.coated")
     speos_coating2_test_file = os.path.join(coatingfolder, "Speos", "COATING_MULTIPLELAYERS_N-BK7_AIR.coated")
-    bsdf180_test_file = os.path.join(work_directory, "test_12_coating.bsdf180")
     coating1_test_file = os.path.join(work_directory, "test_12_coating1.coated")
     coating2_test_file = os.path.join(work_directory, "test_12_coating2.coated")
-    shutil.copyfile(speos_bsdf180_test_file, bsdf180_test_file)
     shutil.copyfile(speos_coating1_test_file, coating1_test_file)
     shutil.copyfile(speos_coating2_test_file, coating2_test_file)
 
