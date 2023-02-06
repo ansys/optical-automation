@@ -22,9 +22,9 @@ def getfilename(extension, save=False):
     root = tk.Tk()
     root.withdraw()
     if not save:
-        file_path = filedialog.askopenfilename(filetypes=[("Rayfile", extension)])
+        file_path = filedialog.askopenfilename(filetypes=[("BSDF", extension)])
     else:
-        file_path = filedialog.asksaveasfilename(filetypes=[("Rayfile", extension)])
+        file_path = filedialog.asksaveasfilename(filetypes=[("BSDF", extension)])
         if not file_path.endswith(extension.strip("*")):
             file_path += extension.strip("*")
     return file_path

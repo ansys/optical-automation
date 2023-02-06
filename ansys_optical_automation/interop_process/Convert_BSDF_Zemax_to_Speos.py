@@ -581,6 +581,7 @@ def convert_zemax_speos_bsdf_data(symmetry,scatterType,
     nbPhi=int(360/precisionPhi+1)
 
     # Initialization
+    temp_bsdfDataSpeos = np.zeros((nbSampleRotation, nbAngleIncidence, nbTheta, nbPhi))
     bsdfDataSpeos = np.zeros((nbSampleRotation,nbAngleIncidence,nbTheta,nbPhi))
 
     for i in range(nbSampleRotation):
@@ -643,15 +644,21 @@ def convert_zemax_speos_bsdf_data(symmetry,scatterType,
                         bsdfN1 = bsdf1 * (1-coeffTheta) + bsdf2 * coeffTheta
                         bsdfN2 = bsdf3 * (1-coeffTheta) + bsdf4 * coeffTheta
                         bsdfValue = bsdfN1 * (1-coeffPhi) + bsdfN2 * coeffPhi
-                        if scatterType == "BRDF":
-                            bsdfDataSpeos[i][j][k][l]=bsdfValue
-                        else:
-                            bsdfDataSpeos[i][j][nbTheta - 1 - k][l] = bsdfValue
+                        temp_bsdfDataSpeos[i][j][k][l]=bsdfValue
+                        #if scatterType == "BRDF":
+                        #bsdfDataSpeos[i][j][k][l]=bsdfValue
+                        #else:
+                        #bsdfDataSpeos[i][j][nbTheta - 1 - k][l] = bsdfValue
 
     if scatterType == "BRDF":
+        bsdfDataSpeos = temp_bsdfDataSpeos
         line_theta = [(precisionTheta * k) for k in range(nbTheta)]
     else:
         line_theta = [(90 + precisionTheta * k) for k in range(nbTheta)]
+        for i in range(nbSampleRotation):
+            for j in range(nbAngleIncidence):
+                for k in range(nbTheta):
+                    bsdfDataSpeos[i][j][k] = temp_bsdfDataSpeos[i][j][nbTheta-1-k]
 
     line_phi = [(precisionPhi * x) for x in range(nbPhi)]
 
