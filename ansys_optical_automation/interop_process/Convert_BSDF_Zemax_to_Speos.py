@@ -661,6 +661,7 @@ def convert_zemax_speos_bsdf_data(symmetry,scatterType,
                     bsdfDataSpeos[i][j][k] = temp_bsdfDataSpeos[i][j][nbTheta-1-k]
 
     line_phi = [(precisionPhi * x) for x in range(nbPhi)]
+    temp_bsdfDataSpeos = []
 
     return bsdfDataSpeos, line_theta, line_phi
 

@@ -33,8 +33,8 @@ def getfilename(extension, save=False):
 def main():
     """Main script to convert a Zemax BSDF file to a Speos BSDF file"""
 
-    precisionTheta = 1  # 1 #10 #0.5
-    precisionPhi = 1  # 10 #1
+    precisionTheta = 5  # 1 #10 #0.5
+    precisionPhi = 5  # 10 #1
 
     BSDF_inputFilepath = getfilename("*.bsdf")
     input_file_extension = os.path.splitext(BSDF_inputFilepath)[1].lower()[0:]
