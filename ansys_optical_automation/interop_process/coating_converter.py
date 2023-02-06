@@ -5,8 +5,6 @@ import shutil
 from ansys_optical_automation.post_process.dpf_base import DataProcessingFramework
 from ansys_optical_automation.zemax_process.base import BaseZOS
 
-# from comtypes.client import CreateObject
-
 
 class CoatingConverter:
     def __init__(self, coatingfilename, coatingfolder, substrate_catalog, substrate_names):
@@ -182,11 +180,6 @@ class CoatingConverter:
         bsdf_viewer = DataProcessingFramework(extension=".bsdf180", application="SimpleBSDFSurfaceViewer.Application")
         bsdf_viewer.dpf_instance.BuildBSDF180(coating_file_1, coating_file_2)
         bsdf_viewer.dpf_instance.SaveFile(speos_bsdf180)
-
-        # bsdf_viewer = CreateObject("SimpleBSDFSurfaceViewer.Application222")
-        # # # Builds BSDF 180
-        # bsdf_viewer.BuildBSDF180(coating_file_1, coating_file_2)
-        # bsdf_viewer.SaveFile(speos_bsdf180)
 
     def __check_wavelength_range(self, substrate_material, user_wavelength_min, user_wavelength_max):
         """
