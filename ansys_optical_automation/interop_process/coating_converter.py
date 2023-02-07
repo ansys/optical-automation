@@ -228,9 +228,11 @@ class CoatingConverter:
 
         Parameters
         ----------
+        coating_data : list
+            list containing coating data
         result_file_dir : string
             Path of result file
-        skip_lines : integer
+        skip_lines : int
             number of lines that are ignored at each loop
 
         Returns
@@ -293,9 +295,10 @@ class CoatingConverter:
 
         Parameters
         ----------
-        skip_lines
         coating_file_name : string
             name of the coating
+        nb_digits : int
+            number of digit to skip
         nb_wavelength : integer
             Number of wavelengths
         wavelength_min : float
@@ -304,6 +307,8 @@ class CoatingConverter:
             Maximum wavelength
         speos_wavelength_unit : integer
             Conversion value to go from speos units to um. For example if speos is in nm, it is 1000
+        skip_lines : int
+            number of lines to skip
 
         Returns
         -------
