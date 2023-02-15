@@ -9,7 +9,7 @@ class DataProcessingFramework:
 
     """
 
-    application_list = ["HDRIViewer.Application", "XMPViewer.Application"]
+    application_list = ["SimpleBSDFSurfaceViewer.Application", "HDRIViewer.Application", "XMPViewer.Application"]
     binary_format = {".ray", ".dat", ".sdf"}
     text_format = {".spectrum", ".spcd"}
 
