@@ -288,6 +288,7 @@ def main():
     html_file = glob.glob(os.path.join(work_directory, "*.html"))
     os.remove(html_file[0])
 
+
 def unittest_run():
     try:
         main()
