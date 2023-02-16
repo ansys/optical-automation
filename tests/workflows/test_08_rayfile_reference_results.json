@@ -282,5 +282,6 @@
     "ray_convert_sdf": true,
     "sdf_convert_ray": true,
     "sdf_ray_sim": true,
-    "dat_ray_sim": true
+    "dat_ray_sim": true,
+    "flux_dat_ray_sim": true
 }
