@@ -392,18 +392,18 @@ class DpfRayfile(DataProcessingFramework):
                     raise ValueError(msg)
                 raylen = math.sqrt(l_dir * l_dir + m_dir * m_dir + n_dir * n_dir)
                 if abs(raylen - 1) > 1e-3:
-                    msg = "Erorr: Vector length of " + str(m_dir) + "th ray is unusual (" + str(raylen) + ")"
+                    msg = "Error: Vector length of " + str(m_dir) + "th ray is unusual (" + str(raylen) + ")"
                     raise ValueError(msg)
                 # Check ray energy:
                 if e < 0:
                     msg = "Error: ray power of " + str(m_dir) + "th ray is < 0"
                     raise ValueError(msg)
                 elif e == 0:
-                    print("The " + str(ray_idx) + " th ray has 0 flux! \n This Ray was removed from data")
+                    print("The " + str(ray_idx) + " the ray has 0 flux! \n This Ray was removed from data")
                     self.__ray_number -= 1
                 else:
                     self.__rays.append(DpfRay(x, y, z, l_dir, m_dir, n_dir, wav, e))
-
+            self.dpf_instance.close()
         else:
             if not self.__binary:
                 msg = "Non binary files not supported \n Filepath:" + self.file_path

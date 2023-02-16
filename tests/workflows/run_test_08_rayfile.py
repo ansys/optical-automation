@@ -18,6 +18,7 @@ from tests.config import SCDM_VERSION
 
 ray_file = os.path.join(unittest_path, "example_models", "test_08_ray.ray")
 dat_file = os.path.join(unittest_path, "example_models", "test_08_dat.dat")
+dat_flux_file = os.path.join(unittest_path, "example_models", "test_08_dat_flux_type_1.dat")
 sdf_file = os.path.join(unittest_path, "example_models", "test_08_sdf.sdf")
 sim_path = os.path.join(unittest_path, "example_models", "ray_test.speos")
 ray_file_reference = os.path.join(unittest_path, "example_models", "test_08_ray_reference.sdf")
@@ -276,6 +277,15 @@ def main():
     convert = RayfileConverter(test_file)
     convert.speos_to_zemax()
     results_dict["ray_sdf_sim"] = check_zos_sim(os.path.splitext(test_file)[0].lower() + ".sdf")
+    # test10
+    test_file = os.path.join(work_directory, "test_08_dat_flux_type_1.dat")
+    shutil.copyfile(dat_flux_file, test_file)
+    convert = RayfileConverter(test_file)
+    convert.zemax_to_speos()
+
+    results_dict["flux_dat_ray_sim"] = check_speos_sim(os.path.splitext(test_file)[0].lower() + ".ray")
+    html_file = glob.glob(os.path.join(work_directory, "*.html"))
+    os.remove(html_file[0])
     shutil.rmtree(work_directory)
 
 

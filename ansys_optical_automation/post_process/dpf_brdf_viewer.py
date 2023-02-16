@@ -27,7 +27,6 @@ class BrdfStructure:
     """
 
     def __init__(self, wavelength_list):
-
         wavelength_list = sorted(set(wavelength_list))
         if not all(360 < item < 830 for item in wavelength_list):
             raise ValueError("Please provide correct wavelengths in range between 360 and 830nm ")
