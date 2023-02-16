@@ -361,7 +361,7 @@ class DpfRayfile(DataProcessingFramework):
                 if flux_type == 0:
                     self.__watt_value = ray_set_flux
                     self.__lumen_value = ray_set_flux * photopic_conversion
-                elif flux_type == 2:
+                elif flux_type == 1:
                     self.__watt_value = ray_set_flux / photopic_conversion
                     self.__lumen_value = ray_set_flux
                 else:
