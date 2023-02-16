@@ -136,3 +136,13 @@ class TestRayfileAPI:
         """
         res = self.results.get("ray_sdf_sim", None)
         assert res is True
+
+    def test_10_convert_flux_type_01_to_ray(self):
+        """
+        Check if a .dat file with flux_type = 1 can be converted
+        Returns
+        -------
+        None
+        """
+        res = self.results.get("flux_dat_ray_sim", None)
+        assert res is True
