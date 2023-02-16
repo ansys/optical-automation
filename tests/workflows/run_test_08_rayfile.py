@@ -277,7 +277,6 @@ def main():
     convert = RayfileConverter(test_file)
     convert.speos_to_zemax()
     results_dict["ray_sdf_sim"] = check_zos_sim(os.path.splitext(test_file)[0].lower() + ".sdf")
-    shutil.rmtree(work_directory)
     # test10
     test_file = os.path.join(work_directory, "test_08_dat_flux_type_1.dat")
     shutil.copyfile(dat_flux_file, test_file)
@@ -287,6 +286,7 @@ def main():
     results_dict["flux_dat_ray_sim"] = check_speos_sim(os.path.splitext(test_file)[0].lower() + ".ray")
     html_file = glob.glob(os.path.join(work_directory, "*.html"))
     os.remove(html_file[0])
+    shutil.rmtree(work_directory)
 
 
 def unittest_run():
