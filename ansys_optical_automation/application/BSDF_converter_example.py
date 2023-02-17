@@ -2,7 +2,8 @@ import os
 import tkinter as tk
 from tkinter import filedialog
 
-from ansys_optical_automation.interop_process.Convert_BSDF_Zemax_to_Speos import convert_zemax_to_speos_bsdf
+from ansys_optical_automation.interop_process.Convert_BSDF_Zemax_to_Speos import convert_zemax_to_speos_bsdf, \
+    convert_speos_to_zemax_bsdf
 
 
 def getfilename(extension, save=False):
@@ -31,23 +32,18 @@ def getfilename(extension, save=False):
 
 
 def main():
-    """Main script to convert a Zemax BSDF file to a Speos BSDF file"""
+    """Main script to convert a Zemax/Speos BSDF file to a Speos/Zemax BSDF file"""
 
-    precisionTheta = 5  # 1 #10 #0.5
-    precisionPhi = 5  # 10 #1
-
-    BSDF_inputFilepath = getfilename("*.bsdf")
+    BSDF_inputFilepath = getfilename("*.bsdf *.brdf")
     input_file_extension = os.path.splitext(BSDF_inputFilepath)[1].lower()[0:]
-    if not ("bsdf" in input_file_extension) :
+    if not ("bsdf" in input_file_extension or "brdf" in input_file_extension):
         msg = "Nonsupported file selected"
         raise TypeError(msg)
 
     if "bsdf" in input_file_extension:
-        # Speos output file
-        BSDF_outputFilepath = os.path.splitext(BSDF_inputFilepath)[0].lower() + '_' + \
-                              str(precisionTheta) + '_' + str(precisionPhi) + \
-                              '.anisotropicbsdf'
-        convert_zemax_to_speos_bsdf(BSDF_inputFilepath,BSDF_outputFilepath,precisionTheta,precisionPhi)
+        convert_zemax_to_speos_bsdf(BSDF_inputFilepath)
 
+    if "brdf" in input_file_extension:
+        convert_speos_to_zemax_bsdf(BSDF_inputFilepath,1)
 
 main()
