@@ -1107,7 +1107,7 @@ def write_zemax_data_bsdf(nLines, wavelength_index, nbSampleRotation, nbAngleInc
 
     for i in range(nbSampleRotation):
         for j in range(nbAngleIncidence):
-            nLines.append("TIS " + str(tisData[i][wavelength_index] / 100) + "\n")
+            nLines.append("TIS " + str(tisData[j][wavelength_index] / 100) + "\n")
             for k in range(bsdfData.shape[3]):
                 for l in range(bsdfData.shape[2] - 1):
                     scientific_notation = "{:.3e}".format(bsdfData[j][wavelength_index][l][k])
