@@ -37,11 +37,23 @@ def main():
     BSDF_inputFilepath = getfilename("*.bsdf *.brdf")
     input_file_extension = os.path.splitext(BSDF_inputFilepath)[1].lower()[0:]
     if not ("bsdf" in input_file_extension or "brdf" in input_file_extension):
+
         msg = "Nonsupported file selected"
         raise TypeError(msg)
 
     if "bsdf" in input_file_extension:
+
         convert_zemax_to_speos_bsdf(BSDF_inputFilepath)
+        # Speos output file
+        BSDF_outputFilepath = (
+            os.path.splitext(BSDF_inputFilepath)[0].lower()
+            + "_"
+            + str(precisionTheta)
+            + "_"
+            + str(precisionPhi)
+            + ".anisotropicbsdf"
+        )
+        convert_zemax_to_speos_bsdf(BSDF_inputFilepath, BSDF_outputFilepath, precisionTheta, precisionPhi)
 
     if "brdf" in input_file_extension:
         convert_speos_to_zemax_bsdf(BSDF_inputFilepath,1)
