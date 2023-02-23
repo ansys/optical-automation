@@ -30,7 +30,7 @@ test = [
 ]
 
 docs = [
-    "Sphinx",
+    "sphinx==5.3.0",
     "sphinx-book-theme",
     "sphinx-copybutton",
     "sphinx-panels",
