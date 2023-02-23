@@ -4,6 +4,14 @@ ansys\_optical\_automation.interop\_process package
 Submodules
 ----------
 
+ansys\_optical\_automation.interop\_process.coating\_converter module
+---------------------------------------------------------------------
+
+.. automodule:: ansys_optical_automation.interop_process.coating_converter
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 ansys\_optical\_automation.interop\_process.rayfile\_converter module
 ---------------------------------------------------------------------
 

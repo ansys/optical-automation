@@ -6,26 +6,33 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>ansys_optical_automation.post_process.dpf_rayfile &#8212; Ansys Optical Automation  documentation</title>
-    
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
   <!-- Loaded before other Sphinx assets -->
-  <link href="../../../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
-<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+  <link href="../../../_static/styles/theme.css?digest=796348d33e8b1d947c94" rel="stylesheet">
+<link href="../../../_static/styles/bootstrap.css?digest=796348d33e8b1d947c94" rel="stylesheet">
+<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=796348d33e8b1d947c94" rel="stylesheet">
 
-    
-  <link rel="stylesheet"
-    href="../../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
-  <link rel="preload" as="font" type="font/woff2" crossorigin
-    href="../../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
-  <link rel="preload" as="font" type="font/woff2" crossorigin
-    href="../../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+  
+  <link href="../../../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=796348d33e8b1d947c94" rel="stylesheet">
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2">
 
     <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css" />
-    <link rel="stylesheet" href="../../../_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/styles/sphinx-book-theme.css?digest=4ec06e9971c5264fbd345897d5258098f11cc577" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css" />
-    
+  
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
+  <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=796348d33e8b1d947c94">
+<link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=796348d33e8b1d947c94">
 
     <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
     <script src="../../../_static/jquery.js"></script>
@@ -33,192 +40,314 @@
     <script src="../../../_static/doctools.js"></script>
     <script src="../../../_static/clipboard.min.js"></script>
     <script src="../../../_static/copybutton.js"></script>
-    <script src="../../../_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
+    <script src="../../../_static/scripts/sphinx-book-theme.js?digest=8bf782fb4ee92b3d3646425e50f299c4e1fd152d"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '_modules/ansys_optical_automation/post_process/dpf_rayfile';</script>
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="docsearch:language" content="None">
-    
-
-    <!-- Google Analytics -->
-    
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="docsearch:language" content="None">
   </head>
-  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
-<!-- Checkboxes to toggle the left sidebar -->
-<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle navigation sidebar">
-<label class="overlay overlay-navbar" for="__navigation">
-    <div class="visually-hidden">Toggle navigation sidebar</div>
-</label>
-<!-- Checkboxes to toggle the in-page toc -->
-<input type="checkbox" class="sidebar-toggle" name="__page-toc" id="__page-toc" aria-label="Toggle in-page Table of Contents">
-<label class="overlay overlay-pagetoc" for="__page-toc">
-    <div class="visually-hidden">Toggle in-page Table of Contents</div>
-</label>
-<!-- Headers at the top -->
-<div class="announcement header-item noprint"></div>
-<div class="header header-item noprint"></div>
+  
+  
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="180" data-default-mode="">
 
-    
-    <div class="container-fluid" id="banner"></div>
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
 
-    
+  
+  <input type="checkbox" class="sidebar-toggle" name="__primary" id="__primary">
+  <label class="overlay overlay-primary" for="__primary"></label>
 
-    <div class="container-xl">
-      <div class="row">
-          
-<!-- Sidebar -->
-<div class="bd-sidebar noprint" id="site-navigation">
-    <div class="bd-sidebar__content">
-        <div class="bd-sidebar__top"><div class="navbar-brand-box">
-    <a class="navbar-brand text-wrap" href="../../../index.html">
+  
+  <input type="checkbox" class="sidebar-toggle" name="__secondary" id="__secondary">
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
       
-      
-      
-      <h1 class="site-logo" id="site-title">Ansys Optical Automation  documentation</h1>
-      
-    </a>
-</div><form class="bd-search d-flex align-items-center" action="../../../search.html" method="get">
-  <i class="icon fas fa-search"></i>
-  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" >
-</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
-    <div class="bd-toc-item active">
-        <ul class="nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="../../../resources/install.html">
-   Installation
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../../../resources/CONTRIBUTE.html">
-   Contribute
-  </a>
- </li>
-</ul>
-<p aria-level="2" class="caption" role="heading">
- <span class="caption-text">
-  Index:
- </span>
-</p>
-<ul class="nav bd-sidenav">
- <li class="toctree-l1 has-children">
-  <a class="reference internal" href="../../../api/modules.html">
-   ansys_optical_automation
-  </a>
-  <input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
-  <label for="toctree-checkbox-1">
-   <i class="fas fa-chevron-down">
-   </i>
+<form class="bd-search d-flex align-items-center" action="../../../search.html" method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+    </div>
+  </div>
+
+  
+  <nav class="bd-header navbar navbar-expand-lg bd-navbar" id="navbar-main"><div class="bd-header__inner bd-page-width">
+  <label class="sidebar-toggle primary-toggle" for="__primary">
+      <span class="fa-solid fa-bars"></span>
   </label>
-  <ul>
-   <li class="toctree-l2 has-children">
-    <a class="reference internal" href="../../../api/ansys_optical_automation.html">
-     ansys_optical_automation package
-    </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/>
-    <label for="toctree-checkbox-2">
-     <i class="fas fa-chevron-down">
-     </i>
-    </label>
-    <ul>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../../api/ansys_optical_automation.interop_process.html">
-       ansys_optical_automation.interop_process package
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../../api/ansys_optical_automation.lumerical_core.html">
-       ansys_optical_automation.lumerical_core package
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../../api/ansys_optical_automation.post_process.html">
-       ansys_optical_automation.post_process package
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../../api/ansys_optical_automation.scdm_core.html">
-       ansys_optical_automation.scdm_core package
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../../api/ansys_optical_automation.scdm_process.html">
-       ansys_optical_automation.scdm_process package
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../../api/ansys_optical_automation.speos_process.html">
-       ansys_optical_automation.speos_process package
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../../api/ansys_optical_automation.zemax_process.html">
-       ansys_optical_automation.zemax_process package
-      </a>
-     </li>
+  <div id="navbar-start">
+    
+    
+  
+
+
+<a class="navbar-brand logo" href="../../../index.html">
+
+  
+  
+  
+  
+  
+  
+  
+
+  
+  
+    <p class="title logo__title">Ansys Optical Automation  documentation</p>
+  
+</a>
+    
+  </div>
+
+  
+  <div class="col-lg-9 navbar-header-items">
+    <div id="navbar-center" class="mr-auto">
+      
+      <div class="navbar-center-item">
+        <nav class="navbar-nav">
+    <p class="sidebar-header-items__title" role="heading" aria-level="1" aria-label="Site Navigation">
+        Site Navigation
+    </p>
+    <ul id="navbar-main-elements" class="navbar-nav">
+        
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../resources/install.html">
+                        Installation
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../resources/CONTRIBUTE.html">
+                        Contribute
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../api/modules.html">
+                        ansys_optical_automation
+                      </a>
+                    </li>
+                
     </ul>
-   </li>
-  </ul>
- </li>
+</nav>
+      </div>
+      
+    </div>
+
+    <div id="navbar-end">
+      
+        <div class="navbar-end-item navbar-persistent--container">
+          
+<button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-toggle="tooltip">
+  <i class="fa-solid fa-magnifying-glass"></i>
+</button>
+        </div>
+      
+      
+      <div class="navbar-end-item">
+        <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+</button>
+      </div>
+      
+      <div class="navbar-end-item">
+        <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
+      </ul>
+      </div>
+      
+    </div>
+  </div>
+
+
+  
+  
+    <div class="navbar-persistent--mobile">
+<button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-toggle="tooltip">
+  <i class="fa-solid fa-magnifying-glass"></i>
+</button>
+    </div>
+  
+
+  
+
+</div>
+  </nav>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+      
+      <div class="navbar-center-item">
+        <nav class="navbar-nav">
+    <p class="sidebar-header-items__title" role="heading" aria-level="1" aria-label="Site Navigation">
+        Site Navigation
+    </p>
+    <ul id="navbar-main-elements" class="navbar-nav">
+        
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../resources/install.html">
+                        Installation
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../resources/CONTRIBUTE.html">
+                        Contribute
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../api/modules.html">
+                        ansys_optical_automation
+                      </a>
+                    </li>
+                
+    </ul>
+</nav>
+      </div>
+      
+      </div>
+    
+
+    
+    
+    <div class="sidebar-header-items__end">
+      
+      <div class="navbar-end-item">
+        <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+</button>
+      </div>
+      
+      <div class="navbar-end-item">
+        <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
+      </ul>
+      </div>
+      
+    </div>
+    
+  </div>
+
+  
+  <div class="sidebar-start-items sidebar-primary__section">
+    <div class="sidebar-start-items__item">
+  
+
+
+<a class="navbar-brand logo" href="../../../index.html">
+
+  
+  
+  
+  
+  
+  
+  
+
+  
+  
+    <p class="title logo__title">Ansys Optical Automation  documentation</p>
+  
+</a>
+    </div>
+    <div class="sidebar-start-items__item">
+<form class="bd-search d-flex align-items-center" action="../../../search.html" method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+    </div>
+    <div class="sidebar-start-items__item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../resources/install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../resources/CONTRIBUTE.html">Contribute</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Index:</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../api/modules.html">ansys_optical_automation</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../api/ansys_optical_automation.html">ansys_optical_automation package</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../api/ansys_optical_automation.interop_process.html">ansys_optical_automation.interop_process package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../api/ansys_optical_automation.lumerical_core.html">ansys_optical_automation.lumerical_core package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../api/ansys_optical_automation.post_process.html">ansys_optical_automation.post_process package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../api/ansys_optical_automation.scdm_core.html">ansys_optical_automation.scdm_core package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../api/ansys_optical_automation.scdm_process.html">ansys_optical_automation.scdm_process package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../api/ansys_optical_automation.speos_process.html">ansys_optical_automation.speos_process package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../api/ansys_optical_automation.zemax_process.html">ansys_optical_automation.zemax_process package</a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 
     </div>
-</nav></div>
-        <div class="bd-sidebar__bottom">
-             <!-- To handle the deprecated key -->
-            
-            <div class="navbar_extra_footer">
-            Theme by the <a href="https://ebp.jupyterbook.org">Executable Book Project</a>
-            </div>
-            
-        </div>
+</nav>
     </div>
-    <div id="rtd-footer-container"></div>
-</div>
+  </div>
+  
 
+  
+  <div class="sidebar-end-items sidebar-primary__section">
+    <div class="sidebar-end-items__item">
+    </div>
+  </div>
 
-          
+  
+  <div id="rtd-footer-container"></div>
 
-
-          
-<!-- A tiny helper pixel to detect if we've scrolled -->
-<div class="sbt-scroll-pixel-helper"></div>
-<!-- Main content -->
-<div class="col py-0 content-container">
-    
-    <div class="header-article row sticky-top noprint">
+      </div>
+      <main id="main-content" class="bd-main">
         
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+        <div class="bd-content">
+          <div class="bd-article-container">
+            
+            <div class="bd-header-article">
+                
 
 
 
 <div class="col py-1 d-flex header-article-main">
     <div class="header-article__left">
-        
-        <label for="__navigation"
-  class="headerbtn"
-  data-toggle="tooltip"
-data-placement="right"
-title="Toggle navigation"
->
-  
-
-<span class="headerbtn__icon-container">
-  <i class="fas fa-bars"></i>
-  </span>
-
-</label>
-
-        
+        <label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" data-toggle="tooltip" data-placement="right" title="Toggle primary sidebar">
+            <span class="fa-solid fa-bars"></span>
+        </label>
     </div>
     <div class="header-article__right">
 <button onclick="toggleFullScreen()"
-  class="headerbtn"
+  class="btn btn-sm"
   data-toggle="tooltip"
 data-placement="bottom"
 title="Fullscreen mode"
 >
   
 
-<span class="headerbtn__icon-container">
+<span class="btn__icon-container">
   <i class="fas fa-expand"></i>
   </span>
 
@@ -226,27 +355,22 @@ title="Fullscreen mode"
 
     </div>
 </div>
-
-<!-- Table of contents -->
-<div class="col-md-3 bd-toc show noprint">
-</div>
-    </div>
-    <div class="article row">
-        <div class="col pl-md-3 pl-lg-5 content-container">
-            <!-- Table of contents that is only displayed when printing the page -->
-            <div id="jb-print-docs-body" class="onlyprint">
-                <h1></h1>
-                <!-- Table of contents -->
-                <div id="print-main-content">
-                    <div id="jb-print-toc">
-                        
-                    </div>
-                </div>
             </div>
-            <main id="main-content" role="main">
-                
-              <div>
-                
+            
+            
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1></h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+        </div>
+    </div>
+</div>
+
+            <article class="bd-article" role="main">
+              
   <h1>Source code for ansys_optical_automation.post_process.dpf_rayfile</h1><div class="highlight"><pre>
 <span></span><span class="kn">import</span> <span class="nn">math</span>
 <span class="kn">import</span> <span class="nn">os</span>
@@ -345,7 +469,7 @@ title="Fullscreen mode"
 
 
 <div class="viewcode-block" id="DpfRay"><a class="viewcode-back" href="../../../api/ansys_optical_automation.post_process.html#ansys_optical_automation.post_process.dpf_rayfile.DpfRay">[docs]</a><span class="k">class</span> <span class="nc">DpfRay</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    this class defines the ray property</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
@@ -361,7 +485,7 @@ title="Fullscreen mode"
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">coordinate_x</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        return ray cardinal_coordinate_x</span>
 <span class="sd">        Returns:</span>
 <span class="sd">            cardinal_coordinate_x</span>
@@ -372,7 +496,7 @@ title="Fullscreen mode"
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">coordinate_y</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        return ray cardinal_coordinate_y</span>
 <span class="sd">        Returns:</span>
 <span class="sd">            cardinal_coordinate_y</span>
@@ -383,7 +507,7 @@ title="Fullscreen mode"
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">coordinate_z</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        return ray cardinal_coordinate_z</span>
 <span class="sd">        Returns:</span>
 <span class="sd">            cardinal_coordinate_z</span>
@@ -394,7 +518,7 @@ title="Fullscreen mode"
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">radiation_l</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        return ray vector_radiation_l</span>
 <span class="sd">        Returns:</span>
 <span class="sd">            vector_radiation_l</span>
@@ -405,7 +529,7 @@ title="Fullscreen mode"
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">radiation_m</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        return ray vector_radiation_m</span>
 <span class="sd">        Returns:</span>
 <span class="sd">            vector_radiation_m</span>
@@ -416,7 +540,7 @@ title="Fullscreen mode"
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">radiation_n</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        return ray vector_radiation_n</span>
 <span class="sd">        Returns:</span>
 <span class="sd">            vector_radiation_n</span>
@@ -427,7 +551,7 @@ title="Fullscreen mode"
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">wavelength</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        return ray wavelength</span>
 <span class="sd">        Returns:</span>
 <span class="sd">            wavelength</span>
@@ -438,7 +562,7 @@ title="Fullscreen mode"
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">energy</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        return ray energy</span>
 <span class="sd">        Returns:</span>
 <span class="sd">            energy</span>
@@ -449,7 +573,7 @@ title="Fullscreen mode"
 
 
 <div class="viewcode-block" id="DpfRayfile"><a class="viewcode-back" href="../../../api/ansys_optical_automation.post_process.html#ansys_optical_automation.post_process.dpf_rayfile.DpfRayfile">[docs]</a><span class="k">class</span> <span class="nc">DpfRayfile</span><span class="p">(</span><span class="n">DataProcessingFramework</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    this class contains method to read extract ray data from given binary rayfile</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
@@ -470,7 +594,7 @@ title="Fullscreen mode"
             <span class="bp">self</span><span class="o">.</span><span class="n">load_content</span><span class="p">()</span>
 
     <span class="k">def</span> <span class="nf">__is_binary</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;this method checks if a file is binary</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;this method checks if a file is binary</span>
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
@@ -485,7 +609,7 @@ title="Fullscreen mode"
         <span class="k">return</span> <span class="kc">False</span>
 
     <span class="k">def</span> <span class="nf">__photopic_conversion</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">wavelength</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;This method computes photopic to Radiometric conversion factor at the given wavelength</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;This method computes photopic to Radiometric conversion factor at the given wavelength</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -514,7 +638,7 @@ title="Fullscreen mode"
         <span class="k">return</span> <span class="p">((</span><span class="n">wavelength</span> <span class="o">-</span> <span class="n">start_wave</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">end_wave</span> <span class="o">-</span> <span class="n">start_wave</span><span class="p">))</span> <span class="o">*</span> <span class="p">(</span><span class="n">end_photopic</span> <span class="o">-</span> <span class="n">start_photopic</span><span class="p">)</span> <span class="o">+</span> <span class="n">start_photopic</span>
 
 <div class="viewcode-block" id="DpfRayfile.set_ray_count"><a class="viewcode-back" href="../../../api/ansys_optical_automation.post_process.html#ansys_optical_automation.post_process.dpf_rayfile.DpfRayfile.set_ray_count">[docs]</a>    <span class="k">def</span> <span class="nf">set_ray_count</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">raynumber</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        redfine raynumber</span>
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -528,7 +652,7 @@ title="Fullscreen mode"
         <span class="bp">self</span><span class="o">.</span><span class="n">__ray_numb</span> <span class="o">=</span> <span class="n">raynumber</span></div>
 
 <div class="viewcode-block" id="DpfRayfile.load_content"><a class="viewcode-back" href="../../../api/ansys_optical_automation.post_process.html#ansys_optical_automation.post_process.dpf_rayfile.DpfRayfile.load_content">[docs]</a>    <span class="k">def</span> <span class="nf">load_content</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        this method load the information from rayfile provided</span>
 
 <span class="sd">        Returns</span>
@@ -556,9 +680,6 @@ title="Fullscreen mode"
                 <span class="n">n_dir</span> <span class="o">=</span> <span class="n">struct</span><span class="o">.</span><span class="n">unpack</span><span class="p">(</span><span class="s2">&quot;f&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">dpf_instance</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="mi">4</span><span class="p">))[</span><span class="mi">0</span><span class="p">]</span>
                 <span class="n">wav</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="n">struct</span><span class="o">.</span><span class="n">unpack</span><span class="p">(</span><span class="s2">&quot;f&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">dpf_instance</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="mi">4</span><span class="p">))[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="mf">0.001</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
                 <span class="n">e</span> <span class="o">=</span> <span class="n">struct</span><span class="o">.</span><span class="n">unpack</span><span class="p">(</span><span class="s2">&quot;f&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">dpf_instance</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="mi">4</span><span class="p">))[</span><span class="mi">0</span><span class="p">]</span>
-                <span class="k">if</span> <span class="n">e</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
-                    <span class="n">msg</span> <span class="o">=</span> <span class="s2">&quot;Error: ray power of ray of &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">ray_idx</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot; cannot be &lt;= 0&quot;</span>
-                    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
                 <span class="k">if</span> <span class="n">wav</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
                     <span class="n">msg</span> <span class="o">=</span> <span class="s2">&quot;Error: ray wavelength of ray of &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">ray_idx</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;cannot be &lt;= 0&quot;</span>
                     <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
@@ -566,7 +687,14 @@ title="Fullscreen mode"
                 <span class="k">if</span> <span class="nb">abs</span><span class="p">(</span><span class="n">raylen</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mf">1e-3</span><span class="p">:</span>
                     <span class="n">msg</span> <span class="o">=</span> <span class="s2">&quot;Error: Vector length of &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">ray_idx</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;the ray is unusual (&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">raylen</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;)&quot;</span>
                     <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">__rays</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">DpfRay</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="n">l_dir</span><span class="p">,</span> <span class="n">m_dir</span><span class="p">,</span> <span class="n">n_dir</span><span class="p">,</span> <span class="n">wav</span><span class="p">,</span> <span class="n">e</span><span class="p">))</span>
+                <span class="k">if</span> <span class="n">e</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="n">msg</span> <span class="o">=</span> <span class="s2">&quot;Error: ray power of &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">m_dir</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;th ray is &lt; 0&quot;</span>
+                    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+                <span class="k">elif</span> <span class="n">e</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">ray_idx</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot; th ray has 0 flux! </span><span class="se">\n</span><span class="s2"> This Ray was removed from data&quot;</span><span class="p">)</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">__ray_numb</span> <span class="o">-=</span> <span class="mi">1</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">__rays</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">DpfRay</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="n">l_dir</span><span class="p">,</span> <span class="n">m_dir</span><span class="p">,</span> <span class="n">n_dir</span><span class="p">,</span> <span class="n">wav</span><span class="p">,</span> <span class="n">e</span><span class="p">))</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">dpf_instance</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
         <span class="k">elif</span> <span class="p">(</span><span class="n">rayfile_type</span> <span class="o">==</span> <span class="s2">&quot;dat&quot;</span> <span class="ow">or</span> <span class="n">rayfile_type</span> <span class="o">==</span> <span class="s2">&quot;sdf&quot;</span><span class="p">)</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">__binary</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">identifier</span> <span class="o">=</span> <span class="nb">int</span><span class="o">.</span><span class="n">from_bytes</span><span class="p">(</span>
@@ -607,7 +735,7 @@ title="Fullscreen mode"
                 <span class="k">if</span> <span class="n">flux_type</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">__watt_value</span> <span class="o">=</span> <span class="n">ray_set_flux</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">__lumen_value</span> <span class="o">=</span> <span class="n">ray_set_flux</span> <span class="o">*</span> <span class="n">photopic_conversion</span>
-                <span class="k">elif</span> <span class="n">flux_type</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+                <span class="k">elif</span> <span class="n">flux_type</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">__watt_value</span> <span class="o">=</span> <span class="n">ray_set_flux</span> <span class="o">/</span> <span class="n">photopic_conversion</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">__lumen_value</span> <span class="o">=</span> <span class="n">ray_set_flux</span>
                 <span class="k">else</span><span class="p">:</span>
@@ -631,9 +759,6 @@ title="Fullscreen mode"
                 <span class="n">n_dir</span> <span class="o">=</span> <span class="n">struct</span><span class="o">.</span><span class="n">unpack</span><span class="p">(</span><span class="s2">&quot;f&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">dpf_instance</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="mi">4</span><span class="p">))[</span><span class="mi">0</span><span class="p">]</span>
                 <span class="n">wav</span> <span class="o">=</span> <span class="n">wavelength</span> <span class="k">if</span> <span class="n">wavelength</span> <span class="o">!=</span> <span class="mi">0</span> <span class="k">else</span> <span class="mi">550</span>
                 <span class="n">e</span> <span class="o">=</span> <span class="n">struct</span><span class="o">.</span><span class="n">unpack</span><span class="p">(</span><span class="s2">&quot;f&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">dpf_instance</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="mi">4</span><span class="p">))[</span><span class="mi">0</span><span class="p">]</span>
-                <span class="k">if</span> <span class="n">e</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
-                    <span class="n">msg</span> <span class="o">=</span> <span class="s2">&quot;Error: ray power of &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">m_dir</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;th ray is &lt;= 0&quot;</span>
-                    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
                 <span class="k">if</span> <span class="n">ray_format_type</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
                     <span class="n">wav</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="n">struct</span><span class="o">.</span><span class="n">unpack</span><span class="p">(</span><span class="s2">&quot;f&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">dpf_instance</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="mi">4</span><span class="p">))[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">3</span><span class="p">)</span>
                 <span class="k">if</span> <span class="n">wav</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
@@ -641,9 +766,18 @@ title="Fullscreen mode"
                     <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
                 <span class="n">raylen</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">l_dir</span> <span class="o">*</span> <span class="n">l_dir</span> <span class="o">+</span> <span class="n">m_dir</span> <span class="o">*</span> <span class="n">m_dir</span> <span class="o">+</span> <span class="n">n_dir</span> <span class="o">*</span> <span class="n">n_dir</span><span class="p">)</span>
                 <span class="k">if</span> <span class="nb">abs</span><span class="p">(</span><span class="n">raylen</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mf">1e-3</span><span class="p">:</span>
-                    <span class="n">msg</span> <span class="o">=</span> <span class="s2">&quot;Erorr: Vector length of &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">m_dir</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;th ray is unusual (&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">raylen</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;)&quot;</span>
+                    <span class="n">msg</span> <span class="o">=</span> <span class="s2">&quot;Error: Vector length of &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">m_dir</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;th ray is unusual (&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">raylen</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;)&quot;</span>
                     <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">__rays</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">DpfRay</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="n">l_dir</span><span class="p">,</span> <span class="n">m_dir</span><span class="p">,</span> <span class="n">n_dir</span><span class="p">,</span> <span class="n">wav</span><span class="p">,</span> <span class="n">e</span><span class="p">))</span>
+                <span class="c1"># Check ray energy:</span>
+                <span class="k">if</span> <span class="n">e</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="n">msg</span> <span class="o">=</span> <span class="s2">&quot;Error: ray power of &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">m_dir</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;th ray is &lt; 0&quot;</span>
+                    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+                <span class="k">elif</span> <span class="n">e</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">ray_idx</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot; the ray has 0 flux! </span><span class="se">\n</span><span class="s2"> This Ray was removed from data&quot;</span><span class="p">)</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">__ray_number</span> <span class="o">-=</span> <span class="mi">1</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">__rays</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">DpfRay</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="n">l_dir</span><span class="p">,</span> <span class="n">m_dir</span><span class="p">,</span> <span class="n">n_dir</span><span class="p">,</span> <span class="n">wav</span><span class="p">,</span> <span class="n">e</span><span class="p">))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">dpf_instance</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">__binary</span><span class="p">:</span>
                 <span class="n">msg</span> <span class="o">=</span> <span class="s2">&quot;Non binary files not supported </span><span class="se">\n</span><span class="s2"> Filepath:&quot;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">file_path</span>
@@ -659,7 +793,7 @@ title="Fullscreen mode"
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">radiometric_power</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        this method return the Radiometric Power value</span>
 <span class="sd">        Returns:</span>
 <span class="sd">            Radiometric Power value</span>
@@ -670,7 +804,7 @@ title="Fullscreen mode"
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">photometric_power</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        this method return Photometric Power value</span>
 <span class="sd">        Returns:</span>
 <span class="sd">            Photometric Power value</span>
@@ -681,7 +815,7 @@ title="Fullscreen mode"
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">rays_number</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        this method return the number of rays</span>
 <span class="sd">        Returns:</span>
 <span class="sd">            number of rays in rayfile</span>
@@ -692,7 +826,7 @@ title="Fullscreen mode"
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">rays</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="p">[</span><span class="n">DpfRay</span><span class="p">]:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        this method return a list of rays</span>
 <span class="sd">        Returns:</span>
 <span class="sd">            a list of rays</span>
@@ -702,7 +836,7 @@ title="Fullscreen mode"
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__rays</span>
 
 <div class="viewcode-block" id="DpfRayfile.export_to_zemax"><a class="viewcode-back" href="../../../api/ansys_optical_automation.post_process.html#ansys_optical_automation.post_process.dpf_rayfile.DpfRayfile.export_to_zemax">[docs]</a>    <span class="k">def</span> <span class="nf">export_to_zemax</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        this method convert the rayfile into zemax format</span>
 
 <span class="sd">        Returns</span>
@@ -761,7 +895,7 @@ title="Fullscreen mode"
         <span class="n">zemax_spectrum_file</span><span class="o">.</span><span class="n">close</span><span class="p">()</span></div>
 
 <div class="viewcode-block" id="DpfRayfile.export_to_speos"><a class="viewcode-back" href="../../../api/ansys_optical_automation.post_process.html#ansys_optical_automation.post_process.dpf_rayfile.DpfRayfile.export_to_speos">[docs]</a>    <span class="k">def</span> <span class="nf">export_to_speos</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        this method convert the rayfile into speos format</span>
 
 <span class="sd">        Returns</span>
@@ -790,7 +924,7 @@ title="Fullscreen mode"
         <span class="n">speos_ray_file</span><span class="o">.</span><span class="n">close</span><span class="p">()</span></div>
 
 <div class="viewcode-block" id="DpfRayfile.export_file"><a class="viewcode-back" href="../../../api/ansys_optical_automation.post_process.html#ansys_optical_automation.post_process.dpf_rayfile.DpfRayfile.export_file">[docs]</a>    <span class="k">def</span> <span class="nf">export_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">export_folder_dir</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">convert</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        this method generates a file to be exported</span>
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -838,36 +972,70 @@ title="Fullscreen mode"
         <span class="k">return</span> <span class="n">outfile</span></div></div>
 </pre></div>
 
-              </div>
-              
-            </main>
-            <footer class="footer-article noprint">
-                
-    <!-- Previous / next buttons -->
+            </article>
+            
+
+            
+            
+            <footer class="bd-footer-article">
+                <!-- Previous / next buttons -->
 <div class='prev-next-area'>
 </div>
             </footer>
+            
+          </div>
+          
+          
+          
+          
         </div>
-    </div>
-    <div class="footer-content row">
-        <footer class="col footer"><p>
+        <footer class="bd-footer-content">
+          <div class="bd-footer-content__inner">
+            
+<div class="bd-footer-content__inner container">
   
-    By Ansys Inc.<br/>
-  
-      &copy; Copyright (c) 2022 ANSYS, Inc. All rights reserved.<br/>
-</p>
-        </footer>
-    </div>
+  <div class="footer-item">
     
-</div>
+<p class="component-author">
+By Ansys Inc.
+</p>
 
-
-      </div>
-    </div>
+  </div>
   
-  <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="../../../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+  <div class="footer-item">
+    
+<p class="copyright">
 
+    &copy; Copyright (c) 2023 ANSYS, Inc. All rights reserved.<br>
+
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    <p class="last-updated">
+Last updated on None.<br>
+</p>
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </div>
+        </footer>
+        
+
+      </main>
+    </div>
+  </div>
+
+  
+    
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../../_static/scripts/bootstrap.js?digest=796348d33e8b1d947c94"></script>
+<script src="../../../_static/scripts/pydata-sphinx-theme.js?digest=796348d33e8b1d947c94"></script>
 
   </body>
 </html>

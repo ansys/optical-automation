@@ -12,6 +12,14 @@ ansys\_optical\_automation.post\_process.dpf\_base module
    :undoc-members:
    :show-inheritance:
 
+ansys\_optical\_automation.post\_process.dpf\_brdf\_viewer module
+-----------------------------------------------------------------
+
+.. automodule:: ansys_optical_automation.post_process.dpf_brdf_viewer
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 ansys\_optical\_automation.post\_process.dpf\_hdri\_viewer module
 -----------------------------------------------------------------
 
