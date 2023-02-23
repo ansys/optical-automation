@@ -237,7 +237,7 @@ def read_zemax_bsdf(inputFilepath, bool_log):
         print("Reading header of Zemax BSDF.....")
     # Source type
     sourceLine = bfile.readline()
-    while sourceLine[0] == "#":
+    while sourceLine[0] == "#" or len(sourceLine) < 6 :
         sourceLine = bfile.readline()
     # source = sourceLine[8:-1]
     source = sourceLine[6:-1]
