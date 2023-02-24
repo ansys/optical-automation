@@ -864,9 +864,12 @@ def convert_zemax_speos_bsdf_data(
                                 len(line_phi_output)))
 
     index_block = 0
-    #Sample rotation or Wavelength
+    #if speos BRDF data i --> angle of incidence
+    #if zemax data i --> Sample rotation
     for i in range(nb_reflection_transmission * nbSampleRotation):
 
+        # if speos BRDF data j --> wavelength
+        # if zemax data i --> angleofincidence
         for j in range(nbAngleIncidence):
             for k in range(len(line_theta_output)):
                 currentTheta = line_theta_output[k]
