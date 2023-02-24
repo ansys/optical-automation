@@ -28,7 +28,7 @@ jobs:
           touch _build/html/.nojekyll
     
     - name: Update HTML Documentation
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v3
       with:
           name: HTML-Documentation
           path: doc/_build/html
