@@ -30,9 +30,9 @@ test = [
 ]
 
 docs = [
-    "Sphinx",
-    "sphinx-book-theme",
-    "sphinx-copybutton",
+    "sphinx",
+    "sphinx-book-theme==0.4.0rc1",
+    "sphinx-copybutton==0.5.1",
     "sphinx-panels",
     "numpydoc",
 ]
