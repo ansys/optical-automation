@@ -237,7 +237,7 @@ def read_zemax_bsdf(inputFilepath, bool_log):
         print("Reading header of Zemax BSDF.....")
     # Source type
     sourceLine = bfile.readline()
-    while sourceLine[0] == "#" or len(sourceLine) < 6 :
+    while sourceLine[0] == "#" or len(sourceLine) < 6:
         sourceLine = bfile.readline()
     # source = sourceLine[8:-1]
     source = sourceLine[6:-1]
@@ -422,7 +422,7 @@ def read_speos_bsdf(inputFilepath, bool_log):
     nb_reflection_transmission = 1
 
     bfile = open(inputFilepath, "r")
-    filesize = os.fstat(bfile.fileno()).st_size
+    # filesize = os.fstat(bfile.fileno()).st_size
 
     input_file_extension = os.path.splitext(inputFilepath)[1].lower()[0:]
     if "brdf" in input_file_extension:
@@ -438,7 +438,7 @@ def read_speos_bsdf(inputFilepath, bool_log):
         bool_success = 0
         print(".....WARNING: The format is not supported.")
         print(".....Open and save the file with the BSDF viewer to update the format.")
-        tempVariable = input(".....Press Enter to continue")
+        input(".....Press Enter to continue")
         exit()
     if bool_log == 1:
         print("Header = " + str(headerLine))
@@ -448,18 +448,24 @@ def read_speos_bsdf(inputFilepath, bool_log):
     if textorbinary[0] == 0:
         bool_success = 0
         print(".....WARNING: The BSDF data cannot be read. It is not a text.")
-        tempVariable = input(".....Press Enter to continue")
+        input(".....Press Enter to continue")
         exit()
     else:
         if bool_log == 1:
             print("Text = " + str(textorbinaryLine))
     # Row 3 : Comment line
     commentLine = bfile.readline()
+    if bool_log == 1:
+        print("Comment = " + str(commentLine))
     # Row 4 : Number of characters to read for the measurement description. Several lines are allowed
     nbmeasurementLine = bfile.readline()
-    nbmeasurement = nbmeasurementLine[:-1].split("\t")
+    if bool_log == 1:
+        print("nbmeasurementLine = " + str(nbmeasurementLine))
+    # nbmeasurement = nbmeasurementLine[:-1].split("\t")
     # Row 5 : Measurement description (cannot be edited from the viewer).
     measurementdescriptionLine = bfile.readline()
+    if bool_log == 1:
+        print("measurement description = " + str(measurementdescriptionLine))
     # Row 6: Contains two boolean values (0=false and 1=true) - reflection / transmission data
     reflectionortransmissionLine = bfile.readline()
     reflectionortransmission = reflectionortransmissionLine[:-1].split("\t")
@@ -470,12 +476,14 @@ def read_speos_bsdf(inputFilepath, bool_log):
         scatterType = "BTDF"
     if reflectionortransmission[0] == "1" and reflectionortransmission[1] == "1":
         nb_reflection_transmission = 2
-        #print(".....WARNING: The BSDF cannot be converted.")
-        #print(".....It contains transmission and reflection data.")
-        #tempVariable = input(".....Press Enter to continue")
-        #exit()
+        # print(".....WARNING: The BSDF cannot be converted.")
+        # print(".....It contains transmission and reflection data.")
+        # tempVariable = input(".....Press Enter to continue")
+        # exit()
     # Row 7: Contains a boolean value describing the type of value stored in the file: 1 bsdf / 0 intensity
     typeLine = bfile.readline()
+    if bool_log == 1:
+        print("BSDF(1) or Intensity(1) values = " + str(typeLine))
     # Row 8: Number of incident angles and number of wavelength samples (in nanometer).
     nbAngleIncidenceWavelengthLine = bfile.readline()
     nbAngleIncidenceWavelength = nbAngleIncidenceWavelengthLine[:-1].split("\t")
@@ -489,17 +497,6 @@ def read_speos_bsdf(inputFilepath, bool_log):
     wavelengthLine = bfile.readline()
     wavelengthString = wavelengthLine[:-1].split("\t")
     wavelength = [float(i) for i in wavelengthString]
-    # Row 11: Reflection (or transmission) percentage for BRDF wavelength data normalization, for the first table.
-    # NormalizationLine = bfile.readline()
-
-    # Row 12: Number of angles measured for Theta and Phi, for the incident angle N°1 and the wavelength N°1 of the incident angle N°1.
-    # nbthetaphiLine = bfile.readline()
-    # nbthetaphi = nbthetaphiLine[:-1].split(' ')
-    # nbScatterRadial = int(nbthetaphi[0])
-    # nbScatterAzimuth = int(nbthetaphi[1])
-    # Row 13: table
-    # scatterAzimuthLine = bfile.readline()
-    # scatterAzimuth = scatterAzimuthLine[:-1].split('\t')
 
     if bool_log == 1:
         print(".....Header was correctly read\n")
@@ -507,6 +504,11 @@ def read_speos_bsdf(inputFilepath, bool_log):
 
     if bool_log == 1:
         print("Reading BSDF content.....")
+
+    # Row 11: Reflection (or transmission) percentage for BRDF wavelength data normalization, for the first table.
+    # NormalizationLine = bfile.readline()
+    # Row 12: Number of angles measured for Theta and Phi
+    # for the incident angle N°1 and the wavelength N°1 of the incident angle N°1.
 
     scatterRadial_list = []
     scatterAzimuth_list = []
@@ -534,13 +536,13 @@ def read_speos_bsdf(inputFilepath, bool_log):
             scatterAzimuth_list.append(scatterAzimuth)
 
             bsdfDataBlock = np.zeros((nbScatterRadial, nbScatterAzimuth))
-            #scatterRadial = np.zeros(nbScatterRadial)
+            # scatterRadial = np.zeros(nbScatterRadial)
             scatterRadial = []
 
             for k in range(nbScatterRadial):
                 dataLine = bfile.readline()
                 data = dataLine.split()
-                #scatterRadial[k] = float(data[0])
+                # scatterRadial[k] = float(data[0])
                 scatterRadial.append(float(data[0]))
                 bsdfDataBlock[k] = data[1:]
             scatterRadial_list.append(scatterRadial)
@@ -737,29 +739,23 @@ def write_zemax_header_bsdf(
     return nLines
 
 
-def compute_new_value_matrix(
-        matrix_z,
-        line_x,
-        line_y,
-        new_x,
-        new_y):
+def compute_new_value_matrix(matrix_z, line_x, line_y, new_x, new_y):
     """
-        That function takes (x,y) as an argument and returns a new interpolated value from a matrix[x,y]
+    That function takes (x,y) as an argument and returns a new interpolated value from a matrix[x,y]
 
-        Parameters
-        ----------
-        matrix_z : matrix of z values
-            matrix giving a z value for a set of x,y values
-        line_x : list
-            List of x
-        line_y : list
-            List of y
-        new_x : flaot
-            New value of theta
-        new_y : flaot
-            New value of phi
-        """
-
+    Parameters
+    ----------
+    matrix_z : matrix of z values
+        matrix giving a z value for a set of x,y values
+    line_x : list
+        List of x
+    line_y : list
+        List of y
+    new_x : flaot
+        New value of theta
+    new_y : flaot
+        New value of phi
+    """
 
     indexInf_x = bisect.bisect_left(line_x, new_x)
     if indexInf_x == 0:
@@ -846,7 +842,6 @@ def convert_zemax_speos_bsdf_data(
         bool = 1 if speos BRDF data to convert, 0 otherwise
     """
 
-
     nbAngleIncidence = len(angleIncidence)
     nbSampleRotation = len(sampleRotation)
 
@@ -854,18 +849,16 @@ def convert_zemax_speos_bsdf_data(
     # If BRDF
     # SampleRotation stands for angle of incidence
     # Angle of incidence stands for wavelength
-    bsdfData_output_temp = np.zeros((nb_reflection_transmission * nbSampleRotation,
-                                     nbAngleIncidence,
-                                     len(line_theta_output),
-                                     len(line_phi_output)))
-    bsdfData_output = np.zeros((nb_reflection_transmission * nbSampleRotation,
-                                nbAngleIncidence,
-                                len(line_theta_output),
-                                len(line_phi_output)))
+    bsdfData_output_temp = np.zeros(
+        (nb_reflection_transmission * nbSampleRotation, nbAngleIncidence, len(line_theta_output), len(line_phi_output))
+    )
+    bsdfData_output = np.zeros(
+        (nb_reflection_transmission * nbSampleRotation, nbAngleIncidence, len(line_theta_output), len(line_phi_output))
+    )
 
     index_block = 0
-    #if speos BRDF data i --> angle of incidence
-    #if zemax data i --> Sample rotation
+    # if speos BRDF data i --> angle of incidence
+    # if zemax data i --> Sample rotation
     for i in range(nb_reflection_transmission * nbSampleRotation):
 
         # if speos BRDF data j --> wavelength
@@ -873,27 +866,25 @@ def convert_zemax_speos_bsdf_data(
         for j in range(nbAngleIncidence):
             for k in range(len(line_theta_output)):
                 currentTheta = line_theta_output[k]
-                for l in range(len(line_phi_output)):
-                    currentPhi = line_phi_output[l]
+                for l_index in range(len(line_phi_output)):
+                    currentPhi = line_phi_output[l_index]
 
                     if bool_speos_brdf == 1:
                         currentAngleInc = sampleRotation[i % nbSampleRotation]
                         # Convert the angles to the "normal" definition
-                        newTheta, newPhi = convert_specular_to_normal_using_cartesian(currentTheta,
-                                                                                      currentPhi,
-                                                                                      currentAngleInc
-                                                                                      )
+                        newTheta, newPhi = convert_specular_to_normal_using_cartesian(
+                            currentTheta, currentPhi, currentAngleInc
+                        )
                     else:
                         # Convert the angles to the "specular" definition
                         currentAngleInc = angleIncidence[j]
-                        newTheta, newPhi = convert_normal_to_specular_using_cartesian(currentTheta,
-                                                                                      currentPhi,
-                                                                                      currentAngleInc
+                        newTheta, newPhi = convert_normal_to_specular_using_cartesian(
+                            currentTheta, currentPhi, currentAngleInc
                         )
                     # newTheta, newPhi = convert_cylindrical(currentTheta, currentPhi, currentAngleInc)
                     # newTheta, newPhi = convert_cylindrical_phiref(currentTheta, currentPhi, currentAngleInc)
                     if newTheta > 90 or newTheta < 0:
-                        bsdfData_output[i][j][k][l] = 0
+                        bsdfData_output[i][j][k][l_index] = 0
                     else:
                         # Added the case where symmetry == PlaneSymmetrical
                         if symmetry == "PlaneSymmetrical" and newPhi > 180:
@@ -903,19 +894,14 @@ def convert_zemax_speos_bsdf_data(
                         # Defining the BSDF values
                         if bool_speos_brdf == 0:
                             bsdf_block = bsdfData_input[i][j]
-                            bsdfData_output_temp[i][j][k][l] = compute_new_value_matrix(bsdf_block,
-                                                                                        line_theta_input,
-                                                                                        line_phi_input,
-                                                                                        newTheta,
-                                                                                        newPhi)
+                            bsdfData_output_temp[i][j][k][l_index] = compute_new_value_matrix(
+                                bsdf_block, line_theta_input, line_phi_input, newTheta, newPhi
+                            )
                         else:
                             bsdf_block = bsdfData_input[index_block]
-                            bsdfData_output_temp[i][j][k][l] = compute_new_value_matrix(bsdf_block,
-                                                                                        line_theta_input[index_block],
-                                                                                        line_phi_input[index_block],
-                                                                                        newTheta,
-                                                                                        newPhi)
-
+                            bsdfData_output_temp[i][j][k][l_index] = compute_new_value_matrix(
+                                bsdf_block, line_theta_input[index_block], line_phi_input[index_block], newTheta, newPhi
+                            )
 
             index_block = index_block + 1
 
@@ -1094,17 +1080,17 @@ def write_zemax_data_bsdf(index_wavelength, index_RT, nbSampleRotation, nbAngleI
     nLines = string
         Text containing the formatted header
     """
-    nLines=[]
+    nLines = []
     for i in range(nbSampleRotation):
         for j in range(nbAngleIncidence):
-            index_angle = j + nbAngleIncidence*index_RT
-            nLines.append("TIS " + str(round(tisData[j][index_wavelength] / 100,3)) + "\n")
+            index_angle = j + nbAngleIncidence * index_RT
+            nLines.append("TIS " + str(round(tisData[j][index_wavelength] / 100, 3)) + "\n")
             for k in range(bsdfData.shape[3]):
-                for l in range(bsdfData.shape[2] - 1):
-                    scientific_notation = "{:.3e}".format(bsdfData[index_angle][index_wavelength][l][k])
+                for l_index in range(bsdfData.shape[2] - 1):
+                    scientific_notation = "{:.3e}".format(bsdfData[index_angle][index_wavelength][l_index][k])
                     nLines.append(str(scientific_notation) + "\t")
-                l = bsdfData.shape[2] - 1
-                scientific_notation = "{:.3e}".format(bsdfData[index_angle][index_wavelength][l][k])
+                l_index = bsdfData.shape[2] - 1
+                scientific_notation = "{:.3e}".format(bsdfData[index_angle][index_wavelength][l_index][k])
                 nLines.append(str(scientific_notation) + "\n")
     nLines.append("DataEnd\n")
 
@@ -1127,7 +1113,8 @@ def write_file(outputFilepath, nLines):
     nFile.close()
     print("The file " + str(outputFilepath) + " is ready!\n")
 
-def phi_theta_recommended_precision(scatterRadial, scatterAzimuth, symmetry,bool_zemax0_speos1):
+
+def phi_theta_recommended_precision(scatterRadial, scatterAzimuth, symmetry, bool_zemax0_speos1):
     """
     That function writes the text nLines in the file
 
@@ -1139,11 +1126,11 @@ def phi_theta_recommended_precision(scatterRadial, scatterAzimuth, symmetry,bool
         List of azimuthal / phi angles
     symmetry : string
         PlaneSymmetrical, Asymmetrical, Asymmetrical4D
-    bool_zemax0_speos1: boolean
+    bool_zemax0_speos1 : boolean
         if zemax data to convert == 0
     """
 
-    #Limitation
+    # Limitation
     nbTheta_max = 1000
     nbPhi_max = 1000
     theta_max = 90
@@ -1154,11 +1141,11 @@ def phi_theta_recommended_precision(scatterRadial, scatterAzimuth, symmetry,bool
         nbPhi_max = 500
 
     # Default values
-    precisionTheta = scatterRadial[1]-scatterRadial[0]
+    precisionTheta = scatterRadial[1] - scatterRadial[0]
     precisionPhi = scatterAzimuth[1] - scatterAzimuth[0]
 
-    nbTheta = int(theta_max/precisionTheta)+1
-    nbPhi = int(phi_max/precisionPhi)+1
+    nbTheta = int(theta_max / precisionTheta) + 1
+    nbPhi = int(phi_max / precisionPhi) + 1
 
     if nbTheta > nbTheta_max:
         precisionTheta = 0.1
@@ -1214,7 +1201,7 @@ def convert_zemax_to_speos_bsdf(inputFilepath):
         line_phi_speos,
         dtheta_speos,
         dphi_speos,
-    ) = phi_theta_recommended_precision(line_theta_zemax, line_phi_zemax, symmetry,bool_zemax0_speos1)
+    ) = phi_theta_recommended_precision(line_theta_zemax, line_phi_zemax, symmetry, bool_zemax0_speos1)
 
     # Converting Zemax data to Speos data
     print("Converting Zemax data to Speos data...\n")
@@ -1242,14 +1229,15 @@ def convert_zemax_to_speos_bsdf(inputFilepath):
     # Normalization
     print("Computing Speos normalization...\n")
     bool_log = 1
-    normalizationBsdf, bsdfDataSpeos = normalize_bsdf_data(len(sampleRotation),
-                                                           len(angleIncidence),
-                                                           line_theta_speos,
-                                                           line_phi_speos,
-                                                           tisData,
-                                                           bsdfDataSpeos,
-                                                           bool_zemax0_speos1,
-                                                           bool_log
+    normalizationBsdf, bsdfDataSpeos = normalize_bsdf_data(
+        len(sampleRotation),
+        len(angleIncidence),
+        line_theta_speos,
+        line_phi_speos,
+        tisData,
+        bsdfDataSpeos,
+        bool_zemax0_speos1,
+        bool_log,
     )
 
     # Writing Speos file content in nLines
@@ -1325,7 +1313,6 @@ def convert_speos_to_zemax_bsdf(inputFilepath, bool_speos_brdf):
             dphi_zemax,
         ) = phi_theta_recommended_precision(line_theta_speos[0], line_phi_speos[0], symmetry, bool_zemax0_speos1)
 
-
         # Converting Speos data to Zemax data
         print("Converting Speos data to Zemax data...\n")
         # angle of incidence --> block of wavelength
@@ -1345,7 +1332,7 @@ def convert_speos_to_zemax_bsdf(inputFilepath, bool_speos_brdf):
 
         # Writing a Zemax file for each wavelength
         print("Writing Zemax data\n")
-        text_RT = ["BRDF","BTDF"]
+        text_RT = ["BRDF", "BTDF"]
         for index_wavelength in range(nbWavelength):
             nbSampleRotation = 1
             sampleRotation = [0]
@@ -1366,22 +1353,18 @@ def convert_speos_to_zemax_bsdf(inputFilepath, bool_speos_brdf):
                 )
 
                 nLines_data = write_zemax_data_bsdf(
-                    index_wavelength,
-                    index_RT,
-                    nbSampleRotation,
-                    nbAngleIncidence,
-                    tisData,
-                    bsdfDataZemax)
+                    index_wavelength, index_RT, nbSampleRotation, nbAngleIncidence, tisData, bsdfDataZemax
+                )
 
                 # Writing Zemax file content (nLines) in a file
                 outputFilepath = (
-                        os.path.splitext(inputFilepath)[0].lower()
-                        + "_"
-                        + str(wavelength[index_wavelength])
-                        + "_"
-                        + str(scatterType)
-                        + ".bsdf"
+                    os.path.splitext(inputFilepath)[0].lower()
+                    + "_"
+                    + str(wavelength[index_wavelength])
+                    + "_"
+                    + str(scatterType)
+                    + ".bsdf"
                 )
-                write_file(outputFilepath, nLines_header+nLines_data)
+                write_file(outputFilepath, nLines_header + nLines_data)
 
     print(".....End of process\n")
