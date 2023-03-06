@@ -2,7 +2,9 @@ import os
 import tkinter as tk
 from tkinter import filedialog
 
-from ansys_optical_automation.zemax_process.nonseq_to_seq_functions import OSModeConverter
+from ansys_optical_automation.zemax_process.nonseq_to_seq_functions import (
+    OSModeConverter,
+)
 
 
 def getfilename(extension, save=False):
@@ -34,12 +36,12 @@ def main():
     """Main script to convert a rayfile from speos to Zemax or from zemax to speos"""
     nscfilename = getfilename("*.zmx")
     input_file_extension = os.path.splitext(nscfilename)[1].lower()[0:]
-    if not ("zmx" in input_file_extension) :
+    if not ("zmx" in input_file_extension):
         msg = "Nonsupported file selected"
         raise TypeError(msg)
 
     nsc_elements = [14, 5, 8, 5, 13, 16]
-    materials = ['', 'Mirror', 'Mirror', 'Mirror', 'Mirror', '']
+    materials = ["", "Mirror", "Mirror", "Mirror", "Mirror", ""]
     reverseflag_ob1 = True
 
     cv = OSModeConverter()
