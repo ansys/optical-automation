@@ -214,6 +214,8 @@ class OSModeConverter:
         materials=self.object_materials
         surface_type_coordinatebreak = se_sys.LDE.GetSurfaceAt(1).GetSurfaceTypeSettings\
             (self.zos.zosapi.Editors.LDE.SurfaceType.CoordinateBreak)
+        se_sys.LDE.GetSurfaceAt(0).Comment = "object " + str(self.nsc_elements[0])
+
         rotation_matrix=np.array(list_rotation_matrix[0])
         position=np.array(list_position[0])
         if (reverseflag_ob1):
@@ -242,6 +244,7 @@ class OSModeConverter:
             se_sys.LDE.InsertNewSurfaceAt(2 * i + 1)
             se_sys.LDE.GetSurfaceAt(2 * i - 1).Thickness = local_position[0][2]
             se_sys.LDE.GetSurfaceAt(2 * i).ChangeType(surface_type_coordinatebreak)
+            se_sys.LDE.GetSurfaceAt(2 * i + 1).Comment = "object " + str(self.nsc_elements[i])  # Comment
             se_sys.LDE.GetSurfaceAt(2 * i).GetCellAt(12).DoubleValue = local_position[0][0]  # DecenterX
             se_sys.LDE.GetSurfaceAt(2 * i).GetCellAt(13).DoubleValue = local_position[0][1]  # DecenterY
             se_sys.LDE.GetSurfaceAt(2 * i).GetCellAt(14).DoubleValue = tilt_angle[0]  # TiltX
