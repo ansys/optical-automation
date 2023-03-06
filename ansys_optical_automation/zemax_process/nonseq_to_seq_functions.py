@@ -135,7 +135,13 @@ class OSModeConverter:
             3X3 reversed rotation matrix of the current surface
         """
         raytrace = thesystem.Tools.OpenBatchRayTrace();
-        re = raytrace.SingleRayNormUnpol(self.zos.zosapi.Tools.RayTrace.RaysType.Real, toSurf, 1, 0.0, 0.0, 0.0, 0.0, False)
+        wavenumber = 1
+        hx=hy=px=py=0
+        calcOPD = False
+
+        re = raytrace.SingleRayNormUnpol(self.zos.zosapi.Tools.RayTrace.RaysType.Real, toSurf, wavenumber,
+                                         hx, hy, px, px, calcOPD,1,2,3,4,5,6,7,8,9,10,11,12,13)
+
         l = re[6]
         m = re[7]
         n = re[8]
@@ -168,7 +174,7 @@ class OSModeConverter:
 
         """
         #nsc_elements=self.nsc_elements
-        sucess=self.the_system.LoadFile(self.nscfilename, False)
+        success=self.the_system.LoadFile(self.nscfilename, False)
         print("Load NSC objects from: "+ self.the_system.SystemFile+"\n")
         list_rotation_matrix=[]
         list_position = []
@@ -179,7 +185,7 @@ class OSModeConverter:
             for obj_num in nsc_elements:
                 success, rotation_matrix[0, 0], rotation_matrix[0, 1], rotation_matrix[0, 2], rotation_matrix[1, 0], \
                 rotation_matrix[1, 1], rotation_matrix[1, 2], rotation_matrix[2, 0], rotation_matrix[2, 1], rotation_matrix[2, 2], \
-                position[0][0], position[0][1], position[0][2] = self.the_system.NCE.GetMatrix(obj_num)
+                position[0][0], position[0][1], position[0][2] = self.the_system.NCE.GetMatrix(obj_num, 11, 12, 13, 21, 22, 23, 31, 32, 33, 1, 2, 3)
                 list_rotation_matrix.append(rotation_matrix.tolist())
                 list_position.append(position.tolist())
             return list_rotation_matrix,list_position
@@ -243,9 +249,16 @@ class OSModeConverter:
             se_sys.LDE.GetSurfaceAt(2 * i).GetCellAt(16).DoubleValue = tilt_angle[2]  # TiltZ
             se_sys.LDE.GetSurfaceAt(2 * i + 1).Material = materials[i]
 
-            multiplier = np.array(inv(rotation_matrix).tolist())
+            #Check if the determinant is not zero before inversing
+            rotation_matrix_det = np.linalg.det(rotation_matrix)
+            if rotation_matrix_det == 0:
+                rotation_matrix_inverse = rotation_matrix
+            else:
+                rotation_matrix_inverse = inv(rotation_matrix)
+            multiplier = np.array(rotation_matrix_inverse.tolist())
             substract = np.array(position.tolist())
 
-        directory = os.path.dirname(self.the_system.SystemFile)
-        se_sys.SaveAs(directory + '\\NSCtoSE3py.zmx')
+        output_filename = os.path.splitext(self.nscfilename)[0] + '_nonseq_to_seq.zmx'
+        se_sys.SaveAs(output_filename)
+        print("Created file ", output_filename)
         print("Conversion completed ! ")
