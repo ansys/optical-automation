@@ -899,6 +899,12 @@ def convert_zemax_speos_bsdf_data(
                             )
                         else:
                             bsdf_block = bsdfData_input[index_block]
+                            # If Speos transmission data
+                            if line_theta_input[index_block][0] >=90:
+                                temp = line_theta_input[index_block]
+                                temp_180 = [180-temp[index_theta] for index_theta in range(len(temp))]
+                                line_theta_input[index_block] = temp_180
+
                             bsdfData_output_temp[i][j][k][l_index] = compute_new_value_matrix(
                                 bsdf_block, line_theta_input[index_block], line_phi_input[index_block], newTheta, newPhi
                             )
