@@ -216,6 +216,7 @@ class OSModeConverter:
         print("Load NSC objects from: " + self.the_system.SystemFile + "\n")
         list_rotation_matrix = []
         list_position = []
+        list_comments = []
         rotation_matrix = np.eye(3)
         # T=np.array([[0,0,0]]) This will cause problem, pitfall: python will treat elements of T as integer
         position = np.array([[0.0, 0.0, 0.0]])
@@ -238,11 +239,12 @@ class OSModeConverter:
                 ) = self.the_system.NCE.GetMatrix(obj_num, 11, 12, 13, 21, 22, 23, 31, 32, 33, 1, 2, 3)
                 list_rotation_matrix.append(rotation_matrix.tolist())
                 list_position.append(position.tolist())
-            return list_rotation_matrix, list_position
+                list_comments.append(self.the_system.NCE.GetObjectAt(obj_num).Comment)
+            return list_rotation_matrix, list_position, list_comments
         else:
             raise ValueError("list of NSC Objects for get_objects_position_info() is required, None detected!")
 
-    def convert(self, list_rotation_matrix, list_position, reverseflag_ob1):
+    def convert(self, list_rotation_matrix, list_position, list_comments, reverseflag_ob1):
         """
         Build the sequential system according to the given rotation and position matrices, reverse the orientation
         of Z axis if necessary.
@@ -263,7 +265,7 @@ class OSModeConverter:
         surface_type_coordinatebreak = se_sys.LDE.GetSurfaceAt(1).GetSurfaceTypeSettings(
             self.zos.zosapi.Editors.LDE.SurfaceType.CoordinateBreak
         )
-        se_sys.LDE.GetSurfaceAt(0).Comment = "object " + str(self.nsc_elements[0])
+        se_sys.LDE.GetSurfaceAt(0).Comment = "object " + str(self.nsc_elements[0]) + " " + str(list_comments[0])
 
         rotation_matrix = np.array(list_rotation_matrix[0])
         position = np.array(list_position[0])
@@ -296,7 +298,8 @@ class OSModeConverter:
             se_sys.LDE.InsertNewSurfaceAt(2 * i + 1)
             se_sys.LDE.GetSurfaceAt(2 * i - 1).Thickness = local_position[0][2]
             se_sys.LDE.GetSurfaceAt(2 * i).ChangeType(surface_type_coordinatebreak)
-            se_sys.LDE.GetSurfaceAt(2 * i + 1).Comment = "object " + str(self.nsc_elements[i])  # Comment
+            se_sys.LDE.GetSurfaceAt(2 * i + 1).Comment = "object " + str(self.nsc_elements[i]) + \
+                                                         " " + str(list_comments[i]) # Comment
             se_sys.LDE.GetSurfaceAt(2 * i).GetCellAt(12).DoubleValue = local_position[0][0]  # DecenterX
             se_sys.LDE.GetSurfaceAt(2 * i).GetCellAt(13).DoubleValue = local_position[0][1]  # DecenterY
             se_sys.LDE.GetSurfaceAt(2 * i).GetCellAt(14).DoubleValue = tilt_angle[0]  # TiltX

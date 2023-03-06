@@ -50,8 +50,8 @@ def main():
     cv.object_materials = materials
     cv.reverseflag_ob1 = reverseflag_ob1
 
-    (list_rotation_matrix, list_position) = cv.get_objects_position_info(nsc_elements)
-    cv.convert(list_rotation_matrix, list_position, reverseflag_ob1)
+    (list_rotation_matrix, list_position, list_comments) = cv.get_objects_position_info(nsc_elements)
+    cv.convert(list_rotation_matrix, list_position, list_comments, reverseflag_ob1)
 
 
 main()
