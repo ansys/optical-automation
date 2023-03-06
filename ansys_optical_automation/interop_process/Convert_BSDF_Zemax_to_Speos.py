@@ -804,8 +804,8 @@ def convert_zemax_speos_bsdf_data(
     nb_reflection_transmission,
     symmetry,
     scatterType,
-    sampleRotation,
-    angleIncidence,
+    listDimension1,
+    listDimension2,
     line_theta_input,
     line_phi_input,
     line_theta_output,
@@ -824,10 +824,12 @@ def convert_zemax_speos_bsdf_data(
         PlaneSymmetric or ASymmetrical4D
     scatterType : string
         BTDF or BRDF
-    sampleRotation : list
-        List of sample rotations
-    angleIncidence : list
-        List of angles of incidence
+    listDimension1 sampleRotation : list
+        If converting a BRDF file (bool_speos_brdf = True): list of angles of incidence
+        If converting a Zemax file (bool_speos_brdf = False): list of Sample Rotations
+    listDimension2 angleIncidence : list
+        If converting a BRDF file (bool_speos_brdf = True): list of wavelengths
+        If converting a Zemax file (bool_speos_brdf = False): list of angles of incidence
     line_theta_input : list
         List of radial / theta input angles
     line_phi_input : list
@@ -842,42 +844,39 @@ def convert_zemax_speos_bsdf_data(
         bool = 1 if speos BRDF data to convert, 0 otherwise
     """
 
-    nbAngleIncidence = len(angleIncidence)
-    nbSampleRotation = len(sampleRotation)
+    nblistDimension1 = len(listDimension1)
+    nblistDimension2 = len(listDimension2)
 
     # Initialization
-    # If BRDF
-    # SampleRotation stands for angle of incidence
-    # Angle of incidence stands for wavelength
     bsdfData_output_temp = np.zeros(
-        (nb_reflection_transmission * nbSampleRotation, nbAngleIncidence, len(line_theta_output), len(line_phi_output))
+        (nb_reflection_transmission * nblistDimension1, nblistDimension2, len(line_theta_output), len(line_phi_output))
     )
     bsdfData_output = np.zeros(
-        (nb_reflection_transmission * nbSampleRotation, nbAngleIncidence, len(line_theta_output), len(line_phi_output))
+        (nb_reflection_transmission * nblistDimension1, nblistDimension2, len(line_theta_output), len(line_phi_output))
     )
 
     index_block = 0
-    # if speos BRDF data i --> angle of incidence
+    # if speos BRDF dimension_1 =  data i --> angle of incidence
     # if zemax data i --> Sample rotation
-    for i in range(nb_reflection_transmission * nbSampleRotation):
+    for i in range(nb_reflection_transmission * nblistDimension1):
 
         # if speos BRDF data j --> wavelength
         # if zemax data i --> angleofincidence
-        for j in range(nbAngleIncidence):
+        for j in range(nblistDimension2):
             for k in range(len(line_theta_output)):
                 currentTheta = line_theta_output[k]
                 for l_index in range(len(line_phi_output)):
                     currentPhi = line_phi_output[l_index]
 
                     if bool_speos_brdf == 1:
-                        currentAngleInc = sampleRotation[i % nbSampleRotation]
+                        currentAngleInc = listDimension1[i % nblistDimension1]
                         # Convert the angles to the "normal" definition
                         newTheta, newPhi = convert_specular_to_normal_using_cartesian(
                             currentTheta, currentPhi, currentAngleInc
                         )
                     else:
                         # Convert the angles to the "specular" definition
-                        currentAngleInc = angleIncidence[j]
+                        currentAngleInc = listDimension2[j]
                         newTheta, newPhi = convert_normal_to_specular_using_cartesian(
                             currentTheta, currentPhi, currentAngleInc
                         )
@@ -903,7 +902,10 @@ def convert_zemax_speos_bsdf_data(
                             if line_theta_input[index_block][0] >=90:
                                 temp = line_theta_input[index_block]
                                 temp_180 = [180-temp[index_theta] for index_theta in range(len(temp))]
-                                line_theta_input[index_block] = temp_180
+
+                                #sawp columns of the bsdf_block
+                                bsdf_block = swap_columns(bsdf_block)
+                                line_theta_input[index_block] = temp_180[::-1]
 
                             bsdfData_output_temp[i][j][k][l_index] = compute_new_value_matrix(
                                 bsdf_block, line_theta_input[index_block], line_phi_input[index_block], newTheta, newPhi
@@ -914,8 +916,8 @@ def convert_zemax_speos_bsdf_data(
     if bool_speos_brdf == 1 or scatterType == "BRDF":
         bsdfData_output = bsdfData_output_temp
     else:
-        for i in range(nbSampleRotation):
-            for j in range(nbAngleIncidence):
+        for i in range(nblistDimension1):
+            for j in range(nblistDimension2):
                 for k in range(len(line_theta_output)):
                     bsdfData_output[i][j][k] = bsdfData_output_temp[i][j][len(line_theta_output) - 1 - k]
 
@@ -923,6 +925,14 @@ def convert_zemax_speos_bsdf_data(
 
     return bsdfData_output
 
+def swap_columns(arr):
+    arr_temp = np.zeros((arr.shape[0],arr.shape[1]))
+    nb_columns = arr.shape[1]
+
+    for index_column in range(nb_columns):
+        arr_temp[:, index_column] = arr[:, nb_columns - 1 - index_column]
+
+    return arr_temp
 
 def normalize_bsdf_data(
     nbSampleRotation, nbAngleIncidence, line_theta, line_phi, tisData, bsdfData, bool_zemax0_speos1, bool_log
