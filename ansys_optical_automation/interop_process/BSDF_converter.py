@@ -126,6 +126,12 @@ class BsdfStructure:
             scatterType.append("BTDF")
         # Row 7: Contains a boolean value describing the type of value stored in the file: 1 bsdf / 0 intensity
         typeLine = bfile.readline()
+        #Support only BSDF values for now
+        if float(typeLine.strip()) == 0:
+            self.bool_success = 0
+            print(".....WARNING: The values are not BSDF values but intensity values.")
+            print(".....It is not supported.")
+            input(".....Press Enter to continue")
         if bool_log == 1:
             print("BSDF(1) or Intensity(1) values = " + str(typeLine))
         # Row 8: Number of incident angles and number of wavelength samples (in nanometer).
@@ -154,32 +160,27 @@ class BsdfStructure:
         # Row 12: Number of angles measured for Theta and Phi
         # for the incident angle N°1 and the wavelength N°1 of the incident angle N°1.
 
-        scatterRadial_list = []
-        scatterAzimuth_list = []
-        nbScatterRadial_list = []
-        nbScatterAzimuth_list = []
         nb_reflection_transmission = len(scatterType)
         # tisData = np.zeros((nb_reflection_transmission * nbAngleIncidence, nbWavelength))
-        tisdata_list = []
-
-        # tisData[0][0] = float(NormalizationLine)
-
-        bsdfData_list = []
+        tisdata_temp_list = []
+        scatterRadial_temp_list = []
+        scatterAzimuth_temp_list = []
+        bsdfData_temp_list = []
 
         for i in range(nb_reflection_transmission * nbAngleIncidence):
             for j in range(nbWavelength):
-                tisdata_list.append(float(bfile.readline()))
+                tisdata_temp_list.append(float(bfile.readline()))
                 nbthetaphiLine = bfile.readline()
                 nbthetaphi = nbthetaphiLine[:-1].split(" ")
                 nbScatterRadial = int(nbthetaphi[0])
                 nbScatterAzimuth = int(nbthetaphi[1])
-                nbScatterRadial_list.append(nbScatterRadial)
-                nbScatterAzimuth_list.append(nbScatterAzimuth)
+                #nbScatterRadial_list.append(nbScatterRadial)
+                #nbScatterAzimuth_list.append(nbScatterAzimuth)
 
                 scatterAzimuthLine = bfile.readline()
                 scatterAzimuthLineString = (scatterAzimuthLine[:-1].strip()).split("\t")
                 scatterAzimuth = [float(i) for i in scatterAzimuthLineString]
-                scatterAzimuth_list.append(scatterAzimuth)
+                scatterAzimuth_temp_list.append(scatterAzimuth)
 
                 bsdfDataBlock = np.zeros((nbScatterRadial, nbScatterAzimuth))
                 # scatterRadial = np.zeros(nbScatterRadial)
@@ -201,8 +202,26 @@ class BsdfStructure:
                     # swap the radial / theta of the bsdf_block
                     bsdfDataBlock = swap_rows(bsdfDataBlock)
 
-                scatterRadial_list.append(scatterRadial)
-                bsdfData_list.append(bsdfDataBlock)
+                scatterRadial_temp_list.append(scatterRadial)
+                bsdfData_temp_list.append(bsdfDataBlock)
+
+        #Need to reorder
+        #BRDF: RT --> incidence --> wavelength
+        #Format: RT --> wavelength --> incidence
+        tisdata_list = []
+        scatterRadial_list = []
+        scatterAzimuth_list = []
+        bsdfData_list = []
+
+        for index_RT in range(nb_reflection_transmission):
+            for index_wavelength in range(nbWavelength):
+                for index_incidence in range(nbAngleIncidence):
+                    index_block = ((index_incidence*nbWavelength)+index_wavelength)+\
+                                  (index_RT*nbWavelength*nbAngleIncidence)
+                    tisdata_list.append(tisdata_temp_list[index_block])
+                    scatterRadial_list.append(scatterRadial_temp_list[index_block])
+                    scatterAzimuth_list.append(scatterAzimuth_temp_list[index_block])
+                    bsdfData_list.append(bsdfData_temp_list[index_block])
 
         if bool_log == 1:
             print(".....BSDF data was correctly read\n")
@@ -473,30 +492,25 @@ class BsdfStructure:
 
         index_block = 0
 
+        if self.zemax_or_speos == "zemax":
+            line_theta_input = self.theta_input[0]
+            line_phi_input = self.phi_input[0]
+
         for index_reflection_transmission in range(nb_reflection_transmission):
             for index_wavelength in range(nb_wavelength):
                 for index_samplerotation in range(nb_samplerotation):
                     for index_angleofincidence in range(nb_angleofincidence):
 
                         current_angleofincidence = self.incidence[index_angleofincidence]
-
                         if self.zemax_or_speos == "speos":
                             line_theta_input = self.theta_input[index_block]
                             line_phi_input = self.phi_input[index_block]
-                        if self.zemax_or_speos == "zemax":
-                            line_theta_input = self.theta_input[0]
-                            line_phi_input = self.phi_input[0]
-                        line_theta_output = self.theta
-                        line_phi_output = self.phi
+                        bsdfData_output_block = np.zeros((len(self.theta), len(self.phi)))
 
-                        nb_theta_output = len(line_theta_output)
-                        nb_phi_output = len(line_phi_output)
-                        bsdfData_output_block = np.zeros((nb_theta_output, nb_phi_output))
-
-                        for index_theta in range(nb_theta_output):
-                            currentTheta = line_theta_output[index_theta]
-                            for index_phi in range(nb_phi_output):
-                                currentPhi = line_phi_output[index_phi]
+                        for index_theta in range(len(self.theta)):
+                            currentTheta = self.theta[index_theta]
+                            for index_phi in range(len(self.phi)):
+                                currentPhi = self.phi[index_phi]
 
                                 if self.zemax_or_speos == "speos":
                                     # Convert the angles to the "normal" definition
@@ -512,8 +526,8 @@ class BsdfStructure:
                                     if self.symmetry == "PlaneSymmetrical" and newPhi > 180:
                                         newPhi = 360 - newPhi
 
-                                if newTheta > 90 or newTheta < 0:
-                                    bsdfData_output_block[index_theta][index_phi] = 0
+                                #if newTheta > 90 or newTheta < 0:
+                                #    bsdfData_output_block[index_theta][index_phi] = 0
 
                                 bsdfData_output_block[index_theta][index_phi] = compute_new_value_matrix(
                                     self.bsdf_input[index_block], line_theta_input, line_phi_input, newTheta, newPhi
@@ -594,11 +608,8 @@ class BsdfStructure:
         # Writing a Zemax file for each wavelength
         print("Writing Zemax data\n")
 
-        for index_wavelength in range(len(self.wavelength)):
-            # nbSampleRotation = 1
-            # sampleRotation = [0]
-
-            for index_RT in range(len(self.scattertype)):
+        for index_RT in range(len(self.scattertype)):
+            for index_wavelength in range(len(self.wavelength)):
                 nLines_header = self.write_zemax_header_bsdf(index_RT, index_wavelength)
                 nLines_data = self.write_zemax_data_bsdf(index_RT, index_wavelength)
 
