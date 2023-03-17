@@ -50,4 +50,5 @@ def main():
         if "brdf" in input_file_extension:
             bsdf_data.write_zemax_file()
 
+
 main()
