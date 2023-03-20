@@ -43,12 +43,14 @@ def main():
 
     bool_log = 1
     bsdf_data.import_data(BSDF_inputFilepath, bool_log)
+    #bsdf_data.write_zemax_file(bool_log)
+
     if bsdf_data.bool_success == 1:
         if "bsdf" in input_file_extension:
-            bsdf_data.write_speos_file()
+            bsdf_data.write_speos_anisotropicbsdf_file()
 
         if "brdf" in input_file_extension:
-            bsdf_data.write_zemax_file()
+            bsdf_data.write_zemax_file(bool_log)
 
 
 main()

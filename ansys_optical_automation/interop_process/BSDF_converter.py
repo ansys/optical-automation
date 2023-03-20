@@ -20,6 +20,45 @@ class BsdfStructure:
     """
 
     def __init__(self):
+        """
+        That functions initializes a class.
+        filename_input: string
+            filename of the imported bsdf
+        bool_success: boolean
+            True if the bsdf was correctly imported
+        zemax_or_speos: string
+            "zemax" or "speos"
+        scattertype: list
+            list of string. Can contain "BRDF, "BTDF" or both
+        symmetry: string
+            "Asymmetrical", "PlaneSymmetrical"
+        wavelength: list
+            list of wavelengths
+        samplerotation: list
+            list of sample rotations
+        incidence: list
+            list of angles of incidence
+        tisdata: list
+            list of total integrated scatter. Max TIS = 1
+            The data is listed in that order: wavelength > sample_rotation > angleofincidence
+        theta_input: list
+            list of input theta (radial) angles
+        phi_input: list
+            list of input phi (azimuthal) angles
+        theta: list
+            list of theta angles
+            The data is listed in that order: wavelength > sample_rotation > angleofincidence
+        phi: list
+            list of phi angles
+            The data is listed in that order: wavelength > sample_rotation > angleofincidence
+        bsdf_input: list
+            list of block of bsdf data input
+            The data is listed in that order: wavelength > sample_rotation > angleofincidence
+        bsdf: list
+            list of block of bsdf data
+            The data is listed in that order: wavelength > sample_rotation > angleofincidence
+
+        """
         self.filename_input = None
         self.bool_success = 0
         self.zemax_or_speos = None
@@ -29,11 +68,11 @@ class BsdfStructure:
         self.samplerotation = None
         self.incidence = None
         self.tisdata = {"wavelength", "sample_rotation", "angleofincidence"}
-        self.theta_input = {"wavelength", "sample_rotation", "angleofincidence"}
-        self.phi_input = {"wavelength", "sample_rotation", "angleofincidence"}
+        #self.theta_input = {"wavelength", "sample_rotation", "angleofincidence"}
+        #self.phi_input = {"wavelength", "sample_rotation", "angleofincidence"}
         self.theta = {"wavelength", "sample_rotation", "angleofincidence"}
         self.phi = {"wavelength", "sample_rotation", "angleofincidence"}
-        self.bsdf_input = {"wavelength", "sample_rotation", "angleofincidence", "theta", "phi"}
+        #self.bsdf_input = {"wavelength", "sample_rotation", "angleofincidence", "theta", "phi"}
         self.bsdf = {"transmission_reflection", "wavelength", "sample_rotation", "angleofincidence", "theta", "phi"}
 
     def import_data(self, inputFilepath, bool_log=True):
@@ -45,15 +84,14 @@ class BsdfStructure:
         if "bsdf" in input_file_extension:
             self.zemax_or_speos = "zemax"
             self.read_zemax_bsdf(bool_log)
-            self.phi_theta_output()
-            self.converter_coordinate_system_bsdf(bool_log)
+            self.converter_coordinate_system_bsdf(1,bool_log)
             self.normalize_bsdf_data(bool_log)
 
         if "brdf" in input_file_extension:
             self.zemax_or_speos = "speos"
             self.read_speos_brdf(bool_log)
-            self.phi_theta_output()
-            self.converter_coordinate_system_bsdf(bool_log)
+            #self.phi_theta_output()
+
 
     def read_speos_brdf(self, bool_log):
         """
@@ -218,7 +256,7 @@ class BsdfStructure:
                 for index_incidence in range(nbAngleIncidence):
                     index_block = ((index_incidence*nbWavelength)+index_wavelength)+\
                                   (index_RT*nbWavelength*nbAngleIncidence)
-                    tisdata_list.append(tisdata_temp_list[index_block])
+                    tisdata_list.append(tisdata_temp_list[index_block]/100)
                     scatterRadial_list.append(scatterRadial_temp_list[index_block])
                     scatterAzimuth_list.append(scatterAzimuth_temp_list[index_block])
                     bsdfData_list.append(bsdfData_temp_list[index_block])
@@ -237,9 +275,9 @@ class BsdfStructure:
         self.samplerotation = samplerotation_list
         self.incidence = angleIncidence
         self.tisdata = tisdata_list
-        self.theta_input = scatterRadial_list
-        self.phi_input = scatterAzimuth_list
-        self.bsdf_input = bsdfData_list
+        self.theta = scatterRadial_list
+        self.phi = scatterAzimuth_list
+        self.bsdf = bsdfData_list
 
     def read_zemax_bsdf(self, bool_log):
         """
@@ -435,11 +473,11 @@ class BsdfStructure:
         self.samplerotation = sampleRotation
         self.incidence = angleIncidence
         self.tisdata = tisData_list
-        self.theta_input = theta_list
-        self.phi_input = phi_list
-        self.bsdf_input = bsdfData_list
+        self.theta = theta_list
+        self.phi = phi_list
+        self.bsdf = bsdfData_list
 
-    def phi_theta_output(self):
+    def obsolete_phi_theta_output(self):
         """
         That function writes the text nLines in the file
         """
@@ -476,7 +514,7 @@ class BsdfStructure:
         self.theta = [(precisionTheta * k) for k in range(nbTheta)]
         self.phi = [(precisionPhi * x) for x in range(nbPhi)]
 
-    def converter_coordinate_system_bsdf(self, bool_log):
+    def converter_coordinate_system_bsdf(self, bool_normal_1, bool_log):
         """
         That function converts the bsdf data
 
@@ -484,17 +522,21 @@ class BsdfStructure:
 
         print("Converting data...\n")
 
+        line_theta_output_list, line_phi_output_list = phi_theta_output(self.theta,self.phi,self.zemax_or_speos)
+        line_theta_output = line_theta_output_list[0]
+        line_phi_output = line_phi_output_list[0]
+
         nb_wavelength = len(self.wavelength)
         nb_samplerotation = len(self.samplerotation)
         nb_angleofincidence = len(self.incidence)
         nb_reflection_transmission = len(self.scattertype)
-        self.bsdf = []
+        #bsdf_output = self.bsdf
 
         index_block = 0
 
         if self.zemax_or_speos == "zemax":
-            line_theta_input = self.theta_input[0]
-            line_phi_input = self.phi_input[0]
+            line_theta_input = self.theta[0]
+            line_phi_input = self.phi[0]
 
         for index_reflection_transmission in range(nb_reflection_transmission):
             for index_wavelength in range(nb_wavelength):
@@ -503,21 +545,16 @@ class BsdfStructure:
 
                         current_angleofincidence = self.incidence[index_angleofincidence]
                         if self.zemax_or_speos == "speos":
-                            line_theta_input = self.theta_input[index_block]
-                            line_phi_input = self.phi_input[index_block]
-                        bsdfData_output_block = np.zeros((len(self.theta), len(self.phi)))
+                            line_theta_input = self.theta[index_block]
+                            line_phi_input = self.phi[index_block]
+                        bsdfData_output_block = np.zeros((len(line_theta_output), len(line_phi_output)))
 
-                        for index_theta in range(len(self.theta)):
-                            currentTheta = self.theta[index_theta]
-                            for index_phi in range(len(self.phi)):
-                                currentPhi = self.phi[index_phi]
+                        for index_theta in range(len(line_theta_output)):
+                            currentTheta = line_theta_output[index_theta]
+                            for index_phi in range(len(line_phi_output)):
+                                currentPhi = line_phi_output[index_phi]
 
-                                if self.zemax_or_speos == "speos":
-                                    # Convert the angles to the "normal" definition
-                                    newTheta, newPhi = convert_specular_to_normal_using_cartesian(
-                                        currentTheta, currentPhi, current_angleofincidence
-                                    )
-                                if self.zemax_or_speos == "zemax":
+                                if bool_normal_1 == 1:
                                     # Convert the angles to the "specular" definition
                                     newTheta, newPhi = convert_normal_to_specular_using_cartesian(
                                         currentTheta, currentPhi, current_angleofincidence
@@ -525,24 +562,29 @@ class BsdfStructure:
                                     # Added the case where symmetry == PlaneSymmetrical
                                     if self.symmetry == "PlaneSymmetrical" and newPhi > 180:
                                         newPhi = 360 - newPhi
+                                else:
+                                    # Convert the angles to the "normal" definition
+                                    newTheta, newPhi = convert_specular_to_normal_using_cartesian(
+                                        currentTheta, currentPhi, current_angleofincidence
+                                    )
+
 
                                 #if newTheta > 90 or newTheta < 0:
                                 #    bsdfData_output_block[index_theta][index_phi] = 0
 
                                 bsdfData_output_block[index_theta][index_phi] = compute_new_value_matrix(
-                                    self.bsdf_input[index_block], line_theta_input, line_phi_input, newTheta, newPhi
+                                    self.bsdf[index_block], line_theta_input, line_phi_input, newTheta, newPhi
                                 )
+                        self.bsdf[index_block] = bsdfData_output_block
                         index_block = index_block + 1
 
-                        self.bsdf.append(bsdfData_output_block)
+        self.theta = line_theta_output_list
+        self.phi = line_phi_output_list
 
     def normalize_bsdf_data(self, bool_log):
         """
         That function normalizes the BSDF data vs the TIS values
         """
-
-        # BRDF: theta goes from 0 to 90
-        # BTDF: theta goes from 90 to 180
 
         if bool_log == 1:
             print("Computing normalization...")
@@ -558,8 +600,8 @@ class BsdfStructure:
             for index_incidence in range(nbAngleIncidence):
                 block_data = np.transpose(self.bsdf[index_block])
 
-                theta_rad, phi_rad = np.radians(self.theta), np.radians(
-                    self.phi
+                theta_rad, phi_rad = np.radians(self.theta[0]), np.radians(
+                    self.phi[0]
                 )  # samples on which integrande is known
                 integrande = (
                     (1 / math.pi) * block_data * np.sin(theta_rad) * np.cos(theta_rad)
@@ -603,7 +645,12 @@ class BsdfStructure:
                 self.bsdf[index_block] = self.bsdf[index_block] * normalizationBsdf[index_block]
                 index_block = index_block + 1
 
-    def write_zemax_file(self):
+    def write_zemax_file(self,bool_log):
+
+        # Writing a Zemax file for each wavelength
+        self.converter_coordinate_system_bsdf(0,bool_log)
+        self.theta = self.theta[0]
+        self.phi = self.phi[0]
 
         # Writing a Zemax file for each wavelength
         print("Writing Zemax data\n")
@@ -692,7 +739,7 @@ class BsdfStructure:
                     + index_wavelength * nb_samplerotation
                     + index_samplerotation
                 ) * nb_angleofincidence + index_angleofincidence
-                nLines.append("TIS " + str(round(self.tisdata[index_data] / 100, 3)) + "\n")
+                nLines.append("TIS " + str(round(self.tisdata[index_data], 3)) + "\n")
                 for index_phi in range(len(self.phi)):
                     for index_theta in range(len(self.theta) - 1):
                         scientific_notation = "{:.3e}".format(self.bsdf[index_data][index_theta][index_phi])
@@ -704,7 +751,7 @@ class BsdfStructure:
 
         return nLines
 
-    def write_speos_file(self):
+    def write_speos_anisotropicbsdf_file(self):
 
         # Writing a Speos file
         print("Writing Speos data\n")
@@ -716,10 +763,6 @@ class BsdfStructure:
     def write_speos_header_bsdf(self):
         """
         That function writes the header of Speos BSDF file
-
-        Parameters
-        ----------
-
 
         """
 
@@ -790,6 +833,9 @@ class BsdfStructure:
         That function writes the main data of Speos BSDF file
 
         """
+        self.theta = self.theta[0]
+        self.phi = self.phi[0]
+
         nbtheta = len(self.theta)
         nbphi = len(self.phi)
         index_block = 0
@@ -842,7 +888,7 @@ class BsdfStructure:
 def convert_normal_to_specular_using_cartesian(theta_i, phi_i, angle_inc):
     """
     That function converts from normal to specular reference using cartesian coordinates
-    phi = 0 top of the plot
+    phi_i = 0 in the normal reference = phi_o = 180 in the specular reference
 
     Parameters
     ----------
@@ -900,6 +946,7 @@ def convert_specular_to_normal_using_cartesian(theta_i, phi_i, angle_inc):
     """
     That function converts from specular to normal reference using cartesian coordinates
     Specular reference: phi = 0 top of the plot
+    Normal reference: phi = 0 bottom of the plot
 
     Parameters
     ----------
@@ -1062,7 +1109,7 @@ def compute_new_value_matrix(matrix_z, line_x, line_y, new_x, new_y):
     """
 
     index_x = bisect.bisect_left(line_x, new_x)
-    if index_x == 0:
+    if index_x == 0 :
         indexInf_x = index_x
         indexSup_x = index_x
         coeff_x = 0
@@ -1074,10 +1121,12 @@ def compute_new_value_matrix(matrix_z, line_x, line_y, new_x, new_y):
         x_Sup = line_x[indexSup_x]
         coeff_x = (new_x - x_Inf) / (x_Sup - x_Inf)
     else:
-        index_x = len(line_x) - 1
-        indexInf_x = index_x - 1
-        indexSup_x = index_x
-        coeff_x = 0
+        newValue = 0
+        return newValue
+        #index_x = len(line_x) - 1
+        #indexInf_x = index_x
+        #indexSup_x = index_x
+        #coeff_x = 0
 
     index_y = bisect.bisect_left(line_y, new_y)
     if index_y == 0:
@@ -1091,10 +1140,12 @@ def compute_new_value_matrix(matrix_z, line_x, line_y, new_x, new_y):
         y_Sup = line_y[indexSup_y]
         coeff_y = (new_y - y_Inf) / (y_Sup - y_Inf)
     else:
-        index_y = len(line_y) - 1
-        indexInf_y = index_y - 1
-        indexSup_y = index_y
-        coeff_y = 0
+        newValue = 0
+        return newValue
+        #index_y = len(line_y) - 1
+        #indexInf_y = index_y
+        #indexSup_y = index_y
+        #coeff_y = 0
 
     # Linear interpolation
     value_Inf_x = matrix_z[indexInf_x][indexInf_y] * (1 - coeff_y) + matrix_z[indexInf_x][indexSup_y] * coeff_y
@@ -1138,3 +1189,46 @@ def write_file(outputFilepath, nLines):
     nFile.writelines(nLines)
     nFile.close()
     print("The file " + str(outputFilepath) + " is ready!\n")
+
+def phi_theta_output(theta_input,phi_input,zemax_or_speos):
+    """
+    That function writes the text nLines in the file
+    """
+    theta_output = []
+    phi_output = []
+
+
+    # Limitation
+    nbTheta_max = 1000
+    nbPhi_max = 1000
+    if zemax_or_speos == "speos":
+        theta_max = 180
+    else:
+        theta_max = 90
+    phi_max = 360
+    # if bsdfstructure_input.symmetry == "PlaneSymmetrical":
+    #    phi_max = 180
+    #    nbPhi_max = 500
+
+    # Default values
+    precisionTheta = theta_input[0][1] - theta_input[0][0]
+    precisionPhi = phi_input[0][1] - phi_input[0][0]
+
+    nbTheta = int(theta_max / precisionTheta) + 1
+    nbPhi = int(phi_max / precisionPhi) + 1
+
+    if nbTheta > nbTheta_max:
+        precisionTheta = 0.1
+        nbTheta = int(theta_max / precisionTheta + 1)
+    if nbPhi > nbPhi_max:
+        precisionPhi = 0.5
+        nbPhi = int(nbPhi_max / precisionPhi + 1)
+
+    print("Precision Theta = ", precisionTheta)
+    print("Precision Phi = ", precisionPhi)
+
+    theta_output.append([(precisionTheta * k) for k in range(nbTheta)])
+    phi_output.append([(precisionPhi * x) for x in range(nbPhi)])
+
+    return theta_output, phi_output
+
