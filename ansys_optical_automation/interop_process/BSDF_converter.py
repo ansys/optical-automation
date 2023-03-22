@@ -24,8 +24,6 @@ class BsdfStructure:
         That functions initializes a class.
         filename_input: string
             filename of the imported bsdf
-        bool_success: boolean
-            True if the bsdf was correctly imported
         zemax_or_speos: string
             "zemax" or "speos"
         scattertype: list
@@ -60,7 +58,6 @@ class BsdfStructure:
 
         """
         self.filename_input = None
-        self.bool_success = 0
         self.zemax_or_speos = None
         self.scattertype = None
         self.symmetry = None
@@ -106,7 +103,6 @@ class BsdfStructure:
 
         # Reading file
         print("Reading Speos BSDF file: " + str(self.filename_input) + "...\n")
-        self.bool_success = 1
 
         bfile = open(self.filename_input, "r")
 
@@ -121,21 +117,16 @@ class BsdfStructure:
         header = headerLine[:-1].split(" ")
         version = header[len(header) - 1]
         if float(version[1:]) < 8.0:
-            self.bool_success = 0
-            print(".....WARNING: The format is not supported.")
-            print(".....Open and save the file with the BSDF viewer to update the format.")
-            input(".....Press Enter to continue")
-            exit()
+            msg = "The format is not supported. Open and save the file with the BSDF viewer to update the format."
+            raise TypeError(msg)
         if bool_log == 1:
             print("Header = " + str(headerLine))
         # Row 2 : text 0 or binary 1
         textorbinaryLine = bfile.readline()
         textorbinary = textorbinaryLine[:-1].split("\t")
         if textorbinary[0] == 0:
-            self.bool_success = 0
-            print(".....WARNING: The BSDF data cannot be read. It is not a text.")
-            input(".....Press Enter to continue")
-            exit()
+            msg = "The BSDF data cannot be read. It is not a text."
+            raise TypeError(msg)
         else:
             if bool_log == 1:
                 print("Text = " + str(textorbinaryLine))
@@ -166,10 +157,8 @@ class BsdfStructure:
         typeLine = bfile.readline()
         #Support only BSDF values for now
         if float(typeLine.strip()) == 0:
-            self.bool_success = 0
-            print(".....WARNING: The values are not BSDF values but intensity values.")
-            print(".....It is not supported.")
-            input(".....Press Enter to continue")
+            msg = "The values are not BSDF values but intensity values. It is not supported."
+            raise TypeError(msg)
         if bool_log == 1:
             print("BSDF(1) or Intensity(1) values = " + str(typeLine))
         # Row 8: Number of incident angles and number of wavelength samples (in nanometer).
@@ -291,7 +280,6 @@ class BsdfStructure:
 
         # Reading file
         print("Reading Zemax BSDF file: " + str(self.filename_input) + "...\n")
-        self.bool_success = 1
         bfile = open(self.filename_input, "r")
 
         # Read the header
@@ -350,8 +338,8 @@ class BsdfStructure:
         while sampleRotationString[-1] == "":
             sampleRotationString = sampleRotationString[:-1]
         if len(sampleRotationString) != nbSampleRotation:
-            print(".....WARNING: Wrong data for sample rotation values")
-            self.bool_success = 0
+            msg = "Wrong data for sample rotation values"
+            raise TypeError(msg)
         else:
             sampleRotation = [float(i) for i in sampleRotationString]
             if bool_log == 1:
@@ -374,8 +362,8 @@ class BsdfStructure:
         while angleIncidenceString[-1] == "":
             angleIncidenceString = angleIncidenceString[:-1]
         if len(angleIncidenceString) != nbAngleIncidence:
-            print(".....WARNING: Wrong data for angle incidence values")
-            self.bool_success = 0
+            msg = "Wrong data for angle incidence values"
+            raise TypeError(msg)
         else:
             angleIncidence = [float(i) for i in angleIncidenceString]
             if bool_log == 1:
@@ -397,8 +385,8 @@ class BsdfStructure:
         while scatterAzimuthString[-1] == "":
             scatterAzimuthString = scatterAzimuthString[:-1]
         if len(scatterAzimuthString) != nbScatterAzimuth:
-            print(".....WARNING: Wrong data for scatter azimuth values")
-            self.bool_success = 0
+            msg = "Wrong data for scatter azimuth values"
+            raise TypeError(msg)
             # tempVariable = input(".....Press Enter to continue")
         else:
             scatterAzimuth = [float(i) for i in scatterAzimuthString]
@@ -421,8 +409,8 @@ class BsdfStructure:
         while scatterRadialString[-1] == "":
             scatterRadialString = scatterRadialString[:-1]
         if len(scatterRadialString) != nbScatterRadial:
-            print(".....WARNING: Wrong data for scatter radial values")
-            self.bool_success = 0
+            msg="WARNING: Wrong data for scatter radial values"
+            raise TypeError(msg)
             # tempVariable = input(".....Press Enter to continue")
         else:
             scatterRadial = [float(i) for i in scatterRadialString]
