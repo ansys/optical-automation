@@ -33,23 +33,27 @@ def getfilename(extension, save=False):
 def main():
     """Main script to convert BSDF files"""
 
-    bsdf_data = BsdfStructure()
-
-    BSDF_inputFilepath = getfilename("*.bsdf *.brdf")
-    input_file_extension = os.path.splitext(BSDF_inputFilepath)[1].lower()[0:]
-    if not ("bsdf" in input_file_extension or "brdf" in input_file_extension):
-        msg = "Nonsupported file selected"
-        raise TypeError(msg)
-
     bool_log = 1
-    bsdf_data.import_data(BSDF_inputFilepath, bool_log)
-    #bsdf_data.write_zemax_file(bool_log)
+    bsdf_data = BsdfStructure()
+    BSDF_inputFilepath = getfilename("*.bsdf *.brdf *.anisotropicbsdf")
+    print("The file to convert is: " + BSDF_inputFilepath)
 
-    if "bsdf" in input_file_extension:
-        bsdf_data.write_speos_anisotropicbsdf_file()
+    msg = "Select the output format \n " \
+          "1 = .bsdf (Zemax) \n " \
+          "2 = .brdf (Speos) - Not yet supported \n " \
+          "3 = .anisotropicbsdf\n" \
+          "Enter >> "
+    output_choice = int(input(msg))
 
-    if "brdf" in input_file_extension:
-        bsdf_data.write_zemax_file(bool_log)
+    if not (output_choice in [1,3]):
+        msg = "Wrong output format"
+        raise TypeError(msg)
+    else:
+        bsdf_data.import_data(BSDF_inputFilepath, bool_log)
+        if output_choice == 1:
+            bsdf_data.write_zemax_file(bool_log)
+        if output_choice == 3:
+            bsdf_data.write_speos_anisotropicbsdf_file()
 
 
 main()
