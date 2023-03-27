@@ -1082,7 +1082,7 @@ class BsdfStructure:
                     index_theta = len(self.bsdfdata_theta) - 1
                     scientific_notation = "{:.3e}".format(self.bsdfdata[index_data][index_theta][index_phi])
                     nLines.append(str(scientific_notation) + "\n")
-            nLines.append("DataEnd\n")
+        nLines.append("DataEnd\n")
 
         return nLines
 
