@@ -76,25 +76,24 @@ class BsdfStructure:
     def import_data(self, inputFilepath, bool_log=True):
         self.filename_input = inputFilepath
         input_file_extension = os.path.splitext(inputFilepath)[1].lower()[0:]
-        if not (input_file_extension in [".bsdf",".brdf",".anisotropicbsdf"]):
+        if not (input_file_extension in [".bsdf", ".brdf", ".anisotropicbsdf"]):
             msg = "Nonsupported file selected"
             raise TypeError(msg)
         if input_file_extension == ".bsdf":
             self.zemax_or_speos = "zemax"
             self.read_zemax_bsdf(bool_log)
-            self.converter_coordinate_system_bsdf(1,bool_log)
+            self.converter_coordinate_system_bsdf(1, bool_log)
             self.normalize_bsdf_data(bool_log)
 
         if input_file_extension == ".brdf":
             self.zemax_or_speos = "speos"
             self.read_speos_brdf(bool_log)
-            #self.phi_theta_output()
+            # self.phi_theta_output()
 
         if input_file_extension == ".anisotropicbsdf":
             self.zemax_or_speos = "speos"
             self.read_speos_anisotropicbsdf(bool_log)
             self.calculate_tis_data(bool_log)
-
 
     def read_speos_brdf(self, bool_log):
         """
@@ -161,7 +160,7 @@ class BsdfStructure:
             scatterType.append("BTDF")
         # Row 7: Contains a boolean value describing the type of value stored in the file: 1 bsdf / 0 intensity
         typeLine = bfile.readline()
-        #Support only BSDF values for now
+        # Support only BSDF values for now
         if float(typeLine.strip()) == 1:
             msg = "The values are not BSDF values but intensity values. It is not supported."
             raise TypeError(msg)
@@ -207,8 +206,8 @@ class BsdfStructure:
                 nbthetaphi = nbthetaphiLine[:-1].split()
                 nbScatterRadial = int(nbthetaphi[0])
                 nbScatterAzimuth = int(nbthetaphi[1])
-                #nbScatterRadial_list.append(nbScatterRadial)
-                #nbScatterAzimuth_list.append(nbScatterAzimuth)
+                # nbScatterRadial_list.append(nbScatterRadial)
+                # nbScatterAzimuth_list.append(nbScatterAzimuth)
 
                 scatterAzimuthLine = bfile.readline()
                 scatterAzimuthLineString = (scatterAzimuthLine[:-1].strip()).split("\t")
@@ -238,9 +237,9 @@ class BsdfStructure:
                 scatterRadial_temp_list.append(scatterRadial)
                 bsdfData_temp_list.append(bsdfDataBlock)
 
-        #Need to reorder
-        #BRDF: RT --> incidence --> wavelength
-        #Format: RT --> wavelength --> incidence
+        # Need to reorder
+        # BRDF: RT --> incidence --> wavelength
+        # Format: RT --> wavelength --> incidence
         tisdata_list = []
         scatterRadial_list = []
         scatterAzimuth_list = []
@@ -255,13 +254,14 @@ class BsdfStructure:
         for index_RT in range(nb_reflection_transmission):
             for index_wavelength in range(nbWavelength):
                 for index_incidence in range(nbAngleIncidence):
-                    index_block = ((index_incidence*nbWavelength)+index_wavelength)+\
-                                  (index_RT*nbWavelength*nbAngleIncidence)
+                    index_block = ((index_incidence * nbWavelength) + index_wavelength) + (
+                        index_RT * nbWavelength * nbAngleIncidence
+                    )
                     scatterType_list.append(scatterType[index_RT])
                     wavelength_list.append(wavelength[index_wavelength])
                     samplerotation_list.append(0)
                     incidence_list.append(angleIncidence[index_incidence])
-                    tisdata_list.append(tisdata_temp_list[index_block]/100)
+                    tisdata_list.append(tisdata_temp_list[index_block] / 100)
                     scatterRadial_list.append(scatterRadial_temp_list[index_block])
                     scatterAzimuth_list.append(scatterAzimuth_temp_list[index_block])
                     bsdfData_list.append(bsdfData_temp_list[index_block])
@@ -271,8 +271,6 @@ class BsdfStructure:
 
         #    return scatterType, BSDFType, nbSampleRotation, nbAngleIncidence, nbScatterAzimuth, nbScatterRadial, \
         #           angleIncidence, wavelength, scatterRadial, scatterAzimuth, tisData, bsdfData
-
-
 
         self.scattertype = scatterType
         self.symmetry = symmetry
@@ -302,7 +300,6 @@ class BsdfStructure:
         angleIncidence_list = []
         wavelength_list = []
         RT_list = []
-        wavelength_tis_list = []
         tisdata_list = []
         nbWavelength = 0
 
@@ -353,7 +350,7 @@ class BsdfStructure:
         anisotropyvectorString = anisotropyvectorLine[:-1].split()
         anisotropyvector = [int(i) for i in anisotropyvectorString]
 
-        if not (anisotropyvector == [0,1,0]):
+        if not (anisotropyvector == [0, 1, 0]):
             msg = "Only the (0,1,0) anisotropy vector is supported for now"
             raise TypeError(msg)
 
@@ -369,15 +366,15 @@ class BsdfStructure:
             scatterType.append("BTDF")
         # Row 8: Contains a boolean value describing the type of value stored in the file: 1 bsdf / 0 intensity
         typeLine = bfile.readline()
-        #Support only BSDF values for now
+        # Support only BSDF values for now
         if float(typeLine.strip()) == 1:
             msg = "The values are not BSDF values but intensity values. It is not supported."
             raise TypeError(msg)
         if bool_log == 1:
             print("BSDF(1) or Intensity(1) values = " + str(typeLine))
-        #scattertype_nb_list = []
+        # scattertype_nb_list = []
 
-        #Reflection
+        # Reflection
         if reflectionortransmission[0] == 1:
             # Row 9: Number of anisotropy angles in reflection.
             nbsamplerotationLine = bfile.readline()
@@ -386,7 +383,7 @@ class BsdfStructure:
             samplerotationLine = bfile.readline()
             samplerotationString = samplerotationLine[:-1].split()
             samplerotation = [float(i) for i in samplerotationString]
-            #samplerotation_list.append(samplerotation_reflection)
+            # samplerotation_list.append(samplerotation_reflection)
             for index_samplerotation in range(nbsamplerotation_reflection):
                 # Row 11: Number of incident angles in reflection, for anisotropy angle N°1
                 nbAngleIncidenceLine = bfile.readline()
@@ -401,10 +398,10 @@ class BsdfStructure:
                 angleIncidence_list.extend(angleIncidence)
                 # Check that the angle of incidences are identical
                 if index_samplerotation > 0:
-                    if not angleIncidence == save_angleIncidence :
+                    if not angleIncidence == save_angleIncidence:
                         msg = "The angle of incidences must be identical for all the sample rotations."
                         raise TypeError(msg)
-                save_angleIncidence =  angleIncidence
+                save_angleIncidence = angleIncidence
 
         # Transmission
         if reflectionortransmission[1] == 1:
@@ -418,7 +415,7 @@ class BsdfStructure:
             samplerotationLine = bfile.readline()
             samplerotationString = samplerotationLine[:-1].split()
             samplerotation = [float(i) for i in samplerotationString]
-            #samplerotation_list.append(samplerotation_transmission)
+            # samplerotation_list.append(samplerotation_transmission)
             for index_samplerotation in range(nbsamplerotation_transmission):
                 # Row 15: Number of incident angles in reflection, for anisotropy angle N°1
                 nbAngleIncidenceLine = bfile.readline()
@@ -444,8 +441,12 @@ class BsdfStructure:
         if reflectionortransmission[0] == 1:
             # Row 17: Theta angle and a Phi angle for each spectrum measurement in reflection.
             theta_phi_reflection_reference_Line = bfile.readline()
+            if bool_log == 1:
+                print("Theta and Phi angles in reflection. = " + str(theta_phi_reflection_reference_Line))
             # Row 18: Reflective Spectrum description: wavelength (nm), coefficient (%)
             theta_phi_reflection_comment_Line = bfile.readline()
+            if bool_log == 1:
+                print("Reflection: wavelength (nm), coefficient (%) = " + str(theta_phi_reflection_comment_Line))
             # Row 19: Number of wavelength measurements in reflection
             nbWavelength_reflection_Line = bfile.readline()
             nbWavelength_reflection = int(nbWavelength_reflection_Line.strip())
@@ -459,13 +460,17 @@ class BsdfStructure:
                 wavelength_reflection_list.append(Wavelength_reflection)
             index_middle_wavelength = int(len(wavelength_reflection_list) / 2)
             wavelength.append(wavelength_reflection_list[index_middle_wavelength][0])
-            tisdata_list.append((wavelength_reflection_list[index_middle_wavelength][1])/100)
+            tisdata_list.append((wavelength_reflection_list[index_middle_wavelength][1]) / 100)
         # Transmission
         if reflectionortransmission[1] == 1:
             # Row 21: Theta angle and a Phi angle for each spectrum measurement in transmission.
             theta_phi_transmission_reference_Line = bfile.readline()
+            if bool_log == 1:
+                print("Theta and Phi angles in transmission. = " + str(theta_phi_transmission_reference_Line))
             # Row 22: Transmission Spectrum description: wavelength (nm), coefficient (%)
             theta_phi_transmission_comment_Line = bfile.readline()
+            if bool_log == 1:
+                print("Transmission: wavelength (nm), coefficient (%) = " + str(theta_phi_transmission_comment_Line))
             # Row 23: Number of wavelength measurements in transmission.
             nbWavelength_transmission_Line = bfile.readline()
             nbWavelength_transmission = int(nbWavelength_transmission_Line.strip())
@@ -478,8 +483,8 @@ class BsdfStructure:
                 Wavelength_transmission = [float(i) for i in Wavelength_transmission_String]
                 wavelength_transmission_list.append(Wavelength_transmission)
             index_middle_wavelength = int(len(wavelength_transmission_list) / 2)
-            #wavelength_list.append(wavelength_tis_list[index_middle_wavelength][0])
-            tisdata_list.append((wavelength_transmission_list[index_middle_wavelength][1])/100)
+            # wavelength_list.append(wavelength_tis_list[index_middle_wavelength][0])
+            tisdata_list.append((wavelength_transmission_list[index_middle_wavelength][1]) / 100)
 
         if bool_log == 1:
             print(".....Header was correctly read\n")
@@ -488,9 +493,7 @@ class BsdfStructure:
         if bool_log == 1:
             print("Reading BSDF content.....")
 
-        nb_reflection_transmission = len(scatterType)
         # tisData = np.zeros((nb_reflection_transmission * nbAngleIncidence, nbWavelength))
-        tisdata_temp_list = []
         scatterRadial_temp_list = []
         scatterAzimuth_temp_list = []
         bsdfData_temp_list = []
@@ -528,15 +531,15 @@ class BsdfStructure:
             scatterRadial_temp_list.append(scatterRadial)
             bsdfData_temp_list.append(bsdfDataBlock)
 
-        #Need to reorder
-        #BRDF: RT --> incidence --> wavelength
-        #Format: RT --> wavelength --> incidence
+        # Need to reorder
+        # BRDF: RT --> incidence --> wavelength
+        # Format: RT --> wavelength --> incidence
         scatterRadial_list = []
         scatterAzimuth_list = []
         bsdfData_list = []
 
         for index_block in range(len(angleIncidence_list)):
-            #tisdata_list.append(tisdata_temp_list[index_block]/100)
+            # tisdata_list.append(tisdata_temp_list[index_block]/100)
             wavelength_list.append(wavelength[0])
             scatterRadial_list.append(scatterRadial_temp_list[index_block])
             scatterAzimuth_list.append(scatterAzimuth_temp_list[index_block])
@@ -700,7 +703,7 @@ class BsdfStructure:
         while scatterRadialString[-1] == "":
             scatterRadialString = scatterRadialString[:-1]
         if len(scatterRadialString) != nbScatterRadial:
-            msg="WARNING: Wrong data for scatter radial values"
+            msg = "WARNING: Wrong data for scatter radial values"
             raise TypeError(msg)
             # tempVariable = input(".....Press Enter to continue")
         else:
@@ -812,17 +815,19 @@ class BsdfStructure:
 
         print("Converting data...\n")
 
-        line_theta_output_list, line_phi_output_list = phi_theta_output(self.bsdfdata_theta, self.bsdfdata_phi, self.zemax_or_speos)
+        line_theta_output_list, line_phi_output_list = phi_theta_output(
+            self.bsdfdata_theta, self.bsdfdata_phi, self.zemax_or_speos
+        )
         line_theta_output = line_theta_output_list[0]
         line_phi_output = line_phi_output_list[0]
 
-        #nb_wavelength = len(self.wavelength)
-        #nb_samplerotation = len(self.samplerotation)
-        #nb_angleofincidence = len(self.incidence)
-        #nb_reflection_transmission = len(self.scattertype)
-        #bsdf_output = self.bsdf
+        # nb_wavelength = len(self.wavelength)
+        # nb_samplerotation = len(self.samplerotation)
+        # nb_angleofincidence = len(self.incidence)
+        # nb_reflection_transmission = len(self.scattertype)
+        # bsdf_output = self.bsdf
 
-        #index_block = 0
+        # index_block = 0
 
         for index_block in range(len(self.bsdfdata_incidence)):
 
@@ -873,8 +878,6 @@ class BsdfStructure:
             print("nbSampleRotation nbAngleIncidence IntegralValue IntegralError Zemax_TIS_value NormalizationFactor")
 
         # Initialization
-        nbSampleRotation = len(self.samplerotation)
-        nbAngleIncidence = len(self.incidence)
         normalizationBsdf = []
 
         for index_block in range(len(self.bsdfdata_incidence)):
@@ -889,9 +892,7 @@ class BsdfStructure:
             # Linear interpolation of the values
             # interp2d is apparently deprecated
             # Look for alternatives f = interpolate.bisplrep(theta_rad, phi_rad, integrande)
-            f = interpolate.interp2d(
-                theta_rad, phi_rad, integrande, kind="linear", bounds_error=False, fill_value=0
-            )
+            f = interpolate.interp2d(theta_rad, phi_rad, integrande, kind="linear", bounds_error=False, fill_value=0)
             # calculation of the integral
             # r = nquad(f, [[0, math.pi / 2], [0, 2 * math.pi]], opts=[{"epsabs": 0.1}, {"epsabs": 0.1}])
             r = nquad(
@@ -946,9 +947,7 @@ class BsdfStructure:
             # Linear interpolation of the values
             # interp2d is apparently deprecated
             # Look for alternatives f = interpolate.bisplrep(theta_rad, phi_rad, integrande)
-            f = interpolate.interp2d(
-                theta_rad, phi_rad, integrande, kind="linear", bounds_error=False, fill_value=0
-            )
+            f = interpolate.interp2d(theta_rad, phi_rad, integrande, kind="linear", bounds_error=False, fill_value=0)
             # calculation of the integral
             # r = nquad(f, [[0, math.pi / 2], [0, 2 * math.pi]], opts=[{"epsabs": 0.1}, {"epsabs": 0.1}])
             r = nquad(
@@ -975,15 +974,14 @@ class BsdfStructure:
                     " ",
                     round(IntegralError, 3),
                     " ",
-                    self.bsdfdata_tisdata[index_block]
+                    self.bsdfdata_tisdata[index_block],
                 )
             index_block = index_block + 1
 
-
-    def write_zemax_file(self,bool_log):
+    def write_zemax_file(self, bool_log):
 
         # Writing a Zemax file for each wavelength
-        self.converter_coordinate_system_bsdf(0,bool_log)
+        self.converter_coordinate_system_bsdf(0, bool_log)
         self.bsdfdata_theta = self.bsdfdata_theta[0]
         self.bsdfdata_phi = self.bsdfdata_phi[0]
 
@@ -1211,7 +1209,9 @@ class BsdfStructure:
                             nLines.append("\t" + str(self.bsdfdata[index_block][index_theta][index_phi]))
                         elif self.scattertype[0] == "BTDF":
                             thetas_cosine = math.cos((180 - currentTheta) * math.pi / 180)
-                            nLines.append("\t" + str(thetas_cosine * self.bsdfdata[index_block][index_theta][index_phi]))
+                            nLines.append(
+                                "\t" + str(thetas_cosine * self.bsdfdata[index_block][index_theta][index_phi])
+                            )
                     nLines.append("\n")
                 index_block = index_block + 1
         nLines.append("End of file")
@@ -1444,7 +1444,7 @@ def compute_new_value_matrix(matrix_z, line_x, line_y, new_x, new_y):
     """
 
     index_x = bisect.bisect_left(line_x, new_x)
-    if index_x == 0 :
+    if index_x == 0:
         indexInf_x = index_x
         indexSup_x = index_x
         coeff_x = 0
@@ -1458,10 +1458,10 @@ def compute_new_value_matrix(matrix_z, line_x, line_y, new_x, new_y):
     else:
         newValue = 0
         return newValue
-        #index_x = len(line_x) - 1
-        #indexInf_x = index_x
-        #indexSup_x = index_x
-        #coeff_x = 0
+        # index_x = len(line_x) - 1
+        # indexInf_x = index_x
+        # indexSup_x = index_x
+        # coeff_x = 0
 
     index_y = bisect.bisect_left(line_y, new_y)
     if index_y == 0:
@@ -1477,10 +1477,10 @@ def compute_new_value_matrix(matrix_z, line_x, line_y, new_x, new_y):
     else:
         newValue = 0
         return newValue
-        #index_y = len(line_y) - 1
-        #indexInf_y = index_y
-        #indexSup_y = index_y
-        #coeff_y = 0
+        # index_y = len(line_y) - 1
+        # indexInf_y = index_y
+        # indexSup_y = index_y
+        # coeff_y = 0
 
     # Linear interpolation
     value_Inf_x = matrix_z[indexInf_x][indexInf_y] * (1 - coeff_y) + matrix_z[indexInf_x][indexSup_y] * coeff_y
@@ -1525,13 +1525,13 @@ def write_file(outputFilepath, nLines):
     nFile.close()
     print("The file " + str(outputFilepath) + " is ready!\n")
 
-def phi_theta_output(theta_input,phi_input,zemax_or_speos):
+
+def phi_theta_output(theta_input, phi_input, zemax_or_speos):
     """
     That function writes the text nLines in the file
     """
     theta_output = []
     phi_output = []
-
 
     # Limitation
     nbTheta_max = 1000
@@ -1566,4 +1566,3 @@ def phi_theta_output(theta_input,phi_input,zemax_or_speos):
     phi_output.append([(precisionPhi * x) for x in range(nbPhi)])
 
     return theta_output, phi_output
-

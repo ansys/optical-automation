@@ -1,4 +1,3 @@
-import os
 import tkinter as tk
 from tkinter import filedialog
 
@@ -38,14 +37,16 @@ def main():
     BSDF_inputFilepath = getfilename("*.bsdf *.brdf *.anisotropicbsdf")
     print("The file to convert is: " + BSDF_inputFilepath)
 
-    msg = "Select the output format \n " \
-          "1 = .bsdf (Zemax) \n " \
-          "2 = .brdf (Speos) - Not yet supported \n " \
-          "3 = .anisotropicbsdf\n" \
-          "Enter >> "
+    msg = (
+        "Select the output format \n "
+        "1 = .bsdf (Zemax) \n "
+        "2 = .brdf (Speos) - Not yet supported \n "
+        "3 = .anisotropicbsdf\n"
+        "Enter >> "
+    )
     output_choice = int(input(msg))
 
-    if not (output_choice in [1,3]):
+    if not (output_choice in [1, 3]):
         msg = "Wrong output format"
         raise TypeError(msg)
     else:
