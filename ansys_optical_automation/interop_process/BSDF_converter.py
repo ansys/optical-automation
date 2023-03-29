@@ -1219,6 +1219,210 @@ class BsdfStructure:
 
         return nLines
 
+    def convert_rgb_to_spectrum_value(self, rgb_tuple, wavelength):
+        """
+        function to convert an RGB tuple to a spectrum
+        Parameters
+        ----------
+        wavelength: float
+            wavelength of conversion
+        rgb_tuple: tuple
+            3 floats of RGB
+        Returns
+        -------
+        spectrumvalue at wavelength: floats
+        """
+
+        r, b, g = rgb_tuple
+        red_spectral_representation = [
+            1.28,
+            1.28,
+            1.28,
+            1.28,
+            1.28,
+            1.28,
+            1.28,
+            1.28,
+            1.28,
+            1.28,
+            1.28,
+            1.28,
+            1.28,
+            1.28,
+            1.29,
+            1.3,
+            1.34,
+            1.44,
+            1.7,
+            2.27,
+            3.48,
+            5.81,
+            9.93,
+            16.6,
+            26.4,
+            39.4,
+            55,
+            71.4,
+            86.1,
+            96.3,
+            100,
+            96.3,
+            86.1,
+            71.4,
+            55,
+            39.4,
+            26.4,
+            16.6,
+            9.93,
+            5.81,
+            3.48,
+            2.27,
+            1.7,
+            1.44,
+            1.34,
+            1.3,
+            1.29,
+            1.28,
+        ]
+        green_spectral_representation = [
+            4.13245e-05,
+            0.000203619,
+            0.000915526,
+            0.00375632,
+            0.0140636,
+            0.0480473,
+            0.14979,
+            0.426124,
+            1.10619,
+            2.62039,
+            5.66423,
+            11.1727,
+            20.11,
+            33.0301,
+            49.5047,
+            67.7056,
+            84.4972,
+            96.2279,
+            100,
+            94.8286,
+            82.0577,
+            64.7947,
+            46.6875,
+            30.6974,
+            18.418,
+            10.0838,
+            5.03789,
+            2.29674,
+            0.955466,
+            0.36271,
+            0.125645,
+            0.0397163,
+            0.011456,
+            0.00301537,
+            0.000724246,
+            0.000158735,
+            3.17468e-05,
+            5.79386e-06,
+            9.64886e-07,
+            1.46631e-07,
+            2.03336e-08,
+            2.57302e-09,
+            2.97107e-10,
+            3.13057e-11,
+            3.01006e-12,
+            2.64099e-13,
+            2.11445e-14,
+            1.54479e-15,
+        ]
+        blue_spectral_representation = [
+            1.36,
+            2.27,
+            4.57,
+            9.61,
+            19,
+            34.1,
+            54.1,
+            75.6,
+            92.8,
+            100,
+            94.5,
+            78.4,
+            57.1,
+            36.6,
+            20.8,
+            10.6,
+            5.07,
+            2.48,
+            1.44,
+            1.08,
+            0.97,
+            0.942,
+            0.935,
+            0.934,
+            0.934,
+            0.934,
+            0.934,
+            0.934,
+            0.934,
+            0.934,
+            0.934,
+            0.934,
+            0.934,
+            0.934,
+            0.934,
+            0.934,
+            0.934,
+            0.934,
+            0.934,
+            0.934,
+            0.934,
+            0.934,
+            0.934,
+            0.934,
+            0.934,
+            0.934,
+            0.934,
+            0.934,
+        ]
+        return (
+            (
+                r * self.get_srgb_spectrum_at_wavelength(red_spectral_representation, 360.0, 830.0, wavelength)
+                + g * self.get_srgb_spectrum_at_wavelength(green_spectral_representation, 360.0, 830.0, wavelength)
+                + b * self.get_srgb_spectrum_at_wavelength(blue_spectral_representation, 360.0, 830.0, wavelength)
+            )
+            / 100.0
+            @ staticmethod
+        )
+
+    @staticmethod
+    def get_srgb_spectrum_at_wavelength(conversion_spectrum, wl_start, wl_end, wl):
+        """
+        Method to extrapolar
+        Parameters
+        ----------
+        conversion_spectrum: list
+            Spectrum data in % values 0-100
+        wl_start: float
+            start wavelength in nm
+        wl_end: float
+            end wavelength in nm
+        Returns
+        -------
+        spectrum value in % 0-100
+        """
+
+        interval_items = len(conversion_spectrum) - 1
+        lambda_increment = (wl_end - wl_start) / interval_items
+        if wl <= wl_start:
+            return conversion_spectrum[0]
+        elif wl >= wl_end:
+            return conversion_spectrum[interval_items]
+        pos = (wl - wl_start) / lambda_increment
+        pos_integer = int(pos)
+        pos_fractional = int(pos) - pos
+        slope = conversion_spectrum[pos_integer + 1] - conversion_spectrum[pos_integer]
+        return conversion_spectrum[pos_integer] + pos_fractional * slope
+
 
 def convert_normal_to_specular_using_cartesian(theta_i, phi_i, angle_inc):
     """
