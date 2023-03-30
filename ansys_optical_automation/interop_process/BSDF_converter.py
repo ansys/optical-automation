@@ -350,9 +350,12 @@ class BsdfStructure:
         anisotropyvectorString = anisotropyvectorLine[:-1].split()
         anisotropyvector = [int(i) for i in anisotropyvectorString]
 
-        if not (anisotropyvector == [0, 1, 0]):
-            msg = "Only the (0,1,0) anisotropy vector is supported for now"
-            raise TypeError(msg)
+        if bool_log == 1:
+            print("The anisotropy vector is = " + str(anisotropyvector))
+
+        #if not (anisotropyvector == [0, 1, 0]):
+        #    msg = "Only the (0,1,0) anisotropy vector is supported for now"
+        #    raise TypeError(msg)
 
         # Row 7: Contains two boolean values (0=false and 1=true) - reflection / transmission data
         reflectionortransmissionLine = bfile.readline()
