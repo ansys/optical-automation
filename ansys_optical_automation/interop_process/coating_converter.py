@@ -255,9 +255,15 @@ class CoatingConverter:
             raise ValueError(msg)
 
         # Reading the transmission file
-        if self.zos.the_application.Preferences.General.TXTFileEncoding == self.zos.zosapi.Preferences.EncodingType.Unicode:
+        if (
+            self.zos.the_application.Preferences.General.TXTFileEncoding
+            == self.zos.zosapi.Preferences.EncodingType.Unicode
+        ):
             bfile = io.open(result_file_dir, "r", encoding="utf-16-le")
-        if self.zos.the_application.Preferences.General.TXTFileEncoding == self.zos.zosapi.Preferences.EncodingType.ANSI:
+        if (
+            self.zos.the_application.Preferences.General.TXTFileEncoding
+            == self.zos.zosapi.Preferences.EncodingType.ANSI
+        ):
             bfile = io.open(result_file_dir, "r", encoding="cp1252")
 
         header_line = bfile.readline()
