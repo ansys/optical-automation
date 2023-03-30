@@ -183,7 +183,7 @@ class CoatingConverter:
         # bsdf_viewer.dpf_instance.BuildBSDF180(coating_file_1, coating_file_2)
         # bsdf_viewer.dpf_instance.SaveFile(speos_bsdf180)
 
-        bsdf_viewer = CreateObject("SimpleBSDFSurfaceViewer.Application222")
+        bsdf_viewer = CreateObject("SimpleBSDFSurfaceViewer.Application")
         # # Builds BSDF 180
         bsdf_viewer.BuildBSDF180(coating_file_1, coating_file_2)
         bsdf_viewer.SaveFile(speos_bsdf180)
@@ -255,7 +255,11 @@ class CoatingConverter:
             raise ValueError(msg)
 
         # Reading the transmission file
-        bfile = io.open(result_file_dir, "r", encoding="utf-16-le")
+        if self.zos.the_application.Preferences.General.TXTFileEncoding == self.zos.zosapi.Preferences.EncodingType.Unicode:
+            bfile = io.open(result_file_dir, "r", encoding="utf-16-le")
+        if self.zos.the_application.Preferences.General.TXTFileEncoding == self.zos.zosapi.Preferences.EncodingType.ANSI:
+            bfile = io.open(result_file_dir, "r", encoding="cp1252")
+
         header_line = bfile.readline()
         while header_line[1:10].strip() != "Angle":
             header_line = bfile.readline()
