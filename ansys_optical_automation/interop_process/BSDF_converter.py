@@ -161,7 +161,7 @@ class BsdfStructure:
         # Row 7: Contains a boolean value describing the type of value stored in the file: 1 bsdf / 0 intensity
         typeLine = bfile.readline()
         # Support only BSDF values for now
-        if float(typeLine.strip()) == 1:
+        if float(typeLine.strip()) == 0:
             msg = "The values are not BSDF values but intensity values. It is not supported."
             raise TypeError(msg)
         if bool_log == 1:
@@ -353,7 +353,7 @@ class BsdfStructure:
         if bool_log == 1:
             print("The anisotropy vector is = " + str(anisotropyvector))
 
-        #if not (anisotropyvector == [0, 1, 0]):
+        # if not (anisotropyvector == [0, 1, 0]):
         #    msg = "Only the (0,1,0) anisotropy vector is supported for now"
         #    raise TypeError(msg)
 
