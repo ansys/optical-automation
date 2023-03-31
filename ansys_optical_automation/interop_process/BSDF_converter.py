@@ -165,7 +165,7 @@ class BsdfStructure:
             msg = "The values are not BSDF values but intensity values. It is not supported."
             raise TypeError(msg)
         if bool_log == 1:
-            print("BSDF(1) or Intensity(1) values = " + str(typeLine))
+            print("BSDF(1) or Intensity(0) values = " + str(typeLine))
         # Row 8: Number of incident angles and number of wavelength samples (in nanometer).
         nbAngleIncidenceWavelengthLine = bfile.readline()
         nbAngleIncidenceWavelength = nbAngleIncidenceWavelengthLine[:-1].split("\t")
