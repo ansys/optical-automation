@@ -833,7 +833,6 @@ class BsdfStructure:
         # index_block = 0
 
         for index_block in range(len(self.bsdfdata_incidence)):
-
             current_angleofincidence = self.bsdfdata_incidence[index_block]
             if len(self.bsdfdata_theta) == 1:
                 line_theta_input = self.bsdfdata_theta[0]
@@ -982,7 +981,6 @@ class BsdfStructure:
             index_block = index_block + 1
 
     def write_zemax_file(self, bool_log):
-
         # Writing a Zemax file for each wavelength
         self.converter_coordinate_system_bsdf(0, bool_log)
         self.bsdfdata_theta = self.bsdfdata_theta[0]
@@ -1088,7 +1086,6 @@ class BsdfStructure:
         return nLines
 
     def write_speos_anisotropicbsdf_file(self):
-
         # Writing a Speos file
         print("Writing Speos data\n")
         nLines = self.write_speos_header_anisotropicbsdf()
