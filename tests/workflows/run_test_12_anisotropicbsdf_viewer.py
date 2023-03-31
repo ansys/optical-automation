@@ -1,8 +1,6 @@
 import os
 
-from ansys_optical_automation.interop_process.BSDF_converter import (
-    obsolete_convert_zemax_to_speos_bsdf,
-)
+from ansys_optical_automation.interop_process.BSDF_converter import BsdfStructure
 
 
 def unittest_run():
@@ -14,7 +12,9 @@ def unittest_run():
 
 
     """
+    bsdf_data = BsdfStructure()
     cwd = os.path.dirname(os.path.realpath(__file__))
     inputFilepath = os.path.join(cwd, "example_models", "test_12_anisotropicbsdf_viewer_zemax.bsdf")
-    outputFilepath = os.path.join(cwd, "example_models", "test_12_anisotropicbsdf_viewer_speos.bsdf")
-    obsolete_convert_zemax_to_speos_bsdf(inputFilepath, outputFilepath, 1, 1)
+    # outputFilepath = os.path.join(cwd, "example_models", "test_12_anisotropicbsdf_viewer_speos.bsdf")
+    bsdf_data.import_data(inputFilepath, 0)
+    bsdf_data.write_speos_anisotropicbsdf_file()

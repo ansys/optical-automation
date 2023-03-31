@@ -11,11 +11,14 @@ class TestAnisotropicbsdfAPI:
     def setup_class(self):
         self.local_path = os.path.dirname(os.path.realpath(__file__))
         self.reference_file_speos = os.path.join(
-            self.local_path, "workflows", "example_models", "test_12_anisotropicbsdf_viewer_speos_reference.bsdf"
+            self.local_path,
+            "workflows",
+            "example_models",
+            "test_12_anisotropicbsdf_viewer_speos_reference.anisotropicbsdf",
         )
 
         self.results_file_speos = os.path.join(
-            self.local_path, "workflows", "example_models", "test_12_anisotropicbsdf_viewer_speos.brdf"
+            self.local_path, "workflows", "example_models", "test_12_anisotropicbsdf_viewer_zemax.anisotropicbsdf"
         )
 
         self.clean_results(self)  # no idea why but you have to pass there self
