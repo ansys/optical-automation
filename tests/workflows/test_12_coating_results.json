@@ -1,0 +1,3 @@
+{
+    "error": "Traceback (most recent call last):\n  File \"C:\\Data\\PROJECTS\\CODE EXCHANGE\\GitHub\\optical-automation\\tests\\workflows\\run_test_12_coating.py\", line 90, in unittest_run\n    main()\n  File \"C:\\Data\\PROJECTS\\CODE EXCHANGE\\GitHub\\optical-automation\\tests\\workflows\\run_test_12_coating.py\", line 80, in main\n    shutil.copyfile(speos_test_file, renamed_test_file)\n  File \"C:\\Python38\\lib\\shutil.py\", line 264, in copyfile\n    with open(src, 'rb') as fsrc, open(dst, 'wb') as fdst:\nFileNotFoundError: [Errno 2] No such file or directory: 'C:\\\\Data\\\\PROJECTS\\\\CODE EXCHANGE\\\\GitHub\\\\optical-automation\\\\tests\\\\workflows\\\\rayfile\\\\Speos\\\\test12_COATING_MULTIPLELAYERS_AIR_N-BK7.bsdf180'\n"
+}
