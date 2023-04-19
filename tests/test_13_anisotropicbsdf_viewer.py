@@ -1,6 +1,6 @@
 import os
 
-from .workflows.run_test_12_anisotropicbsdf_viewer import unittest_run
+from .workflows.run_test_13_anisotropicbsdf_viewer import unittest_run
 
 
 class TestAnisotropicbsdfAPI:
@@ -14,11 +14,11 @@ class TestAnisotropicbsdfAPI:
             self.local_path,
             "workflows",
             "example_models",
-            "test_12_anisotropicbsdf_viewer_speos_reference.anisotropicbsdf",
+            "test_13_anisotropicbsdf_viewer_speos_reference.anisotropicbsdf",
         )
 
         self.results_file_speos = os.path.join(
-            self.local_path, "workflows", "example_models", "test_12_anisotropicbsdf_viewer_zemax.anisotropicbsdf"
+            self.local_path, "workflows", "example_models", "test_13_anisotropicbsdf_viewer_zemax.anisotropicbsdf"
         )
 
         self.clean_results(self)  # no idea why but you have to pass there self
