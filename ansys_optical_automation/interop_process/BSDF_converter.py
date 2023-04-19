@@ -73,9 +73,8 @@ class BsdfStructure:
         self.bsdfdata_phi = {"transmission_reflection", "wavelength", "sample_rotation", "angleofincidence"}
         self.bsdfdata = {"transmission_reflection", "wavelength", "sample_rotation", "angleofincidence", "theta", "phi"}
 
-    def import_data(self, inputFilepath, bool_log=True):
-        self.filename_input = inputFilepath
-        input_file_extension = os.path.splitext(inputFilepath)[1].lower()[0:]
+    def import_data(self, bool_log=True):
+        input_file_extension = os.path.splitext(self.filename_input)[1].lower()[0:]
         if not (input_file_extension in [".bsdf", ".brdf", ".anisotropicbsdf"]):
             msg = "Nonsupported file selected"
             raise TypeError(msg)

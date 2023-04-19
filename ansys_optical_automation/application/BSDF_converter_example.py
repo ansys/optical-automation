@@ -34,8 +34,8 @@ def main():
 
     bool_log = 1
     bsdf_data = BsdfStructure()
-    BSDF_inputFilepath = getfilename("*.bsdf *.brdf *.anisotropicbsdf")
-    print("The file to convert is: " + BSDF_inputFilepath)
+    bsdf_data.filename_input = getfilename("*.bsdf *.brdf *.anisotropicbsdf")
+    print("The file to convert is: " + bsdf_data.filename_input)
 
     msg = (
         "Select the output format \n "
@@ -50,7 +50,7 @@ def main():
         msg = "Wrong output format"
         raise TypeError(msg)
     else:
-        bsdf_data.import_data(BSDF_inputFilepath, bool_log)
+        bsdf_data.import_data(bool_log)
         if output_choice == 1:
             bsdf_data.write_zemax_file(bool_log)
         if output_choice == 3:
