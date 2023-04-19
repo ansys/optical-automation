@@ -70,7 +70,7 @@ class BrdfStructure:
 
         """
         theta_brdf = [
-            [MeasurePoint.theta_input, MeasurePoint.brdf]
+            [MeasurePoint.theta, MeasurePoint.brdf]
             for MeasurePoint in self.measurement_2d_brdf
             if (MeasurePoint.incidence == incident and MeasurePoint.wavelength == wavelength)
         ]
