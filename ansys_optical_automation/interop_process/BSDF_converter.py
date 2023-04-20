@@ -75,7 +75,7 @@ class BsdfStructure:
 
     def import_data(self, bool_log=True):
         input_file_extension = os.path.splitext(self.filename_input)[1].lower()[0:]
-        if not (input_file_extension in [".bsdf", ".brdf", ".anisotropicbsdf"]):
+        if not (input_file_extension in [".bsdf", ".brdf", ".anisotropicbsdf", ".astm"]):
             msg = "Nonsupported file selected"
             raise TypeError(msg)
         if input_file_extension == ".bsdf":
@@ -92,6 +92,11 @@ class BsdfStructure:
         if input_file_extension == ".anisotropicbsdf":
             self.zemax_or_speos = "speos"
             self.read_speos_anisotropicbsdf(bool_log)
+            self.calculate_tis_data(bool_log)
+
+        if input_file_extension == ".astm":
+            self.zemax_or_speos = "None"
+            self.read_astm_file(bool_log)
             self.calculate_tis_data(bool_log)
 
     def read_speos_brdf(self, bool_log):
