@@ -426,6 +426,11 @@ title="Print to PDF"
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#module-ansys_optical_automation.interop_process.BSDF_converter">
+   ansys_optical_automation.interop_process.BSDF_converter module
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#ansys-optical-automation-interop-process-coating-converter-module">
    ansys_optical_automation.interop_process.coating_converter module
   </a>
@@ -453,6 +458,354 @@ title="Print to PDF"
 <h1>ansys_optical_automation.interop_process package<a class="headerlink" href="#ansys-optical-automation-interop-process-package" title="Permalink to this headline">#</a></h1>
 <section id="submodules">
 <h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">#</a></h2>
+</section>
+<section id="module-ansys_optical_automation.interop_process.BSDF_converter">
+<span id="ansys-optical-automation-interop-process-bsdf-converter-module"></span><h2>ansys_optical_automation.interop_process.BSDF_converter module<a class="headerlink" href="#module-ansys_optical_automation.interop_process.BSDF_converter" title="Permalink to this headline">#</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="ansys_optical_automation.interop_process.BSDF_converter.BsdfStructure">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">ansys_optical_automation.interop_process.BSDF_converter.</span></span><span class="sig-name descname"><span class="pre">BsdfStructure</span></span><a class="reference internal" href="../_modules/ansys_optical_automation/interop_process/BSDF_converter.html#BsdfStructure"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ansys_optical_automation.interop_process.BSDF_converter.BsdfStructure" title="Permalink to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>class of BSDF data contains method to host bsdf data</p>
+<p class="rubric">Methods</p>
+<table class="autosummary longtable table autosummary">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#ansys_optical_automation.interop_process.BSDF_converter.BsdfStructure.calculate_tis_data" title="ansys_optical_automation.interop_process.BSDF_converter.BsdfStructure.calculate_tis_data"><code class="xref py py-obj docutils literal notranslate"><span class="pre">calculate_tis_data</span></code></a>(bool_log)</p></td>
+<td><p>That function computes the TIS values from the BSDF data and one TIS value</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#ansys_optical_automation.interop_process.BSDF_converter.BsdfStructure.convert_rgb_to_spectrum_value" title="ansys_optical_automation.interop_process.BSDF_converter.BsdfStructure.convert_rgb_to_spectrum_value"><code class="xref py py-obj docutils literal notranslate"><span class="pre">convert_rgb_to_spectrum_value</span></code></a>(rgb_tuple, ...)</p></td>
+<td><p>function to convert an RGB tuple to a spectrum Parameters ---------- wavelength: float     wavelength of conversion rgb_tuple: tuple     3 floats of RGB Returns ------- spectrumvalue at wavelength: floats</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#ansys_optical_automation.interop_process.BSDF_converter.BsdfStructure.converter_coordinate_system_bsdf" title="ansys_optical_automation.interop_process.BSDF_converter.BsdfStructure.converter_coordinate_system_bsdf"><code class="xref py py-obj docutils literal notranslate"><span class="pre">converter_coordinate_system_bsdf</span></code></a>(...)</p></td>
+<td><p>That function converts the bsdf data</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#ansys_optical_automation.interop_process.BSDF_converter.BsdfStructure.get_srgb_spectrum_at_wavelength" title="ansys_optical_automation.interop_process.BSDF_converter.BsdfStructure.get_srgb_spectrum_at_wavelength"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_srgb_spectrum_at_wavelength</span></code></a>(...)</p></td>
+<td><p>Method to extrapolar Parameters ---------- conversion_spectrum: list     Spectrum data in % values 0-100 wl_start: float     start wavelength in nm wl_end: float     end wavelength in nm Returns ------- spectrum value in % 0-100</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#ansys_optical_automation.interop_process.BSDF_converter.BsdfStructure.normalize_bsdf_data" title="ansys_optical_automation.interop_process.BSDF_converter.BsdfStructure.normalize_bsdf_data"><code class="xref py py-obj docutils literal notranslate"><span class="pre">normalize_bsdf_data</span></code></a>(bool_log)</p></td>
+<td><p>That function normalizes the BSDF data vs the TIS values</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#ansys_optical_automation.interop_process.BSDF_converter.BsdfStructure.obsolete_phi_theta_output" title="ansys_optical_automation.interop_process.BSDF_converter.BsdfStructure.obsolete_phi_theta_output"><code class="xref py py-obj docutils literal notranslate"><span class="pre">obsolete_phi_theta_output</span></code></a>()</p></td>
+<td><p>That function writes the text nLines in the file</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#ansys_optical_automation.interop_process.BSDF_converter.BsdfStructure.read_speos_anisotropicbsdf" title="ansys_optical_automation.interop_process.BSDF_converter.BsdfStructure.read_speos_anisotropicbsdf"><code class="xref py py-obj docutils literal notranslate"><span class="pre">read_speos_anisotropicbsdf</span></code></a>(bool_log)</p></td>
+<td><p>That function reads Speos anisotropicbsdf file</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#ansys_optical_automation.interop_process.BSDF_converter.BsdfStructure.read_speos_brdf" title="ansys_optical_automation.interop_process.BSDF_converter.BsdfStructure.read_speos_brdf"><code class="xref py py-obj docutils literal notranslate"><span class="pre">read_speos_brdf</span></code></a>(bool_log)</p></td>
+<td><p>That function reads Speos BSDF file</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#ansys_optical_automation.interop_process.BSDF_converter.BsdfStructure.read_zemax_bsdf" title="ansys_optical_automation.interop_process.BSDF_converter.BsdfStructure.read_zemax_bsdf"><code class="xref py py-obj docutils literal notranslate"><span class="pre">read_zemax_bsdf</span></code></a>(bool_log)</p></td>
+<td><p>That function reads Zemax BSDF file</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#ansys_optical_automation.interop_process.BSDF_converter.BsdfStructure.write_speos_data_anisotropicbsdf" title="ansys_optical_automation.interop_process.BSDF_converter.BsdfStructure.write_speos_data_anisotropicbsdf"><code class="xref py py-obj docutils literal notranslate"><span class="pre">write_speos_data_anisotropicbsdf</span></code></a>(nLines)</p></td>
+<td><p>That function writes the main data of Speos BSDF file</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#ansys_optical_automation.interop_process.BSDF_converter.BsdfStructure.write_speos_header_anisotropicbsdf" title="ansys_optical_automation.interop_process.BSDF_converter.BsdfStructure.write_speos_header_anisotropicbsdf"><code class="xref py py-obj docutils literal notranslate"><span class="pre">write_speos_header_anisotropicbsdf</span></code></a>()</p></td>
+<td><p>That function writes the header of Speos BSDF file</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#ansys_optical_automation.interop_process.BSDF_converter.BsdfStructure.write_zemax_data_bsdf" title="ansys_optical_automation.interop_process.BSDF_converter.BsdfStructure.write_zemax_data_bsdf"><code class="xref py py-obj docutils literal notranslate"><span class="pre">write_zemax_data_bsdf</span></code></a>(index_RT, index_wavelength)</p></td>
+<td><p>That function writes the main data of Zemax BSDF file</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#ansys_optical_automation.interop_process.BSDF_converter.BsdfStructure.write_zemax_header_bsdf" title="ansys_optical_automation.interop_process.BSDF_converter.BsdfStructure.write_zemax_header_bsdf"><code class="xref py py-obj docutils literal notranslate"><span class="pre">write_zemax_header_bsdf</span></code></a>(index_RT, ...)</p></td>
+<td><p>That function writes the header of Zemax BSDF file</p></td>
+</tr>
+</tbody>
+</table>
+<table class="table">
+<colgroup>
+<col style="width: 78%" />
+<col style="width: 22%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>import_data</strong></p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p><strong>write_speos_anisotropicbsdf_file</strong></p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p><strong>write_zemax_file</strong></p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<dl class="py method">
+<dt class="sig sig-object py" id="ansys_optical_automation.interop_process.BSDF_converter.BsdfStructure.calculate_tis_data">
+<span class="sig-name descname"><span class="pre">calculate_tis_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">bool_log</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ansys_optical_automation/interop_process/BSDF_converter.html#BsdfStructure.calculate_tis_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ansys_optical_automation.interop_process.BSDF_converter.BsdfStructure.calculate_tis_data" title="Permalink to this definition">#</a></dt>
+<dd><p>That function computes the TIS values from the BSDF data and one TIS value</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ansys_optical_automation.interop_process.BSDF_converter.BsdfStructure.convert_rgb_to_spectrum_value">
+<span class="sig-name descname"><span class="pre">convert_rgb_to_spectrum_value</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rgb_tuple</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wavelength</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ansys_optical_automation/interop_process/BSDF_converter.html#BsdfStructure.convert_rgb_to_spectrum_value"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ansys_optical_automation.interop_process.BSDF_converter.BsdfStructure.convert_rgb_to_spectrum_value" title="Permalink to this definition">#</a></dt>
+<dd><p>function to convert an RGB tuple to a spectrum
+Parameters
+———-
+wavelength: float</p>
+<blockquote>
+<div><p>wavelength of conversion</p>
+</div></blockquote>
+<dl class="simple">
+<dt>rgb_tuple: tuple</dt><dd><p>3 floats of RGB</p>
+</dd>
+</dl>
+<p>spectrumvalue at wavelength: floats</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ansys_optical_automation.interop_process.BSDF_converter.BsdfStructure.converter_coordinate_system_bsdf">
+<span class="sig-name descname"><span class="pre">converter_coordinate_system_bsdf</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">bool_normal_1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bool_log</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ansys_optical_automation/interop_process/BSDF_converter.html#BsdfStructure.converter_coordinate_system_bsdf"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ansys_optical_automation.interop_process.BSDF_converter.BsdfStructure.converter_coordinate_system_bsdf" title="Permalink to this definition">#</a></dt>
+<dd><p>That function converts the bsdf data</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ansys_optical_automation.interop_process.BSDF_converter.BsdfStructure.get_srgb_spectrum_at_wavelength">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_srgb_spectrum_at_wavelength</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">conversion_spectrum</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wl_start</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wl_end</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wl</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ansys_optical_automation/interop_process/BSDF_converter.html#BsdfStructure.get_srgb_spectrum_at_wavelength"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ansys_optical_automation.interop_process.BSDF_converter.BsdfStructure.get_srgb_spectrum_at_wavelength" title="Permalink to this definition">#</a></dt>
+<dd><p>Method to extrapolar
+Parameters
+———-
+conversion_spectrum: list</p>
+<blockquote>
+<div><p>Spectrum data in % values 0-100</p>
+</div></blockquote>
+<dl class="simple">
+<dt>wl_start: float</dt><dd><p>start wavelength in nm</p>
+</dd>
+<dt>wl_end: float</dt><dd><p>end wavelength in nm</p>
+</dd>
+</dl>
+<p>spectrum value in % 0-100</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ansys_optical_automation.interop_process.BSDF_converter.BsdfStructure.import_data">
+<span class="sig-name descname"><span class="pre">import_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">bool_log</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ansys_optical_automation/interop_process/BSDF_converter.html#BsdfStructure.import_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ansys_optical_automation.interop_process.BSDF_converter.BsdfStructure.import_data" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ansys_optical_automation.interop_process.BSDF_converter.BsdfStructure.normalize_bsdf_data">
+<span class="sig-name descname"><span class="pre">normalize_bsdf_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">bool_log</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ansys_optical_automation/interop_process/BSDF_converter.html#BsdfStructure.normalize_bsdf_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ansys_optical_automation.interop_process.BSDF_converter.BsdfStructure.normalize_bsdf_data" title="Permalink to this definition">#</a></dt>
+<dd><p>That function normalizes the BSDF data vs the TIS values</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ansys_optical_automation.interop_process.BSDF_converter.BsdfStructure.obsolete_phi_theta_output">
+<span class="sig-name descname"><span class="pre">obsolete_phi_theta_output</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ansys_optical_automation/interop_process/BSDF_converter.html#BsdfStructure.obsolete_phi_theta_output"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ansys_optical_automation.interop_process.BSDF_converter.BsdfStructure.obsolete_phi_theta_output" title="Permalink to this definition">#</a></dt>
+<dd><p>That function writes the text nLines in the file</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ansys_optical_automation.interop_process.BSDF_converter.BsdfStructure.read_speos_anisotropicbsdf">
+<span class="sig-name descname"><span class="pre">read_speos_anisotropicbsdf</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">bool_log</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ansys_optical_automation/interop_process/BSDF_converter.html#BsdfStructure.read_speos_anisotropicbsdf"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ansys_optical_automation.interop_process.BSDF_converter.BsdfStructure.read_speos_anisotropicbsdf" title="Permalink to this definition">#</a></dt>
+<dd><p>That function reads Speos anisotropicbsdf file</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>bool_log</strong><span class="classifier">boolean</span></dt><dd><p>0 –&gt; no report / 1 –&gt; reports values</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ansys_optical_automation.interop_process.BSDF_converter.BsdfStructure.read_speos_brdf">
+<span class="sig-name descname"><span class="pre">read_speos_brdf</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">bool_log</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ansys_optical_automation/interop_process/BSDF_converter.html#BsdfStructure.read_speos_brdf"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ansys_optical_automation.interop_process.BSDF_converter.BsdfStructure.read_speos_brdf" title="Permalink to this definition">#</a></dt>
+<dd><p>That function reads Speos BSDF file</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>bool_log</strong><span class="classifier">boolean</span></dt><dd><p>0 –&gt; no report / 1 –&gt; reports values</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ansys_optical_automation.interop_process.BSDF_converter.BsdfStructure.read_zemax_bsdf">
+<span class="sig-name descname"><span class="pre">read_zemax_bsdf</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">bool_log</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ansys_optical_automation/interop_process/BSDF_converter.html#BsdfStructure.read_zemax_bsdf"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ansys_optical_automation.interop_process.BSDF_converter.BsdfStructure.read_zemax_bsdf" title="Permalink to this definition">#</a></dt>
+<dd><p>That function reads Zemax BSDF file</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>bool_log</strong><span class="classifier">boolean</span></dt><dd><p>0 –&gt; no report / 1 –&gt; reports values</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ansys_optical_automation.interop_process.BSDF_converter.BsdfStructure.write_speos_anisotropicbsdf_file">
+<span class="sig-name descname"><span class="pre">write_speos_anisotropicbsdf_file</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ansys_optical_automation/interop_process/BSDF_converter.html#BsdfStructure.write_speos_anisotropicbsdf_file"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ansys_optical_automation.interop_process.BSDF_converter.BsdfStructure.write_speos_anisotropicbsdf_file" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ansys_optical_automation.interop_process.BSDF_converter.BsdfStructure.write_speos_data_anisotropicbsdf">
+<span class="sig-name descname"><span class="pre">write_speos_data_anisotropicbsdf</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">nLines</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ansys_optical_automation/interop_process/BSDF_converter.html#BsdfStructure.write_speos_data_anisotropicbsdf"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ansys_optical_automation.interop_process.BSDF_converter.BsdfStructure.write_speos_data_anisotropicbsdf" title="Permalink to this definition">#</a></dt>
+<dd><p>That function writes the main data of Speos BSDF file</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ansys_optical_automation.interop_process.BSDF_converter.BsdfStructure.write_speos_header_anisotropicbsdf">
+<span class="sig-name descname"><span class="pre">write_speos_header_anisotropicbsdf</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ansys_optical_automation/interop_process/BSDF_converter.html#BsdfStructure.write_speos_header_anisotropicbsdf"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ansys_optical_automation.interop_process.BSDF_converter.BsdfStructure.write_speos_header_anisotropicbsdf" title="Permalink to this definition">#</a></dt>
+<dd><p>That function writes the header of Speos BSDF file</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ansys_optical_automation.interop_process.BSDF_converter.BsdfStructure.write_zemax_data_bsdf">
+<span class="sig-name descname"><span class="pre">write_zemax_data_bsdf</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">index_RT</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">index_wavelength</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ansys_optical_automation/interop_process/BSDF_converter.html#BsdfStructure.write_zemax_data_bsdf"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ansys_optical_automation.interop_process.BSDF_converter.BsdfStructure.write_zemax_data_bsdf" title="Permalink to this definition">#</a></dt>
+<dd><p>That function writes the main data of Zemax BSDF file</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ansys_optical_automation.interop_process.BSDF_converter.BsdfStructure.write_zemax_file">
+<span class="sig-name descname"><span class="pre">write_zemax_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">bool_log</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ansys_optical_automation/interop_process/BSDF_converter.html#BsdfStructure.write_zemax_file"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ansys_optical_automation.interop_process.BSDF_converter.BsdfStructure.write_zemax_file" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ansys_optical_automation.interop_process.BSDF_converter.BsdfStructure.write_zemax_header_bsdf">
+<span class="sig-name descname"><span class="pre">write_zemax_header_bsdf</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">index_RT</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">index_wavelength</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ansys_optical_automation/interop_process/BSDF_converter.html#BsdfStructure.write_zemax_header_bsdf"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ansys_optical_automation.interop_process.BSDF_converter.BsdfStructure.write_zemax_header_bsdf" title="Permalink to this definition">#</a></dt>
+<dd><p>That function writes the header of Zemax BSDF file</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="ansys_optical_automation.interop_process.BSDF_converter.compute_new_value_matrix">
+<span class="sig-prename descclassname"><span class="pre">ansys_optical_automation.interop_process.BSDF_converter.</span></span><span class="sig-name descname"><span class="pre">compute_new_value_matrix</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">matrix_z</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">line_x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">line_y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">new_x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">new_y</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ansys_optical_automation/interop_process/BSDF_converter.html#compute_new_value_matrix"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ansys_optical_automation.interop_process.BSDF_converter.compute_new_value_matrix" title="Permalink to this definition">#</a></dt>
+<dd><p>That function takes (x,y) as an argument and returns a new interpolated value from a matrix[x,y]</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>matrix_z</strong><span class="classifier">matrix of z values</span></dt><dd><p>matrix giving a z value for a set of x,y values</p>
+</dd>
+<dt><strong>line_x</strong><span class="classifier">list</span></dt><dd><p>List of x</p>
+</dd>
+<dt><strong>line_y</strong><span class="classifier">list</span></dt><dd><p>List of y</p>
+</dd>
+<dt><strong>new_x</strong><span class="classifier">flaot</span></dt><dd><p>New value of theta</p>
+</dd>
+<dt><strong>new_y</strong><span class="classifier">flaot</span></dt><dd><p>New value of phi</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="ansys_optical_automation.interop_process.BSDF_converter.convert_normal_to_specular_using_cartesian">
+<span class="sig-prename descclassname"><span class="pre">ansys_optical_automation.interop_process.BSDF_converter.</span></span><span class="sig-name descname"><span class="pre">convert_normal_to_specular_using_cartesian</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">theta_i</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">phi_i</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">angle_inc</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ansys_optical_automation/interop_process/BSDF_converter.html#convert_normal_to_specular_using_cartesian"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ansys_optical_automation.interop_process.BSDF_converter.convert_normal_to_specular_using_cartesian" title="Permalink to this definition">#</a></dt>
+<dd><p>That function converts from normal to specular reference using cartesian coordinates
+phi_i = 0 in the normal reference = phi_o = 180 in the specular reference</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>theta_i</strong><span class="classifier">float</span></dt><dd><p>Scattered polar angle in the normal reference</p>
+</dd>
+<dt><strong>phi_i</strong><span class="classifier">float</span></dt><dd><p>Scattered azimuthal angle in the normal reference</p>
+</dd>
+<dt><strong>angle_inc</strong><span class="classifier">float</span></dt><dd><p>Angle of incidence</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="ansys_optical_automation.interop_process.BSDF_converter.convert_normal_to_specular_using_cylindrical">
+<span class="sig-prename descclassname"><span class="pre">ansys_optical_automation.interop_process.BSDF_converter.</span></span><span class="sig-name descname"><span class="pre">convert_normal_to_specular_using_cylindrical</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">theta_i</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">phi_i</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">angle_inc</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ansys_optical_automation/interop_process/BSDF_converter.html#convert_normal_to_specular_using_cylindrical"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ansys_optical_automation.interop_process.BSDF_converter.convert_normal_to_specular_using_cylindrical" title="Permalink to this definition">#</a></dt>
+<dd><p>That function converts from normal to specular reference using cylindrical cartesian conversion
+phi = 0 top of the plot</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>theta_i</strong><span class="classifier">float</span></dt><dd><p>Scattered polar angle in the normal reference</p>
+</dd>
+<dt><strong>phi_i</strong><span class="classifier">float</span></dt><dd><p>Scattered azimuthal angle in the normal reference</p>
+</dd>
+<dt><strong>angle_inc</strong><span class="classifier">float</span></dt><dd><p>Angle of incidence</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="ansys_optical_automation.interop_process.BSDF_converter.convert_normal_to_specular_using_cylindrical_phiref">
+<span class="sig-prename descclassname"><span class="pre">ansys_optical_automation.interop_process.BSDF_converter.</span></span><span class="sig-name descname"><span class="pre">convert_normal_to_specular_using_cylindrical_phiref</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">theta_i</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">phi_i</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">angle_inc</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ansys_optical_automation/interop_process/BSDF_converter.html#convert_normal_to_specular_using_cylindrical_phiref"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ansys_optical_automation.interop_process.BSDF_converter.convert_normal_to_specular_using_cylindrical_phiref" title="Permalink to this definition">#</a></dt>
+<dd><p>That function converts from normal to specular reference using cylindrical cartesian conversion
+phi=0 for OpticStudio is phi=180 for speos
+phi = 0 top of the plot</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>theta_i</strong><span class="classifier">float</span></dt><dd><p>Scattered polar angle in the normal reference</p>
+</dd>
+<dt><strong>phi_i</strong><span class="classifier">float</span></dt><dd><p>Scattered azimuthal angle in the normal reference</p>
+</dd>
+<dt><strong>angle_inc</strong><span class="classifier">float</span></dt><dd><p>Angle of incidence</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="ansys_optical_automation.interop_process.BSDF_converter.convert_specular_to_normal_using_cartesian">
+<span class="sig-prename descclassname"><span class="pre">ansys_optical_automation.interop_process.BSDF_converter.</span></span><span class="sig-name descname"><span class="pre">convert_specular_to_normal_using_cartesian</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">theta_i</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">phi_i</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">angle_inc</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ansys_optical_automation/interop_process/BSDF_converter.html#convert_specular_to_normal_using_cartesian"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ansys_optical_automation.interop_process.BSDF_converter.convert_specular_to_normal_using_cartesian" title="Permalink to this definition">#</a></dt>
+<dd><p>That function converts from specular to normal reference using cartesian coordinates
+Specular reference: phi = 0 top of the plot
+Normal reference: phi = 0 bottom of the plot</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>theta_i</strong><span class="classifier">float</span></dt><dd><p>Scattered polar angle in the specular reference</p>
+</dd>
+<dt><strong>phi_i</strong><span class="classifier">float</span></dt><dd><p>Scattered azimuthal angle in the specular reference</p>
+</dd>
+<dt><strong>angle_inc</strong><span class="classifier">float</span></dt><dd><p>Angle of incidence</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="ansys_optical_automation.interop_process.BSDF_converter.phi_theta_output">
+<span class="sig-prename descclassname"><span class="pre">ansys_optical_automation.interop_process.BSDF_converter.</span></span><span class="sig-name descname"><span class="pre">phi_theta_output</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">theta_input</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">phi_input</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">zemax_or_speos</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ansys_optical_automation/interop_process/BSDF_converter.html#phi_theta_output"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ansys_optical_automation.interop_process.BSDF_converter.phi_theta_output" title="Permalink to this definition">#</a></dt>
+<dd><p>That function writes the text nLines in the file</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="ansys_optical_automation.interop_process.BSDF_converter.swap_columns">
+<span class="sig-prename descclassname"><span class="pre">ansys_optical_automation.interop_process.BSDF_converter.</span></span><span class="sig-name descname"><span class="pre">swap_columns</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">arr</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ansys_optical_automation/interop_process/BSDF_converter.html#swap_columns"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ansys_optical_automation.interop_process.BSDF_converter.swap_columns" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="ansys_optical_automation.interop_process.BSDF_converter.swap_rows">
+<span class="sig-prename descclassname"><span class="pre">ansys_optical_automation.interop_process.BSDF_converter.</span></span><span class="sig-name descname"><span class="pre">swap_rows</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">arr</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ansys_optical_automation/interop_process/BSDF_converter.html#swap_rows"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ansys_optical_automation.interop_process.BSDF_converter.swap_rows" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="ansys_optical_automation.interop_process.BSDF_converter.write_file">
+<span class="sig-prename descclassname"><span class="pre">ansys_optical_automation.interop_process.BSDF_converter.</span></span><span class="sig-name descname"><span class="pre">write_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">outputFilepath</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nLines</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ansys_optical_automation/interop_process/BSDF_converter.html#write_file"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ansys_optical_automation.interop_process.BSDF_converter.write_file" title="Permalink to this definition">#</a></dt>
+<dd><p>That function writes the text nLines in the file</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>nLines</strong><span class="classifier">text</span></dt><dd><p>Text containing the data</p>
+</dd>
+<dt><strong>outputFilepath</strong><span class="classifier">filename</span></dt><dd><p>file to write</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
 </section>
 <section id="ansys-optical-automation-interop-process-coating-converter-module">
 <h2>ansys_optical_automation.interop_process.coating_converter module<a class="headerlink" href="#ansys-optical-automation-interop-process-coating-converter-module" title="Permalink to this headline">#</a></h2>
@@ -593,6 +946,11 @@ title="Print to PDF"
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#submodules">
    Submodules
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#module-ansys_optical_automation.interop_process.BSDF_converter">
+   ansys_optical_automation.interop_process.BSDF_converter module
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
