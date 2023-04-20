@@ -1185,7 +1185,7 @@ class BsdfStructure:
         # Anisotropy angles (SampleRotations)
         nLines.append(str(nbSampleRotation) + "\n")
         for i in range(nbSampleRotation):
-            nLines.append(str(self.bsdfdata_samplerotation[i]) + "\t")
+            nLines.append(str(self.samplerotation[i]) + "\t")
         if nbSampleRotation != 0:
             nLines.append("\n")
         # Incident angles (AngleIncidence)
