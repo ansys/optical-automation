@@ -772,6 +772,81 @@ class BsdfStructure:
         self.bsdfdata_phi = phi_list
         self.bsdfdata = bsdfData_list
 
+    def read_astm_file(self, bool_log):
+        """
+        Parameters
+        ----------
+        bool_log
+
+        Returns
+        -------
+
+
+        """
+        txt_path = self.filename_input
+        with open(txt_path, "r") as file:
+            my_data = csv.reader(file, delimiter=",")
+            data_starts = True
+            while data_starts:
+                line = next(my_data)
+                if len(line):
+                    if "NUM_POINTS " in line[0]:
+                        number_of_points = int(line[0].strip("NUM_POINTS "))
+                        data_starts = False
+            line = next(my_data)
+            wavelength = []
+            if "theta_i" in line[0] and "phi_i" in line[1] and "theta_s" in line[2] and "phi_s" in line[3]:
+                values = []
+                for i in range(len(line) - 4):
+                    wavelength.append(line[3 + i])
+                    values.append([])
+                next(my_data)
+                if bool_log:
+                    print("Data seperation: \n")
+                    print(wavelength)
+            else:
+                print("incorrect data format")
+            theta_i = []
+            theta_s = []
+            phi_i = []
+            phi_s = []
+            for index in range(number_of_points):
+                line = next(my_data)
+                theta_i.append(round(np.degrees(float(line[0])), 2))
+                phi_i.append(round(np.degrees(float(line[1])), 2))
+                theta_s.append(round(np.degrees(float(line[2])), 2))
+                phi_s.append(round(np.degrees(float(line[3])), 2))
+                for i in range(len(values)):
+                    values[i].append(line[4 + i])
+            final_theta_i = np.unique(theta_i).tolist()
+            final_theta_s = np.unique(theta_s).tolist()
+            final_phi_i = np.unique(phi_i).tolist()
+            final_phi_s = np.unique(phi_s).tolist()
+            if bool_log:
+                print("input theta= " + str(final_theta_i))
+                print("input Phi= " + str(final_phi_i))
+                print("output theta= " + str(final_theta_s))
+                print("output Phi= " + str(final_phi_s))
+            bsdf_data_block = np.zeros(
+                (len(final_theta_i), len(final_phi_i), len(final_theta_s), len(final_phi_s), len(values))
+            )
+            for wl, sub_value in enumerate(values):
+                for i, value in enumerate(sub_value):
+                    input_theta = final_theta_i.index(theta_i[i])
+                    output_theta = final_theta_s.index(theta_s[i])
+                    input_phi = final_phi_i.index(phi_i[i])
+                    output_phi = final_phi_s.index(phi_s[i])
+                    bsdf_data_block[input_theta, input_phi, output_theta, output_phi, wl] = value
+            self.bsdfdata_phi = final_phi_s
+            self.bsdfdata_theta = final_theta_s
+            self.bsdfdata_incidence = final_theta_i
+            self.bsdfdata_samplerotation = final_phi_i
+            self.bsdfdata = []
+            for theta_index in range(len(final_theta_i)):
+                for phi_index in range(len(final_phi_i)):
+                    for wl in range(len(wavelength)):
+                        self.bsdfdata.append(bsdf_data_block[theta_index, phi_index, :, :, wl])
+
     def obsolete_phi_theta_output(self):
         """
         That function writes the text nLines in the file
