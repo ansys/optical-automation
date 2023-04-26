@@ -803,8 +803,14 @@ class BsdfStructure:
             if "theta_i" in line[0] and "phi_i" in line[1] and "theta_s" in line[2] and "phi_s" in line[3]:
                 values = []
                 for i in range(len(line) - 4):
-                    wavelength.append(line[3 + i])
+                    print(line[4 + i])
+                    if line[4 + i] in ["XYZ"]:
+                        wavelength.append(line[4 + i])
+                    elif "nm" in line[4 + i]:
+                        wavelength.append(int(line[4 + i].strip("nm")))
                     values.append([])
+                else:
+                    print("incorrect data format neither XYZ nor wavelength seperation")
                 next(my_data)
                 if bool_log:
                     print("Data seperation: \n")
