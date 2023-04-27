@@ -781,7 +781,8 @@ class BsdfStructure:
         """
         Parameters
         ----------
-        bool_log
+        bool_log : Bool
+            defines if logfile is written
 
         Returns
         -------
