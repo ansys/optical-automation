@@ -2,7 +2,9 @@ import os
 import tkinter as tk
 from tkinter import filedialog
 
-from ansys_optical_automation.interop_process.Convert_Zemax_Detectors_to_XMP import Convert_detectordata_to_xmp
+from ansys_optical_automation.interop_process.convert_zemax_detectors_to_speos_xmp import (
+    detectordata_to_xmp,
+)
 
 
 def getfilename(extension, save=False):
@@ -37,7 +39,7 @@ def main():
     if not (("ddr" in input_file_extension) or ("txt" in input_file_extension)):
         msg = "Nonsupported file selected"
         raise TypeError(msg)
-    xmpFilePath = Convert_detectordata_to_xmp(path_to_detectordatafile, input_file_extension, True)
+    detectordata_to_xmp(path_to_detectordatafile, input_file_extension, True)
+
 
 main()
-
