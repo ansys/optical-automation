@@ -12,9 +12,23 @@ def unittest_run():
 
 
     """
+    # Test 1
     bsdf_data = BsdfStructure()
     cwd = os.path.dirname(os.path.realpath(__file__))
-    bsdf_data.filename_input = os.path.join(cwd, "example_models", "test_13_anisotropicbsdf_viewer_zemax.bsdf")
-    # outputFilepath = os.path.join(cwd, "example_models", "test_12_anisotropicbsdf_viewer_speos.bsdf")
+    bsdf_data.filename_input = os.path.join(cwd, "example_models", "test_13_planesymmetric_brdf_zemax.bsdf")
+    bsdf_data.import_data(0)
+    bsdf_data.write_speos_anisotropicbsdf_file()
+
+    # Test 2
+    bsdf_data = BsdfStructure()
+    cwd = os.path.dirname(os.path.realpath(__file__))
+    bsdf_data.filename_input = os.path.join(cwd, "example_models", "test_13_planesymmetric_btdf_zemax.bsdf")
+    bsdf_data.import_data(0)
+    bsdf_data.write_speos_anisotropicbsdf_file()
+
+    # Test 3
+    bsdf_data = BsdfStructure()
+    cwd = os.path.dirname(os.path.realpath(__file__))
+    bsdf_data.filename_input = os.path.join(cwd, "example_models", "test_13_asymmetrical4d_btdf_zemax.bsdf")
     bsdf_data.import_data(0)
     bsdf_data.write_speos_anisotropicbsdf_file()
