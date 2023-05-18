@@ -24,7 +24,7 @@ To install the Optical Automation library, run this code in the Windows command 
 
 Documentation
 -------------
-You can read API documentation here: `Ansys Optical Automation <https://ansys.github.io/optical-automation/>`_.
+You can read API documentation here: `Ansys Optical Automation <https://ansys-internal.github.io/optical-automation/>`_.
 
 Examples
 --------
