@@ -376,7 +376,7 @@ class BsdfStructure:
         # Row 8: Contains a boolean value describing the type of value stored in the file: 1 bsdf / 0 intensity
         typeLine = bfile.readline()
         # Support only BSDF values for now
-        if float(typeLine.strip()) == 1:
+        if float(typeLine.strip()) == 0:
             msg = "The values are not BSDF values but intensity values. It is not supported."
             raise TypeError(msg)
         if bool_log == 1:
@@ -417,9 +417,10 @@ class BsdfStructure:
             # Row 13: Number of anisotropy angles in transmission
             nbsamplerotationLine = bfile.readline()
             nbsamplerotation_transmission = int(nbsamplerotationLine.strip())
-            if not nbsamplerotation_reflection == nbsamplerotation_transmission:
-                msg = "The number of sample rotation in transmission and reflection have to be equal."
-                raise TypeError(msg)
+            if reflectionortransmission[0] == 1:
+                if not nbsamplerotation_reflection == nbsamplerotation_transmission:
+                    msg = "The number of sample rotation in transmission and reflection have to be equal."
+                    raise TypeError(msg)
             # Row 14: List of anisotropy angles in reflection.
             samplerotationLine = bfile.readline()
             samplerotationString = samplerotationLine[:-1].split()
@@ -428,7 +429,7 @@ class BsdfStructure:
             for index_samplerotation in range(nbsamplerotation_transmission):
                 # Row 15: Number of incident angles in reflection, for anisotropy angle N°1
                 nbAngleIncidenceLine = bfile.readline()
-                nbAngleIncidence = int(nbAngleIncidenceLine.strip)
+                nbAngleIncidence = int(nbAngleIncidenceLine.strip())
                 for index_incidence in range(nbAngleIncidence):
                     samplerotation_list.append(samplerotation[index_samplerotation])
                     RT_list.append("BTDF")
@@ -492,7 +493,8 @@ class BsdfStructure:
                 Wavelength_transmission = [float(i) for i in Wavelength_transmission_String]
                 wavelength_transmission_list.append(Wavelength_transmission)
             index_middle_wavelength = int(len(wavelength_transmission_list) / 2)
-            # wavelength_list.append(wavelength_tis_list[index_middle_wavelength][0])
+            if reflectionortransmission[0] == 0:
+                wavelength.append(wavelength_transmission_list[index_middle_wavelength][0])
             tisdata_list.append((wavelength_transmission_list[index_middle_wavelength][1]) / 100)
 
         if bool_log == 1:
@@ -1154,7 +1156,7 @@ class BsdfStructure:
         comment = "Comment"
 
         # Header
-        nLines = ["OPTIS - Anisotropic BSDF surface file v7.0\n"]
+        nLines = ["OPTIS - Anisotropic BSDF surface file v8.0\n"]
         # Binary mode
         nLines.append(str(binaryMode) + "\n")
         # Comment
