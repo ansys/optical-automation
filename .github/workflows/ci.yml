@@ -32,4 +32,4 @@ jobs:
       - name: Unittests
         run: |
           venv\Scripts\Activate.ps1
-          pytest -v tests\test_13_anisotropicbsdf_viewer.py
+          pytest -v tests
