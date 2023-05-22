@@ -102,22 +102,22 @@ class TestAnisotropicbsdfAPI:
         assert os.path.exists(self.results_file_speos_2)
         assert os.path.exists(self.results_file_speos_3)
 
-    # def test_02_verify_generated_speos_brdf_planesymmetric_bsdf_file(self):
-    #     """
-    #     Verify brdf file is corrected generated via comparing to a reference
-    #     Returns
-    #     -------
-    #     None
-    #     """
-    #
-    #     res_file = open(self.results_file_speos_1, "r")
-    #     ref_file = open(self.reference_file_speos_1, "r")
-    #     res = res_file.read()
-    #     ref = ref_file.read()
-    #     res_file.close()
-    #     ref_file.close()
-    #     assert res == ref
-    #
+    def test_02_verify_generated_speos_brdf_planesymmetric_bsdf_file(self):
+        """
+        Verify brdf file is corrected generated via comparing to a reference
+        Returns
+        -------
+        None
+        """
+
+        res_file = open(self.results_file_speos_1, "r")
+        ref_file = open(self.reference_file_speos_1, "r")
+        res = res_file.read()
+        ref = ref_file.read()
+        res_file.close()
+        ref_file.close()
+        assert res == ref
+
     # def test_03_verify_generated_speos_btdf_planesymmetric_bsdf_file(self):
     #     """
     #     Verify brdf file is corrected generated via comparing to a reference
