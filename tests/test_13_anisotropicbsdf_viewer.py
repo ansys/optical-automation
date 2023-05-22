@@ -150,22 +150,22 @@ class TestAnisotropicbsdfAPI:
         ref_file.close()
         assert res == ref
 
-    # def test_05_verify_generated_zemax_bsdf_file(self):
-    #     """
-    #     Verify bsdf file is corrected generated via comparing to a reference
-    #     Returns
-    #     -------
-    #     None
-    #     """
-    #
-    #     res_file = open(self.results_file_zemax_4, "r")
-    #     ref_file = open(self.reference_file_zemax_4, "r")
-    #     res = res_file.read()
-    #     ref = ref_file.read()
-    #     res_file.close()
-    #     ref_file.close()
-    #     assert res == ref
-    #
+    def test_05_verify_generated_zemax_bsdf_file(self):
+        """
+        Verify bsdf file is corrected generated via comparing to a reference
+        Returns
+        -------
+        None
+        """
+
+        res_file = open(self.results_file_zemax_4, "r")
+        ref_file = open(self.reference_file_zemax_4, "r")
+        res = res_file.read()
+        ref = ref_file.read()
+        res_file.close()
+        ref_file.close()
+        assert res == ref
+
     # def test_06_verify_generated_zemax_bsdf_file(self):
     #     """
     #     Verify bsdf file is corrected generated via comparing to a reference
