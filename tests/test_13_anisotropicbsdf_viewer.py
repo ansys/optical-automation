@@ -90,8 +90,14 @@ class TestAnisotropicbsdfAPI:
             os.remove(self.results_file_speos_2)
         if os.path.isfile(self.results_file_speos_3):
             os.remove(self.results_file_speos_3)
+        if os.path.isfile(self.results_file_zemax_4):
+            os.remove(self.results_file_zemax_4)
+        if os.path.isfile(self.results_file_zemax_4):
+            os.remove(self.results_file_zemax_5)
+        if os.path.isfile(self.results_file_zemax_6):
+            os.remove(self.results_file_zemax_6)
 
-    def test_01_speos_anisotropic_bsdf_generated(self):
+    def test_01_files_generated(self):
         """
         Verify brdf content is loaded and file generated
         Returns:
@@ -101,6 +107,9 @@ class TestAnisotropicbsdfAPI:
         assert os.path.exists(self.results_file_speos_1)
         assert os.path.exists(self.results_file_speos_2)
         assert os.path.exists(self.results_file_speos_3)
+        assert os.path.exists(self.results_file_zemax_4)
+        assert os.path.exists(self.results_file_zemax_5)
+        assert os.path.exists(self.results_file_zemax_6)
 
     def test_02_verify_generated_speos_brdf_planesymmetric_bsdf_file(self):
         """
