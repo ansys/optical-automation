@@ -27,6 +27,8 @@ class BsdfStructure:
             filename of the imported bsdf
         zemax_or_speos: string
             string = "zemax" or "speos". Zemax or Speos imported file
+        output_choice: integer
+            1 for .bsdf (Zemax),2 for .brdf (Speos) - Not yet supported, 3 = .anisotropicbsdf\n
         scattertype: list
             list of string. Can be ["BRDF"], ["BTDF"] or ["BRDF","BTDF"]
         symmetry: string
@@ -57,6 +59,7 @@ class BsdfStructure:
         """
         self.filename_input = None
         self.zemax_or_speos = None
+        self.output_choice = None
         self.scattertype = None
         self.symmetry = None
         self.wavelength = None
@@ -101,6 +104,23 @@ class BsdfStructure:
             self.read_speos_anisotropicbsdf(bool_log)
             self.calculate_tis_data(bool_log)
 
+        # Restriction: we don't convert BTDF between Speos and Zemax
+        # The index of refraction is not taken into account
+        for index_RT in range(len(self.scattertype)):
+            if self.scattertype[index_RT] == "BTDF":
+                if self.zemax_or_speos == "zemax" and self.output_choice == 3:
+                    msg = "BTDF data conversions are not supported between Zemax and Speos"
+                    raise TypeError(msg)
+                if (len(self.scattertype)) == 2:
+                    if self.zemax_or_speos == "speos" and self.output_choice == 1:
+                        msg = (
+                            "WARNING! \n"
+                            "BTDF data conversions are not supported between Speos and Zemax \n"
+                            "Only BRDF data will be converted.\n"
+                            "Press Enter to continue.\n"
+                        )
+                        input(msg)
+
     def read_speos_brdf(self, bool_log):
         """
         That function reads a Speos brdf file
@@ -113,7 +133,8 @@ class BsdfStructure:
         """
 
         # Reading file
-        print("Reading Speos BSDF file: " + str(self.filename_input) + "...\n")
+        if bool_log == 1:
+            print("Reading Speos BSDF file: " + str(self.filename_input) + "...\n")
 
         bfile = open(self.filename_input, "r")
 
@@ -1007,20 +1028,21 @@ class BsdfStructure:
         print("Writing Zemax data\n")
 
         for index_RT in range(len(self.scattertype)):
-            for index_wavelength in range(len(self.wavelength)):
-                nLines_header = self.write_zemax_header_bsdf(index_RT, index_wavelength)
-                nLines_data = self.write_zemax_data_bsdf(index_RT, index_wavelength)
+            if self.scattertype[index_RT] == "BRDF":
+                for index_wavelength in range(len(self.wavelength)):
+                    nLines_header = self.write_zemax_header_bsdf(index_RT, index_wavelength)
+                    nLines_data = self.write_zemax_data_bsdf(index_RT, index_wavelength)
 
-                # Writing Zemax file content (nLines) in a file
-                outputFilepath = (
-                    os.path.splitext(self.filename_input)[0].lower()
-                    + "_"
-                    + str(self.wavelength[index_wavelength])
-                    + "_"
-                    + str(self.scattertype[index_RT])
-                    + ".bsdf"
-                )
-                write_file(outputFilepath, nLines_header + nLines_data)
+                    # Writing Zemax file content (nLines) in a file
+                    outputFilepath = (
+                        os.path.splitext(self.filename_input)[0].lower()
+                        + "_"
+                        + str(self.wavelength[index_wavelength])
+                        + "_"
+                        + str(self.scattertype[index_RT])
+                        + ".bsdf"
+                    )
+                    write_file(outputFilepath, nLines_header + nLines_data)
 
     def write_zemax_header_bsdf(self, index_RT, index_wavelength):
         """
@@ -1715,7 +1737,7 @@ def write_file(outputFilepath, nLines):
     nFile = open(outputFilepath, "w")
     nFile.writelines(nLines)
     nFile.close()
-    print("The file " + str(outputFilepath) + " is ready!\n")
+    print("The file " + str(outputFilepath) + " is ready!")
 
 
 def phi_theta_output(theta_input, phi_input, zemax_or_speos):
@@ -1766,6 +1788,10 @@ def phi_theta_output(theta_input, phi_input, zemax_or_speos):
         precisionPhi = 0.5
         nbPhi = int(phi_max / precisionPhi) + 1
 
+    print(
+        "Phi and Theta spacings are uniform in the converted format.\n"
+        "It may result in a loss of accuracy in some cases."
+    )
     print("Precision Theta = ", precisionTheta)
     print("Precision Phi = ", precisionPhi)
 
