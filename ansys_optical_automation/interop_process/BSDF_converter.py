@@ -617,7 +617,7 @@ class BsdfStructure:
         while sourceLine[0] == "#" or len(sourceLine) < 6:
             sourceLine = bfile.readline()
         # source = sourceLine[8:-1]
-        source = sourceLine[6:-1]
+        source = (sourceLine.split())[1]
         source = source.strip()
         if bool_log == 1:
             print("Source = " + str(source))
@@ -626,7 +626,8 @@ class BsdfStructure:
         while symmetryLine[0] == "#":
             symmetryLine = bfile.readline()
         # symmetry = symmetryLine[10:-1]
-        symmetry = symmetryLine[8:-1]
+        # symmetry = symmetryLine[8:-1]
+        symmetry = (symmetryLine.split())[1]
         symmetry = symmetry.strip()
         if bool_log == 1:
             print("Symmetry = " + str(symmetry))
@@ -635,7 +636,8 @@ class BsdfStructure:
         while spectralContentLine[0] == "#":
             spectralContentLine = bfile.readline()
         # spectralContent = spectralContentLine[17:-1]
-        spectralContent = spectralContentLine[15:-1]
+        # spectralContent = spectralContentLine[15:-1]
+        spectralContent = (spectralContentLine.split())[1]
         spectralContent = spectralContent.strip()
         if bool_log == 1:
             print("Spectral content = " + str(spectralContent))
@@ -644,7 +646,8 @@ class BsdfStructure:
         while scatterTypeLine[0] == "#":
             scatterTypeLine = bfile.readline()
         # scatterType = scatterTypeLine[13:-1]
-        scatterType = str(scatterTypeLine[11:-1])
+        # scatterType = str(scatterTypeLine[11:-1])
+        scatterType = str(scatterTypeLine.split()[1])
         scatterType = scatterType.strip()
         if bool_log == 1:
             print("Scatter type = " + str(scatterType))
@@ -653,7 +656,9 @@ class BsdfStructure:
         while sampleRotationLine[0] == "#":
             sampleRotationLine = bfile.readline()
         # nbSampleRotation = int(sampleRotationLine[16:-1])
-        nbSampleRotation = int(sampleRotationLine[14:-1])
+        # nbSampleRotation = int(sampleRotationLine[14:-1])
+        sampleRotationLine = (sampleRotationLine.split())[1]
+        nbSampleRotation = int(sampleRotationLine.strip())
         if bool_log == 1:
             print("Nb sample rotation = " + str(nbSampleRotation))
         # Sample rotation values
@@ -676,7 +681,9 @@ class BsdfStructure:
         while angleIncidenceLine[0] == "#":
             angleIncidenceLine = bfile.readline()
         # nbAngleIncidence = int(angleIncidenceLine[18:-1])
-        nbAngleIncidence = int(angleIncidenceLine[16:-1])
+        # nbAngleIncidence = int(angleIncidenceLine[16:-1])
+        angleIncidenceLine = (angleIncidenceLine.split())[1]
+        nbAngleIncidence = int(angleIncidenceLine.strip())
         if bool_log == 1:
             print("Nb angle incidence = " + str(nbAngleIncidence))
         # Angle incidence values
@@ -696,11 +703,12 @@ class BsdfStructure:
             if bool_log == 1:
                 print("Angle incidence angle values : " + str(angleIncidenceString))
         # Number scatter azimuth
-        scatterAzimuthLine = bfile.readline()
-        while scatterAzimuthLine[0] == "#":
-            scatterAzimuthLine = bfile.readline()
+        scatterNbAzimuthLine = bfile.readline()
+        while scatterNbAzimuthLine[0] == "#":
+            scatterNbAzimuthLine = bfile.readline()
         # nbScatterAzimuth = int(scatterAzimuthLine[15:-1])
-        nbScatterAzimuth = int(scatterAzimuthLine[14:-1])
+        # nbScatterAzimuth = int(scatterAzimuthLine[14:-1])
+        nbScatterAzimuth = int((scatterNbAzimuthLine.split())[1])
         if bool_log == 1:
             print("Nb scatter azimuth = " + str(nbScatterAzimuth))
         # Scatter azimuth values
@@ -724,7 +732,9 @@ class BsdfStructure:
         while scatterRadialLine[0] == "#":
             scatterRadialLine = bfile.readline()
         # nbScatterRadial = int(scatterRadialLine[14:-1])
-        nbScatterRadial = int(scatterRadialLine[13:-1])
+        # nbScatterRadial = int(scatterRadialLine[13:-1])
+        scatterRadialLine = (scatterRadialLine.split())[1]
+        nbScatterRadial = int(scatterRadialLine)
         if bool_log == 1:
             print("Nb scatter radial = " + str(nbScatterRadial))
         # Scatter radial values
