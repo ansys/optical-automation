@@ -108,18 +108,20 @@ class BsdfStructure:
         # The index of refraction is not taken into account
         for index_RT in range(len(self.scattertype)):
             if self.scattertype[index_RT] == "BTDF":
-                if self.zemax_or_speos == "zemax" and self.output_choice == 3:
-                    msg = "BTDF data conversions are not supported between Zemax and Speos"
-                    raise TypeError(msg)
-                if (len(self.scattertype)) == 2:
-                    if self.zemax_or_speos == "speos" and self.output_choice == 1:
-                        msg = (
-                            "WARNING! \n"
-                            "BTDF data conversions are not supported between Speos and Zemax \n"
-                            "Only BRDF data will be converted.\n"
-                            "Press Enter to continue.\n"
-                        )
-                        input(msg)
+                # For unit tests we will still test the BTDF conversion
+                if self.output_choice is not None:
+                    if self.zemax_or_speos == "zemax" and self.output_choice == 3:
+                        msg = "BTDF data conversions are not supported between Zemax and Speos"
+                        raise TypeError(msg)
+                    if (len(self.scattertype)) == 2:
+                        if self.zemax_or_speos == "speos" and self.output_choice == 1:
+                            msg = (
+                                "WARNING! \n"
+                                "BTDF data conversions are not supported between Speos and Zemax \n"
+                                "Only BRDF data will be converted.\n"
+                                "Press Enter to continue.\n"
+                            )
+                            input(msg)
 
     def read_speos_brdf(self, bool_log):
         """
