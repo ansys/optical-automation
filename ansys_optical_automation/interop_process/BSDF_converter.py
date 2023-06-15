@@ -27,10 +27,13 @@ class BsdfStructure:
             filename of the imported bsdf
         zemax_or_speos: string
             string = "zemax" or "speos". Zemax or Speos imported file
+        output_choice: integer
+            1 for .bsdf (Zemax),2 for .brdf (Speos) - Not yet supported, 3 = .anisotropicbsdf\n
         scattertype: list
             list of string. Can be ["BRDF"], ["BTDF"] or ["BRDF","BTDF"]
         symmetry: string
-            "Asymmetrical", "PlaneSymmetrical"
+            The string can be "Asymmetrical", "PlaneSymmetrical". This is used for Zemax BSDF files.
+            If "PlaneSymmetrical", the software will recreate the data for phi between 180-360.
         wavelength: list
             list of wavelengths
         samplerotation: list
@@ -57,6 +60,7 @@ class BsdfStructure:
         """
         self.filename_input = None
         self.zemax_or_speos = None
+        self.output_choice = None
         self.scattertype = None
         self.symmetry = None
         self.wavelength = None
@@ -101,6 +105,25 @@ class BsdfStructure:
             self.read_speos_anisotropicbsdf(bool_log)
             self.calculate_tis_data(bool_log)
 
+        # Restriction: we don't convert BTDF between Speos and Zemax
+        # The index of refraction is not taken into account
+        for index_RT in range(len(self.scattertype)):
+            if self.scattertype[index_RT] == "BTDF":
+                # For unit tests we will still test the BTDF conversion
+                if self.output_choice is not None:
+                    if self.zemax_or_speos == "zemax" and self.output_choice == 3:
+                        msg = "BTDF data conversions are not supported between Zemax and Speos"
+                        raise TypeError(msg)
+                    if (len(self.scattertype)) == 2:
+                        if self.zemax_or_speos == "speos" and self.output_choice == 1:
+                            msg = (
+                                "WARNING! \n"
+                                "BTDF data conversions are not supported between Speos and Zemax \n"
+                                "Only BRDF data will be converted.\n"
+                                "Press Enter to continue.\n"
+                            )
+                            input(msg)
+
     def read_speos_brdf(self, bool_log):
         """
         That function reads a Speos brdf file
@@ -113,7 +136,8 @@ class BsdfStructure:
         """
 
         # Reading file
-        print("Reading Speos BSDF file: " + str(self.filename_input) + "...\n")
+        if bool_log == 1:
+            print("Reading Speos BSDF file: " + str(self.filename_input) + "...\n")
 
         bfile = open(self.filename_input, "r")
 
@@ -166,12 +190,9 @@ class BsdfStructure:
             scatterType.append("BTDF")
         # Row 7: Contains a boolean value describing the type of value stored in the file: 1 bsdf / 0 intensity
         typeLine = bfile.readline()
-        # Support only BSDF values for now
-        if float(typeLine.strip()) == 0:
-            msg = "The values are not BSDF values but intensity values. It is not supported."
-            raise TypeError(msg)
+        intensity_or_bsdf = float(typeLine.strip())
         if bool_log == 1:
-            print("BSDF(1) or Intensity(0) values = " + str(typeLine))
+            print("BSDF(1) or Intensity(1) values = " + str(intensity_or_bsdf))
         # Row 8: Number of incident angles and number of wavelength samples (in nanometer).
         nbAngleIncidenceWavelengthLine = bfile.readline()
         nbAngleIncidenceWavelength = nbAngleIncidenceWavelengthLine[:-1].split("\t")
@@ -292,6 +313,10 @@ class BsdfStructure:
         self.bsdfdata_phi = scatterAzimuth_list
         self.bsdfdata = bsdfData_list
 
+        # Convert intensity values to BSDF values
+        if intensity_or_bsdf == 0:
+            self.intensity_to_bsdf_data()
+
     def read_speos_anisotropicbsdf(self, bool_log):
         """
         That function reads a Speos anisotropicbsdf file
@@ -375,12 +400,9 @@ class BsdfStructure:
             scatterType.append("BTDF")
         # Row 8: Contains a boolean value describing the type of value stored in the file: 1 bsdf / 0 intensity
         typeLine = bfile.readline()
-        # Support only BSDF values for now
-        if float(typeLine.strip()) == 1:
-            msg = "The values are not BSDF values but intensity values. It is not supported."
-            raise TypeError(msg)
+        intensity_or_bsdf = float(typeLine.strip())
         if bool_log == 1:
-            print("BSDF(1) or Intensity(1) values = " + str(typeLine))
+            print("BSDF(1) or Intensity(1) values = " + str(intensity_or_bsdf))
         # scattertype_nb_list = []
 
         # Reflection
@@ -417,9 +439,10 @@ class BsdfStructure:
             # Row 13: Number of anisotropy angles in transmission
             nbsamplerotationLine = bfile.readline()
             nbsamplerotation_transmission = int(nbsamplerotationLine.strip())
-            if not nbsamplerotation_reflection == nbsamplerotation_transmission:
-                msg = "The number of sample rotation in transmission and reflection have to be equal."
-                raise TypeError(msg)
+            if reflectionortransmission[0] == 1:
+                if not nbsamplerotation_reflection == nbsamplerotation_transmission:
+                    msg = "The number of sample rotation in transmission and reflection have to be equal."
+                    raise TypeError(msg)
             # Row 14: List of anisotropy angles in reflection.
             samplerotationLine = bfile.readline()
             samplerotationString = samplerotationLine[:-1].split()
@@ -428,7 +451,7 @@ class BsdfStructure:
             for index_samplerotation in range(nbsamplerotation_transmission):
                 # Row 15: Number of incident angles in reflection, for anisotropy angle N°1
                 nbAngleIncidenceLine = bfile.readline()
-                nbAngleIncidence = int(nbAngleIncidenceLine.strip)
+                nbAngleIncidence = int(nbAngleIncidenceLine.strip())
                 for index_incidence in range(nbAngleIncidence):
                     samplerotation_list.append(samplerotation[index_samplerotation])
                     RT_list.append("BTDF")
@@ -492,7 +515,8 @@ class BsdfStructure:
                 Wavelength_transmission = [float(i) for i in Wavelength_transmission_String]
                 wavelength_transmission_list.append(Wavelength_transmission)
             index_middle_wavelength = int(len(wavelength_transmission_list) / 2)
-            # wavelength_list.append(wavelength_tis_list[index_middle_wavelength][0])
+            if reflectionortransmission[0] == 0:
+                wavelength.append(wavelength_transmission_list[index_middle_wavelength][0])
             tisdata_list.append((wavelength_transmission_list[index_middle_wavelength][1]) / 100)
 
         if bool_log == 1:
@@ -571,6 +595,10 @@ class BsdfStructure:
         self.bsdfdata_phi = scatterAzimuth_list
         self.bsdfdata = bsdfData_list
 
+        # Convert intensity values to BSDF values
+        if intensity_or_bsdf == 0:
+            self.intensity_to_bsdf_data()
+
     def read_zemax_bsdf(self, bool_log):
         """
         That function reads a Zemax bsdf file
@@ -594,7 +622,7 @@ class BsdfStructure:
         while sourceLine[0] == "#" or len(sourceLine) < 6:
             sourceLine = bfile.readline()
         # source = sourceLine[8:-1]
-        source = sourceLine[6:-1]
+        source = (sourceLine.split())[1]
         source = source.strip()
         if bool_log == 1:
             print("Source = " + str(source))
@@ -603,7 +631,8 @@ class BsdfStructure:
         while symmetryLine[0] == "#":
             symmetryLine = bfile.readline()
         # symmetry = symmetryLine[10:-1]
-        symmetry = symmetryLine[8:-1]
+        # symmetry = symmetryLine[8:-1]
+        symmetry = (symmetryLine.split())[1]
         symmetry = symmetry.strip()
         if bool_log == 1:
             print("Symmetry = " + str(symmetry))
@@ -612,7 +641,8 @@ class BsdfStructure:
         while spectralContentLine[0] == "#":
             spectralContentLine = bfile.readline()
         # spectralContent = spectralContentLine[17:-1]
-        spectralContent = spectralContentLine[15:-1]
+        # spectralContent = spectralContentLine[15:-1]
+        spectralContent = (spectralContentLine.split())[1]
         spectralContent = spectralContent.strip()
         if bool_log == 1:
             print("Spectral content = " + str(spectralContent))
@@ -621,7 +651,8 @@ class BsdfStructure:
         while scatterTypeLine[0] == "#":
             scatterTypeLine = bfile.readline()
         # scatterType = scatterTypeLine[13:-1]
-        scatterType = str(scatterTypeLine[11:-1])
+        # scatterType = str(scatterTypeLine[11:-1])
+        scatterType = str(scatterTypeLine.split()[1])
         scatterType = scatterType.strip()
         if bool_log == 1:
             print("Scatter type = " + str(scatterType))
@@ -630,7 +661,9 @@ class BsdfStructure:
         while sampleRotationLine[0] == "#":
             sampleRotationLine = bfile.readline()
         # nbSampleRotation = int(sampleRotationLine[16:-1])
-        nbSampleRotation = int(sampleRotationLine[14:-1])
+        # nbSampleRotation = int(sampleRotationLine[14:-1])
+        sampleRotationLine = (sampleRotationLine.split())[1]
+        nbSampleRotation = int(sampleRotationLine.strip())
         if bool_log == 1:
             print("Nb sample rotation = " + str(nbSampleRotation))
         # Sample rotation values
@@ -653,7 +686,9 @@ class BsdfStructure:
         while angleIncidenceLine[0] == "#":
             angleIncidenceLine = bfile.readline()
         # nbAngleIncidence = int(angleIncidenceLine[18:-1])
-        nbAngleIncidence = int(angleIncidenceLine[16:-1])
+        # nbAngleIncidence = int(angleIncidenceLine[16:-1])
+        angleIncidenceLine = (angleIncidenceLine.split())[1]
+        nbAngleIncidence = int(angleIncidenceLine.strip())
         if bool_log == 1:
             print("Nb angle incidence = " + str(nbAngleIncidence))
         # Angle incidence values
@@ -673,11 +708,12 @@ class BsdfStructure:
             if bool_log == 1:
                 print("Angle incidence angle values : " + str(angleIncidenceString))
         # Number scatter azimuth
-        scatterAzimuthLine = bfile.readline()
-        while scatterAzimuthLine[0] == "#":
-            scatterAzimuthLine = bfile.readline()
+        scatterNbAzimuthLine = bfile.readline()
+        while scatterNbAzimuthLine[0] == "#":
+            scatterNbAzimuthLine = bfile.readline()
         # nbScatterAzimuth = int(scatterAzimuthLine[15:-1])
-        nbScatterAzimuth = int(scatterAzimuthLine[14:-1])
+        # nbScatterAzimuth = int(scatterAzimuthLine[14:-1])
+        nbScatterAzimuth = int((scatterNbAzimuthLine.split())[1])
         if bool_log == 1:
             print("Nb scatter azimuth = " + str(nbScatterAzimuth))
         # Scatter azimuth values
@@ -701,7 +737,9 @@ class BsdfStructure:
         while scatterRadialLine[0] == "#":
             scatterRadialLine = bfile.readline()
         # nbScatterRadial = int(scatterRadialLine[14:-1])
-        nbScatterRadial = int(scatterRadialLine[13:-1])
+        # nbScatterRadial = int(scatterRadialLine[13:-1])
+        scatterRadialLine = (scatterRadialLine.split())[1]
+        nbScatterRadial = int(scatterRadialLine)
         if bool_log == 1:
             print("Nb scatter radial = " + str(nbScatterRadial))
         # Scatter radial values
@@ -1005,20 +1043,21 @@ class BsdfStructure:
         print("Writing Zemax data\n")
 
         for index_RT in range(len(self.scattertype)):
-            for index_wavelength in range(len(self.wavelength)):
-                nLines_header = self.write_zemax_header_bsdf(index_RT, index_wavelength)
-                nLines_data = self.write_zemax_data_bsdf(index_RT, index_wavelength)
+            if self.scattertype[index_RT] == "BRDF":
+                for index_wavelength in range(len(self.wavelength)):
+                    nLines_header = self.write_zemax_header_bsdf(index_RT, index_wavelength)
+                    nLines_data = self.write_zemax_data_bsdf(index_RT, index_wavelength)
 
-                # Writing Zemax file content (nLines) in a file
-                outputFilepath = (
-                    os.path.splitext(self.filename_input)[0].lower()
-                    + "_"
-                    + str(self.wavelength[index_wavelength])
-                    + "_"
-                    + str(self.scattertype[index_RT])
-                    + ".bsdf"
-                )
-                write_file(outputFilepath, nLines_header + nLines_data)
+                    # Writing Zemax file content (nLines) in a file
+                    outputFilepath = (
+                        os.path.splitext(self.filename_input)[0].lower()
+                        + "_"
+                        + str(self.wavelength[index_wavelength])
+                        + "_"
+                        + str(self.scattertype[index_RT])
+                        + ".bsdf"
+                    )
+                    write_file(outputFilepath, nLines_header + nLines_data)
 
     def write_zemax_header_bsdf(self, index_RT, index_wavelength):
         """
@@ -1154,7 +1193,7 @@ class BsdfStructure:
         comment = "Comment"
 
         # Header
-        nLines = ["OPTIS - Anisotropic BSDF surface file v7.0\n"]
+        nLines = ["OPTIS - Anisotropic BSDF surface file v8.0\n"]
         # Binary mode
         nLines.append(str(binaryMode) + "\n")
         # Comment
@@ -1470,6 +1509,24 @@ class BsdfStructure:
         slope = conversion_spectrum[pos_integer + 1] - conversion_spectrum[pos_integer]
         return conversion_spectrum[pos_integer] + pos_fractional * slope
 
+    def intensity_to_bsdf_data(self):
+        """
+        That function converts intensity values into BSDF values
+
+        """
+        bsdf_block = []
+        for index_block in range(len(self.bsdfdata)):
+            bsdf_block = self.bsdfdata[index_block]
+            bsdf_block_theta = self.bsdfdata_theta[index_block]
+
+            for index_theta in range(len(bsdf_block_theta)):
+                currentTheta = bsdf_block_theta[index_theta]
+                thetas_cosine = math.cos((currentTheta) * math.pi / 180)
+                if thetas_cosine != 0.0:
+                    bsdf_block[index_theta] = bsdf_block[index_theta] / thetas_cosine
+
+            self.bsdfdata[index_block] = bsdf_block
+
 
 def convert_normal_to_specular_using_cartesian(theta_i, phi_i, angle_inc):
     """
@@ -1713,7 +1770,7 @@ def write_file(outputFilepath, nLines):
     nFile = open(outputFilepath, "w")
     nFile.writelines(nLines)
     nFile.close()
-    print("The file " + str(outputFilepath) + " is ready!\n")
+    print("The file " + str(outputFilepath) + " is ready!")
 
 
 def phi_theta_output(theta_input, phi_input, zemax_or_speos):
@@ -1764,6 +1821,10 @@ def phi_theta_output(theta_input, phi_input, zemax_or_speos):
         precisionPhi = 0.5
         nbPhi = int(phi_max / precisionPhi) + 1
 
+    print(
+        "Phi and Theta spacings are uniform in the converted format.\n"
+        "It may result in a loss of accuracy in some cases."
+    )
     print("Precision Theta = ", precisionTheta)
     print("Precision Phi = ", precisionPhi)
 

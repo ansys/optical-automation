@@ -35,7 +35,7 @@ def getfilename(extension, save=False):
 def main():
     """Main script to convert BSDF files"""
 
-    bool_log = 1
+    bool_log = 0
     bsdf_data = BsdfStructure()
     bsdf_data.filename_input = getfilename("*.bsdf *.brdf *.anisotropicbsdf")
     print("The file to convert is: " + bsdf_data.filename_input)
@@ -47,16 +47,16 @@ def main():
         "3 = .anisotropicbsdf\n"
         "Enter >> "
     )
-    output_choice = int(input(msg))
+    bsdf_data.output_choice = int(input(msg))
 
-    if not (output_choice in [1, 3]):
+    if not (bsdf_data.output_choice in [1, 3]):
         msg = "Wrong output format"
         raise TypeError(msg)
     else:
         bsdf_data.import_data(bool_log)
-        if output_choice == 1:
+        if bsdf_data.output_choice == 1:
             bsdf_data.write_zemax_file(bool_log)
-        if output_choice == 3:
+        if bsdf_data.output_choice == 3:
             bsdf_data.write_speos_anisotropicbsdf_file()
 
 
