@@ -72,7 +72,14 @@ class HOD(BaseSCDM):
 
 
         """
-        return self.Selection.CreateByNames("[" + self.name + "]_Optical Axis")
+        return_selection = (
+            self.Selection.CreateByNames("[" + self.name + "]_Optical Axis_0")
+            + self.Selection.CreateByNames("[" + self.name + "]_Optical Axis_1")
+            + self.Selection.CreateByNames("[" + self.name + "]_Optical Axis_2")
+            + self.Selection.CreateByNames("[" + self.name + "]_Optical Axis_3")
+        )
+
+        return return_selection
 
     def export_to_zemax(self, output_dir, log=False):
         """
@@ -132,7 +139,7 @@ class HOD(BaseSCDM):
             print(curvesprev)
             print(edges)
             print(curves)
-            print(len(curves))
+            print(len(curves.Items))
         n = 0
         # o = 0
 
