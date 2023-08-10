@@ -1,4 +1,5 @@
 import bisect
+import csv
 import math
 import os
 
@@ -97,7 +98,6 @@ class BsdfStructure:
         if input_file_extension == ".astm":
             self.zemax_or_speos = "None"
             self.read_astm_file(bool_log)
-            self.calculate_tis_data(bool_log)
 
     def read_speos_brdf(self, bool_log):
         """
@@ -849,15 +849,44 @@ class BsdfStructure:
                     input_phi = final_phi_i.index(phi_i[i])
                     output_phi = final_phi_s.index(phi_s[i])
                     bsdf_data_block[input_theta, input_phi, output_theta, output_phi, wl] = value
-            self.bsdfdata_phi = final_phi_s
-            self.bsdfdata_theta = final_theta_s
-            self.bsdfdata_incidence = final_theta_i
-            self.bsdfdata_samplerotation = final_phi_i
+            self.scattertype = ["BRDF"]
+            self.symmetry = None
+            self.wavelength = wavelength
+            self.samplerotation = final_phi_i
+            self.incidence = final_theta_i
+            self.bsdfdata_scattertype = []
+            self.bsdfdata_wavelength = []
+            self.bsdfdata_samplerotation = []
+            self.bsdfdata_incidence = []
+            self.bsdfdata_tisdata = []
+            self.bsdfdata_theta = []
+            self.bsdfdata_phi = []
             self.bsdfdata = []
             for theta_index in range(len(final_theta_i)):
                 for phi_index in range(len(final_phi_i)):
                     for wl in range(len(wavelength)):
+                        self.bsdfdata_scattertype.append("BRDF")
+                        self.bsdfdata_wavelength.append(wl)
+                        self.bsdfdata_samplerotation.append(final_phi_i[phi_index])
+                        self.bsdfdata_incidence.append(final_theta_s[theta_index])
+                        self.bsdfdata_phi.append(final_phi_s)
+                        self.bsdfdata_theta.append(final_theta_s)
                         self.bsdfdata.append(bsdf_data_block[theta_index, phi_index, :, :, wl])
+                        block_data = np.transpose(bsdf_data_block[theta_index, phi_index, :, :, wl])
+
+                        theta_rad, phi_rad = np.radians(final_theta_s), np.radians(final_phi_s)
+                        # samples on which integrande is known
+                        integrande = block_data * np.sin(theta_rad) * np.cos(theta_rad)
+                        f = interpolate.RectBivariateSpline(phi_rad, theta_rad, integrande, kx=1, ky=1)
+                        # calculation of the integral
+                        # r = nquad(f, [[0, math.pi / 2], [0, 2 * math.pi]], opts=[{"epsabs": 0.1}, {"epsabs": 0.1}])
+                        r = nquad(
+                            f,
+                            [[min(phi_rad), max(phi_rad)], [min(theta_rad), max(theta_rad)]],
+                            opts=[{"epsabs": 0.1}, {"epsabs": 0.1}],
+                        )
+                        IntegralValue = abs(r[0])
+                        self.bsdfdata_tisdata.append(IntegralValue)
 
     def obsolete_phi_theta_output(self):
         """

@@ -37,7 +37,7 @@ def main():
 
     bool_log = 1
     bsdf_data = BsdfStructure()
-    bsdf_data.filename_input = getfilename("*.bsdf *.brdf *.anisotropicbsdf")
+    bsdf_data.filename_input = getfilename("*.bsdf *.brdf *.anisotropicbsdf *.astm")
     print("The file to convert is: " + bsdf_data.filename_input)
 
     msg = (
