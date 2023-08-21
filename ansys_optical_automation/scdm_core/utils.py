@@ -1,3 +1,4 @@
+import math
 import os
 import subprocess
 
@@ -70,3 +71,55 @@ def run_scdm_batch(scdm_version, api_version, script_file):
         r"/ScriptAPI={}".format(api_version),
     ]
     subprocess.call(command)
+
+
+def vector_len(vector):
+    """
+    compute vector length
+    Parameters
+    ----------
+    vector : list
+        [x,y,z]
+
+    Returns
+    -------
+    float
+        length of a vector
+
+    """
+    return math.sqrt(vector[0] ** 2 + vector[1] ** 2 + vector[2] ** 2)
+
+
+def vector_normalize(vector):
+    """
+    get normalized vector.
+
+    Parameters
+    ----------
+    vector : list
+        [x,y,z]
+
+    Returns
+    -------
+    list
+        list representing normalized vector
+
+    """
+    vector_magnitude = vector_len(vector)
+    return [round(item / vector_magnitude, 5) for item in vector]
+
+
+def dot_product(vector1, vector2):
+    """
+    function to multiply to vectors
+    Parameters
+    ----------
+    vector1 : list
+        [x,y,z]
+    vector2 : list
+        [x,y,z]
+    Returns
+    -------
+    int
+    """
+    return vector1[0] * vector2[0] + vector1[1] * vector2[1] + vector1[2] * vector2[2]
