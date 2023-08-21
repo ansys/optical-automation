@@ -109,7 +109,7 @@ def vector_normalize(vector):
     return [round(item / vector_magnitude, 5) for item in vector]
 
 
-def dot_product(vector1, vector2):
+def vector_dot_product(vector1, vector2):
     """
     function to multiply to vectors
     Parameters
