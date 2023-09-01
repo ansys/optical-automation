@@ -1,3 +1,4 @@
+import math
 import os
 import tkinter as tk
 from tkinter import filedialog
@@ -55,6 +56,10 @@ def getfilepath():
     return folder_selected
 
 
+def deg_to_rad(degree_value):
+    return degree_value * math.pi / 180.0
+
+
 def read_reflect_data(file):
     flg = False
     phi_step = 0
@@ -90,23 +95,43 @@ def coordinate_convert(o_theta, o_phi):
     return i_theta, i_phi
 
 
-def convert_bsdf(out_theta_list, out_phi_list, in_theta_list, in_phi_list, in_bsdf):
+def convert_bsdf(out_theta_list, out_phi_list, in_theta_list, in_phi_list, in_bsdf, rt_value):
+    rt_value = min(rt_value, 1)
+
     def get_val(theta, phi):
         return in_bsdf[in_theta_list.index(theta)][in_phi_list.index(phi)]
 
+    def get_delta(idx, val_list):
+        if idx == 0:
+            return (val_list[1] - val_list[0]) / 2.0
+        elif idx == len(val_list) - 1:
+            return (val_list[-1] - val_list[-2]) / 2.0
+        else:
+            return val_list[idx + 1] - val_list[idx - 1]
+
+    bsdf_integration = 0
     out_bsdf = []
-    for o_theta in out_theta_list:
+    for o_theta_idx, o_theta in enumerate(out_theta_list):
         out_bsdf_list = []
-        for o_phi in out_phi_list:
+        for o_phi_idx, o_phi in enumerate(out_phi_list):
             i_theta, i_phi = coordinate_convert(o_theta, o_phi)
             o_bsdf = get_val(i_theta, i_phi)
             # print(i_theta, i_phi, o_theta, o_phi, o_bsdf)
+            bsdf_integration += (
+                o_bsdf
+                * math.sin(deg_to_rad(o_theta))
+                * deg_to_rad(get_delta(o_theta_idx, out_theta_list))
+                * deg_to_rad(get_delta(o_phi_idx, out_phi_list))
+            )
             out_bsdf_list.append(o_bsdf)
         out_bsdf.append(out_bsdf_list)
-    return out_bsdf
+    normalized_bsdf = []
+    for bsdf_list in out_bsdf:
+        normalized_bsdf.append([bsdf * rt_value / bsdf_integration for bsdf in bsdf_list])
+    return normalized_bsdf
 
 
-def write_header(incident_file_list, file_out):
+def write_header(incident_file_list, file_out, rt_value):
     file_out.write("OPTIS - Anisotropic BSDF surface file v7.0\n")
     file_out.write("0\n")
     file_out.write("Comment\n")
@@ -125,10 +150,10 @@ def write_header(incident_file_list, file_out):
         ]
     )
     file_out.write(content + "\n")
-    file_out.write("6\t0\n\n")
+    file_out.write("0\t0\n\n")
     file_out.write("2\n")
-    file_out.write("350\t92.4711\n")
-    file_out.write("850\t92.4711\n")
+    file_out.write("350\t" + str(rt_value * 100) + "\n")
+    file_out.write("850\t" + str(rt_value * 100) + "\n")
 
 
 def write_out(bsdf, out_theta_list, out_phi_list, file_out):
@@ -142,13 +167,26 @@ def write_out(bsdf, out_theta_list, out_phi_list, file_out):
         file_out.write(content)
 
 
+def read_RT(file):
+    RT = []
+    with open(file) as myfile:
+        for line in myfile:
+            if "AOI" in line:
+                RT.append(float(line.split()[3]))
+    return RT
+
+
 def main():
     reflect_dir = getfilepath()
     groups = {}
+    rt_value_list = []
     for filename in os.listdir(reflect_dir):
         # if filename == "LightTools_Export3_0_BRDF_800.txt":
-        if filename.endswith("txt") and "LightTools" in filename:
+        if filename.endswith("txt"):
             orientation = filename.split("_")[2]
+            if "RTfile" in filename:
+                rt_value_list = read_RT(os.path.join(reflect_dir, filename))
+                continue
             if not orientation.isnumeric():
                 continue
             if orientation not in groups:
@@ -160,10 +198,12 @@ def main():
         if os.path.isfile(out_file):
             os.remove(out_file)
         file_out = open(out_file, "a")
-        write_header(groups[group], file_out)
-        for file_dir in groups[group]:
+        write_header(groups[group], file_out, rt_value_list[0])
+        for file_idx, file_dir in enumerate(groups[group]):
             in_theta_list, in_phi_list, out_theta_list, out_phi_list, in_bsdf = read_reflect_data(file_dir)
-            out_bsdf = convert_bsdf(out_theta_list, out_phi_list, in_theta_list, in_phi_list, in_bsdf)
+            out_bsdf = convert_bsdf(
+                out_theta_list, out_phi_list, in_theta_list, in_phi_list, in_bsdf, rt_value_list[file_idx]
+            )
             write_out(out_bsdf, out_theta_list, out_phi_list, file_out)
         file_out.write("End of file\n")
         file_out.close()
