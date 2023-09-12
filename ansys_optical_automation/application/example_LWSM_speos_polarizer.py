@@ -1,4 +1,6 @@
 import sys
+import tkinter as tk
+from tkinter import filedialog
 
 import numpy as np
 
@@ -23,6 +25,31 @@ class Polarize:
         self.normal_t /= 100
         self.parallel_a = 1 - self.parallel_r - self.parallel_t
         self.normal_a = 1 - self.normal_r - self.normal_t
+
+
+def getfilename(extension, save=False):
+    """
+    Parameters
+    ----------
+    extension : str
+        containing the which file extension in *.ending format
+    save : Bool
+        option to define to open(default) or save. The default is False.
+
+    Returns
+    -------
+    str
+        string containing the selected file path
+    """
+    root = tk.Tk()
+    root.withdraw()
+    if not save:
+        file_path = filedialog.askopenfilename(filetypes=[("coated", extension)])
+    else:
+        file_path = filedialog.asksaveasfilename(filetypes=[("coated", extension)])
+        if not file_path.endswith(extension.strip("*")):
+            file_path += extension.strip("*")
+    return file_path
 
 
 def read_input(coated_file):
@@ -62,9 +89,11 @@ def read_input(coated_file):
     return incident_angles_list, wavelength_list, p_info
 
 
-theta_list, wavelength_list, polarize_info = read_input(
-    r"D:\Customer\Valeo\Polarizor\LSWM_DataExtraction_2022_R2_2022-08-12\test.coated"
-)
+output_file = r"D:\Customer\Valeo\Polarizor\Test"
+lsf = r"D:\Customer\Valeo\Polarizor\util_func - modGB (1).lsf"
+input_coated_file = getfilename("coated")
+
+theta_list, wavelength_list, polarize_info = read_input(input_coated_file)
 phi_list = [0, 90, 180, 270, 360]
 for wavelength_idx, wavelength in enumerate(wavelength_list):
     for theta_idx, theta in enumerate(theta_list):
@@ -72,7 +101,10 @@ for wavelength_idx, wavelength in enumerate(wavelength_list):
         print(p.parallel_r)
         p.process()
 
-R_lower = R_upper = T_lower = T_upper = np.zeros((len(theta_list), len(phi_list), len(wavelength_list), 1, 2, 2))
+R_lower = np.zeros((len(theta_list), len(phi_list), len(wavelength_list), 1, 2, 2))
+R_upper = np.zeros((len(theta_list), len(phi_list), len(wavelength_list), 1, 2, 2))
+T_lower = np.zeros((len(theta_list), len(phi_list), len(wavelength_list), 1, 2, 2))
+T_upper = np.zeros((len(theta_list), len(phi_list), len(wavelength_list), 1, 2, 2))
 for wavelength_idx in range(len(wavelength_list)):
     p_r = []
     p_t = []
@@ -87,8 +119,8 @@ for wavelength_idx in range(len(wavelength_list)):
         for phi_idx, phi in enumerate(phi_list):
             s_r_item.append(p.normal_r if phi_idx % 2 == 0 else p.parallel_r)
             s_t_item.append(p.normal_t if phi_idx % 2 == 0 else p.parallel_t)
-            p_r_item.append(p.parallel_r if phi_idx % 2 == 0 else p.parallel_t)
-            p_t_item.append(p.parallel_t if phi_idx % 2 == 0 else p.parallel_r)
+            p_r_item.append(p.parallel_r if phi_idx % 2 == 0 else p.normal_r)
+            p_t_item.append(p.parallel_t if phi_idx % 2 == 0 else p.normal_t)
         s_r.append(s_r_item)
         s_t.append(s_t_item)
         p_r.append(p_r_item)
@@ -104,16 +136,16 @@ for wavelength_idx in range(len(wavelength_list)):
     T_upper[:, :, wavelength_idx, 0, 1, 1] = p_t
 
 
-print(R_lower[:, :, 0, 0, 0, 0])
-print(R_lower[:, :, 1, 0, 0, 0])
-print(R_lower[:, :, 2, 0, 0, 0])
-
-#
+# print(R_upper[:, :, 0, 0, 1, 1])
+# print(R_upper[:, :, 1, 0, 1, 1])
+# print(R_upper[:, :, 2, 0, 1, 1])
+# print(R_upper[:, :, 3, 0, 1, 1])
+# print(R_upper[:, :, 4, 0, 1, 1])
+# print(R_upper[:, :, 5, 0, 1, 1])
 # theta = [0, 60, 90]
 # phi = [0, 90, 180, 270, 360]                         #pol // = phi
 # wavelength = [400e-9, 550e-9, 700e-9]
-#
-# # R_lower = R_upper = T_lower = T_upper = matrix(length(theta), length(phi), length(wavelength), 1, 2, 2)
+# R_lower = R_upper = T_lower = T_upper = matrix(length(theta), length(phi), length(wavelength), 1, 2, 2)
 # R_lower = R_upper = T_lower = T_upper = np.zeros((len(theta), len(phi), len(wavelength), 1, 2, 2))
 #
 #
@@ -247,10 +279,7 @@ print(R_lower[:, :, 2, 0, 0, 0])
 #     [0.5,0.5,0.5,0.5,0.5]
 # ]
 #
-#
-#
-output_file = r"D:\Customer\Valeo\Polarizor\Test"
-lsf = r"D:\Customer\Valeo\Polarizor\util_func - modGB (1).lsf"
+
 fdtd = lumapi.FDTD(lsf, hide=True)
 fdtd.feval(lsf)
 fdtd.simpleRT(1.0, 1.5, True, R_lower, T_lower, R_upper, T_upper, theta_list, phi_list, wavelength_list, output_file)
