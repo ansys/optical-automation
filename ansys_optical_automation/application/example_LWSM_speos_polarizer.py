@@ -90,7 +90,7 @@ def read_input(coated_file):
 
 
 output_file = r"D:\Customer\Valeo\Polarizor\Test"
-lsf = r"D:\Customer\Valeo\Polarizor\util_func - modGB (1).lsf"
+lsf = r"D:\Customer\Valeo\Polarizor\util_func - modGB_plu.lsf"
 input_coated_file = getfilename("coated")
 
 theta_list, wavelength_list, polarize_info = read_input(input_coated_file)
