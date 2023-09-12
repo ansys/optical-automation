@@ -94,6 +94,13 @@ def ref_lpf_process(data, sequence=True):
                 trace.LastDirection.Get(1),
                 math.sqrt(1 - trace.LastDirection.Get(0) ** 2 - trace.LastDirection.Get(1) ** 2),
             ]
+            # ## FTS
+            # lpf_out_2 = [
+            #     trace.LastDirection.Get(0),
+            #     trace.LastDirection.Get(1),
+            #     trace.LastDirection.Get(2),
+            # ]
+            # print("using original data: ", lpf_out_2, " using calculated data: ", lpf_out)
             alpha = math.acos(vector_dot_product(lpf_in, lpf_out))
             if lpf_out[1] < 0:
                 alpha = -alpha
