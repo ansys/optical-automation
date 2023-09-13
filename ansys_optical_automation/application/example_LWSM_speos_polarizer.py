@@ -1,3 +1,4 @@
+import os
 import sys
 import tkinter as tk
 from tkinter import filedialog
@@ -89,9 +90,9 @@ def read_input(coated_file):
     return incident_angles_list, wavelength_list, p_info
 
 
-output_file = r"D:\Customer\Valeo\Polarizor\Test"
 lsf = r"D:\Customer\Valeo\Polarizor\util_func - modGB_plu.lsf"
 input_coated_file = getfilename("coated")
+output_json_file = os.path.splitext(input_coated_file)[0]
 
 theta_list, wavelength_list, polarize_info = read_input(input_coated_file)
 phi_list = [0, 90, 180, 270, 360]
@@ -282,4 +283,6 @@ for wavelength_idx in range(len(wavelength_list)):
 
 fdtd = lumapi.FDTD(lsf, hide=True)
 fdtd.feval(lsf)
-fdtd.simpleRT(1.0, 1.5, True, R_lower, T_lower, R_upper, T_upper, theta_list, phi_list, wavelength_list, output_file)
+fdtd.simpleRT(
+    1.0, 1.5, True, R_lower, T_lower, R_upper, T_upper, theta_list, phi_list, wavelength_list, output_json_file
+)
