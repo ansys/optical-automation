@@ -3,8 +3,11 @@ import tkinter as tk
 from tkinter import filedialog
 
 import matplotlib.pyplot as plt
+import numpy as np
 
 from ansys_optical_automation.post_process.dpf_lpf_reader import DpfLpfReader
+from ansys_optical_automation.scdm_core.utils import degree
+from ansys_optical_automation.scdm_core.utils import radiance
 from ansys_optical_automation.scdm_core.utils import vector_dot_product
 from ansys_optical_automation.scdm_core.utils import vector_normalize
 
@@ -41,6 +44,15 @@ class LpfRay:
 
     def __init__(self, alpha, ray):
         self.rays = [ray]
+        self.end_direction = [
+            vector_normalize(
+                [
+                    ray.LastDirection.Get(0),
+                    ray.LastDirection.Get(1),
+                    ray.LastDirection.Get(2),
+                ]
+            )
+        ]
         self.ref_alpha = alpha
         self.position = [ray.vImpacts.Get(2).Get(0), ray.vImpacts.Get(2).Get(1), ray.vImpacts.Get(2).Get(2)]
         self.start_position = [
@@ -49,7 +61,8 @@ class LpfRay:
             ray.vImpacts.Get(0).Get(2),  # start position z
         ]
         self.calc_alpha = []
-        self.optical_power = 0
+        self.optical_distortion = 0
+        self.optical_diopter = 0
 
     def ECE_R43(self):
         """
@@ -58,7 +71,14 @@ class LpfRay:
         -------
 
         """
-        self.optical_power = max(((abs(item - self.ref_alpha)) / 4 for item in self.calc_alpha))
+        # self.optical_power = max(((abs(item - self.ref_alpha)) / 4 for item in self.calc_alpha))
+        distortion = 0
+        print(self.end_direction)
+        for item in self.end_direction[1:]:
+            dot_product = min(1.0, math.fabs(vector_dot_product(item, self.end_direction[0])))
+            distortion = max(degree(math.acos(dot_product)), distortion)
+        self.optical_distortion = distortion
+        self.optical_diopter = radiance(distortion) / 0.012
 
 
 def ref_lpf_process(data, sequence=True):
@@ -92,8 +112,12 @@ def ref_lpf_process(data, sequence=True):
             lpf_out = [
                 trace.LastDirection.Get(0),
                 trace.LastDirection.Get(1),
-                math.sqrt(1 - trace.LastDirection.Get(0) ** 2 - trace.LastDirection.Get(1) ** 2),
+                math.copysign(
+                    math.sqrt(1 - trace.LastDirection.Get(0) ** 2 - trace.LastDirection.Get(1) ** 2),
+                    trace.LastDirection.Get(2),
+                ),
             ]
+            # print(lpf_in, lpf_out, trace.LastDirection.Get(2))
             # ## FTS
             # lpf_out_2 = [
             #     trace.LastDirection.Get(0),
@@ -103,13 +127,12 @@ def ref_lpf_process(data, sequence=True):
             # print("using original data: ", lpf_out_2, " using calculated data: ", lpf_out)
             alpha = math.acos(vector_dot_product(lpf_in, lpf_out))
             if lpf_out[1] < 0:
-                alpha = -alpha
+                alpha = degree(-alpha)
             else:
-                alpha = alpha
-            # print(alpha, lpf_out)
+                alpha = degree(alpha)
             distortion_analysis_info.append(LpfRay(alpha, trace))
     distortion_analysis_info = sorted(
-        distortion_analysis_info, key=lambda x: (x.start_position[0], x.start_position[1]), reverse=True
+        distortion_analysis_info, key=lambda x: (x.start_position[2], x.start_position[1]), reverse=True
     )
     return distortion_analysis_info
 
@@ -132,11 +155,12 @@ def add_lpf_data(data_list):
     for data_idx, data in enumerate(data_list[1:]):
         for item_idx, item in enumerate(ref):
             ref[item_idx].rays.append(data[item_idx].rays[0])
+            ref[item_idx].end_direction.append(data[item_idx].end_direction[0])
             ref[item_idx].calc_alpha.append(data[item_idx].ref_alpha)
             if data_idx == len(data_list[1:]) - 1:
                 ref[item_idx].ECE_R43()
-    for item in ref:
-        print(item.start_position, item.ref_alpha, item.calc_alpha, item.optical_power)
+    # for item in ref:
+    #     print(item.start_position, item.ref_alpha, item.calc_alpha, item.optical_power)
     return ref
 
 
@@ -156,16 +180,33 @@ def plot_result(data_result):
     """
     x = []
     y = []
-    value = []
+    distortion_value = []
+    diopter_value = []
+    distortion_max = 0
+    diopter_max = 0
     for item in data_result:
-        x.append(item.start_position[0])
-        y.append(item.start_position[1])
-        if item.optical_power > 0.1:
-            value.append(0)
-        else:
-            value.append(item.optical_power)
-    plt.scatter(x, y, c=value, s=20)
-    plt.colorbar()
+        x.append(item.start_position[1])
+        y.append(item.start_position[2])
+        distortion_value.append(item.optical_distortion)
+        diopter_value.append(item.optical_diopter)
+        distortion_max = max(distortion_max, item.optical_distortion)
+        diopter_max = max(diopter_max, item.optical_diopter)
+
+    # plot distortion map
+    plt.scatter(x, y, c=distortion_value, s=20, marker="s", cmap="Greys")
+    plt.axis("scaled")
+    cbar = plt.colorbar()
+    cbar.set_ticks(np.arange(0, distortion_max, distortion_max / 10.0))
+    plt.title("Distortion Map")
+    plt.show()
+
+    # plot diopter map
+    plt.scatter(x, y, c=diopter_value, s=20, marker="s", cmap="Greys")
+    plt.axis("scaled")
+    cbar = plt.colorbar()
+    cbar.set_ticks(np.arange(0, diopter_max + diopter_max / 10.0, diopter_max / 10.0))
+    plt.title("Diopter Map")
+
     plt.show()
 
 
@@ -187,8 +228,8 @@ def main():
         else:
             my_lpf = DpfLpfReader(231)
             my_lpf.open_file(file_name)
+            print("You have loaded data from: ", file_name, " has number of rays:")
             data.append(ref_lpf_process(my_lpf))
-            print("You have loaded data from: ", file_name)
 
     if len(data) != 0:
         result = add_lpf_data(data)
