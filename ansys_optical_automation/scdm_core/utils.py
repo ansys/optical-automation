@@ -106,7 +106,7 @@ def vector_normalize(vector):
 
     """
     vector_magnitude = vector_len(vector)
-    return [round(item / vector_magnitude, 5) for item in vector]
+    return [item / vector_magnitude for item in vector]
 
 
 def vector_dot_product(vector1, vector2):
@@ -120,6 +120,38 @@ def vector_dot_product(vector1, vector2):
         [x,y,z]
     Returns
     -------
-    int
+    float
     """
     return vector1[0] * vector2[0] + vector1[1] * vector2[1] + vector1[2] * vector2[2]
+
+
+def degree(rad):
+    """
+    function to convert unit radian to degree.
+
+    Parameters
+    ----------
+    rad : float
+
+    Returns
+    -------
+    float
+
+    """
+    return rad * 180.0 / math.pi
+
+
+def radiance(deg):
+    """
+    function to convert unit degree to radian.
+
+    Parameters
+    ----------
+    deg : float
+
+    Returns
+    -------
+    float
+
+    """
+    return deg * math.pi / 180.0
