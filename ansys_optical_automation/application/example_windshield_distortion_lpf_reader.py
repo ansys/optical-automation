@@ -193,7 +193,7 @@ def plot_result(data_result):
         diopter_max = max(diopter_max, item.optical_diopter)
 
     # plot distortion map
-    plt.scatter(x, y, c=distortion_value, s=20, marker="s", cmap="Greys")
+    plt.scatter(x, y, c=distortion_value, s=20, marker="s")
     plt.axis("scaled")
     cbar = plt.colorbar()
     cbar.set_ticks(np.arange(0, distortion_max, distortion_max / 10.0))
@@ -201,7 +201,7 @@ def plot_result(data_result):
     plt.show()
 
     # plot diopter map
-    plt.scatter(x, y, c=diopter_value, s=20, marker="s", cmap="Greys")
+    plt.scatter(x, y, c=diopter_value, s=20, marker="s")
     plt.axis("scaled")
     cbar = plt.colorbar()
     cbar.set_ticks(np.arange(0, diopter_max + diopter_max / 10.0, diopter_max / 10.0))
