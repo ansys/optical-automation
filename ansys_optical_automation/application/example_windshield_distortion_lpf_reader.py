@@ -3,7 +3,6 @@ import tkinter as tk
 from tkinter import filedialog
 
 import matplotlib.pyplot as plt
-import numpy as np
 
 from ansys_optical_automation.post_process.dpf_lpf_reader import DpfLpfReader
 from ansys_optical_automation.scdm_core.utils import degree
@@ -195,16 +194,18 @@ def plot_result(data_result):
     # plot distortion map
     plt.scatter(x, y, c=distortion_value, s=20, marker="s")
     plt.axis("scaled")
-    cbar = plt.colorbar()
-    cbar.set_ticks(np.arange(0, distortion_max, distortion_max / 10.0))
+    plt.colorbar()
+    # cbar.set_ticks(np.arange(0, distortion_max + distortion_max / 10.0, distortion_max / 10.0))
+    plt.clim(0, 0.07)
     plt.title("Distortion Map")
     plt.show()
 
     # plot diopter map
     plt.scatter(x, y, c=diopter_value, s=20, marker="s")
     plt.axis("scaled")
-    cbar = plt.colorbar()
-    cbar.set_ticks(np.arange(0, diopter_max + diopter_max / 10.0, diopter_max / 10.0))
+    plt.colorbar()
+    # cbar.set_ticks(np.arange(0, diopter_max + diopter_max / 10.0, diopter_max / 10.0))
+    plt.clim(0, 0.07)
     plt.title("Diopter Map")
 
     plt.show()
