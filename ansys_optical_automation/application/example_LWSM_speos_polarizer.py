@@ -5,7 +5,7 @@ from tkinter import filedialog
 
 import numpy as np
 
-lumapi_location = r"C:\Program Files\Lumerical\v222\api\python"
+lumapi_location = r"C:\Program Files\Lumerical\v232\api\python"
 sys.path.append(lumapi_location)
 import lumapi
 
@@ -136,6 +136,19 @@ for wavelength_idx in range(len(wavelength_list)):
     R_upper[:, :, wavelength_idx, 0, 1, 1] = p_r
     T_upper[:, :, wavelength_idx, 0, 1, 1] = p_t
 
+# for wave in range(len(wavelength_list)):
+#     print("at: " + str(wavelength_list[wave]) + "-----------------------------")
+#     print("S part")
+#     print("R_lower: \n", R_lower[:, :, wave, 0, 0, 0])
+#     print("T_lower: \n", T_lower[:, :, wave, 0, 0, 0])
+#     print("R_upper: \n", R_upper[:, :, wave, 0, 0, 0])
+#     print("T_upper: \n", T_upper[:, :, wave, 0, 0, 0])
+#
+#     print("P part")
+#     print("R_lower: \n", R_lower[:, :, wave, 0, 1, 1])
+#     print("T_lower: \n", T_lower[:, :, wave, 0, 1, 1])
+#     print("R_upper: \n", R_upper[:, :, wave, 0, 1, 1])
+#     print("T_upper: \n", T_upper[:, :, wave, 0, 1, 1])
 
 # print(R_upper[:, :, 0, 0, 1, 1])
 # print(R_upper[:, :, 1, 0, 1, 1])
