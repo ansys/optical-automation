@@ -3,6 +3,7 @@ import os
 import tkinter as tk
 from tkinter import filedialog
 
+import matplotlib.pyplot as plt
 import numpy as np
 
 # file = r"D:\Customer\Continental\Reflet\LAB_Anisotropic_BSDF_Surface (4)\test.txt"
@@ -95,6 +96,18 @@ def coordinate_convert(o_theta, o_phi):
     return i_theta, i_phi
 
 
+def coordinate_convert_new(o_theta, o_phi):
+    i_phi = 0
+    i_theta = 0
+    if o_phi <= 180:
+        i_theta = o_theta
+        i_phi = o_phi - 90
+    else:
+        i_theta = -o_theta
+        i_phi = o_phi - 270
+    return i_theta, i_phi
+
+
 def convert_bsdf(out_theta_list, out_phi_list, in_theta_list, in_phi_list, in_bsdf, rt_value):
     rt_value = min(rt_value, 1)
 
@@ -111,10 +124,12 @@ def convert_bsdf(out_theta_list, out_phi_list, in_theta_list, in_phi_list, in_bs
 
     bsdf_integration = 0
     out_bsdf = []
+    # print(out_theta_list)
+    # print(out_phi_list)
     for o_theta_idx, o_theta in enumerate(out_theta_list):
         out_bsdf_list = []
         for o_phi_idx, o_phi in enumerate(out_phi_list):
-            i_theta, i_phi = coordinate_convert(o_theta, o_phi)
+            i_theta, i_phi = coordinate_convert_new(o_theta, o_phi)
             o_bsdf = get_val(i_theta, i_phi)
             # print(i_theta, i_phi, o_theta, o_phi, o_bsdf)
             bsdf_integration += (
@@ -126,6 +141,10 @@ def convert_bsdf(out_theta_list, out_phi_list, in_theta_list, in_phi_list, in_bs
             out_bsdf_list.append(o_bsdf)
         out_bsdf.append(out_bsdf_list)
     normalized_bsdf = []
+    factor = 0.1273
+    if rt_value != factor:
+        factor = rt_value * factor
+    print("use factor: ", factor / 0.1273, "* 0.1273")
     for bsdf_list in out_bsdf:
         normalized_bsdf.append([bsdf * rt_value / bsdf_integration for bsdf in bsdf_list])
     return normalized_bsdf
@@ -176,6 +195,22 @@ def read_RT(file):
     return RT
 
 
+def plot_result(theta_list, phi_list, bsdf, tittle):
+    h = []
+    v = []
+    z = []
+    for item_list_idx, item_list in enumerate(bsdf):
+        for item_idx, item in enumerate(item_list):
+            v.append(phi_list[item_idx])
+            h.append(theta_list[item_list_idx])
+            z.append(item)
+    plt.title(os.path.basename(tittle))
+    plt.xlabel("theta list")
+    plt.ylabel("phi list")
+    plt.scatter(h, v, c=z)
+    plt.show()
+
+
 def main():
     reflect_dir = getfilepath()
     groups = {}
@@ -194,6 +229,12 @@ def main():
             groups[orientation].append(os.path.join(reflect_dir, filename))
 
     for group in groups:
+        if len(groups[group]) != len(rt_value_list):
+            raise ValueError(
+                "Please check your measurement data, number of RT values does not match measurement files number"
+            )
+
+    for group in groups:
         out_file = os.path.join(reflect_dir, "out_" + group + ".anisotropicbsdf")
         if os.path.isfile(out_file):
             os.remove(out_file)
@@ -201,6 +242,15 @@ def main():
         write_header(groups[group], file_out, rt_value_list[0])
         for file_idx, file_dir in enumerate(groups[group]):
             in_theta_list, in_phi_list, out_theta_list, out_phi_list, in_bsdf = read_reflect_data(file_dir)
+            # plot_result(in_theta_list, in_phi_list, in_bsdf, file_dir)
+
+            if (
+                in_theta_list != sorted(in_theta_list)
+                or in_phi_list != sorted(in_phi_list)
+                or out_theta_list != sorted(out_theta_list)
+                or out_phi_list != sorted(out_phi_list)
+            ):
+                raise ValueError("Please check the measurement setup")
             out_bsdf = convert_bsdf(
                 out_theta_list, out_phi_list, in_theta_list, in_phi_list, in_bsdf, rt_value_list[file_idx]
             )
