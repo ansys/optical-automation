@@ -96,7 +96,7 @@ def coordinate_convert(o_theta, o_phi):
     return i_theta, i_phi
 
 
-def coordinate_convert_new(o_theta, o_phi):
+def reflect_coordinate_convert(o_theta, o_phi):
     i_phi = 0
     i_theta = 0
     if o_phi <= 180:
@@ -114,13 +114,49 @@ def convert_bsdf(out_theta_list, out_phi_list, in_theta_list, in_phi_list, in_bs
     def get_val(theta, phi):
         return in_bsdf[in_theta_list.index(theta)][in_phi_list.index(phi)]
 
+    def get_bsdf_val(theta, phi):
+        i_theta, i_phi = reflect_coordinate_convert(theta, phi)
+        i_phi = round(i_phi, 3)
+        return get_val(i_theta, i_phi)
+
+    def get_bsdf_reflet_val_ave(theta, phi):
+        return (get_bsdf_val(theta, phi) + get_bsdf_val(theta, 360 - phi)) / 2.0
+
+    def get_bsdf_reflet_val_sm(theta, phi):
+        if phi == 0:
+            phi = 360
+        i_theta, i_phi = reflect_coordinate_convert(theta, phi)
+        i_phi = round(i_phi, 3)
+        return get_val(i_theta, i_phi)
+
     def get_delta(idx, val_list):
         if idx == 0:
             return (val_list[1] - val_list[0]) / 2.0
         elif idx == len(val_list) - 1:
             return (val_list[-1] - val_list[-2]) / 2.0
         else:
-            return val_list[idx + 1] - val_list[idx - 1]
+            return (val_list[idx + 1] - val_list[idx - 1]) / 2.0
+
+    def get_bsdf_integration(bsdf, theta_idx, phi_idx):
+        # bsdf_val = 0
+        # if phi_idx == 0:
+        #     bsdf_val = (bsdf + get_bsdf_reflet_val_sm(out_theta_list[theta_idx], out_phi_list[phi_idx + 1])) / 4.0
+        # elif phi_idx == len(out_phi_list) - 1:
+        #     bsdf_val = (bsdf + get_bsdf_reflet_val_sm(out_theta_list[theta_idx], out_phi_list[phi_idx - 1])) / 4.0
+        # else:
+        #     bsdf_val = bsdf
+        if phi_idx == 0:
+            return 0
+        integration = (
+            bsdf
+            * math.sin(deg_to_rad(out_theta_list[theta_idx]))
+            * deg_to_rad(get_delta(theta_idx, out_theta_list))
+            * deg_to_rad(get_delta(phi_idx, out_phi_list))
+        )
+        if phi_idx == len(out_phi_list) - 1:
+            return 2 * integration
+        else:
+            return integration
 
     bsdf_integration = 0
     out_bsdf = []
@@ -129,22 +165,11 @@ def convert_bsdf(out_theta_list, out_phi_list, in_theta_list, in_phi_list, in_bs
     for o_theta_idx, o_theta in enumerate(out_theta_list):
         out_bsdf_list = []
         for o_phi_idx, o_phi in enumerate(out_phi_list):
-            i_theta, i_phi = coordinate_convert_new(o_theta, o_phi)
-            o_bsdf = get_val(i_theta, i_phi)
-            # print(i_theta, i_phi, o_theta, o_phi, o_bsdf)
-            bsdf_integration += (
-                o_bsdf
-                * math.sin(deg_to_rad(o_theta))
-                * deg_to_rad(get_delta(o_theta_idx, out_theta_list))
-                * deg_to_rad(get_delta(o_phi_idx, out_phi_list))
-            )
+            o_bsdf = get_bsdf_reflet_val_sm(o_theta, o_phi)
+            bsdf_integration += get_bsdf_integration(o_bsdf, o_theta_idx, o_phi_idx)
             out_bsdf_list.append(o_bsdf)
         out_bsdf.append(out_bsdf_list)
     normalized_bsdf = []
-    factor = 0.1273
-    if rt_value != factor:
-        factor = rt_value * factor
-    print("use factor: ", factor / 0.1273, "* 0.1273")
     for bsdf_list in out_bsdf:
         normalized_bsdf.append([bsdf * rt_value / bsdf_integration for bsdf in bsdf_list])
     return normalized_bsdf
@@ -208,6 +233,7 @@ def plot_result(theta_list, phi_list, bsdf, tittle):
     plt.xlabel("theta list")
     plt.ylabel("phi list")
     plt.scatter(h, v, c=z)
+    plt.axis("scaled")
     plt.show()
 
 
@@ -252,7 +278,12 @@ def main():
             ):
                 raise ValueError("Please check the measurement setup")
             out_bsdf = convert_bsdf(
-                out_theta_list, out_phi_list, in_theta_list, in_phi_list, in_bsdf, rt_value_list[file_idx]
+                out_theta_list,
+                out_phi_list,
+                in_theta_list,
+                in_phi_list,
+                in_bsdf,
+                rt_value_list[file_idx],
             )
             write_out(out_bsdf, out_theta_list, out_phi_list, file_out)
         file_out.write("End of file\n")
