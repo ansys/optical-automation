@@ -1009,16 +1009,21 @@ class BsdfStructure:
             # Linear interpolation of the values
             # interp2d is apparently deprecated
             # Look for alternatives f = interpolate.bisplrep(theta_rad, phi_rad, integrande)
-            f = interpolate.interp2d(theta_rad, phi_rad, integrande, kind="linear", bounds_error=False, fill_value=0)
-            # calculation of the integral
-            # r = nquad(f, [[0, math.pi / 2], [0, 2 * math.pi]], opts=[{"epsabs": 0.1}, {"epsabs": 0.1}])
+            f = interpolate.RectBivariateSpline(phi_rad, theta_rad, integrande, kx=1, ky=1)
+            # f = interpolate.interp2d(theta_rad, phi_rad, integrande, kind="linear", bounds_error=False, fill_value=0)
             r = nquad(
                 f,
-                [[min(theta_rad), max(theta_rad)], [min(phi_rad), max(phi_rad)]],
+                [[min(phi_rad), max(phi_rad)], [min(theta_rad), max(theta_rad)]],
                 opts=[{"epsabs": 0.1}, {"epsabs": 0.1}],
             )
+            # r = nquad(
+            #    f,
+            #    [ [min(theta_rad), max(theta_rad)],[min(phi_rad), max(phi_rad)]],
+            #    opts=[{"epsabs": 0.1}, {"epsabs": 0.1}],
+            # )
             IntegralValue = abs(r[0])
             IntegralError = r[1]
+            # print("new:"+ str(IntegralValue))
 
             # Normalization of the data
             if IntegralValue > 0:
