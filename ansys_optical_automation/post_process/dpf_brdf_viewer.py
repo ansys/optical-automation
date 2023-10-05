@@ -95,9 +95,13 @@ class BrdfStructure:
         """
         theta_rad, phi_rad = np.radians(theta), np.radians(phi)  # samples on which integrande is known
         integrande = (1 / math.pi) * brdf * np.sin(theta_rad)  # *theta for polar integration
-        f = interpolate.interp2d(theta_rad, phi_rad, integrande, kind="linear", bounds_error=False, fill_value=0)
-        # calculation of integrande as from from samples
-        r = nquad(f, [[0, math.pi / 2], [0, 2 * math.pi]], opts=[{"epsabs": 0.1}, {"epsabs": 0.1}])
+        # deprecated scipy method
+        # f = interpolate.interp2d(theta_rad, phi_rad, integrande, kind="linear", bounds_error=False, fill_value=0)
+        # calculation of integrande as from samples
+        # r = nquad(f, [[0, math.pi / 2], [0, 2 * math.pi]], opts=[{"epsabs": 0.1}, {"epsabs": 0.1}])
+        # current scipy method
+        f = interpolate.RectBivariateSpline(phi_rad, theta_rad, integrande, kx=1, ky=1)
+        r = nquad(f, [[0, 2 * math.pi], [0, math.pi / 2]], opts=[{"epsabs": 0.1}, {"epsabs": 0.1}])
         # reflectance calculaiton thanks to nquad lib
         return min(r[0] * 100, 100)  # return reflectance as percentage
 
