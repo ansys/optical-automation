@@ -79,6 +79,7 @@ class BaseSCDM(object):
         self.Window = scdm_api.Window
         self.HandleAxis = scdm_api.Scripting.Commands.HandleAxis
         self.MoveOptions = scdm_api.Scripting.Commands.CommandOptions.MoveOptions
+        self.ExportOptions = api.ExportOptions
         self.Move = scdm_api.Scripting.Commands.Move
         self.PartSelection = scdm_api.Scripting.Selection.PartSelection
         self.Vector = scdm_api.Geometry.Vector
