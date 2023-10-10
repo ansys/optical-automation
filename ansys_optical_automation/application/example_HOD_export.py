@@ -15,7 +15,7 @@ not_selected = True
 # Get UI Selection Input
 while not_selected:
     ctypes.windll.user32.MessageBoxW(
-        0, "Please select a HUD Optical Design feature, then Click [Ok]", "HUD Optical Design selection"
+        0, "Please select a HUD Optical Design feature, then Click [Ok]", "HUD Optical Design selection", None
     )
     if len(Selection.GetActive().Items) != 1:
         sys.exit("Canceled")
