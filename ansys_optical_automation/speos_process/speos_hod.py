@@ -502,5 +502,5 @@ class HOD(BaseSCDM):
         step_file_path = os.path.join(output_dir, self.speos_object.Name + ".windshield.export.stp")
         options = self.ExportOptions.Create()
         self.DocumentSave.Execute(step_file_path, options)
-        self.DocumentHelper.CloseDocument()
+        self.CloseDocument()
         return step_file_path

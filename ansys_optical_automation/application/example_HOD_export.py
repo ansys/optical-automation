@@ -28,7 +28,7 @@ while not_selected:
         print("invalid Selection")
 
 dir = os.path.split(GetActivePart().Document.Path)[0]
-name = os.path.split(GetActivePart().Document.Path)[1]
+name = os.path.split(GetActivePart().Document.Path)[1].rstrip("*.scdocx")
 export_file_path = os.path.join(dir, r"SPEOS output files", name)
 print(dir + r"\n" + name + r"\n" + export_file_path)
 
