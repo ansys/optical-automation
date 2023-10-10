@@ -29,14 +29,16 @@ def unittest_planesymmetric_btdf_zemax_run():
     bsdf_data.import_data(0)
     bsdf_data.write_speos_anisotropicbsdf_file()
     del bsdf_data
-    #
-    # # Test 3
-    # bsdf_data = BsdfStructure()
-    # cwd = os.path.dirname(os.path.realpath(__file__))
-    # bsdf_data.filename_input = os.path.join(cwd, "example_models", "test_13_asymmetrical4d_btdf_zemax.bsdf")
-    # bsdf_data.import_data(0)
-    # bsdf_data.write_speos_anisotropicbsdf_file()
-    # del bsdf_data
+
+
+def unittest_asymmetrical4d_btdf_zemax_run():
+    # Test 3
+    bsdf_data = BsdfStructure()
+    cwd = os.path.dirname(os.path.realpath(__file__))
+    bsdf_data.filename_input = os.path.join(cwd, "example_models", "test_13_asymmetrical4d_btdf_zemax.bsdf")
+    bsdf_data.import_data(0)
+    bsdf_data.write_speos_anisotropicbsdf_file()
+    del bsdf_data
     #
     # # Test 4
     # bsdf_data = BsdfStructure()
