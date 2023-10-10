@@ -26,10 +26,10 @@ while not_selected:
     if len(Selection.GetActive().Items) == 1:
         selectedHODFeature = Selection.GetActive().Items[0]
         hod_name = selectedHODFeature.GetName()
-    if SpeosDes.HUDOD.Find(hod_name):
+    if SpeosDes.HUDOD.Find(hod_name) and SpeosDes.HUDOD.Find(hod_name).IsUpToDate:
         not_selected = False
     else:
-        print("invalid Selection")
+        print("invalid Selection \nPlease CHeck that you have selected a HOD feature and the HOD feature is uptodate")
 
 dir = os.path.split(GetActivePart().Document.Path)[0]
 name = os.path.split(GetActivePart().Document.Path)[1].rstrip("*.scdocx")
