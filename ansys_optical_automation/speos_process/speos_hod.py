@@ -8,7 +8,7 @@ class HOD(BaseSCDM):
     """this class is used to interact with hud optical design systems of Speos"""
 
     def __init__(self, name, SpeosDes, SpaceClaim):
-        super(HOD, self).__init__(SpaceClaim, ["V19", "V20", "V21", "V22", "V23"])
+        super(HOD, self).__init__(SpaceClaim, ["V232"])
         self.name = name
         self.speos_sim = SpeosDes
         self.speos_object = self.speos_sim.HUDOD.Find(name)
