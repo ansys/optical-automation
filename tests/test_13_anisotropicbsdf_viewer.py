@@ -9,6 +9,12 @@ from .workflows.run_test_13_anisotropicbsdf_viewer import (
 from .workflows.run_test_13_anisotropicbsdf_viewer import (
     unittest_brdf_one_wavelength_speos_run,
 )
+from .workflows.run_test_13_anisotropicbsdf_viewer import (
+    unittest_planesymmetric_brdf_zemax_run,
+)
+from .workflows.run_test_13_anisotropicbsdf_viewer import (
+    unittest_planesymmetric_btdf_zemax_run,
+)
 
 # from .workflows.run_test_13_anisotropicbsdf_viewer import (
 #     unittest_planesymmetric_brdf_zemax_run,
@@ -92,75 +98,61 @@ class TestAnisotropicbsdfAPI:
 
         On fail will report traceback with lines where the code failed.
         """
-        # self.clean_results(self)
+        self.clean_results(self)
 
     def clean_results(self):
         """
         Delete results file to avoid confusion.
         Returns:
         """
-        # if os.path.isfile(self.results_file_speos_1):
-        #     os.remove(self.results_file_speos_1)
-        # if os.path.isfile(self.results_file_speos_2):
-        #     os.remove(self.results_file_speos_2)
-        # if os.path.isfile(self.results_file_speos_3):
-        #     os.remove(self.results_file_speos_3)
-        # if os.path.isfile(self.results_file_zemax_4):
-        #     os.remove(self.results_file_zemax_4)
-        # if os.path.isfile(self.results_file_zemax_4):
-        #     os.remove(self.results_file_zemax_5)
-        # if os.path.isfile(self.results_file_zemax_6):
-        #     os.remove(self.results_file_zemax_6)
+        if os.path.isfile(self.results_file_speos_1):
+            os.remove(self.results_file_speos_1)
+        if os.path.isfile(self.results_file_speos_2):
+            os.remove(self.results_file_speos_2)
+        if os.path.isfile(self.results_file_speos_3):
+            os.remove(self.results_file_speos_3)
+        if os.path.isfile(self.results_file_zemax_4):
+            os.remove(self.results_file_zemax_4)
+        if os.path.isfile(self.results_file_zemax_4):
+            os.remove(self.results_file_zemax_5)
+        if os.path.isfile(self.results_file_zemax_6):
+            os.remove(self.results_file_zemax_6)
 
-    # def test_01_files_generated(self):
-    #     """
-    #     Verify brdf content is loaded and file generated
-    #     Returns:
-    #     -------
-    #     None
-    #     """
-    #     # assert os.path.exists(self.results_file_speos_1)
-    #     # assert os.path.exists(self.results_file_speos_2)
-    #     # assert os.path.exists(self.results_file_speos_3)
-    #     # assert os.path.exists(self.results_file_zemax_4)
-    #     # assert os.path.exists(self.results_file_zemax_5)
-    #     # assert os.path.exists(self.results_file_zemax_6)
+    def test_01_verify_generated_speos_brdf_planesymmetric_bsdf_file(self):
+        """
+        Verify brdf file is corrected generated via comparing to a reference
+        Returns
+        -------
+        None
+        """
+        unittest_planesymmetric_brdf_zemax_run()
 
-    # def test_02_verify_generated_speos_brdf_planesymmetric_bsdf_file(self):
-    #     """
-    #     Verify brdf file is corrected generated via comparing to a reference
-    #     Returns
-    #     -------
-    #     None
-    #     """
-    #     unittest_planesymmetric_brdf_zemax_run()
-    #
-    #     res_file = open(self.results_file_speos_1, "r")
-    #     ref_file = open(self.reference_file_speos_1, "r")
-    #     res = res_file.read()
-    #     ref = ref_file.read()
-    #     res_file.close()
-    #     ref_file.close()
-    #     assert res == ref
-    #
-    # def test_03_verify_generated_speos_btdf_planesymmetric_bsdf_file(self):
-    #     """
-    #     Verify brdf file is corrected generated via comparing to a reference
-    #     Returns
-    #     -------
-    #     None
-    #     """
-    #     unittest_planesymmetric_btdf_zemax_run()
-    #
-    #     res_file = open(self.results_file_speos_2, "r")
-    #     ref_file = open(self.reference_file_speos_2, "r")
-    #     res = res_file.read()
-    #     ref = ref_file.read()
-    #     res_file.close()
-    #     ref_file.close()
-    #     assert res == ref
+        res_file = open(self.results_file_speos_1, "r")
+        ref_file = open(self.reference_file_speos_1, "r")
+        res = res_file.read()
+        ref = ref_file.read()
+        res_file.close()
+        ref_file.close()
+        assert res == ref
 
-    def test_04_verify_generated_speos_btdf_anisotropic_bsdf_file(self):
+    def test_02_verify_generated_speos_btdf_planesymmetric_bsdf_file(self):
+        """
+        Verify brdf file is corrected generated via comparing to a reference
+        Returns
+        -------
+        None
+        """
+        unittest_planesymmetric_btdf_zemax_run()
+
+        res_file = open(self.results_file_speos_2, "r")
+        ref_file = open(self.reference_file_speos_2, "r")
+        res = res_file.read()
+        ref = ref_file.read()
+        res_file.close()
+        ref_file.close()
+        assert res == ref
+
+    def test_03_verify_generated_speos_btdf_anisotropic_bsdf_file(self):
         """
         Verify brdf file is corrected generated via comparing to a reference
         Returns
@@ -177,7 +169,7 @@ class TestAnisotropicbsdfAPI:
         ref_file.close()
         assert res == ref
 
-    def test_05_verify_generated_zemax_bsdf_file(self):
+    def test_04_verify_generated_zemax_bsdf_file(self):
         """
         Verify bsdf file is corrected generated via comparing to a reference
         Returns
@@ -195,7 +187,7 @@ class TestAnisotropicbsdfAPI:
         assert res == ref
 
     #
-    def test_06_verify_generated_zemax_bsdf_file(self):
+    def test_05_verify_generated_zemax_bsdf_file(self):
         """
         Verify bsdf file is corrected generated via comparing to a reference
         Returns
@@ -211,7 +203,7 @@ class TestAnisotropicbsdfAPI:
         ref_file.close()
         assert res == ref
 
-    def test_07_verify_generated_zemax_bsdf_file(self):
+    def test_06_verify_generated_zemax_bsdf_file(self):
         """
         Verify bsdf file is corrected generated via comparing to a reference
         Returns
