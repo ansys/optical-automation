@@ -108,8 +108,8 @@ def reflect_coordinate_convert(o_theta, o_phi):
     return i_theta, i_phi
 
 
-def convert_bsdf(out_theta_list, out_phi_list, in_theta_list, in_phi_list, in_bsdf, rt_value):
-    rt_value = min(rt_value, 1)
+def convert_bsdf(out_theta_list, out_phi_list, in_theta_list, in_phi_list, in_bsdf, rt_value, bsdf_type):
+    rt_value = min(rt_value[0] if "BTDF" in bsdf_type else rt_value[1], 1)
 
     def get_val(theta, phi):
         return in_bsdf[in_theta_list.index(theta)][in_phi_list.index(phi)]
@@ -175,21 +175,26 @@ def convert_bsdf(out_theta_list, out_phi_list, in_theta_list, in_phi_list, in_bs
     return normalized_bsdf
 
 
-def write_header(incident_file_list, file_out, rt_value):
+def write_header(incident_file_list, file_out, rt_value, bsdf_type):
+    rt_value = min(rt_value[0] if "BTDF" in bsdf_type else rt_value[1], 1)
+
     file_out.write("OPTIS - Anisotropic BSDF surface file v7.0\n")
     file_out.write("0\n")
     file_out.write("Comment\n")
     file_out.write("23\n")
     file_out.write("Measurement description\n")
     file_out.write("1\t0\t0\n")
-    file_out.write("1\t0\n")
+    if "BRDF" in bsdf_type:
+        file_out.write("1\t0\n")
+    else:
+        file_out.write("0\t1\n")
     file_out.write("0\n")
     file_out.write("1\n")
     file_out.write("0\n")
     file_out.write(str(len(incident_file_list)) + "\n")
     content = "\t".join(
         [
-            str(float(os.path.splitext(os.path.basename(incident_file).split("_")[4])[0]) / 10)
+            str(float(os.path.splitext(os.path.basename(incident_file))[0].rsplit("_", 1)[1]) / 10.0)
             for incident_file in incident_file_list
         ]
     )
@@ -200,15 +205,21 @@ def write_header(incident_file_list, file_out, rt_value):
     file_out.write("850\t" + str(rt_value * 100) + "\n")
 
 
-def write_out(bsdf, out_theta_list, out_phi_list, file_out):
+def write_out(bsdf, out_theta_list, out_phi_list, file_out, bsdf_type):
     separator = "\t"
     file_out.write(str(len(out_theta_list)) + "\t" + str(len(out_phi_list)) + "\n")
     content = separator.join("{:.2f}".format(item) for item in out_phi_list) + "\n"
     file_out.write(content)
-    for bsdf_idx, bsdf_line in enumerate(bsdf):
-        content = "{:.3f}".format(out_theta_list[bsdf_idx]) + "\t"
-        content += separator.join("{:.8f}".format(item) for item in bsdf_line) + "\n"
-        file_out.write(content)
+    if "BRDF" in bsdf_type:
+        for bsdf_idx, bsdf_line in enumerate(bsdf):
+            content = "{:.3f}".format(out_theta_list[bsdf_idx]) + "\t"
+            content += separator.join("{:.8f}".format(item) for item in bsdf_line) + "\n"
+            file_out.write(content)
+    else:
+        for bsdf_idx, bsdf_line in reversed(list(enumerate(bsdf))):
+            content = "{:.3f}".format(180 - out_theta_list[bsdf_idx]) + "\t"
+            content += separator.join("{:.8f}".format(item) for item in bsdf_line) + "\n"
+            file_out.write(content)
 
 
 def read_RT(file):
@@ -216,7 +227,8 @@ def read_RT(file):
     with open(file) as myfile:
         for line in myfile:
             if "AOI" in line:
-                RT.append(float(line.split()[3]))
+                RT_value = line.split()[2:]
+                RT.append([float(value) for value in RT_value])
     return RT
 
 
@@ -238,34 +250,38 @@ def plot_result(theta_list, phi_list, bsdf, tittle):
 
 
 def main():
-    reflect_dir = getfilepath()
+    def order_method(item):
+        f_name = os.path.basename(item)
+        name = os.path.splitext(f_name)[0]
+        return float(name.split("_")[-1])
+
+    reflet_dir = getfilepath()
     groups = {}
     rt_value_list = []
-    for filename in os.listdir(reflect_dir):
-        # if filename == "LightTools_Export3_0_BRDF_800.txt":
-        if filename.endswith("txt"):
-            orientation = filename.split("_")[2]
-            if "RTfile" in filename:
-                rt_value_list = read_RT(os.path.join(reflect_dir, filename))
-                continue
-            if not orientation.isnumeric():
-                continue
-            if orientation not in groups:
-                groups[orientation] = []
-            groups[orientation].append(os.path.join(reflect_dir, filename))
+    for filename in os.listdir(reflet_dir):
+        if not filename.endswith("txt"):
+            continue
+        if "RTfile" in filename:
+            rt_value_list = read_RT(os.path.join(reflet_dir, filename))
+            continue
+        measurement_session = os.path.splitext(filename)[0].rsplit("_", 1)[0]
+        if measurement_session not in groups:
+            groups[measurement_session] = []
+        groups[measurement_session].append(os.path.join(reflet_dir, filename))
 
     for group in groups:
+        groups[group].sort(key=order_method)
         if len(groups[group]) != len(rt_value_list):
             raise ValueError(
                 "Please check your measurement data, number of RT values does not match measurement files number"
             )
 
     for group in groups:
-        out_file = os.path.join(reflect_dir, "out_" + group + ".anisotropicbsdf")
+        out_file = os.path.join(reflet_dir, group + ".anisotropicbsdf")
         if os.path.isfile(out_file):
             os.remove(out_file)
         file_out = open(out_file, "a")
-        write_header(groups[group], file_out, rt_value_list[0])
+        write_header(groups[group], file_out, rt_value_list[0], group)
         for file_idx, file_dir in enumerate(groups[group]):
             in_theta_list, in_phi_list, out_theta_list, out_phi_list, in_bsdf = read_reflect_data(file_dir)
             # plot_result(in_theta_list, in_phi_list, in_bsdf, file_dir)
@@ -284,8 +300,9 @@ def main():
                 in_phi_list,
                 in_bsdf,
                 rt_value_list[file_idx],
+                group,
             )
-            write_out(out_bsdf, out_theta_list, out_phi_list, file_out)
+            write_out(out_bsdf, out_theta_list, out_phi_list, file_out, group)
         file_out.write("End of file\n")
         file_out.close()
 
