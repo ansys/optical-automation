@@ -2,6 +2,8 @@ import math
 import os
 import subprocess
 
+import numpy as np
+
 
 def get_scdm_install_location(version):
     """
@@ -138,7 +140,7 @@ def degree(rad):
     float
 
     """
-    return rad * 180.0 / math.pi
+    return np.rad2deg(rad)
 
 
 def radiance(deg):
@@ -154,4 +156,4 @@ def radiance(deg):
     float
 
     """
-    return deg * math.pi / 180.0
+    return np.deg2rad(deg)
