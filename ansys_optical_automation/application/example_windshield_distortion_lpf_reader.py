@@ -269,12 +269,13 @@ def main():
 
     """
     data = []
+    speos_version = 231
     for selection in range(5):
         file_name = getfilename("*.lpf")
         if file_name == "":
             print("Complete, no file has been selected")
         else:
-            my_lpf = DpfLpfReader(231)
+            my_lpf = DpfLpfReader(speos_version)
             my_lpf.open_file(file_name)
             print("You have loaded data from: ", file_name, " has number of rays:")
             data.append(ref_lpf_process(my_lpf))
