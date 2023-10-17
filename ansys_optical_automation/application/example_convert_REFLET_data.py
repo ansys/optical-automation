@@ -6,49 +6,6 @@ from tkinter import filedialog
 import matplotlib.pyplot as plt
 import numpy as np
 
-# file = r"D:\Customer\Continental\Reflet\LAB_Anisotropic_BSDF_Surface (4)\test.txt"
-#
-# phi_list = []
-# theta_list = []
-# bsdf = []
-# with open(file) as myfile:
-#     for idx, line in enumerate(myfile):
-#         if idx == 0:
-#             phi_list = [float(item) for item in line.split()]
-#         else:
-#             line_content = [float(item) for item in line.split()]
-#             theta_list.append(line_content[0])
-#             bsdf.append(line_content[1:])
-# def get_val(theta, phi):
-#     theta_id = theta_list.index(theta)
-#     phi_id = phi_list.index(phi)
-#     return bsdf[theta_id][phi_id]
-#
-# theta_2d_ressampled, phi_2d_ressampled = np.meshgrid(np.array(theta_list), np.array(phi_list))
-# bsdf_resample = []
-# phi_temp = phi_2d_ressampled.reshape(-1)
-# theta_temp = theta_2d_ressampled.reshape(-1)
-# for idx, item in enumerate(phi_temp):
-#     bsdf_resample.append(get_val(theta_temp[idx],phi_temp[idx]))
-#
-# bsdf_resample = np.array(bsdf_resample)
-# bsdf_resample = bsdf_resample.reshape(np.shape(theta_2d_ressampled)[0], np.shape(theta_2d_ressampled)[1])
-# print(np.shape(bsdf_resample), np.shape(theta_2d_ressampled))
-# # samples on which integrande is known
-# theta_rad, phi_rad = np.radians(theta_2d_ressampled), np.radians(phi_2d_ressampled)
-# integrande = (1 / math.pi) * bsdf_resample * np.sin(theta_rad)  # *theta for polar integration
-# f = interpolate.interp2d(theta_rad, phi_rad, integrande, kind="linear", bounds_error=False, fill_value=0)
-# # calculation of integrande as from samples
-# r = nquad(f, [[0, math.pi / 2], [0, 2 * math.pi]], opts=[{"epsabs": 0.1}, {"epsabs": 0.1}])
-# print(r)
-
-# x = np.linspace(-5, 5, 5)
-# y = np.linspace(-4, 4, 5)
-# X, Y = np.meshgrid(x, y)
-# print(X, Y)
-# Z = Y**2 + X**2
-# print(Z)
-
 
 def getfilepath():
     """
