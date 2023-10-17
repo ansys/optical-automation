@@ -126,10 +126,6 @@ def ref_lpf_process(data, sequence=True):
             # ]
             # print("using original data: ", lpf_out_2, " using calculated data: ", lpf_out)
             alpha = math.acos(vector_dot_product(lpf_in, lpf_out))
-            if lpf_out[1] < 0:
-                alpha = degree(-alpha)
-            else:
-                alpha = degree(alpha)
             distortion_analysis_info.append(LpfRay(alpha, trace))
     distortion_analysis_info = sorted(
         distortion_analysis_info, key=lambda x: (x.start_position[2], x.start_position[1]), reverse=True
