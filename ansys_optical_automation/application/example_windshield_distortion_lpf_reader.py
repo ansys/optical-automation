@@ -5,6 +5,7 @@ from tkinter import filedialog
 import matplotlib.pyplot as plt
 
 from ansys_optical_automation.post_process.dpf_lpf_reader import DpfLpfReader
+from ansys_optical_automation.post_process.dpf_xmp_viewer import MapStruct
 from ansys_optical_automation.scdm_core.utils import degree
 from ansys_optical_automation.scdm_core.utils import radiance
 from ansys_optical_automation.scdm_core.utils import vector_dot_product
@@ -211,6 +212,52 @@ def plot_result(data_result):
     plt.show()
 
 
+def plot_result_xmp(data_result):
+    """
+    function to plot result for windshield distortion data into XMP file.
+
+    Parameters
+    ----------
+    data_result : list
+        a list of data in format: [x, y, optical power]
+
+    Returns
+    -------
+
+
+    """
+    x = []
+    y = []
+    distortion_value = []
+    diopter_value = []
+    distortion_max = 0
+    diopter_max = 0
+    for item in data_result:
+        x.append(item.start_position[1])
+        y.append(item.start_position[2])
+        distortion_value.append(item.optical_distortion)
+        diopter_value.append(item.optical_diopter)
+        distortion_max = max(distortion_max, item.optical_distortion)
+        diopter_max = max(diopter_max, item.optical_diopter)
+
+    x_axis = sorted(list(set(x)), reverse=True)
+    y_axis = sorted(list(set(y)), reverse=True)
+    distortion_value_map = MapStruct(
+        3, 20, 0, 9, 1, [min(x_axis), max(x_axis), min(y_axis), max(y_axis)], [len(x_axis), len(y_axis)]
+    )
+    distortion_value_map.export_name = "distortion_map"
+    diopter_value_map = MapStruct(
+        3, 20, 0, 9, 1, [min(x_axis), max(x_axis), min(y_axis), max(y_axis)], [len(x_axis), len(y_axis)]
+    )
+    diopter_value_map.export_name = "optical_power_map"
+    for y_idx, y_item in enumerate(y_axis):
+        for x_idx, x_item in enumerate(x_axis):
+            distortion_value_map.data[0, x_idx, y_idx, 0] = distortion_value[y_idx * len(x_axis) + x_idx]
+            diopter_value_map.data[0, x_idx, y_idx, 0] = diopter_value[y_idx * len(x_axis) + x_idx]
+    distortion_value_map.export_to_xmp(r"c:\temp")
+    diopter_value_map.export_to_xmp(r"c:\temp")
+
+
 def main():
     """
     main function to run windshield distortion study, available methods:
@@ -235,6 +282,7 @@ def main():
     if len(data) != 0:
         result = add_lpf_data(data)
         plot_result(result)
+        # plot_result_xmp(result)
 
 
 main()
