@@ -63,6 +63,8 @@ class MapStruct:
             2 for spectral, 3 for extended
         value_type : int
             0 for Irradiance, 1 for Intensity, 2 for Radiance, 20 for refractive Power
+        intensity_type : int
+            0 for optis intensity
         unit_type : int
             0 for Radiometric, 1 for Photometric, 9 for Diopter
         axis_unit : int

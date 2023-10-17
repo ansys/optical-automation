@@ -1,5 +1,8 @@
+import math
 import os
 import subprocess
+
+import numpy as np
 
 
 def get_scdm_install_location(version):
@@ -70,3 +73,87 @@ def run_scdm_batch(scdm_version, api_version, script_file):
         r"/ScriptAPI={}".format(api_version),
     ]
     subprocess.call(command)
+
+
+def vector_len(vector):
+    """
+    compute vector length
+    Parameters
+    ----------
+    vector : list
+        [x,y,z]
+
+    Returns
+    -------
+    float
+        length of a vector
+
+    """
+    return math.sqrt(vector[0] ** 2 + vector[1] ** 2 + vector[2] ** 2)
+
+
+def vector_normalize(vector):
+    """
+    get normalized vector.
+
+    Parameters
+    ----------
+    vector : list
+        [x,y,z]
+
+    Returns
+    -------
+    list
+        list representing normalized vector
+
+    """
+    vector_magnitude = vector_len(vector)
+    return [item / vector_magnitude for item in vector]
+
+
+def vector_dot_product(vector1, vector2):
+    """
+    function to multiply to vectors
+    Parameters
+    ----------
+    vector1 : list
+        [x,y,z]
+    vector2 : list
+        [x,y,z]
+    Returns
+    -------
+    float
+    """
+    return vector1[0] * vector2[0] + vector1[1] * vector2[1] + vector1[2] * vector2[2]
+
+
+def degree(rad):
+    """
+    function to convert unit radian to degree.
+
+    Parameters
+    ----------
+    rad : float
+
+    Returns
+    -------
+    float
+
+    """
+    return np.rad2deg(rad)
+
+
+def radiance(deg):
+    """
+    function to convert unit degree to radian.
+
+    Parameters
+    ----------
+    deg : float
+
+    Returns
+    -------
+    float
+
+    """
+    return np.deg2rad(deg)

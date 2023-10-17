@@ -35,7 +35,7 @@ def gaussian(xy, x0, y0, sigma_x, sigma_y, H):
     return gaussian_value
 
 
-diopter_map = MapStruct(3, 20, 9, 1, [-10, 10, -10, 10], [50, 50])
+diopter_map = MapStruct(3, 20, 0, 9, 1, [-10, 10, -10, 10], [50, 50])
 x_values = np.arange(-10, 10.0, 20 / 50)
 y_values = np.arange(-10, 10.0, 20 / 50)
 for x in range(50):
