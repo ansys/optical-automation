@@ -1,13 +1,14 @@
 import os
-import tkinter as tk    # Used to select files
-
-#
-from ansys_optical_automation.interop_process.speos_hud_to_zemaxOS import SpeosHUDToZemax
+import tkinter as tk
 from tkinter import filedialog
+
+from ansys_optical_automation.interop_process.speos_hud_to_zemaxOS import (
+    SpeosHUDToZemax,
+)
+
 
 def getfilename(extension, fileTypeName, title):
     """
-
     Parameters
     ----------
     extension : str
@@ -25,10 +26,7 @@ def getfilename(extension, fileTypeName, title):
     """
     root = tk.Tk()
     root.withdraw()
-    filePath = filedialog.askopenfilename(
-        title=title,
-        filetypes=[(fileTypeName, extension)]
-    )
+    filePath = filedialog.askopenfilename(title=title, filetypes=[(fileTypeName, extension)])
     return filePath
 
 
@@ -43,6 +41,7 @@ def main():
     windshieldFile = os.path.basename(windshieldStart)
 
     # Call function to parse the data provided by Speos
-    converter = SpeosHUDToZemax(fullFile, freeformFile, freeformFileName, windshieldStart, windshieldFile)
+    SpeosHUDToZemax(fullFile, freeformFile, freeformFileName, windshieldStart, windshieldFile)
+
 
 main()

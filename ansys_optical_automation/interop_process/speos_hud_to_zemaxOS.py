@@ -1,8 +1,7 @@
-import os
-import math
-import shutil           # Used to copy file to Zemax Objects directory
+import shutil  # Used to copy file to Zemax Objects directory
 
 from ansys_optical_automation.zemax_process.base import BaseZOS
+
 
 class SpeosHUDToZemax:
     """
@@ -12,18 +11,21 @@ class SpeosHUDToZemax:
         a. HUD_SpeosToZemax
         b. HUD surface export
         c. Windshield.STP
-    2. Assuming the comment "#Point coordinates start from Eyebox and go to PGU. These are vertices of 4 polylines, so there are 8 vertices, 4 are duplicates" is always used directly preceding the point-by-point data
+    2. Assuming the comment "#Point coordinates start from Eyebox and go to PGU. These are vertices of 4 polylines,
+        so there are 8 vertices, 4 are duplicates" is always used directly preceding the point-by-point data
     3. Assuming three objects + one step file are being imported. Nothing more
     4. Assuming the points and tilt angles are all preceded by "n Point:" or "Z:" or "Y':" or "X'':"
     5. Assuming point-by-point data is duplicated such that lines 6, 4, and 2 may be removed
-    6. Assuming object size data is directly preceded by "#Surface dimensions start from freeform and go to PGU. There are 4 edge dimensions per surface"
+    6. Assuming object size data is directly preceded by "#Surface dimensions start from freeform and go to PGU.
+        There are 4 edge dimensions per surface"
     7. Assuming sizing data directly precedes the position data, and is duplicated
     8. Assumption: We are using MM units and received m units from Speos
     9. Assume eyebox data is given in the first lines, separate from other position/tilt data
     10. Assume gut ray strikes all objects except windshield at local axis (center)
     11. BIG assumption: We do not need the Horizontal/Vertical angle reports with the X, Y, Z data now
     12. Assume gut ray leaving PGU is at a 180 degree X Tilt wrt the PGU position
-    13. Assume gut ray leaving PGU may not be "normal to" the PGU itself. Will allow for some minor optimization of position
+    13. Assume gut ray leaving PGU may not be "normal to" the PGU itself.
+        Will allow for some minor optimization of position
         a. Assume gut ray leaving PGU is at object 3
     """
 
@@ -47,7 +49,7 @@ class SpeosHUDToZemax:
             The name of the windshield CAD file
 
         Returns
-        ----------
+        -------
         None
         """
         self.fullFile = fullFile
@@ -76,10 +78,14 @@ class SpeosHUDToZemax:
         newPath = objectsDir + "\\CAD Files\\" + windshieldFile
         shutil.copyfile(windshieldStart, newPath)
 
+        # Update the CAD libraries.
+        # This is required to import the windshield due to restrictions on sizing using the Parasolid libraries
+        self.TheSystem.TheApplication.Preferences.General.SetUseParasolid(False)
+
         # Move into the NSC file editing stage
         self.NSCFileCreation(self.TheSystem, objectsDir)
 
-        #TO-DO: Create a method to confirm successful conversion
+        # TO-DO: Create a method to confirm successful conversion
 
     def HUDfileParser(self, filePath):
         """
@@ -92,7 +98,7 @@ class SpeosHUDToZemax:
             Defining the location of the HUD_SpeosToZemax text file
 
         Returns
-        ----------
+        -------
         A set of arrays containing the object-specific position and tilt data
         Arrays include:
             eyebox
@@ -128,7 +134,10 @@ class SpeosHUDToZemax:
         # However, it may be the case that we update the output
         # So let's search for the comment directly preceding the point data
         for line in range(len(fileData)):
-            if fileData[line] == "#Point coordinates start from Eyepoint and go to PGU. These are vertices of 4 polylines, so there are 8 vertices, 4 are duplicates":
+            if (
+                fileData[line]
+                == "#Surface dimensions start from freeform and go to PGU. There are 4 edge dimensions per surface"
+            ):
                 startPosition = line + 1
 
         # Grab the point-by-point position data AND the tilt data
@@ -136,17 +145,18 @@ class SpeosHUDToZemax:
             # Start with point data. All the point data have a value at the front that is a number
             # TO-DO: Update the method for checking the first character
             if fileData[i][0] == "1" or fileData[i][0] == "2" or fileData[i][0] == "3" or fileData[i][0] == "4":
-                trimVal = fileData[i].find("(")
+                trimVal = fileData[i].find("(") + 1
                 endTrimVal = fileData[i].find(")")
-                fileData[i] = fileData[i][trimVal + 1:endTrimVal]
+                fileData[i] = fileData[i][trimVal:endTrimVal]
                 dummy = fileData[i].replace(" ", "").split(",")
                 # Convert to numbers instead of string and convert to mm
                 for n in range(len(dummy)):
                     dummy[n] = float(dummy[n]) * 1000
                 positionData.append(dummy)
             if fileData[i][0] == "Z" or fileData[i][0] == "Y" or fileData[i][0] == "X":
-                trimVal = fileData[i].find(":")
-                fileData[i] = float(fileData[i][trimVal + 1:len(fileData[i])])
+                trimVal = fileData[i].find(":") + 1
+                endTrimVal = len(fileData[i])
+                fileData[i] = float(fileData[i][trimVal:endTrimVal])
                 tiltData.append(fileData[i])
         # Get rid of the duplicate position data lines
         positionData.pop(6)
@@ -174,18 +184,24 @@ class SpeosHUDToZemax:
         # The larger value should always be the Y-size of the object in OS. Use the array to sort
         # First, we must find where the size data begins (search for the comment)
         for line in range(len(fileData)):
-            if fileData[line] == "#Surface dimensions start from freeform and go to PGU. There are 4 edge dimensions per surface":
+            msg = (
+                "#Point coordinates start from Eyepoint and go to PGU. "
+                "These are vertices of 4 polylines,so there are 8 vertices, 4 are duplicates"
+            )
+            if fileData[line] == msg:
+                # if fileData[line] == "#Point coordinates start from Eyepoint and go to PGU.
+                # These are vertices of 4 polylines, so there are 8 vertices, 4 are duplicates":
                 startSizing = line + 1
 
         # The sizing data directly precedes the position data, so that will be our range
         # The sizing data is also duplicated, so we will skip some lines in the loop
-        for i in range(startSizing, startPosition - 1, 4):
+        for i in range(startPosition + 1, startSizing - 1, 4):
             # Store the X, Y size to a dummy array and convert to mm
             dummy = [float(fileData[i]) * 1000, float(fileData[i + 1]) * 1000]
             dummy.sort()
             sizeData.append(dummy)
 
-        ## Eyebox data
+        # Eyebox data
         # Eyebox X size (Speos Vertical output)
         eyebox.append(float(fileData[3]))
         # Eyebox Y size (Speos Horizontal data)
@@ -197,7 +213,7 @@ class SpeosHUDToZemax:
         eyebox.append(fileData[8])
         eyebox.append(fileData[7])
 
-        ## Windshield data
+        # Windshield data
         for i in range(2):
             windshield.append(0)
         # Distance from windshield to freeform
@@ -209,7 +225,7 @@ class SpeosHUDToZemax:
         for i in range(3):
             windshield.append(0)
 
-        ## Freeform data
+        # Freeform data
         for i in range(2):
             freeform.append(sizeData[0][i])
         # Distance from freeform to fold mirror
@@ -219,7 +235,7 @@ class SpeosHUDToZemax:
         for i in range(3):
             freeform.append(tiltData[0][i])
 
-        ## Fold mirror data
+        # Fold mirror data
         for i in range(2):
             fold.append(sizeData[1][i])
         # Distance from fold mirror to PGU
@@ -229,7 +245,7 @@ class SpeosHUDToZemax:
         for i in range(3):
             fold.append(tiltData[1][i])
 
-        ## PGU data
+        # PGU data
         for i in range(2):
             pgu.append(sizeData[2][i])
         pgu.append(0)
@@ -242,18 +258,17 @@ class SpeosHUDToZemax:
 
     def NSCFreeformConversion(self, freeformProfile, obj, objData):
         """
-
         Parameters
         ----------
         freeformProfile : str
             Defining the location of the file containing the freeform profile information
         obj : zosapi.Editors.NCE.INCERow
             The object in the NSCE representing the freeform mirror
-        objData: zosapi.Editors.NCE.IObject
+        objData : zosapi.Editors.NCE.IObject
             The parameter data for the given Zemax OpticStudio object
 
         Returns
-        ----------
+        -------
         None
         """
 
@@ -261,37 +276,37 @@ class SpeosHUDToZemax:
         # Define arrays to hold the data
         dataArray = []
         # Define arrays to hold the multi-dimensional data
-        positionData = []
-        paramData = []
-        ######## Parse the file ########
+        # positionData = []
+        # paramData = []
+        # Parse the file #
         # Open the file and analyze
         with open(file) as the_file:
             for the_line in the_file:
                 # Pull the data from text into an array. Remove the new line character at the end
                 dataArray.append(the_line[:-1])
-        ######## Line 1 ########
+        # Line 1
         # Skip this line. This is handled in the full file
 
-        ######## Line 2 ########
+        # Line 2
         # Vector data. Ignore for now
 
-        ######## Line 5 ########
+        # Line 5
         # Pull the radius data
         dummy = dataArray[5].replace(" ", "").split("=")
         radius = float(dummy[1])
 
-        ######## Line 6 ########
+        # Line 6
         # Pull the conic data
         dummy = dataArray[6].replace(" ", "").split("=")
         conic = float(dummy[1])
 
-        ######## Line 7 ########
+        # Line 7 #
         # Pull the normalization data
-        ###### TO DO: make sure this norm value is a radius. If not, convert
+        # TO DO: make sure this norm value is a radius. If not, convert
         dummy = dataArray[7].replace(" ", "").split("=")
         normRad = float(dummy[1])
 
-        ######## Line 8 ########
+        # Line 8 #
         # Extract the surface parameter data
         # We need to store the coefficient title and the corresponding value
         # We also need to know how many X and Y coefficients.
@@ -307,15 +322,15 @@ class SpeosHUDToZemax:
                 # Use the left-hand side of the equals sign to find the max X and max Y
                 # First, strip out the values
                 # Then store against a max
-                findY = dummy[0].find("Y")
+                findY = dummy[0].find("Y") + 1
                 xVal = int(dummy[0][1:findY])
-                yVal = int(dummy[0][findY + 1:])
+                yVal = int(dummy[0][findY:])
                 # Max X calculation
-                if (xVal > maxX):
-                        maxX = xVal
+                if xVal > maxX:
+                    maxX = xVal
                 # Max Y calculation
-                if (yVal > maxY):
-                        maxY = yVal
+                if yVal > maxY:
+                    maxY = yVal
                 paramData.append(dummy)
 
         # With the maxX and maxY, find the number of params required in OS.
@@ -389,7 +404,6 @@ class SpeosHUDToZemax:
 
     def NSCFileCreation(self, ZOSSystem, objectsDir):
         """
-
         Parameters
         ----------
         ZOSSystem : zosapi.IOpticalSystem
@@ -404,7 +418,7 @@ class SpeosHUDToZemax:
         # Send for the eyebox, windshield, freeform, fold mirror, and PGU coordinates
         componentCoordinateData = self.HUDfileParser(self.fullFile)
         eyebox = componentCoordinateData[0]
-        windshield = componentCoordinateData[1]
+        # windshield = componentCoordinateData[1]
         freeform = componentCoordinateData[2]
         fold = componentCoordinateData[3]
         pgu = componentCoordinateData[4]
@@ -418,7 +432,7 @@ class SpeosHUDToZemax:
         globalRef.Comment = "Move to Speos axis"
         globalRef.TiltAboutY = -90
 
-        ### PGU Setup
+        # PGU Setup
         obj = self.newObj(TheNCE)
         self.newType(obj, self.zos.zosapi.Editors.NCE.ObjectType.Rectangle, "")
         obj.Comment = "SPEOS PGU"
@@ -434,7 +448,7 @@ class SpeosHUDToZemax:
         param.XHalfWidth = pgu[0] / 2
         param.YHalfWidth = pgu[1] / 2
 
-        ### Gut ray. Used to confirm the tilts are correct
+        # Gut ray. Used to confirm the tilts are correct
         obj = self.newObj(TheNCE)
         self.newType(obj, self.zos.zosapi.Editors.NCE.ObjectType.SourceRay, "")
         obj.Comment = "Gut Ray from PGU"
@@ -445,7 +459,7 @@ class SpeosHUDToZemax:
         param.NumberOfLayoutRays = 1
         param.NumberOfAnalysisRays = 1
 
-        ### Optimize the angular position of the gut ray leaving the PGU
+        # Optimize the angular position of the gut ray leaving the PGU
         # This assumes the gut ray from the PGU is at object 3
         TheMFE = ZOSSystem.MFE
         for i in range(1, 4):
@@ -468,7 +482,7 @@ class SpeosHUDToZemax:
         # Remove variables
         ZOSSystem.Tools.RemoveAllVariables()
 
-        ### Fold mirror setup
+        # Fold mirror setup
         obj = self.newObj(TheNCE)
         self.newType(obj, self.zos.zosapi.Editors.NCE.ObjectType.Rectangle, "")
         obj.Comment = "SPEOS Fold Mirror"
@@ -485,7 +499,7 @@ class SpeosHUDToZemax:
         param.XHalfWidth = fold[0] / 2
         param.YHalfWidth = fold[1] / 2
 
-        ### Freeform setup
+        # Freeform setup
         obj = self.newObj(TheNCE)
         self.newType(obj, self.zos.zosapi.Editors.NCE.ObjectType.ExtendedPolynomialSurface, "")
         obj.Comment = "SPEOS Freeform"
@@ -502,7 +516,7 @@ class SpeosHUDToZemax:
         file = self.freeformFileName[:-3] + "UDA"
         udaFile = objectsDir + "\\Apertures\\" + file
         toFile = "REC 0 0 " + str(freeform[1] / 2) + " " + str(freeform[0] / 2)
-        with open(udaFile, 'w') as f:
+        with open(udaFile, "w") as f:
             f.write(toFile)
         # Apply the UDA to the freeform
         obj.TypeData.UserDefinedAperture = True
@@ -513,14 +527,14 @@ class SpeosHUDToZemax:
         # Access a function which parses the polynomial terms
         self.NSCFreeformConversion(self.freeformFile, obj, param)
 
-        ### Windshield setup
+        # Windshield setup
         # For now, we are simply loading in a CAD with the position data already applied
         # TO-DO: Make into a native object
         obj = self.newObj(TheNCE)
         self.newType(obj, self.zos.zosapi.Editors.NCE.ObjectType.CADPartSTEPIGESSAT, self.windshieldFile)
         obj.Material = "MIRROR"
 
-        ### Eyebox setup
+        # Eyebox setup
         obj = self.newObj(TheNCE)
         self.newType(obj, self.zos.zosapi.Editors.NCE.ObjectType.DetectorRectangle, "")
         obj.Comment = "SPEOS Eyebox"
@@ -537,7 +551,7 @@ class SpeosHUDToZemax:
         param.XHalfWidth = eyebox[0] / 2
         param.YHalfWidth = eyebox[1] / 2
 
-        ### Opposing gut ray setup
+        # Opposing gut ray setup
         # Gut ray from the Eyebox to ensure proper alignment/tilt angles are applied
         obj = self.newObj(TheNCE)
         self.newType(obj, self.zos.zosapi.Editors.NCE.ObjectType.SourceRay, "")
@@ -548,5 +562,5 @@ class SpeosHUDToZemax:
         param.NumberOfLayoutRays = 1
         param.NumberOfAnalysisRays = 1
 
-        ### Save the file
+        # Save the file
         ZOSSystem.Save()
