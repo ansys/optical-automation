@@ -1,6 +1,27 @@
 import os
 
-from .workflows.run_test_13_anisotropicbsdf_viewer import unittest_run
+from .workflows.run_test_13_anisotropicbsdf_viewer import (
+    unittest_asymmetrical4d_brdf_speoss_run,
+)
+from .workflows.run_test_13_anisotropicbsdf_viewer import (
+    unittest_asymmetrical4d_btdf_zemax_run,
+)
+from .workflows.run_test_13_anisotropicbsdf_viewer import (
+    unittest_brdf_one_wavelength_speos_run,
+)
+from .workflows.run_test_13_anisotropicbsdf_viewer import (
+    unittest_planesymmetric_brdf_zemax_run,
+)
+from .workflows.run_test_13_anisotropicbsdf_viewer import (
+    unittest_planesymmetric_btdf_zemax_run,
+)
+
+# from .workflows.run_test_13_anisotropicbsdf_viewer import (
+#     unittest_planesymmetric_brdf_zemax_run,
+# )
+# from .workflows.run_test_13_anisotropicbsdf_viewer import (
+#     unittest_planesymmetric_btdf_zemax_run,
+# )
 
 
 class TestAnisotropicbsdfAPI:
@@ -68,8 +89,8 @@ class TestAnisotropicbsdfAPI:
 
         self.clean_results(self)  # no idea why but you have to pass there self
 
-        print("Start Anisotropic BSDF to generate file for tests.")
-        unittest_run()
+        # print("Start Anisotropic BSDF to generate file for tests.")
+        # unittest_planesymmetric_brdf_zemax_run()
 
     def teardown_class(self):
         """
@@ -97,27 +118,14 @@ class TestAnisotropicbsdfAPI:
         if os.path.isfile(self.results_file_zemax_6):
             os.remove(self.results_file_zemax_6)
 
-    def test_01_files_generated(self):
-        """
-        Verify brdf content is loaded and file generated
-        Returns:
-        -------
-        None
-        """
-        assert os.path.exists(self.results_file_speos_1)
-        assert os.path.exists(self.results_file_speos_2)
-        assert os.path.exists(self.results_file_speos_3)
-        assert os.path.exists(self.results_file_zemax_4)
-        assert os.path.exists(self.results_file_zemax_5)
-        assert os.path.exists(self.results_file_zemax_6)
-
-    def test_02_verify_generated_speos_brdf_planesymmetric_bsdf_file(self):
+    def test_01_verify_generated_speos_brdf_planesymmetric_bsdf_file(self):
         """
         Verify brdf file is corrected generated via comparing to a reference
         Returns
         -------
         None
         """
+        unittest_planesymmetric_brdf_zemax_run()
 
         res_file = open(self.results_file_speos_1, "r")
         ref_file = open(self.reference_file_speos_1, "r")
@@ -127,13 +135,14 @@ class TestAnisotropicbsdfAPI:
         ref_file.close()
         assert res == ref
 
-    def test_03_verify_generated_speos_btdf_planesymmetric_bsdf_file(self):
+    def test_02_verify_generated_speos_btdf_planesymmetric_bsdf_file(self):
         """
         Verify brdf file is corrected generated via comparing to a reference
         Returns
         -------
         None
         """
+        unittest_planesymmetric_btdf_zemax_run()
 
         res_file = open(self.results_file_speos_2, "r")
         ref_file = open(self.reference_file_speos_2, "r")
@@ -143,13 +152,14 @@ class TestAnisotropicbsdfAPI:
         ref_file.close()
         assert res == ref
 
-    def test_04_verify_generated_speos_btdf_anisotropic_bsdf_file(self):
+    def test_03_verify_generated_speos_btdf_anisotropic_bsdf_file(self):
         """
         Verify brdf file is corrected generated via comparing to a reference
         Returns
         -------
         None
         """
+        unittest_asymmetrical4d_btdf_zemax_run()
 
         res_file = open(self.results_file_speos_3, "r")
         ref_file = open(self.reference_file_speos_3, "r")
@@ -159,13 +169,14 @@ class TestAnisotropicbsdfAPI:
         ref_file.close()
         assert res == ref
 
-    def test_05_verify_generated_zemax_bsdf_file(self):
+    def test_04_verify_generated_zemax_bsdf_file(self):
         """
         Verify bsdf file is corrected generated via comparing to a reference
         Returns
         -------
         None
         """
+        unittest_brdf_one_wavelength_speos_run()
 
         res_file = open(self.results_file_zemax_4, "r")
         ref_file = open(self.reference_file_zemax_4, "r")
@@ -175,7 +186,8 @@ class TestAnisotropicbsdfAPI:
         ref_file.close()
         assert res == ref
 
-    def test_06_verify_generated_zemax_bsdf_file(self):
+    #
+    def test_05_verify_generated_zemax_bsdf_file(self):
         """
         Verify bsdf file is corrected generated via comparing to a reference
         Returns
@@ -191,13 +203,14 @@ class TestAnisotropicbsdfAPI:
         ref_file.close()
         assert res == ref
 
-    def test_07_verify_generated_zemax_bsdf_file(self):
+    def test_06_verify_generated_zemax_bsdf_file(self):
         """
         Verify bsdf file is corrected generated via comparing to a reference
         Returns
         -------
         None
         """
+        unittest_asymmetrical4d_brdf_speoss_run()
 
         res_file = open(self.results_file_zemax_6, "r")
         ref_file = open(self.reference_file_zemax_6, "r")

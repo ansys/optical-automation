@@ -3,9 +3,9 @@ import os
 from ansys_optical_automation.interop_process.BSDF_converter import BsdfStructure
 
 
-def unittest_run():
+def unittest_planesymmetric_brdf_zemax_run():
     """
-    main function to run conversion.
+    Test 1.
 
     Returns
     -------
@@ -20,7 +20,16 @@ def unittest_run():
     bsdf_data.write_speos_anisotropicbsdf_file()
     del bsdf_data
 
-    # Test 2
+
+def unittest_planesymmetric_btdf_zemax_run():
+    """
+    Test 2.
+
+    Returns
+    -------
+
+
+    """
     bsdf_data = BsdfStructure()
     cwd = os.path.dirname(os.path.realpath(__file__))
     bsdf_data.filename_input = os.path.join(cwd, "example_models", "test_13_planesymmetric_btdf_zemax.bsdf")
@@ -28,7 +37,16 @@ def unittest_run():
     bsdf_data.write_speos_anisotropicbsdf_file()
     del bsdf_data
 
-    # Test 3
+
+def unittest_asymmetrical4d_btdf_zemax_run():
+    """
+    Test 3.
+
+    Returns
+    -------
+
+
+    """
     bsdf_data = BsdfStructure()
     cwd = os.path.dirname(os.path.realpath(__file__))
     bsdf_data.filename_input = os.path.join(cwd, "example_models", "test_13_asymmetrical4d_btdf_zemax.bsdf")
@@ -36,7 +54,16 @@ def unittest_run():
     bsdf_data.write_speos_anisotropicbsdf_file()
     del bsdf_data
 
-    # Test 4
+
+def unittest_brdf_one_wavelength_speos_run():
+    """
+    Test 4.
+
+    Returns
+    -------
+
+
+    """
     bsdf_data = BsdfStructure()
     cwd = os.path.dirname(os.path.realpath(__file__))
     bsdf_data.filename_input = os.path.join(cwd, "example_models", "test_13_brdf_one_wavelength_speos.brdf")
@@ -44,7 +71,16 @@ def unittest_run():
     bsdf_data.write_zemax_file(0)
     del bsdf_data
 
-    # Test 5
+
+def unittest_asymmetrical4d_brdf_speoss_run():
+    """
+    Test 5.
+
+    Returns
+    -------
+
+
+    """
     bsdf_data = BsdfStructure()
     cwd = os.path.dirname(os.path.realpath(__file__))
     bsdf_data.filename_input = os.path.join(cwd, "example_models", "test_13_asymmetrical4d_brdf_speos.anisotropicbsdf")

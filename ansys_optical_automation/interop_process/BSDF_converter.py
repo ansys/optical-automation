@@ -298,6 +298,7 @@ class BsdfStructure:
 
         #    return scatterType, BSDFType, nbSampleRotation, nbAngleIncidence, nbScatterAzimuth, nbScatterRadial, \
         #           angleIncidence, wavelength, scatterRadial, scatterAzimuth, tisData, bsdfData
+        bfile.close()
 
         self.scattertype = scatterType
         self.symmetry = symmetry
