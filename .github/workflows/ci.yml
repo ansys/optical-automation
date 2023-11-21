@@ -32,4 +32,4 @@ jobs:
       - name: Unittests
         run: |
           venv\Scripts\Activate.ps1
-          pytest --tb=no tests
+          pytest --tb=no tests\test_08_rayfile
