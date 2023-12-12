@@ -119,7 +119,7 @@ class BrdfStructure:
 
         """
 
-        def brdf_2d_function(theta, phi, ratio=0.5):
+        def brdf_2d_function(theta, phi, ratio=1):
             """
             an internal method to calculate the 2d brdf based on location theta and phi.
 
@@ -146,11 +146,14 @@ class BrdfStructure:
             angular_distance = np.where(angular_distance < EPSILON, 1, angular_distance)
             # special case for specular point (no interpolation due to null distance)
             weight = (incidence + angular_distance - theta * np.cos(np.radians(phi))) / (2 * angular_distance)
-            # weight = np.where(incidence + angular_distance > theta_max, 1, weight)
             # theta max : maximal reflected angle that is measured. for angle > theta_max we do not have values
-            return weight * (brdf_1d(incidence - angular_distance)) + (1 - weight) * brdf_1d(
-                incidence + angular_distance
+            brdf_left = np.where(
+                brdf_1d(incidence - angular_distance) < 0.0, 0.0, brdf_1d(incidence - angular_distance)
             )
+            brdf_right = np.where(
+                brdf_1d(incidence + angular_distance) < 0.0, 0.0, brdf_1d(incidence + angular_distance)
+            )
+            return weight * brdf_left + (1 - weight) * brdf_right
 
         if len(self.__incident_angles) == 0:
             for measurement in self.measurement_2d_brdf:
@@ -166,7 +169,7 @@ class BrdfStructure:
                 theta_2d_ressampled, phi_2d_ressampled = np.meshgrid(
                     self.__theta_1d_ressampled, self.__phi_1d_ressampled
                 )
-                self.brdf.append(brdf_2d_function(theta_2d_ressampled, phi_2d_ressampled))
+                self.brdf.append(brdf_2d_function(theta_2d_ressampled, phi_2d_ressampled, 1))
                 if incidence_id == 0:
                     normalized_scale = self.rt_list[0] / self.__brdf_reflectance(
                         self.__theta_1d_ressampled, self.__phi_1d_ressampled, self.brdf[-1]
@@ -175,7 +178,7 @@ class BrdfStructure:
                 self.reflectance.append(
                     self.__brdf_reflectance(self.__theta_1d_ressampled, self.__phi_1d_ressampled, self.brdf[-1])
                 )
-                print(self.rt_list[0], incidence, self.reflectance[-1])
+                print(incidence, self.reflectance[-1])
 
         self.brdf = np.reshape(
             self.brdf,
