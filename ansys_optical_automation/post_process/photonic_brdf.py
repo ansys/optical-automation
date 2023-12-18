@@ -171,13 +171,24 @@ class BrdfStructure:
                 )
                 self.brdf.append(brdf_2d_function(theta_2d_ressampled, phi_2d_ressampled, 1))
                 if incidence_id == 0:
-                    normalized_scale = self.rt_list[0] / self.__brdf_reflectance(
+                    normalized_scale = self.rt_list[incidence_id] / self.__brdf_reflectance(
                         self.__theta_1d_ressampled, self.__phi_1d_ressampled, self.brdf[-1]
                     )
                 self.brdf[-1] *= normalized_scale
                 self.reflectance.append(
                     self.__brdf_reflectance(self.__theta_1d_ressampled, self.__phi_1d_ressampled, self.brdf[-1])
                 )
+                new_ratio = 1
+                while incidence_id != 0 and abs(self.reflectance[-1] - self.rt_list[incidence_id]) > 0.01:
+                    if self.reflectance[-1] < self.rt_list[incidence_id]:
+                        print("error data at incidence: ", incidence)
+                        break
+                    new_ratio *= self.rt_list[incidence_id] / self.reflectance[-1]
+                    self.brdf[-1] = brdf_2d_function(theta_2d_ressampled, phi_2d_ressampled, new_ratio)
+                    self.brdf[-1] *= normalized_scale
+                    self.reflectance[-1] = self.__brdf_reflectance(
+                        self.__theta_1d_ressampled, self.__phi_1d_ressampled, self.brdf[-1]
+                    )
                 print(incidence, self.reflectance[-1])
 
         self.brdf = np.reshape(
