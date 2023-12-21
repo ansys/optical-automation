@@ -16,13 +16,13 @@ def convert_line_to_float_list(line: str):
 
     Parameters
     ----------
-    line : A string with the content of one line from a .txt file. The line should only
-    include float numbers
+    line : str
+        A string with the content of one line from a .txt file. The line should only include float numbers.
 
     Returns
     -------
-    A list of floats. The floats are the ones separated by blank spaces in the line retrieved from the
-    .txt file
+    list
+        A list of floats. The floats are the ones separated by blank spaces in the line retrieved from the .txt file.
     """
     # Convert line to list of strings
     line_str_list = re.split("\t", line)
@@ -44,7 +44,8 @@ def select_datafile():
 
     Returns
     -------
-    A string of the full path of the selected file.
+    str
+        A string of the full path of the selected file.
     """
     root = tk.Tk()
     root.withdraw()
@@ -59,16 +60,18 @@ def calculate_transmittance_from_dec_absorbance(dec_absorbance: float):
 
     Parameters
     ----------
-    dec_absorbance : A float representing the decadic absorbance of a material (usually at a specific wavelength).
-    The decadic absorbance is physically defined as dec_absorbance=I(0)/I(l), where I(0) is the incident light and I(l)
-    absorbance is 10^dec_absorbance = exp(absorbance).
+    dec_absorbance : float
+        A float representing the decadic absorbance of a material (usually at a specific wavelength). The decadic
+        absorbance is physically defined as dec_absorbance=I(0)/I(l), where I(0) is the incident light and I(l)
+        absorbance is 10^dec_absorbance = exp(absorbance).
 
     Returns
     -------
-    A float representing the transmittance of a material (usually at a specific wavelength). The transmittance
-    is physically defined as transmittance=I(l)/I(0).
+    float
+        A float representing the transmittance of a material (usually at a specific wavelength). The transmittance is
+        physically defined as transmittance=I(l)/I(0).
     """
-    transmittance = 10 ** (-dec_absorbance)  # [ - ] (ppm-meter@296K)
+    transmittance = 10 ** (-dec_absorbance)  # [ - ] (ppm-meter)
     return transmittance
 
 
@@ -81,14 +84,16 @@ def calculate_absorption_coef_from_dec_absorbance(dec_absorbance: float):
 
     Parameters
     ----------
-    dec_absorbance : A float representing the decadic absorbance of a material (usually at a specific wavelength).
-    The decadic absorbance is physically defined as dec_absorbance=I(0)/I(l).
+    dec_absorbance : float
+        A float representing the decadic absorbance of a material (usually at a specific wavelength). The decadic
+        absorbance is physically defined as dec_absorbance=I(0)/I(l).
 
     Returns
     -------
-    A float representing the absorption coefficient (mm^-1) of a material (usually at a specific wavelength).
-    NOTE: The relation between absorption coefficient and decadic absorption coefficient is
-    dec_absorption_coef=absorption_coef/ln(10).
+    float
+        A float representing the absorption coefficient (mm^-1) of a material (usually at a specific wavelength).
+        NOTE: The relation between absorption coefficient and decadic absorption coefficient is
+        dec_absorption_coef=absorption_coef/ln(10).
     """
     transmittance = calculate_transmittance_from_dec_absorbance(dec_absorbance)
     absorption_coef = -math.log(transmittance) / 1e3  # [mm^-1]
@@ -101,11 +106,13 @@ def calculate_wavelength_from_wavenumber(wavenumber: float):
 
     Parameters
     ----------
-    wavenumber : A float representing the wavenumber value (cm^-1)
+    wavenumber : float
+        A float representing the wavenumber value (cm^-1)
 
     Returns
     -------
-    A float representing the wavelength value (nm)
+    float
+        A float representing the wavelength value (nm)
     """
     wavelength = 1e7 / wavenumber  # [nm]
     return wavelength
@@ -117,8 +124,9 @@ def load_dec_absorbance_data_to_variable():
 
     Returns
     -------
-    A list variable containing the decadic absorbance data. Each list element is another list of two floats.
-    These floats are respectively the wavenumber (cm^-1) and the corresponding decadic absorbance (ppm-meter).
+    list
+        A list variable containing the decadic absorbance data. Each list element is another list of two floats.
+        These floats are respectively the wavenumber (cm^-1) and the corresponding decadic absorbance (ppm-meter).
     """
     file_path = select_datafile()
     with open(file_path) as f:
@@ -134,13 +142,15 @@ def convert_dec_absorbance_data(dec_absorbance_data: list):
 
     Parameters
     ----------
-    dec_absorbance_data : A list variable containing the decadic absorbance data. Each list element is another
-    list of two floats. These floats are respectively the wavenumber (cm^-1) and the corresponding decadic absorbance
+    dec_absorbance_data : list
+        A list variable containing the decadic absorbance data. Each list element is another list of two floats. These
+        floats are respectively the wavenumber (cm^-1) and the corresponding decadic absorbance
 
     Returns
     -------
-    A list variable containing the absorption coefficient data. Each list element is another list of two
-    floats. These floats are respectively the wavelength (nm) and the corresponding absorption coefficient (mm^-1).
+    list
+        A list variable containing the absorption coefficient data. Each list element is another list of two floats.
+        These floats are respectively the wavelength (nm) and the corresponding absorption coefficient (mm^-1).
     """
     absorption_coef_data = [
         [calculate_wavelength_from_wavenumber(row[0]), calculate_absorption_coef_from_dec_absorbance(row[1])]
@@ -159,9 +169,10 @@ def setup_material_file_for_speos(absorption_coef_data: list):
 
     Parameters
     ----------
-    absorption_coef_data : A list variable containing the absorption coefficient data. Each list element is
-    another list of two floats. These floats are respectively the wavelength (nm) and the corresponding absorption
-    coefficient (mm^-1).
+    absorption_coef_data : list
+        A list variable containing the absorption coefficient data. Each list element is
+        another list of two floats. These floats are respectively the wavelength (nm) and the corresponding absorption
+        coefficient (mm^-1).
 
     Returns
     -------
