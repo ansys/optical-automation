@@ -494,7 +494,9 @@ class HOD(BaseSCDM):
             print(result)
 
     def export_ws(self, output_dir, file_type="stp"):
-        windshieldGeometry = self.Selection.Create(self.speos_object.WindshieldInnerSurface.LinkedObject)
+        windshieldGeometry = self.speos_object.WindshieldInnerSurface.LinkedObject
+        windshieldGeometry = self.convert_object_version(windshieldGeometry)
+        windshieldGeometry = self.Selection.Create(windshieldGeometry)
         # Create new design
         self.CreateNewDocument()
         self.Copy.Execute(windshieldGeometry)
