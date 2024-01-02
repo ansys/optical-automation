@@ -32,7 +32,7 @@ while not_selected:
         print("invalid Selection \nPlease CHeck that you have selected a HOD feature and the HOD feature is uptodate")
 
 dir = os.path.split(GetActivePart().Document.Path)[0]
-name = os.path.split(GetActivePart().Document.Path)[1].rstrip("*.scdocx")
+name = os.path.split(GetActivePart().Document.Path)[1].split(".")[0]
 export_file_path = os.path.join(dir, r"SPEOS output files", name)
 current_HOD_system = HOD(hod_name, SpeosDes, SpaceClaim)
 current_HOD_system.export_to_zemax(export_file_path, False)
