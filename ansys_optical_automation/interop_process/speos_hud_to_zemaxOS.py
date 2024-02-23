@@ -323,7 +323,7 @@ class SpeosHUDToZemax:
                 # First, strip out the values
                 # Then store against a max
                 findY = dummy[0].find("Y") + 1
-                xVal = int(dummy[0][1:findY])
+                xVal = int(dummy[0][1:findY-1])
                 yVal = int(dummy[0][findY:])
                 # Max X calculation
                 if xVal > maxX:
