@@ -77,6 +77,20 @@ class BaseSCDM(object):
         self.StitchFaces = scdm_api.Scripting.Commands.StitchFaces
         self.ViewHelper = scdm_api.Scripting.Helpers.ViewHelper
         self.Window = scdm_api.Window
+        self.HandleAxis = scdm_api.Scripting.Commands.HandleAxis
+        self.MoveOptions = scdm_api.Scripting.Commands.CommandOptions.MoveOptions
+        self.ExportOptions = scdm_api.ExportOptions
+        self.Move = scdm_api.Scripting.Commands.Move
+        self.PartSelection = scdm_api.Scripting.Selection.PartSelection
+        self.Vector = scdm_api.Geometry.Vector
+        self.Point = scdm_api.Geometry.Point
+        self.DesignCurve = scdm_api.DesignCurve
+        self.CurveSegment = scdm_api.Geometry.CurveSegment
+        self.Direction = scdm_api.Geometry.Direction
+        self.GetActivePart = scdm_api.Scripting.Helpers.DocumentHelper.GetActivePart
+        self.DatumOriginCreator = scdm_api.Scripting.Commands.DatumOriginCreator
+        self.DEG = scdm_api.Scripting.Helpers.Units.DEG
+        self.M = scdm_api.Scripting.Helpers.Units.M
 
     def convert_object_version(self, obj):
         """
