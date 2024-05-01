@@ -10,7 +10,7 @@
 #   - a txt file describing calibration results (camera intrinsics, and pose for each calibration image)
 #   - OPTDistortion v1 file, for use in speos
 #
-# 2024/4/16
+# 2024/5/1
 # for questions, contact zach.derocher@ansys.com
 
 import cv2 
@@ -19,33 +19,54 @@ import os
 import glob 
 from scipy.spatial.transform import Rotation  
 
+# local git root dir
+root = os.path.dirname(os.getcwd() + '\\') 
+root = os.path.dirname(root)
+root = os.path.dirname(root) 
 
-# ======================== USER INPUTS ======================== #
+# ============ User Inputs ============ #
 # point to the calibration images
-imageDir = os.getcwd() + '\\CalibrationImages\\'
-ext = 'jpg'
-
-# show each image during checkerboard detection? (useful for debugging)
-showCalImages = False
-
-# best-guess value for camera EFL (units=pixels); ~1x the sensor resolution X is generally a reasonable guess if you have no idea
-efl = 3840
-# the physical pixel size for the sensor (need this to convert calibrated distortion into angles for speos)
-pixelSize = 0.0021 #mm
+imageDir = root + '\\tests\\workflows\\example_models\\checkerboard_cal_images\\'
+ext = 'png'
 
 # Define the dimensions of checkerboard 
-checkerboard = (11,8) # (x, y); the number of points between checkerboard boxes
-targetSquareSize = 30 # (mm); the physical, measured side-length of each individual checkerboard box in the calibration pattern
+checkerDims = (7,7) # (x, y); the number of points between checkerboard boxes
+checkerSize = 62.5 # (mm); the physical, measured side-length of each individual checkerboard box in the calibration pattern
+
+# show each image during checkerboard detection? (useful for debugging)
+showCalImages = True
+
+# camera EFL (best-guess, for initialization) and sensor pixel size
+efl = 800 # (pixels); if unknown, the sensor X resolution (width) is usually a good enough guess
+pixelSize = 0.024 # (mm); the physical pixel size for the sensor (need this to convert calibrated distortion into angles for speos)
 
 # Choose which calibration type; fisheye will provide a better fit if the camera is wide-FOV (beyond 100~120)
 useFisheyeCalibration = False
 
+# file names for results files
 extrinsicsFn = "CameraCal_IntrinsicsExtrinsics.txt"
 optDistortionFn = "CameraCal.OPTDistortion"
-# ============================================================ #
+# =================================== #
 
 
 def buildinitialcameramatrix(efl, rX, rY):
+    """
+    builds a camera matrix
+
+    Parameters
+    ----------
+    efl : float
+        the camera focal length, in length units of pixels
+    rX : int
+        the sensor resolution in the X axis, in units of pixels
+    rY : int
+        the sensor resolution in the Y axis, in units of pixels
+    
+    Returns
+    -------
+    cameraMat : numpy array
+        a 3x3 camera matrix
+    """
     cameraMat = np.zeros((3, 3), np.float64)
     cameraMat[0, 0] = efl # camera focal length X (units=pixels); the calibration will use this as a starting point; 
     cameraMat[1, 1] = efl # camera focal length Y (units=pixels)
@@ -56,6 +77,37 @@ def buildinitialcameramatrix(efl, rX, rY):
 
 
 def readcalibrationimages(images, checkerboard, targetSquareSize, showCalImages):
+    """
+    Determines checkerboard corners'  3d coordinates based on physical checkerboard size. 
+    Reads in a set of checkerboard calibration images, 
+    and determines the checkerboard 2d coordinates in each image.
+
+    Parameters
+    ----------
+    images : glob
+        the set of calibration checkerboard images
+    checkerboard : int array
+        the x and y dimensions of the checkerboard, in units of '# of checkers'
+    targetSquareSize : float
+        the physical size of a single square of the checkerboard, in mm
+    showCalImages : bool
+        if true, the corner detection will be displayed for each cal image (press 'enter' to skip through each image)
+    
+    Returns
+    -------
+    twoDPoints : numpy array
+        the 2d (image-space) corner coordinates for each cal image that was succesfully analyzed
+    
+    threeDPoints : numpy array
+        the 3d (object-space) corner coordinates of the checkerboard target
+
+    imagesAnalyzed : array
+        a list of the cal image file names which were succesfully analyzed, in order
+        
+    grayColor.shape[::-1] : array
+        the size (resolution) of the cal images
+    """
+    
     # stop the iteration when specified accuracy, epsilon, is reached or specified number of iterations are completed. 
     criteria = (cv2.TERM_CRITERIA_EPS + cv2.TERM_CRITERIA_MAX_ITER, 300000, 0.0001) 
     
@@ -109,12 +161,47 @@ def readcalibrationimages(images, checkerboard, targetSquareSize, showCalImages)
 
 
 def cameracalibration(matrixIn, resolution, twoDPoints, threeDPoints, useFisheyeCalibration):
-    # Perform camera calibration from the 3d checkerboard points
-    # and corresponding pixel coordinates of the detected corners (twodpoints) 
+    """
+    Runs the camera calibration to determine the camera intrinsics and pose for each cal image.
 
+    Parameters
+    ----------
+    matrixIn : numpy array
+        the initial-guess camera matrix, used as a starting point for the cal
+
+    resolution : array
+        the image resolution for the call images in units of pixels (x, y)
+    
+    twoDPoints : numpy array
+        the 2d (image-space) corner coordinates for each cal image that was succesfully analyzed
+    
+    threeDPoints : numpy array
+        the 3d (object-space) corner coordinates of the checkerboard target
+
+    useFisheyeCalibration : bool
+        an indicator on whether to use openCV's fisheye calibration mode, or not.
+        The fisheye calibration method provides fewer options, but is required for accurate wide FOV camera calibration.
+        The regular (non-fisheye) calibration from openCV has some additional options and is preferred if the max full-FOV of the camera is less than ~100~120 deg
+
+    Returns
+    -------
+    ret : float
+        the RMS calibration error (units are pix). A value less than 1 is good. 
+    
+    cameraMatrix : numpy array
+        the calibrated camera matrix
+    
+    distortion : array
+        the distortion parameters output from the camera calibration
+
+    r_vecs : array
+        the rotation vectors describing the camera pose for each image included in the calibration
+
+    t_vecs : array
+        the translation vectors describing the camera pose for each image included in the calibration
+        
+    """
     if useFisheyeCalibration:
-        # the fisheye calibration method from openCV
-        # fewer options, but required for accurate wide FOV camera calibration
         ret, cameraMatrix, distortion, r_vecs, t_vecs = cv2.fisheye.calibrate( 
             threeDPoints, twoDPoints, resolution, matrixIn, None, 
             flags=(cv2.fisheye.CALIB_FIX_SKEW + # removes skew factor as an optimization variable (use our initial-guess camera matrix value)
@@ -123,36 +210,73 @@ def cameracalibration(matrixIn, resolution, twoDPoints, threeDPoints, useFisheye
                 cv2.fisheye.CALIB_CHECK_COND)) 
 
     else:
-        # the basic camera calibration from openCV
-        # this is sufficient if the max half-FOV of the camera is less than 50~60deg
-        # this method has some additional options, so it is preferred to use when possible
         ret, cameraMatrix, distortion, r_vecs, t_vecs = cv2.calibrateCamera( 
             threeDPoints, twoDPoints, resolution, matrixIn, None, 
             flags=(cv2.CALIB_USE_INTRINSIC_GUESS + # initial matrix guess
                 cv2.CALIB_FIX_PRINCIPAL_POINT + # don't allow cx/cy as variable
                 cv2.CALIB_RATIONAL_MODEL + # use 6 k-terms
                 cv2.CALIB_ZERO_TANGENT_DIST)) # only symmetrical distortion
-
+        
     return ret, cameraMatrix, distortion, r_vecs, t_vecs
 
 
 def convertcamerapose(r_vec):
+    """
+    Converts the r vector (camera pose from calibration) into euler angles 
+
+    Parameters
+    ----------
+    r_vec : array
+        a single rotation vector
+
+    Returns
+    -------
+    eulerAngles : array
+        the euler rotation angles as (z,y,x), in degrees. The rotation order is z->y->x (yaw->pitch->roll).
+
+    """
     rotMatrix,_ = cv2.Rodrigues(r_vec.flatten())
     R =  Rotation.from_matrix(rotMatrix)
     # Note: Speos performs intrinsic rotations, so use scipy intrinsic rotation "zyx"
     eulerAngles = R.as_euler("zyx",degrees=True) # zyx rotation also called yaw->pitch->roll
+
     return eulerAngles
 
 
 def savecameraextrinsics(imagesAnalyzed, cameraMatrix, distortion, t_vecs, r_vecs, outFn):
-    # save the camera intrinsics and the camera pose for each calibration image
-    # note about validation:
-    # this pose data, converted to euler angles, lets you validate the calibration via speos
-    # In speos, you can build a checkerboard model (make sure to match the phsyical checkerboard size), an import the OPTDistortion model generated here.
-    # By positioning the camera in precisely the same pose as a given calibratoin image, you should be able to reproduce the checkerboard corner coordinates in the image.
-    # OpenCV uses the upper-left checkerboard corner as the reference origin. 
-    # So in Speos, starting from that origin, you can apply the rotation (z->y-x) and then the translations, to reproduce the camera pose
-    # caution: openCV uses left-handed coordinates, so you'll need to invert the sign of the x rotation and x translation
+    """
+    Saves to text the camera intrinsics, and the pose for each image used in the calibration.
+    
+    With this data, you can validate the calibration result within Speos
+    by building a checkerboard model, and using the pose (rotation/translation) to position the camera model
+    so that it matches the setup of an individual calibration image.
+    OpenCV uses the upper-left checkerboard corner as the reference origin, with Y pointing up and Z facing away from the camera.
+    In Speos, place a coordinate at that origin, then apply the rotation (z->y->x) and then the translations to reproduce the camera pose.
+
+    Parameters
+    ----------
+    imagesAnalyzed : array
+        an array of character strings with ordered filenames of the cal images used.
+    
+    cameraMatrix : array
+        the calibrated camera matrix
+
+    distortion : array
+        the distortion parameters output from the camera calibration
+
+    r_vecs : array
+        the rotation vectors describing the camera pose for each image included in the calibration
+
+    t_vecs : array
+        the translation vectors describing the camera pose for each image included in the calibration
+      
+    outFn :  string
+        the filename of the output text file to be saved   
+    
+    Returns
+    -------
+
+    """
 
     txtfile = open(outFn, 'w')
 
@@ -167,6 +291,12 @@ def savecameraextrinsics(imagesAnalyzed, cameraMatrix, distortion, t_vecs, r_vec
         # convert camera rotation vector into euler angles, for usage in speos
         eulerAngles = convertcamerapose(r_vecs[i])
 
+        # openCV uses left-handed coordinate system; this converts to right-handed
+        eulerAngles[2] = -1*eulerAngles[2]
+        translation = t_vecs[i]
+        translation[0] = -1*translation[0]
+
+        # write out the pose
         imName = filename.split("\\")
         txtfile.write("Calibration Image: " + imName[-1] + "\n")
         txtfile.write("Translation Vector: " + repr(t_vecs[i].flatten()) + "\n") 
@@ -179,20 +309,52 @@ def savecameraextrinsics(imagesAnalyzed, cameraMatrix, distortion, t_vecs, r_vec
 
 
 def convertdistortiontoangles(cameraMatrix, resolution, distortion, useFisheyeCalibration):
-    ## distortion calculation method using projection (sample the object space, and project to distorted image plane)
-    ## note: we have to guess (and overshoot) the object angle which will fill the sensor
-    # .OPTDistortionV1 requires symmetry, so we assume rotational symmetry, so functionally x=y=r
+    """
+    Converts the camera calibration data (camera matrix and distortion)
+    into object/image angle pairs, which is the format Speos expects for the OPTDistortionV1 data.
+    
+    We use openCV's projection function (sample the object space, and project to distorted image plane).
+    The advantage of sampling object space is that there's no extra interpolation required to compute the inverse distortion function ('unprojection')
+    The downside is that we have to guess (and overshoot) the object angle which will fill the sensor; so we'll just use 89 degrees.
+    
+    note: .OPTDistortionV1 requires symmetry, so we assume rotational symmetry and do the field sweep in 1D
+
+    Parameters
+    ----------
+    cameraMatrix : array
+        the calibrated camera matrix
+
+    resolution : array
+        the x and y cal image resolution
+    
+    distortion : array
+        the distortion parameters output from the camera calibration
+
+    useFisheyeCalibration : bool
+        an indicator on whether to use openCV's fisheye calibration mode, or not.
+        The fisheye calibration method provides fewer options, but is required for accurate wide FOV camera calibration.
+        The regular (non-fisheye) calibration from openCV has some additional options and is preferred if the max full-FOV of the camera is less than ~100~120 deg
+
+    
+    Returns
+    -------
+    xyzObj : numpy array 
+        3d object coordinates 
+
+    xyImage : numpy array
+        2d image coordinates
+
+    nSamp : int
+        number of valid points sampled across FOV
+
+    """
 
     # sample >2000 points across image plane
     nSamp = 5001
 
-    # these represent sensor-side (distorted image plane)
-    # image plane is at z=efl (from camera matrix)
-    efl = 0.5*(cameraMatrix[0,0] + cameraMatrix[1,1]) # EFL (from calibration) in units of pix
-    
     # create a set of evenly sampled object points in 3d space
     # overfill the sensor (beyond rMax, the sensor corner) 
-    thetaObjMax = 89 #deg
+    thetaObjMax = 89.9 # deg; OPTDistortion only allows up to 90 deg.
     z = 1 # sample our 3d points at z=1 plane (in front of camera)
     xyzObj = np.zeros((nSamp,1, 3), dtype=np.float32) #note: theres a bug (?) in cv2.fisheye.projectPoints, where it needs an extra dimension in the input array
     for i in range(0, nSamp):
@@ -232,11 +394,37 @@ def convertdistortiontoangles(cameraMatrix, resolution, distortion, useFisheyeCa
     objAngle = (180/np.pi)*np.arctan(rUndistorted/cameraMatrix[0,0])
     plt.scatter(dist, objAngle)'''
 
-    return xyzObj, xyImage,nSamp
+    return xyzObj, xyImage, nSamp
 
 
 def generateoptdistortionfile(xyzObj, xyImage, cameraMatrix, pixelSize, nSamp, optDistortionFn):
-    # Write out the .OPTDistortion file
+    """
+    Write out the optdistortion file.
+
+    Parameters
+    ----------
+    xyzObj : numpy array 
+        3d object coordinates 
+
+    xyImage : numpy array
+        2d image coordinates
+
+    cameraMatrix : array
+        the calibrated camera matrix
+
+    pixelSize : float
+        the physical pixel size of the camera (mm)
+
+    nSamp : int
+        number of valid points sampled across FOV
+
+    optDistortionFn : string
+        the name of the optdistortion file to be saved out
+
+    Returns
+    -------
+
+    """
     
     # convert coordinates to angles
     efl = 0.5*(cameraMatrix[0,0] + cameraMatrix[1,1]) # EFL (from calibration) in units of pix
@@ -254,11 +442,19 @@ def generateoptdistortionfile(xyzObj, xyImage, cameraMatrix, pixelSize, nSamp, o
             f.write('\n' + str(thetaObj[i]) + ' ' + str(thetaImage[i]))
 
 def main():
+    """
+    Parameters
+    ----------
 
+    Returns
+    -------
+
+
+    """
     # glob the images
     images = glob.glob(imageDir + '*.' + ext) 
     # find the checkerboard coordinates in each cal image
-    twoDPoints, threeDPoints, imagesAnalyzed, resolution = readcalibrationimages(images, checkerboard, targetSquareSize, showCalImages)
+    twoDPoints, threeDPoints, imagesAnalyzed, resolution = readcalibrationimages(images, checkerDims, checkerSize, showCalImages)
 
     # set up an initial guess for the camera intrinsics matrix
     initialCameraMat = buildinitialcameramatrix(efl, resolution[0], resolution[1])
@@ -274,6 +470,7 @@ def main():
 
     # save the optdistortion data file
     generateoptdistortionfile(xyzObj, xyImage, cameraMatrix, pixelSize, nSamp, optDistortionFn)
+
 
 
 main()
