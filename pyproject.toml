@@ -20,7 +20,7 @@ dependencies = [
     "numpy",
     "scipy",
     "comtypes",
-    "cv2>=4.9.0"
+    "opencv-python>=4.9.0"
 ]
 
 # development dependencies
