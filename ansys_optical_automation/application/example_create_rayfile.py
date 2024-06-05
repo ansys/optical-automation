@@ -2,38 +2,8 @@ import numpy as np
 
 from ansys_optical_automation.post_process.dpf_rayfile import DpfRay
 from ansys_optical_automation.post_process.dpf_rayfile import DpfRayfile
-
-
-def vector_multi(vec1, vec2):
-    """
-    function to multiply to vectors
-    Parameters
-    ----------
-    vec1 : list
-        [x,y,z]
-    vec2 : list
-        [x,y,z]
-    Returns
-    -------
-    int
-    """
-    return vec1[0] * vec2[0] + vec1[1] * vec2[1] + vec1[2] * vec2[2]
-
-
-def vector_len(vec):
-    """
-    compute vector length
-    Parameters
-    ----------
-    vec : list
-        [x,y,z]
-
-    Returns
-    -------
-    float
-
-    """
-    return np.sqrt(vec[0] ** 2 + vec[1] ** 2 + vec[2] ** 2)
+from ansys_optical_automation.scdm_core.utils import vector_dot_product
+from ansys_optical_automation.scdm_core.utils import vector_len
 
 
 def create_ray(point, direction, wl, e):
@@ -57,9 +27,9 @@ def create_ray(point, direction, wl, e):
     x_dir = [1, 0, 0]
     y_dir = [0, 1, 0]
     z_dir = [0, 0, 1]
-    l_dir = vector_multi(x_dir, direction) / (vector_len(x_dir) * vector_len(direction))
-    m_dir = vector_multi(y_dir, direction) / (vector_len(y_dir) * vector_len(direction))
-    n_dir = vector_multi(z_dir, direction) / (vector_len(z_dir) * vector_len(direction))
+    l_dir = vector_dot_product(x_dir, direction) / (vector_len(x_dir) * vector_len(direction))
+    m_dir = vector_dot_product(y_dir, direction) / (vector_len(y_dir) * vector_len(direction))
+    n_dir = vector_dot_product(z_dir, direction) / (vector_len(z_dir) * vector_len(direction))
     my_ray = DpfRay(point[0], point[1], point[2], l_dir, m_dir, n_dir, wl, e)
     return my_ray
 
