@@ -392,8 +392,8 @@ def convertdistortiontoangles(cameraMatrix, resolution, distortion, useFisheyeCa
         if xyImage[i, 0, 0] < xyImage[(i - 1), 0, 0]:
             if i == 0:
                 continue
-            xyImage = xyImage[0:(i - 1), :, :]
-            xyzObj = xyzObj[0:(i - 1), :, :]
+            xyImage = xyImage[0 : (i - 1), :, :]
+            xyzObj = xyzObj[0 : (i - 1), :, :]
             nSamp = i - 1
             break
 
