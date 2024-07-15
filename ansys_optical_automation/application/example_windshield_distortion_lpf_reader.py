@@ -61,6 +61,7 @@ class LpfRay:
             ray.vImpacts.Get(0).Get(2),  # start position z
         ]
         self.calc_alpha = []
+        self.ini_pos = [self.start_position]
         self.optical_distortion = 0
         self.optical_diopter = 0
 
@@ -71,12 +72,30 @@ class LpfRay:
         -------
 
         """
-        # self.optical_power = max(((abs(item - self.ref_alpha)) / 4 for item in self.calc_alpha))
+        max_distortion = 0
         distortion = 0
-        print(self.end_direction)
-        for item in self.end_direction[1:]:
-            dot_product = min(1.0, math.fabs(vector_dot_product(item, self.end_direction[0])))
-            distortion = max(degree(math.acos(dot_product)), distortion)
+        for idx, item in enumerate(self.end_direction[1:]):
+            v3Radius_vector = [
+                self.ini_pos[0][0] - self.ini_pos[idx + 1][0],
+                self.ini_pos[0][1] - self.ini_pos[idx + 1][1],
+                self.ini_pos[0][2] - self.ini_pos[idx + 1][2],
+            ]
+            v3Radius_vector = vector_normalize(v3Radius_vector)
+            current_distortion = math.fabs(vector_dot_product(item, self.end_direction[0]))
+            current_distortion = 0.0 if current_distortion > 1.0 else degree(math.acos(current_distortion))
+            v3Radius = [
+                v3Radius_vector[0]
+                - vector_dot_product(v3Radius_vector, self.end_direction[0]) * self.end_direction[0][0],
+                v3Radius_vector[1]
+                - vector_dot_product(v3Radius_vector, self.end_direction[0]) * self.end_direction[0][1],
+                v3Radius_vector[2]
+                - vector_dot_product(v3Radius_vector, self.end_direction[0]) * self.end_direction[0][2],
+            ]
+            v3Radius = vector_normalize(v3Radius)
+            current_distortion = math.copysign(current_distortion, -vector_dot_product(v3Radius, item))
+            if math.fabs(current_distortion) > max_distortion:
+                max_distortion = math.fabs(current_distortion)
+                distortion = current_distortion
         self.optical_distortion = distortion
         self.optical_diopter = radiance(distortion) / 0.012
 
@@ -109,22 +128,13 @@ def ref_lpf_process(data, sequence=True):
                     trace.vImpacts.Get(1).Get(2) - trace.vImpacts.Get(0).Get(2),
                 ]
             )
-            lpf_out = [
-                trace.LastDirection.Get(0),
-                trace.LastDirection.Get(1),
-                math.copysign(
-                    math.sqrt(1 - trace.LastDirection.Get(0) ** 2 - trace.LastDirection.Get(1) ** 2),
+            lpf_out = vector_normalize(
+                [
+                    trace.LastDirection.Get(0),
+                    trace.LastDirection.Get(1),
                     trace.LastDirection.Get(2),
-                ),
-            ]
-            # print(lpf_in, lpf_out, trace.LastDirection.Get(2))
-            # ## FTS
-            # lpf_out_2 = [
-            #     trace.LastDirection.Get(0),
-            #     trace.LastDirection.Get(1),
-            #     trace.LastDirection.Get(2),
-            # ]
-            # print("using original data: ", lpf_out_2, " using calculated data: ", lpf_out)
+                ]
+            )
             alpha = math.acos(vector_dot_product(lpf_in, lpf_out))
             distortion_analysis_info.append(LpfRay(alpha, trace))
     distortion_analysis_info = sorted(
@@ -152,6 +162,7 @@ def add_lpf_data(data_list):
         for item_idx, item in enumerate(ref):
             ref[item_idx].rays.append(data[item_idx].rays[0])
             ref[item_idx].end_direction.append(data[item_idx].end_direction[0])
+            ref[item_idx].ini_pos.append(data[item_idx].start_position)
             ref[item_idx].calc_alpha.append(data[item_idx].ref_alpha)
             if data_idx == len(data_list[1:]) - 1:
                 ref[item_idx].ECE_R43()
@@ -189,21 +200,23 @@ def plot_result(data_result):
         diopter_max = max(diopter_max, item.optical_diopter)
 
     # plot distortion map
-    plt.scatter(x, y, c=distortion_value, s=20, marker="s")
+    plt.scatter(x, y, c=distortion_value, s=10, marker="s")
     plt.axis("scaled")
     plt.colorbar()
     # cbar.set_ticks(np.arange(0, distortion_max + distortion_max / 10.0, distortion_max / 10.0))
-    plt.clim(0, 0.07)
-    plt.title("Distortion Map")
+    plt.clim(-1, 1)
+    plt.set_cmap("bwr")
+    plt.title("Distortion Map (Degree)")
     plt.show()
 
     # plot diopter map
-    plt.scatter(x, y, c=diopter_value, s=20, marker="s")
+    plt.scatter(x, y, c=diopter_value, s=10, marker="s")
     plt.axis("scaled")
     plt.colorbar()
     # cbar.set_ticks(np.arange(0, diopter_max + diopter_max / 10.0, diopter_max / 10.0))
-    plt.clim(0, 0.07)
-    plt.title("Diopter Map")
+    plt.clim(-1, 1)
+    plt.set_cmap("bwr")
+    plt.title("Diopter Map (Diopter)")
 
     plt.show()
 
@@ -265,9 +278,9 @@ def main():
 
     """
     data = []
-    speos_version = 231
+    speos_version = 241
     for selection in range(5):
-        file_name = getfilename("*.lpf")
+        file_name = getfilename("*.lpf; *.lp3")
         if file_name == "":
             print("Complete, no file has been selected")
         else:
