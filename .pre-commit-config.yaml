@@ -33,7 +33,8 @@ repos:
         args: [
             '--max-line-length', '120',
             '--max-doc-length', '120',
-            '--ignore', 'F821,E402,W503'
+            '--ignore', 'F821,E402,W503',
+            '--extend-ignore', 'E203'
         ]
   - repo: https://github.com/Carreau/velin
     rev: 0.0.11
