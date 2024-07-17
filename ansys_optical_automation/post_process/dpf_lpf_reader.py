@@ -4,7 +4,7 @@ import sys
 
 class DpfLpfReader:
     def __init__(self, speos_version):
-        if speos_version not in [231, 232]:
+        if speos_version not in [231, 232, 241, 242]:
             msg = "Speos API {} is not supported.".format(speos_version)
             raise ValueError(msg)
         speos_installation_path = os.path.join(
