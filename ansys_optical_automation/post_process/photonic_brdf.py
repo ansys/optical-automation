@@ -1,12 +1,39 @@
 import csv
 import math
 import os
+import tkinter as tk
+from tkinter import filedialog
 
 import numpy as np
 from scipy import interpolate
 from scipy.integrate import nquad
 
 EPSILON = 1e-6
+
+
+def getfilename(extension, save=False):
+    """
+    Parameters
+    ----------
+    extension : str
+        containing the which file extension in *.ending format
+    save : Bool
+        option to define to open(default) or save. The default is False.
+
+    Returns
+    -------
+    str
+        string containing the selected file path
+    """
+    root = tk.Tk()
+    root.withdraw()
+    if not save:
+        file_path = filedialog.askopenfilename(filetypes=[("csv", extension)])
+    else:
+        file_path = filedialog.asksaveasfilename(filetypes=[("csv", extension)])
+        if not file_path.endswith(extension.strip("*")):
+            file_path += extension.strip("*")
+    return file_path
 
 
 class BrdfMeasurementPoint:
@@ -286,7 +313,7 @@ class BrdfStructure:
         export.close()
 
 
-def convert_export(input_csv, rt, rt_type, output_path):
+def single_dimension_convert_export(input_csv, rt, rt_type, output_path):
     """
     main function to convert 2d data into brdf and export.
 
@@ -336,8 +363,24 @@ def convert_export(input_csv, rt, rt_type, output_path):
         brdf_data.export_to_speos(output_path, rt_type)
 
 
+def cross_dimension_convert_export(input_csv):
+    with open(input_csv) as file:
+        content = csv.reader(file, delimiter=",")
+        header_lines_count = 3
+        for row_id, row in enumerate(content):
+            if row_id == 0:
+                AOI = list(filter(None, row))
+                AOI = [float(item.split("_")[1][1:]) for item in AOI]
+                print(AOI)
+            if row_id < header_lines_count:
+                continue
+            bsdf = [float(item) for item in row]
+            print(bsdf)
+
+
 cwd = os.path.realpath(__file__)
 repo = os.path.dirname(os.path.dirname(os.path.dirname(cwd)))
-measurement_2d_file = r"D:\Customer\CP\infinite\MakrolonDQ5122_speos_transmissiononly_modified.csv"
-rt_file = r"D:\Customer\CP\infinite\RTfile.txt"
-convert_export(measurement_2d_file, rt_file, "T", r"D:\\")
+
+input_file = getfilename("*.csv")
+cross_dimension_convert_export(input_file)
+# convert_export(measurement_2d_file, rt_file, "T", r"D:\\")
