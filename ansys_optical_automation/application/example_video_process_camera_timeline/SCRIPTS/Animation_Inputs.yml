@@ -1,0 +1,15 @@
+Animation:
+	Start Time (in s): 0
+	End Time (in s): 6
+	Frame Per Second: 15
+	Working Directory: Your\ABbsolute\Path\VIDEO
+Model:
+	Scdocx Path: Your\ABbsolute\Path\PROJECT\Project_Name.scdocx
+	Simulation Name: Inverse_Simulation_Name
+    Sensor Name: Camera_Name
+	XMP Template Path: Your\ABbsolute\Path\Template_Camera.xml
+    Computation Mode: GPU
+    Keep XMP: No
+    Keep PNG: Yes
+Video:
+	Title: Video_Name
