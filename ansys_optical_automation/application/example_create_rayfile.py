@@ -1,3 +1,6 @@
+import math
+import os
+
 import numpy as np
 
 from ansys_optical_automation.post_process.dpf_rayfile import DpfRay
@@ -65,23 +68,45 @@ def create_ray(point, direction, wl, e):
 
 
 def main():
-    step_size = 10
-    x_min = -1500
-    x_max = 1500
-    y_min = -600
-    y_max = 600
+    step_size = 30
+    x_min = 1310
+    x_max = 1700
+    y_min = -690
+    y_max = 690
+    radius = 12
     x_range = np.arange(x_min, x_max, step_size)
     y_range = np.arange(y_min, y_max, step_size)
-    file_path = r"c:\temp\ray.ray"
-    my_rayfile = DpfRayfile(file_path=None)
-    ray_number = 0
-    for x in x_range:
-        for y in y_range:
-            my_rayfile.rays.append(create_ray([x + step_size / 2, y + step_size / 2, 0], [0, 0, 1], 0.555, 1))
-            ray_number += 1
-    my_rayfile.set_ray_count(ray_number)
-    my_rayfile.file_path = file_path
-    my_rayfile.export_to_speos()
+    file_path = r"c:\temp"
+    sample = 5.0
+    for item in range(int(sample)):
+        radius_vector = [0, 0, 0]
+        if item != 0:
+            radius_vector = [
+                0,
+                math.cos(2 * math.pi / (sample - 1) * item),
+                math.sin(2 * math.pi / (sample - 1) * item),
+            ]
+        radius_vector = [item * radius for item in radius_vector]
+        my_rayfile = DpfRayfile(file_path=None)
+        ray_number = 0
+        for x in x_range:
+            for y in y_range:
+                my_rayfile.rays.append(
+                    create_ray(
+                        [
+                            0 + radius_vector[0],
+                            y + step_size / 2 + radius_vector[1],
+                            x + step_size / 2 + radius_vector[2],
+                        ],
+                        [1, 0, 0],
+                        0.555,
+                        1,
+                    )
+                )
+                ray_number += 1
+        my_rayfile.set_ray_count(ray_number)
+        my_rayfile.file_path = os.path.join(file_path, "ray_" + str(item) + ".ray")
+        my_rayfile.export_to_speos()
 
 
 main()

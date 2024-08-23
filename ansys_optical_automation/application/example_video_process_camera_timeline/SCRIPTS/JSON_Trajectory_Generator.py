@@ -6,7 +6,6 @@
 # with exporting laws, warranties, disclaimers, limitations of liability, and remedies, and other provisions.
 # The software products and documentation may be used, disclosed, transferred, or copied only in accordance with the
 # terms and conditions of that software license agreement.
-
 import sys
 from os import path
 
@@ -47,11 +46,14 @@ workingDirectory = path.dirname(GetRootPart().Document.Path.ToString())
 # SpaceClaim InputHelper
 ihTrajectoryName = InputHelper.CreateTextBox("Trajectory.1", "Trajectory name: ", "Enter the name of the trajectory")
 ihFrameFrequency = InputHelper.CreateTextBox(
-    30, "example_video_process_camera_timeline frame rate:", "Set timeline frame rate (FPS)", ValueType.PositiveInteger
+    30, "Timeline frame rate (FPS):", "Set timeline frame rate (FPS)", ValueType.PositiveInteger
 )
 ihReverseDirection = InputHelper.CreateCheckBox(False, "Reverse direction", "Reverse direction on trajectory")
 ihObjectSpeed = InputHelper.CreateTextBox(
-    50, "Object speed:", "Set the moving object speed (km/h)", ValueType.PositiveDouble
+    50, "Object speed (km/h):", "Set the moving object speed (km/h)", ValueType.PositiveDouble
+)
+ihObjectStart = InputHelper.CreateTextBox(
+    0, "Object start time (s):", "Set the time when object starts to move (s)", ValueType.PositiveDouble
 )
 
 ihCoordinateSystem = InputHelper.CreateSelection(
@@ -64,6 +66,7 @@ InputHelper.PauseAndGetInput(
     ihTrajectoryName,
     ihFrameFrequency,
     ihObjectSpeed,
+    ihObjectStart,
     ihReverseDirection,
     ihCoordinateSystem,
     ihTrajectory,
@@ -74,6 +77,9 @@ frameFrequency = float(ihFrameFrequency.Value)
 
 # Object speed (km/h)
 objectSpeed = float(ihObjectSpeed.Value)
+
+# Object start (s)
+objectStart = float(ihObjectStart.Value)
 
 # Trajectory file
 trajectoryName = str(ihTrajectoryName.Value)
@@ -112,7 +118,7 @@ def GetPositionOrientation(i_CoordSys, i_ReferenceCoordSys):
 
 
 def MoveAlongTrajectory(
-    i_trajectoryCoordSys, i_trajectoryCurve, i_isReversedTrajectory, i_frameFrequency, i_objectSpeed
+    i_trajectoryCoordSys, i_trajectoryCurve, i_isReversedTrajectory, i_frameFrequency, i_objectSpeed, objectStart
 ):
     selectedCoordSys = Selection.Create(i_trajectoryCoordSys)
     newselectedCoordSys = i_trajectoryCoordSys
@@ -124,7 +130,7 @@ def MoveAlongTrajectory(
     convObjectSpeed = float(i_objectSpeed * 1000 / 3600)
 
     currentPosition = 0.0
-    timeStamp = 0.0
+    timeStamp = objectStart
     positionTable = []
     timeTable = []
 
@@ -173,7 +179,7 @@ pathLength = trajectoryCurve.Shape.Length
 
 # Get time stamps and relative coordinate systems
 timeTable, positionTable = MoveAlongTrajectory(
-    trajectoryCoordSys, trajectoryCurve, isReversedTrajectory, frameFrequency, objectSpeed
+    trajectoryCoordSys, trajectoryCurve, isReversedTrajectory, frameFrequency, objectSpeed, objectStart
 )
 
 dAxisSystemData_Table = []
