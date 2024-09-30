@@ -4,7 +4,6 @@ import os
 
 import numpy as np
 from scipy import interpolate
-from scipy.integrate import nquad
 
 # =========================================
 # Speos BSDF Help files
@@ -931,10 +930,10 @@ class BsdfStructure:
             # Linear interpolation of the values
             # interp2d is apparently deprecated
             # Look for alternatives f = interpolate.bisplrep(theta_rad, phi_rad, integrande)
-            f = interpolate.RectBivariateSpline(phi_rad,theta_rad, integrande, kx=1, ky=1)
+            f = interpolate.RectBivariateSpline(phi_rad, theta_rad, integrande, kx=1, ky=1)
             # calculation of the integral
             # r = nquad(f, [[0, math.pi / 2], [0, 2 * math.pi]], opts=[{"epsabs": 0.1}, {"epsabs": 0.1}])
-            r = f.integral(min(phi_rad), max(phi_rad),min(theta_rad), max(theta_rad))
+            r = f.integral(min(phi_rad), max(phi_rad), min(theta_rad), max(theta_rad))
             IntegralValue = abs(r)
 
             # Normalization of the data
@@ -988,10 +987,10 @@ class BsdfStructure:
             # Linear interpolation of the values
             # interp2d is apparently deprecated
             # Look for alternatives f = interpolate.bisplrep(theta_rad, phi_rad, integrande)
-            f = interpolate.RectBivariateSpline(phi_rad,theta_rad, integrande, kx=1, ky=1)
+            f = interpolate.RectBivariateSpline(phi_rad, theta_rad, integrande, kx=1, ky=1)
             # calculation of the integral
             # r = nquad(f, [[0, math.pi / 2], [0, 2 * math.pi]], opts=[{"epsabs": 0.1}, {"epsabs": 0.1}])
-            r=f.integral(min(phi_rad),max(phi_rad),min(theta_rad),max(theta_rad))
+            r = f.integral(min(phi_rad), max(phi_rad), min(theta_rad), max(theta_rad))
             IntegralValue = abs(r)
             if index_block == 0:
                 tis_value = self.bsdfdata_tisdata[0]
