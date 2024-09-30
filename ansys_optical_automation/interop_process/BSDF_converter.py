@@ -103,6 +103,7 @@ class BsdfStructure:
         if input_file_extension == ".anisotropicbsdf":
             self.zemax_or_speos = "speos"
             self.read_speos_anisotropicbsdf(bool_log)
+            print("error")
             self.calculate_tis_data(bool_log)
 
         # Restriction: we don't convert BTDF between Speos and Zemax
@@ -930,16 +931,11 @@ class BsdfStructure:
             # Linear interpolation of the values
             # interp2d is apparently deprecated
             # Look for alternatives f = interpolate.bisplrep(theta_rad, phi_rad, integrande)
-            f = interpolate.RectBivariateSpline(phi_rad, theta_rad, integrande, kx=1, ky=1)
+            f = interpolate.RectBivariateSpline(phi_rad,theta_rad, integrande, kx=1, ky=1)
             # calculation of the integral
             # r = nquad(f, [[0, math.pi / 2], [0, 2 * math.pi]], opts=[{"epsabs": 0.1}, {"epsabs": 0.1}])
-            r = nquad(
-                f,
-                [[min(theta_rad), max(theta_rad)], [min(phi_rad), max(phi_rad)]],
-                opts=[{"epsabs": 0.1}, {"epsabs": 0.1}],
-            )
-            IntegralValue = abs(r[0])
-            IntegralError = r[1]
+            r = f.integral(min(phi_rad), max(phi_rad),min(theta_rad), max(theta_rad))
+            IntegralValue = abs(r)
 
             # Normalization of the data
             if IntegralValue > 0:
@@ -955,7 +951,7 @@ class BsdfStructure:
                     " ",
                     round(IntegralValue, 3),
                     " ",
-                    round(IntegralError, 3),
+                    # round(IntegralError, 3),
                     " ",
                     self.bsdfdata_tisdata[index_block],
                     " ",
@@ -992,17 +988,11 @@ class BsdfStructure:
             # Linear interpolation of the values
             # interp2d is apparently deprecated
             # Look for alternatives f = interpolate.bisplrep(theta_rad, phi_rad, integrande)
-            f = interpolate.RectBivariateSpline(phi_rad, theta_rad, integrande, kx=1, ky=1)
+            f = interpolate.RectBivariateSpline(phi_rad,theta_rad, integrande, kx=1, ky=1)
             # calculation of the integral
             # r = nquad(f, [[0, math.pi / 2], [0, 2 * math.pi]], opts=[{"epsabs": 0.1}, {"epsabs": 0.1}])
-            r = nquad(
-                f,
-                [[min(theta_rad), max(theta_rad)], [min(phi_rad), max(phi_rad)]],
-                opts=[{"epsabs": 0.1}, {"epsabs": 0.1}],
-            )
-            IntegralValue = abs(r[0])
-            IntegralError = r[1]
-
+            r=f.integral(min(phi_rad),max(phi_rad),min(theta_rad),max(theta_rad))
+            IntegralValue = abs(r)
             if index_block == 0:
                 tis_value = self.bsdfdata_tisdata[0]
                 normalization = self.bsdfdata_tisdata[0] / IntegralValue
@@ -1017,7 +1007,7 @@ class BsdfStructure:
                     " ",
                     round(IntegralValue, 3),
                     " ",
-                    round(IntegralError, 3),
+                    # round(IntegralError, 3),
                     " ",
                     self.bsdfdata_tisdata[index_block],
                 )
