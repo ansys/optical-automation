@@ -102,7 +102,6 @@ class BsdfStructure:
         if input_file_extension == ".anisotropicbsdf":
             self.zemax_or_speos = "speos"
             self.read_speos_anisotropicbsdf(bool_log)
-            print("error")
             self.calculate_tis_data(bool_log)
 
         # Restriction: we don't convert BTDF between Speos and Zemax
@@ -950,8 +949,6 @@ class BsdfStructure:
                     " ",
                     round(IntegralValue, 3),
                     " ",
-                    # round(IntegralError, 3),
-                    " ",
                     self.bsdfdata_tisdata[index_block],
                     " ",
                     round(normalizationBsdf[index_block], 3),
@@ -1005,8 +1002,6 @@ class BsdfStructure:
                     self.bsdfdata_incidence[index_block],
                     " ",
                     round(IntegralValue, 3),
-                    " ",
-                    # round(IntegralError, 3),
                     " ",
                     self.bsdfdata_tisdata[index_block],
                 )
