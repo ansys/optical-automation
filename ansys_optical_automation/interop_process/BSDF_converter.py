@@ -930,7 +930,7 @@ class BsdfStructure:
             # Linear interpolation of the values
             # interp2d is apparently deprecated
             # Look for alternatives f = interpolate.bisplrep(theta_rad, phi_rad, integrande)
-            f = interpolate.interp2d(theta_rad, phi_rad, integrande, kind="linear", bounds_error=False, fill_value=0)
+            f = interpolate.RectBivariateSpline(phi_rad, theta_rad, integrande, kx=1, ky=1)
             # calculation of the integral
             # r = nquad(f, [[0, math.pi / 2], [0, 2 * math.pi]], opts=[{"epsabs": 0.1}, {"epsabs": 0.1}])
             r = nquad(
@@ -992,7 +992,7 @@ class BsdfStructure:
             # Linear interpolation of the values
             # interp2d is apparently deprecated
             # Look for alternatives f = interpolate.bisplrep(theta_rad, phi_rad, integrande)
-            f = interpolate.interp2d(theta_rad, phi_rad, integrande, kind="linear", bounds_error=False, fill_value=0)
+            f = interpolate.RectBivariateSpline(phi_rad, theta_rad, integrande, kx=1, ky=1)
             # calculation of the integral
             # r = nquad(f, [[0, math.pi / 2], [0, 2 * math.pi]], opts=[{"epsabs": 0.1}, {"epsabs": 0.1}])
             r = nquad(
