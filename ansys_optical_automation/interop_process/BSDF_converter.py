@@ -4,7 +4,6 @@ import os
 
 import numpy as np
 from scipy import interpolate
-from scipy.integrate import nquad
 
 # =========================================
 # Speos BSDF Help files
@@ -930,16 +929,11 @@ class BsdfStructure:
             # Linear interpolation of the values
             # interp2d is apparently deprecated
             # Look for alternatives f = interpolate.bisplrep(theta_rad, phi_rad, integrande)
-            f = interpolate.interp2d(theta_rad, phi_rad, integrande, kind="linear", bounds_error=False, fill_value=0)
+            f = interpolate.RectBivariateSpline(phi_rad, theta_rad, integrande, kx=1, ky=1)
             # calculation of the integral
             # r = nquad(f, [[0, math.pi / 2], [0, 2 * math.pi]], opts=[{"epsabs": 0.1}, {"epsabs": 0.1}])
-            r = nquad(
-                f,
-                [[min(theta_rad), max(theta_rad)], [min(phi_rad), max(phi_rad)]],
-                opts=[{"epsabs": 0.1}, {"epsabs": 0.1}],
-            )
-            IntegralValue = abs(r[0])
-            IntegralError = r[1]
+            r = f.integral(min(phi_rad), max(phi_rad), min(theta_rad), max(theta_rad))
+            IntegralValue = abs(r)
 
             # Normalization of the data
             if IntegralValue > 0:
@@ -954,8 +948,6 @@ class BsdfStructure:
                     self.bsdfdata_incidence[index_block],
                     " ",
                     round(IntegralValue, 3),
-                    " ",
-                    round(IntegralError, 3),
                     " ",
                     self.bsdfdata_tisdata[index_block],
                     " ",
@@ -992,17 +984,11 @@ class BsdfStructure:
             # Linear interpolation of the values
             # interp2d is apparently deprecated
             # Look for alternatives f = interpolate.bisplrep(theta_rad, phi_rad, integrande)
-            f = interpolate.interp2d(theta_rad, phi_rad, integrande, kind="linear", bounds_error=False, fill_value=0)
+            f = interpolate.RectBivariateSpline(phi_rad, theta_rad, integrande, kx=1, ky=1)
             # calculation of the integral
             # r = nquad(f, [[0, math.pi / 2], [0, 2 * math.pi]], opts=[{"epsabs": 0.1}, {"epsabs": 0.1}])
-            r = nquad(
-                f,
-                [[min(theta_rad), max(theta_rad)], [min(phi_rad), max(phi_rad)]],
-                opts=[{"epsabs": 0.1}, {"epsabs": 0.1}],
-            )
-            IntegralValue = abs(r[0])
-            IntegralError = r[1]
-
+            r = f.integral(min(phi_rad), max(phi_rad), min(theta_rad), max(theta_rad))
+            IntegralValue = abs(r)
             if index_block == 0:
                 tis_value = self.bsdfdata_tisdata[0]
                 normalization = self.bsdfdata_tisdata[0] / IntegralValue
@@ -1016,8 +1002,6 @@ class BsdfStructure:
                     self.bsdfdata_incidence[index_block],
                     " ",
                     round(IntegralValue, 3),
-                    " ",
-                    round(IntegralError, 3),
                     " ",
                     self.bsdfdata_tisdata[index_block],
                 )
