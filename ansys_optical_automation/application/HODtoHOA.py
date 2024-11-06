@@ -20,7 +20,7 @@ if current_sel.Count == 1:
     hodObject = SpeosDes.HUDOD.Find(hod_name)
     hodStatus = False
     hodStatus = hodObject.IsUpToDate
-    if !hodStatus:
+    if not hodStatus:
         ApplicationHelper.ReportWarning(
             "The HOD feature selected is not up to date, please verify the simulation inputs"
         )
@@ -148,7 +148,7 @@ if current_sel.Count == 1:
                     hoaSim.Mirrors.TiltRotationAxis.Set(curve)
                     TiltAxisFound = True
                     break
-            if !TiltAxisFound:
+            if not TiltAxisFound:
                 Display = MessageBox.Show(
                     "Tilt axis can't be found, please select it manually and set the rotation values"
                 )
@@ -168,7 +168,7 @@ if current_sel.Count == 1:
             PGU_center_found = True
             break
 
-    if PGU_center_found == False:
+    if not PGU_center_found:
         Display = MessageBox.Show("PGU center can't be found, please select it manually")
         ApplicationHelper.ReportWarning("PGU center can't be found, please select it manually")
 
@@ -187,10 +187,10 @@ if current_sel.Count == 1:
             hoaSim.PGU.YDirection.Set(curve)
             PGU_AxisVFound = True
 
-    if !PGU_AxisHFound:
+    if not PGU_AxisHFound:
         Display = MessageBox.Show("PGU Horizontal axis can't be found, please select it manually")
         ApplicationHelper.ReportWarning("PGU Horizontal axis can't be found, please select it manually")
-    if !PGU_AxisVFound:
+    if not PGU_AxisVFound:
         Display = MessageBox.Show("PGU Vertical axis can't be found, please select it manually")
         ApplicationHelper.ReportWarning("PGU Vertical axis can't be found, please select it manually")
     # PGU parameters
