@@ -10,13 +10,8 @@ while the user still has admin rights.
 Upon launching each application, the module registers the associated COM server used to call each application, 
 with the path to each executable appropriately registered.
 
-Classes and Main Methods
+Class
 -----------------------------------------------------------------------
-1. **SpeosPathFinder**
-   - This class provides two methods to locate the Speos application path:
-      - A method to search for a specific Speos version Path.
-      - A default method that identifies and returns the latest installed version of Speos.
-
 2. **LabsAdmin**
    - This class offers methods to open or close one or multiple applications simultaneously.
    - By default, if no specific applications are specified, it will launch all applications found.
@@ -24,6 +19,19 @@ Classes and Main Methods
 """
 
 import subprocess, os, time, sys
+# Get the absolute path to the scdm_core directory
+current_dir = os.path.dirname(os.path.abspath(__file__))
+scdm_core_path = os.path.join(current_dir, '..', 'scdm_core')
+# Add the scdm_core path to sys.path if it's not already there
+if scdm_core_path not in sys.path:
+    sys.path.append(scdm_core_path)
+# Try importing the function from utils
+try:
+    from utils import find_awp_root
+    print("get_scdm_install_location imported.")
+except ModuleNotFoundError as e:
+    print(f"Error: {e}")
+    print(f"sys.path: {sys.path}")
 
 # If pygetwindow is not installed, do it
 third_party_package = "pygetwindow"
@@ -35,26 +43,8 @@ except ImportError:
     subprocess.check_call([sys.executable, "-m", "pip", "install", third_party_package])
     import pygetwindow as gw
 
-class SpeosPathFinder:
-    '''
-    Class to find the environmental variable to Speos installation.
-    There are two methds:
-    - find_latest_awp_root --> Finds the environmental variable for
-    last version of Speos.
-    - get_custom_awp_root --> Finds the environmental variable for
-    a specific version of Speos.
-    '''
-    def __init__(self):
-        self.last_version = "000"
-        self.version = "000"
-    def find_latest_awp_root(self):
-        # Find the last version of AWP_ROOT in the environmental variables
-        for key, value in os.environ.items():
-            if "AWP_ROOT" in key and key.split("AWP_ROOT")[1] > self.last_version:
-                self.last_version = key.split("AWP_ROOT")[1]
-        # Build environmental variable
-        ThreeDigitCode = self.last_version
-        return ThreeDigitCode
+
+import numpy as np
 
 class LabsAdmin:
     '''
@@ -66,28 +56,66 @@ class LabsAdmin:
     - Run and Kill one application.
     - Run and Kill all applications.
     '''
-    def __init__(self, ThreeDigitCode = SpeosPathFinder().find_latest_awp_root()):
-        self.ThreeDigitCode = ThreeDigitCode
-        self.Path_Installation_Root = os.environ.get("AWP_ROOT" + self.ThreeDigitCode,"")
+
+    def __init__(self, ThreeDigitCode=""):
+        """
+        Initializes the LabsAdmin class with a given ThreeDigitCode or derives it from the installation path.
+
+        Parameters
+        ----------
+        ThreeDigitCode : str, optional
+            A 3-digit version code (default is an empty string, which causes the code to be derived from the installation path).
+        Path_Installation_Root: str
+            Path to Ansys installation, format C:\Program Files\ANSYS Inc\v242.
+            Uses find_awp_root, imported from utils. If no ThreeDigitCode is given as input, the function will return
+            the latest installed Ansys installation path.
+        """
+        if not ThreeDigitCode:
+            self.Path_Installation_Root = find_awp_root(version="")
+            version_part = self.Path_Installation_Root.split("\\")[-1]
+            self.ThreeDigitCode = version_part[1:]
+        else:
+            self.ThreeDigitCode = ThreeDigitCode
+            self.Path_Installation_Root = find_awp_root(version=self.ThreeDigitCode)
+
+        if not self.Path_Installation_Root:
+            raise ValueError(f"AWP_ROOT path for version {self.ThreeDigitCode} not found.")
+
     def RunSingleApp(self, exe_name):
-        # Execute only one application
+        """
+        Runs a single application as an administrator.
+
+        Parameters
+        ----------
+        exe_name : str
+            The name of the executable to run.
+        """
         exe_path = os.path.join(self.Path_Installation_Root, 'Optical Products', 'Viewers', exe_name)
         print("Application Executed: " + exe_path)
         subprocess.Popen(["powershell", "-Command", f"Start-Process '{exe_path}' -Verb RunAs"])
+
     def RunAll(self):
-        # Run as Admin All Apps
+        """
+        Runs all applications as administrators.
+        """
         print("\n\n#### Run all Viewer as admin STARTED: \n")
         Dictionary_Labs = self.Applications()
-        PathToViewers = os.path.join(self.ThreeDigitCode, 'Optical Products', 'Viewers')
         for App in Dictionary_Labs.keys():
-            self.RunSingleApp(os.path.join(self.Path_Installation_Root, 'Optical Products', 'Viewers', App))
+            self.RunSingleApp(App)
+
     def Applications(self):
-        # Check if Speos_Root has enough characters
+        """
+        Returns a dictionary of applications with the names of the applications to run as key, and the title visible
+        for each application after running the viewer without input files, as items.
+
+        Returns
+        -------
+        dict
+            A dictionary where the keys are executable names and the values are titles.
+        """
         if len(self.ThreeDigitCode) != 3:
             raise ValueError("\n\nThe code must be of 3 characters long to derive the version.")
         self.Version = "20" + self.ThreeDigitCode[0] + self.ThreeDigitCode[1] + " R" + self.ThreeDigitCode[2]
-        self.Version = "20" + self.ThreeDigitCode[0] + self.ThreeDigitCode[1] + " R" + self.ThreeDigitCode[2]
-        # Dictonary with the name of the file and the title once opened
         self.Labs_Applications = {
             "XmpViewer.exe": "Speos " + self.Version + " - Extended map [No Name]",
             "VRLab.exe": "Speos " + self.Version + " - Empty view",
@@ -115,16 +143,22 @@ class LabsAdmin:
             "UserMaterialViewer.exe": "Speos " + self.Version + " - User Material (Advanced Model) [No Name]"
         }
         return self.Labs_Applications
+
     def KillApp(self, exe_name):
+        """
+        Kills a specific running application.
+
+        Parameters
+        ----------
+        exe_name : str
+            The name of the executable to kill.
+        """
         Dictionary_Labs = self.Applications()
         open_windows = gw.getAllTitles()
         app_opened = False
         Expected_title = Dictionary_Labs[exe_name]
         while not app_opened:
-            # List all open applications
             open_windows = gw.getAllTitles()
-            # print(open_windows)
-            Expected_title = Dictionary_Labs[exe_name]
             for title in open_windows:
                 if Expected_title in title:
                     app_opened = True
@@ -132,20 +166,37 @@ class LabsAdmin:
                     subprocess.run(["taskkill", "/f", "/im", exe_name])
                     break
             time.sleep(0.2)
+
     def KillAll(self):
-        # Kill all Labs App
+        """
+        Kills all running applications.
+        """
         Dictionary_Labs = self.Applications()
         print("\n\n#### Kill all process: \n")
         for App in Dictionary_Labs.keys():
             self.KillApp(App)
+
     def RunAndKillApp(self, exe_name):
+        """
+        Runs and then kills a specific application.
+
+        Parameters
+        ----------
+        exe_name : str
+            The name of the executable to run and kill.
+        """
         self.RunSingleApp(exe_name)
         self.KillApp(exe_name)
+
     def RunAndKillAll(self):
+        """
+        Runs all applications and then kills all of them.
+        """
         self.RunAll()
         self.KillAll()
 
+# Example usage of LabsAdmin with the new integration
 try:
-    LabsAdmin().RunAndKillAll()
+    LabsAdmin("242").RunAndKillAll()
 except Exception as err:
-    print("Unexpected "+str(err)+", "+str(type(err)))
+    print("Unexpected error: "+str(err)+", "+str(type(err)))
