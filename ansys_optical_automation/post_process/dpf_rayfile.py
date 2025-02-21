@@ -286,7 +286,7 @@ class DpfRayfile(DataProcessingFramework):
 
 
         """
-        rayfile_type = self.file_path.split(".")[-1]
+        rayfile_type = self.file_path.lower().split(".")[-1]
         if rayfile_type == "ray":
             content_size = os.fstat(self.dpf_instance.fileno()).st_size - 28
             if content_size % 32 != 0:
