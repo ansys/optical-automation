@@ -17,7 +17,7 @@ from ansys_optical_automation.zemax_process.base import BaseZOS
 from tests.config import SCDM_VERSION
 
 ray_file = os.path.join(unittest_path, "example_models", "test_08_ray.ray")
-dat_file = os.path.join(unittest_path, "example_models", "test_08_dat.dat")
+dat_file = os.path.join(unittest_path, "example_models", "test_08_dat.DAT")
 dat_flux_file = os.path.join(unittest_path, "example_models", "test_08_dat_flux_type_1.dat")
 sdf_file = os.path.join(unittest_path, "example_models", "test_08_sdf.sdf")
 sim_path = os.path.join(unittest_path, "example_models", "ray_test.speos")
@@ -209,7 +209,7 @@ def main():
     results_dict["sdf_content"] = verify_data_load(test_file)
     os.remove(test_file)
     # test02
-    test_file = os.path.join(work_directory, "test_08_dat.dat")
+    test_file = os.path.join(work_directory, "test_08_dat.DAT")
     shutil.copyfile(dat_file, test_file)
     results_dict["dat_content"] = verify_data_load(test_file)
     os.remove(test_file)
@@ -219,7 +219,7 @@ def main():
     results_dict["ray_content"] = verify_data_load(test_file)
     os.remove(test_file)
     # test04
-    test_file = os.path.join(work_directory, "test_08_dat.dat")
+    test_file = os.path.join(work_directory, "test_08_dat.DAT")
     test_reference = os.path.join(work_directory, "test_08_dat_reference.ray")
     shutil.copyfile(dat_file, test_file)
     shutil.copyfile(dat_file_reference, test_reference)
@@ -264,7 +264,7 @@ def main():
     html_file = glob.glob(os.path.join(work_directory, "*.html"))
     os.remove(html_file[0])
     # test08
-    test_file = os.path.join(work_directory, "test_08_dat.dat")
+    test_file = os.path.join(work_directory, "test_08_dat.DAT")
     shutil.copyfile(dat_file, test_file)
     convert = RayfileConverter(test_file)
     convert.zemax_to_speos()
