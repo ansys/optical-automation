@@ -19,7 +19,9 @@ class SynchLayersMaterials(BaseSCDM):
         SpaceClaim : SpaceClaim object
             SpaceClaim.
         """
-        super(SynchLayersMaterials, self).__init__(SpaceClaim, ["V19", "V20", "V21", "V22", "V23"])
+        super(SynchLayersMaterials, self).__init__(
+            SpaceClaim, ["V19", "V20", "V21", "V22", "V23", "V231", "V232", "V241", "V242", "V251"]
+        )
         self.speos_sim = SpeosSim
 
     def __create_dictionary_from_layers(self):

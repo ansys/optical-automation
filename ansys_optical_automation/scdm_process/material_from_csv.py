@@ -23,7 +23,9 @@ class MaterialsFromCSV(BaseSCDM):
         SpaceClaim : SpaceClaim object
             SpaceClaim.
         """
-        super(MaterialsFromCSV, self).__init__(SpaceClaim, ["V19", "V20", "V21", "V22", "V23"])
+        super(MaterialsFromCSV, self).__init__(
+            SpaceClaim, ["V19", "V20", "V21", "V22", "V23", "V231", "V232", "V241", "V242", "V251"]
+        )
         self.speos_sim = SpeosSim
 
     def __get_real_original(self, item):

@@ -1,3 +1,4 @@
+# Python Script, API Version = V232
 from ansys_optical_automation.scdm_process.scdm_io import ScdmIO
 
 

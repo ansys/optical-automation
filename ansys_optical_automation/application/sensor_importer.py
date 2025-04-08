@@ -1,3 +1,4 @@
+# Python Script, API Version = V232
 from ansys_optical_automation.speos_process.speos_sensors import RadianceSensor
 
 

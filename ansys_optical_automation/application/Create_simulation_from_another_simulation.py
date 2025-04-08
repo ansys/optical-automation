@@ -7,7 +7,7 @@ Recreate a direct simulation from an inverse or inverse from direct
 # specific options not set (i.e. Dispersion, FTG, automatic save frequency)
 # FTG not set in geometries
 
-if (args.Count == 0):
+if args.Count == 0:
     scdocfilepath = Window.ActiveWindow.Document.Path
 
 # Asking user to select a simulation
@@ -58,4 +58,3 @@ if "Type" in dir(current_sel.Items[0]):
 else:
     Display = MessageBox.Show("Please select a direct or inverse simulation.")
     ApplicationHelper.ReportError("Please select a direct or inverse simulation.")
-
