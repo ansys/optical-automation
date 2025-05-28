@@ -12,8 +12,6 @@ yaml_path = 'D:\your\SSS\Inputs.yaml'
 
 def File_Counter(yaml_path, wdir):
     # Load the YAML file
-    
-    #with open(os.path.abspath('inputs.yaml'), 'r') as inputs:
     with open(yaml_path, 'r') as file:
         inputs = yaml.load(file, Loader=yaml.FullLoader)
 
