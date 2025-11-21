@@ -4,30 +4,38 @@ Requirements: administrative privileges.
 This module launches with administrator privileges all executables in:
 `C:\\Program Files\\ANSYS Inc\\vXXX\\Optical Products\\Viewers`
 
-Many users lack administrative rights, so this module can be executed right after the installation
-while the user still has admin rights.
+Many users lack administrative rights, so this module can be executed
+ right after the installation while the user still has admin rights.
 
-Upon launching each application, the module registers the associated COM server used to call each application, 
-with the path to each executable appropriately registered.
+Upon launching each application, the module registers the associated
+ COM server used to call each application, with the path to each
+  executable appropriately registered.
 
 Class
 -----------------------------------------------------------------------
 2. **LabsAdmin**
-   - This class offers methods to open or close one or multiple applications simultaneously.
-   - By default, if no specific applications are specified, it will launch all applications found.
+   - This class offers methods to open or close one or multiple
+    applications simultaneously.
+   - By default, if no specific applications are specified, it will
+    launch all applications found.
 
 """
 
-import subprocess, os, time, sys
+import os
+import subprocess
+import sys
+import time
+
 # Get the absolute path to the scdm_core directory
 current_dir = os.path.dirname(os.path.abspath(__file__))
-scdm_core_path = os.path.join(current_dir, '..', 'scdm_core')
+scdm_core_path = os.path.join(current_dir, "..", "scdm_core")
 # Add the scdm_core path to sys.path if it's not already there
 if scdm_core_path not in sys.path:
     sys.path.append(scdm_core_path)
 # Try importing the function from utils
 try:
     from utils import find_awp_root
+
     print("get_scdm_install_location imported.")
 except ModuleNotFoundError as e:
     print(f"Error: {e}")
@@ -35,8 +43,8 @@ except ModuleNotFoundError as e:
 
 # If pygetwindow is not installed, do it
 third_party_package = "pygetwindow"
-try: 
-    gw =  __import__(third_party_package)
+try:
+    gw = __import__(third_party_package)
     print(f"{third_party_package} is already installed.")
 except ImportError:
     print(f"{third_party_package} not found. Installing...")
@@ -44,10 +52,8 @@ except ImportError:
     import pygetwindow as gw
 
 
-import numpy as np
-
 class LabsAdmin:
-    '''
+    """
     Class with methods to:
     - Run one specific application.
     - Kill one specific application.
@@ -55,7 +61,7 @@ class LabsAdmin:
     - Kill all applications.
     - Run and Kill one application.
     - Run and Kill all applications.
-    '''
+    """
 
     def __init__(self, ThreeDigitCode=""):
         """
@@ -64,11 +70,13 @@ class LabsAdmin:
         Parameters
         ----------
         ThreeDigitCode : str, optional
-            A 3-digit version code (default is an empty string, which causes the code to be derived from the installation path).
+            A 3-digit version code (default is an empty string, which causes
+             the code to be derived from the installation path).
         Path_Installation_Root: str
-            Path to Ansys installation, format C:\Program Files\ANSYS Inc\v242.
-            Uses find_awp_root, imported from utils. If no ThreeDigitCode is given as input, the function will return
-            the latest installed Ansys installation path.
+            Path to Ansys installation, format "C:\\Program Files\\ANSYS Inc\\v242".
+            Uses find_awp_root, imported from utils. If no ThreeDigitCode is
+             given as input, the function will return the latest installed
+              Ansys installation path.
         """
         if not ThreeDigitCode:
             self.Path_Installation_Root = find_awp_root(version="")
@@ -90,7 +98,7 @@ class LabsAdmin:
         exe_name : str
             The name of the executable to run.
         """
-        exe_path = os.path.join(self.Path_Installation_Root, 'Optical Products', 'Viewers', exe_name)
+        exe_path = os.path.join(self.Path_Installation_Root, "Optical Products", "Viewers", exe_name)
         print("Application Executed: " + exe_path)
         subprocess.Popen(["powershell", "-Command", f"Start-Process '{exe_path}' -Verb RunAs"])
 
@@ -136,11 +144,13 @@ class LabsAdmin:
             "CoatedSurfaceViewer.exe": "Speos " + self.Version + " - Coated surface [No Name]",
             "EulumdatViewer.exe": "Speos " + self.Version + " - Eulumdat [No Name]",
             "VirtualLightingAnimation.exe": "Virtual Lighting Animation [BETA] " + self.Version,
-            "AdvancedScatteringViewer.exe": "Speos " + self.Version + " - Scattering surface (Advanced model) [No Name]",
+            "AdvancedScatteringViewer.exe": "Speos "
+            + self.Version
+            + " - Scattering surface (Advanced model) [No Name]",
             "DoeSurfaceViewer.exe": "Speos " + self.Version + " - Thin lens surface [No Name]",
             "GratingSurfaceViewer.exe": "Speos " + self.Version + " - Grating surface [No Name]",
             "RayEditor.exe": "Speos " + self.Version + " -  [No Name]",
-            "UserMaterialViewer.exe": "Speos " + self.Version + " - User Material (Advanced Model) [No Name]"
+            "UserMaterialViewer.exe": "Speos " + self.Version + " - User Material (Advanced Model) [No Name]",
         }
         return self.Labs_Applications
 
@@ -195,8 +205,9 @@ class LabsAdmin:
         self.RunAll()
         self.KillAll()
 
+
 # Example usage of LabsAdmin with the new integration
 try:
     LabsAdmin("242").RunAndKillAll()
 except Exception as err:
-    print("Unexpected error: "+str(err)+", "+str(type(err)))
+    print("Unexpected error: " + str(err) + ", " + str(type(err)))

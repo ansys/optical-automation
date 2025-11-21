@@ -4,10 +4,6 @@ import subprocess
 
 import numpy as np
 
-import os
-
-import os
-
 
 def find_awp_root(version=""):
     """
@@ -63,6 +59,8 @@ def find_awp_root(version=""):
 
 
 print(find_awp_root("242"))
+
+
 def get_scdm_install_location(version=""):
     """
     Get the SpaceClaim installation path.
@@ -100,7 +98,9 @@ def get_scdm_install_location(version=""):
     except ValueError as e:
         raise ValueError(f"Error while getting the SpaceClaim installation path: {str(e)}")
 
-print("####",get_scdm_install_location("242"))
+
+print("####", get_scdm_install_location("242"))
+
 
 def get_speos_core(version):
     """
