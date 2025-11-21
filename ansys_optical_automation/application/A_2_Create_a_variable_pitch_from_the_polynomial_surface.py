@@ -10,14 +10,17 @@ If the JSON model does not exist, this script will try to import and run
 Everything can also be executed independently (standalone).
 """
 
-import os
 import json
+import os
+from typing import List
+from typing import Tuple
+
 import numpy as np
-from typing import List, Tuple
 
 # Try importing the fitting script
 try:
     from A_1_Create_stl_polynomial_surface import create_polynomial_surface
+
     print("[INFO] Successfully imported create_polynomial_surface from 1_1_create_stl_polynomial_surface.py")
 except ModuleNotFoundError as e:
     print(f"[ERROR] Could not import Script 1: {e}")
@@ -68,9 +71,9 @@ def linear_pitch_x(x: float, x_min: float, x_max: float, p_start: float, p_end: 
     return p_start * (1.0 - t) + p_end * t
 
 
-def generate_points(domain: Tuple[float, float, float, float],
-                    p_start: float, p_end: float, p_y: float,
-                    include_edges: bool = True) -> Tuple[np.ndarray, np.ndarray]:
+def generate_points(
+    domain: Tuple[float, float, float, float], p_start: float, p_end: float, p_y: float, include_edges: bool = True
+) -> Tuple[np.ndarray, np.ndarray]:
     """
     Generate (X, Y) grid with variable X pitch and constant Y pitch.
 
@@ -121,26 +124,30 @@ def eval_poly2d(coeffs: np.ndarray, x_norm: np.ndarray, y_norm: np.ndarray, orde
     idx = 0
     for i in range(order + 1):
         for j in range(order + 1 - i):
-            z += coeffs[idx] * (x_norm ** i) * (y_norm ** j)
+            z += coeffs[idx] * (x_norm**i) * (y_norm**j)
             idx += 1
     return z
 
 
-def write_opt3d_mapping(path: str,
-                        X: np.ndarray, Y: np.ndarray, Z: np.ndarray,
-                        extra_constants: List[str],
-                        float_fmt: str = ".6f") -> None:
+def write_opt3d_mapping(
+    path: str,
+    X: np.ndarray,
+    Y: np.ndarray,
+    Z: np.ndarray,
+    extra_constants: List[str],
+    float_fmt: str = ".6f",
+) -> None:
     """Write the .OPT3DMapping file."""
     if len(extra_constants) != 9:
         raise ValueError("Exactly 9 extra constants are required.")
     n = len(X)
     os.makedirs(os.path.dirname(path), exist_ok=True)
-    ffmt = f"{{:{float_fmt}}}"
+    ffmt = f"{{:{float_fmt}}}"  # noqa: E231
     with open(path, "w", encoding="utf-8") as f:
         f.write(f"{n}\n")
         for x, y, z in zip(X, Y, Z):
-            f.write(f"{ffmt.format(x)} {ffmt.format(y)} {ffmt.format(z)} "
-                    + " ".join(extra_constants) + "\n")
+            formatted_values = " ".join([ffmt.format(x), ffmt.format(y), ffmt.format(z)] + extra_constants)
+            f.write(formatted_values + "\n")
 
 
 def ensure_model_json():
@@ -170,8 +177,7 @@ def main():
     y_min = Y_MIN or float(model["y_min"])
     y_max = Y_MAX or float(model["y_max"])
 
-    X_pts, Y_pts = generate_points((x_min, x_max, y_min, y_max),
-                                   PITCH_X_START, PITCH_X_END, PITCH_Y, INCLUDE_EDGES)
+    X_pts, Y_pts = generate_points((x_min, x_max, y_min, y_max), PITCH_X_START, PITCH_X_END, PITCH_Y, INCLUDE_EDGES)
     x_norm = (X_pts - x_mean) / x_std
     y_norm = (Y_pts - y_mean) / y_std
     Z_pts = eval_poly2d(coeffs, x_norm, y_norm, order)

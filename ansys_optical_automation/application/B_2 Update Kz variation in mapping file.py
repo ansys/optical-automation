@@ -1,16 +1,15 @@
 import os
 
 # ==== Parameters ====
-K_Z_1 = 0.5   # Value applied at the minimum X (start of the range)
-K_Z_2 = 0.1   # Value applied at the maximum X (end of the range)
+K_Z_1 = 0.5  # Value applied at the minimum X (start of the range)
+K_Z_2 = 0.1  # Value applied at the maximum X (end of the range)
 
 # File paths
-input_path = r"C:\Users\amarin\OneDrive - ANSYS, Inc\Articules and Trainings ACE\3D Texture - Light Guide\#3. Variable Kz\TL L.3D Texture.2.OPT3DMapping"
-output_path = os.path.join(
-    os.path.dirname(input_path),
-    "K-Z Variation.OPT3DMapping"
+base_dir = (
+    r"C:\Users\amarin\OneDrive - ANSYS, Inc\Articules and Trainings ACE" r"\3D Texture - Light Guide\#3. Variable Kz"
 )
-
+input_path = os.path.join(base_dir, "TL L.3D Texture.2.OPT3DMapping")
+output_path = os.path.join(base_dir, "K-Z Variation.OPT3DMapping")
 # ==== Read the file ====
 # Read all lines from the mapping file
 with open(input_path, "r") as f:

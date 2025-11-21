@@ -1,16 +1,25 @@
+import ctypes
 import os
 import random
-import ctypes
+
 import clr
+
 clr.AddReference("System.Windows.Forms")
 clr.AddReference("System.Drawing")
 
-import System
-from System.Windows.Forms import (
-    Form, Label, TextBox, Button, DialogResult, FormStartPosition, Panel,
-    ProgressBar, ProgressBarStyle, Application, Timer
-)
-from System.Drawing import Point, Size
+from System.Drawing import Point
+from System.Drawing import Size
+from System.Windows.Forms import Application
+from System.Windows.Forms import Button
+from System.Windows.Forms import DialogResult
+from System.Windows.Forms import Form
+from System.Windows.Forms import FormStartPosition
+from System.Windows.Forms import Label
+from System.Windows.Forms import Panel
+from System.Windows.Forms import ProgressBar
+from System.Windows.Forms import ProgressBarStyle
+from System.Windows.Forms import TextBox
+from System.Windows.Forms import Timer
 
 # -------------------------------------------------------------------------
 # Windows MessageBox flags (for reference)
@@ -21,6 +30,7 @@ from System.Drawing import Point, Size
 MB_OK = 0x00000000
 MB_ICONINFORMATION = 0x00000040
 MB_TOPMOST = 0x00040000
+
 
 def show_message(message, title="Message"):
     """
@@ -43,6 +53,7 @@ def show_message(message, title="Message"):
     """
     hwnd = ctypes.windll.user32.GetForegroundWindow()
     ctypes.windll.user32.MessageBoxW(hwnd, message, title, MB_OK | MB_ICONINFORMATION | MB_TOPMOST)
+
 
 # === Simple progress window with animated bounce ===
 class ProgressWindow(Form):
@@ -115,9 +126,10 @@ class ProgressWindow(Form):
                 self.direction = 1
             self.bar.Value = new_val
             Application.DoEvents()
-        except:
+        except Exception:
             # Silently ignore transient UI exceptions
             pass
+
 
 # === GUI with editable control points ===
 class DynamicProbabilityForm(Form):
@@ -352,8 +364,9 @@ class DynamicProbabilityForm(Form):
             self.points = [(x / 100.0, p) for p, x in sorted_points]
             self.DialogResult = DialogResult.OK
             self.Close()
-        except:
+        except Exception:
             show_message("Invalid input. Please check values.", "Input Error")
+
 
 def process_mapping_file(input_file, control_points, master_name):
     """
@@ -384,7 +397,6 @@ def process_mapping_file(input_file, control_points, master_name):
     with open(input_file, "r") as f:
         lines = f.readlines()
 
-    original_count = int(lines[0].strip())
     data_lines = lines[1:]
 
     # Parse X from each line; keep original line for later writing
@@ -408,7 +420,7 @@ def process_mapping_file(input_file, control_points, master_name):
     new_count = len(filtered_lines)
 
     # Encode control points in filename for traceability
-    points_str = "_".join(["p{:.1f}-{:.1f}".format(p, x*100) for x, p in control_points])
+    points_str = "_".join(["p{:.1f}-{:.1f}".format(p, x * 100) for x, p in control_points])
     output_file = os.path.join(os.path.dirname(input_file), "{}_{}.OPT3DMapping".format(master_name, points_str))
 
     # Write new header (count) and kept lines
@@ -418,6 +430,7 @@ def process_mapping_file(input_file, control_points, master_name):
             f.write(line)
 
     return output_file
+
 
 def interpolate_probability(x_norm, control_points):
     """
@@ -439,12 +452,13 @@ def interpolate_probability(x_norm, control_points):
     float
         Interpolated probability in [0..1].
     """
-    for i in range(len(control_points)-1):
+    for i in range(len(control_points) - 1):
         x0, p0 = control_points[i]
-        x1, p1 = control_points[i+1]
+        x1, p1 = control_points[i + 1]
         if x0 <= x_norm <= x1:
             return p0 + (p1 - p0) * ((x_norm - x0) / (x1 - x0))
     return control_points[-1][1]
+
 
 # -----------------------------------------------------------------------------
 # Main execution block

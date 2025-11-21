@@ -8,11 +8,11 @@ generate an STL mesh, and export both the STL and the polynomial model JSON.
 This script works standalone or can be imported by another script.
 """
 
-import numpy as np
-import trimesh
 import json
 import os
-from typing import Optional
+
+import numpy as np
+import trimesh
 
 
 def build_design_matrix(x: np.ndarray, y: np.ndarray, order: int = 5) -> np.ndarray:
@@ -34,7 +34,7 @@ def build_design_matrix(x: np.ndarray, y: np.ndarray, order: int = 5) -> np.ndar
     terms = []
     for i in range(order + 1):
         for j in range(order + 1 - i):
-            terms.append((x ** i) * (y ** j))
+            terms.append((x**i) * (y**j))
     return np.vstack(terms).T
 
 
@@ -60,15 +60,12 @@ def evaluate_fitted_surface(coeffs: np.ndarray, x: np.ndarray, y: np.ndarray, or
     idx = 0
     for i in range(order + 1):
         for j in range(order + 1 - i):
-            z += coeffs[idx] * (x ** i) * (y ** j)
+            z += coeffs[idx] * (x**i) * (y**j)
             idx += 1
     return z
 
 
-def create_polynomial_surface(input_file: str,
-                              output_stl: str,
-                              output_json: str,
-                              order: int = 5) -> None:
+def create_polynomial_surface(input_file: str, output_stl: str, output_json: str, order: int = 5) -> None:
     """
     Fit the polynomial surface and export STL + JSON model.
 
@@ -138,16 +135,23 @@ def create_polynomial_surface(input_file: str,
 
 def main():
     """Standalone entry point."""
-    input_file = (
-        r"C:\Users\amarin\OneDrive - ANSYS, Inc\Articules and Trainings ACE\3D Texture - Light Guide\#2. Variable pitch\TL L.3D Texture.2.OPT3DMapping"
+
+    base_path = (
+        r"C:\Users\amarin\OneDrive - ANSYS, Inc\Articules and Trainings ACE"
+        r"\3D Texture - Light Guide\#2. Variable pitch"
     )
-    output_stl = (
-        r"C:\Users\amarin\OneDrive - ANSYS, Inc\Articules and Trainings ACE\3D Texture - Light Guide\#2. Variable pitch\FittedSurface_Global_HighQuality.stl"
+
+    input_file = base_path + r"\TL L.3D Texture.2.OPT3DMapping"
+
+    output_stl = base_path + r"\FittedSurface_Global_HighQuality.stl"
+
+    output_json = base_path + r"\FittedSurface_Model.json"
+
+    create_polynomial_surface(
+        input_file,
+        output_stl,
+        output_json,
     )
-    output_json = (
-        r"C:\Users\amarin\OneDrive - ANSYS, Inc\Articules and Trainings ACE\3D Texture - Light Guide\#2. Variable pitch\FittedSurface_Model.json"
-    )
-    create_polynomial_surface(input_file, output_stl, output_json)
 
 
 if __name__ == "__main__":
