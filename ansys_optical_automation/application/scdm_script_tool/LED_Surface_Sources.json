@@ -1,0 +1,147 @@
+{
+  "CREE_XR_C_2600K_3700K": {
+    "Flux": 45.7,
+    "Spectrum": "Source_SPEOS/spectrum_-_white_led_/CREE XR-C 2600K-3700K.spectrum"
+  },
+  "CREE_XR_C_3700K_5000K": {
+    "Flux": 56.8,
+    "Spectrum": "Source_SPEOS/spectrum_-_white_led_/CREE XR-C 3700K-5000K.spectrum"
+  },
+  "CREE_XR_C_5000K_10000K": {
+    "Flux": 56.8,
+    "Spectrum": "Source_SPEOS/spectrum_-_white_led_/CREE XR-C 5000K-10000K.spectrum"
+  },
+
+  "Luxeon_K2_6200K": {
+    "Flux": null,
+    "Spectrum": "Source_SPEOS/spectrum_-_white_led_/Luxeon K2 6200K.spectrum"
+  },
+
+  "Luxeon_Rebel_Cool_White_5800K": {
+    "Flux": 80,
+    "Spectrum": "Source_SPEOS/spectrum_-_white_led_/Luxeon Rebel Cool White 5800K .spectrum"
+  },
+  "Luxeon_Rebel_Neutral_White_4500K": {
+    "Flux": 75,
+    "Spectrum": "Source_SPEOS/spectrum_-_white_led_/Luxeon Rebel Neutral White 4500K.spectrum"
+  },
+  "Luxeon_Rebel_Warm_White_3200K": {
+    "Flux": 66,
+    "Spectrum": "Source_SPEOS/spectrum_-_white_led_/Luxeon Rebel Warm White 3200K.spectrum"
+  },
+
+  "Luxeon_standard_6600K": {
+    "Flux": null,
+    "Spectrum": "Source_SPEOS/spectrum_-_white_led_/Luxeon standard 6600K.spectrum"
+  },
+
+  "NICHIA_NSCU275T": {
+    "Flux": null,
+    "Spectrum": "Source_SPEOS/uv_led_-_nichia_ncsu275t/SPEOS input files/NICHIA NSCU275T.spectrum"
+  },
+
+  "OSRAM_Golden_Dragon_Warm_White_3100K": {
+    "Flux": null,
+    "Spectrum": "Source_SPEOS/spectrum_-_white_led_/OSRAM Golden Dragon - Warm White 3100K.spectrum"
+  },
+  "OSRAM_Golden_Dragon_White_5300K": {
+    "Flux": null,
+    "Spectrum": "Source_SPEOS/spectrum_-_white_led_/OSRAM Golden Dragon - White 5300K.spectrum"
+  },
+
+  "OSRAM_Hyper_Bright_LED_Amber": {
+    "Flux": null,
+    "Spectrum": "Source_SPEOS/spectrum_-_osram_led/OSRAM_Hyper-Bright LED_Amber.spectrum"
+  },
+  "OSRAM_Hyper_Bright_LED_Blue_GaN": {
+    "Flux": null,
+    "Spectrum": "Source_SPEOS/spectrum_-_osram_led/OSRAM_Hyper-Bright LED_Blue(GaN).spectrum"
+  },
+  "OSRAM_Hyper_Bright_LED_Hyper_Red": {
+    "Flux": null,
+    "Spectrum": "Source_SPEOS/spectrum_-_osram_led/OSRAM_Hyper-Bright LED_Hyper-Red.spectrum"
+  },
+  "OSRAM_Hyper_Bright_LED_Orange": {
+    "Flux": null,
+    "Spectrum": "Source_SPEOS/spectrum_-_osram_led/OSRAM_Hyper-Bright LED_Orange.spectrum"
+  },
+  "OSRAM_Hyper_Bright_LED_Super_Red": {
+    "Flux": null,
+    "Spectrum": "Source_SPEOS/spectrum_-_osram_led/OSRAM_Hyper-Bright LED_Super-Red.spectrum"
+  },
+  "OSRAM_Hyper_Bright_LED_White_GaN": {
+    "Flux": null,
+    "Spectrum": "Source_SPEOS/spectrum_-_osram_led/OSRAM_Hyper-Bright LED_White(GaN).spectrum"
+  },
+  "OSRAM_Hyper_Bright_LED_Yellow": {
+    "Flux": null,
+    "Spectrum": "Source_SPEOS/spectrum_-_osram_led/OSRAM_Hyper-Bright LED_Yellow.spectrum"
+  },
+
+  "OSRAM_Single_Chip_White_LED_Standard_InGaN_LED_HOP_LED_Amber": {
+    "Flux": null,
+    "Spectrum": "Source_SPEOS/spectrum_-_osram_led/OSRAM_Single Chip White LED - Standard-InGaN LED - HOP LED_Amber.spectrum"
+  },
+  "OSRAM_Single_Chip_White_LED_Standard_InGaN_LED_HOP_LED_Blue_InGaN": {
+    "Flux": null,
+    "Spectrum": "Source_SPEOS/spectrum_-_osram_led/OSRAM_Single Chip White LED - Standard-InGaN LED - HOP LED_Blue(InGaN).spectrum"
+  },
+  "OSRAM_Single_Chip_White_LED_Standard_InGaN_LED_HOP_LED_True_Green": {
+    "Flux": null,
+    "Spectrum": "Source_SPEOS/spectrum_-_osram_led/OSRAM_Single Chip White LED - Standard-InGaN LED - HOP LED_True Green.spectrum"
+  },
+  "OSRAM_Single_Chip_White_LED_Standard_InGaN_LED_HOP_LED_Verde": {
+    "Flux": null,
+    "Spectrum": "Source_SPEOS/spectrum_-_osram_led/OSRAM_Single Chip White LED - Standard-InGaN LED - HOP LED_Verde.spectrum"
+  },
+  "OSRAM_Single_Chip_White_LED_Standard_InGaN_LED_HOP_LED_White_InGaN": {
+    "Flux": null,
+    "Spectrum": "Source_SPEOS/spectrum_-_osram_led/OSRAM_Single Chip White LED - Standard-InGaN LED - HOP LED_White(InGaN).spectrum"
+  },
+  "OSRAM_Single_Chip_White_LED_Standard_InGaN_LED_HOP_LED_Yellow": {
+    "Flux": null,
+    "Spectrum": "Source_SPEOS/spectrum_-_osram_led/OSRAM_Single Chip White LED - Standard-InGaN LED - HOP LED_Yellow.spectrum"
+  },
+
+  "OSRAM_Standard_current_LED_Low_current_LED_High_current_LED_Green": {
+    "Flux": null,
+    "Spectrum": "Source_SPEOS/spectrum_-_osram_led/OSRAM_Standard-current LED - Low-current LED - High-current LED_Green.spectrum"
+  },
+  "OSRAM_Standard_current_LED_Low_current_LED_High_current_LED_Hyper_Red": {
+    "Flux": 20,
+    "Spectrum": "Source_SPEOS/spectrum_-_osram_led/OSRAM_Standard-current LED - Low-current LED - High-current LED_Hyper-Red.spectrum"
+  },
+  "OSRAM_Standard_current_LED_Low_current_LED_High_current_LED_Orange": {
+    "Flux": null,
+    "Spectrum": "Source_SPEOS/spectrum_-_osram_led/OSRAM_Standard-current LED - Low-current LED - High-current LED_Orange.spectrum"
+  },
+  "OSRAM_Standard_current_LED_Low_current_LED_High_current_LED_Pure_Green": {
+    "Flux": null,
+    "Spectrum": "Source_SPEOS/spectrum_-_osram_led/OSRAM_Standard-current LED - Low-current LED - High-current LED_Pure Green.spectrum"
+  },
+  "OSRAM_Standard_current_LED_Low_current_LED_High_current_LED_Red": {
+    "Flux": null,
+    "Spectrum": "Source_SPEOS/spectrum_-_osram_led/OSRAM_Standard-current LED - Low-current LED - High-current LED_Red.spectrum"
+  },
+  "OSRAM_Standard_current_LED_Low_current_LED_High_current_LED_Super_Red": {
+    "Flux": null,
+    "Spectrum": "Source_SPEOS/spectrum_-_osram_led/OSRAM_Standard-current LED - Low-current LED - High-current LED_Super-Red.spectrum"
+  },
+  "OSRAM_Standard_current_LED_Low_current_LED_High_current_LED_Yellow": {
+    "Flux": null,
+    "Spectrum": "Source_SPEOS/spectrum_-_osram_led/OSRAM_Standard-current LED - Low-current LED - High-current LED_Yellow.spectrum"
+  },
+
+  "OSRAM_standard_5400K": {
+    "Flux": null,
+    "Spectrum": "Source_SPEOS/spectrum_-_white_led_/OSRAM standard 5400K.spectrum"
+  },
+  "OSRAM_standard_GaN_7300K": {
+    "Flux": null,
+    "Spectrum": "Source_SPEOS/spectrum_-_white_led_/OSRAM standard GaN 7300K.spectrum"
+  },
+  "OSRAM_standard_InGaN_5700K": {
+    "Flux": null,
+    "Spectrum": "Source_SPEOS/spectrum_-_white_led_/OSRAM standard InGaN 5700K.spectrum"
+  }
+}
