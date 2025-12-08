@@ -6,6 +6,7 @@ Recreate an HOA simulation from an HUD Design
 # Limits :
 # Works only if the HOD feature is located in the main assembly
 # Script only runs from Speos
+# Works from 26R1 (request the display of Tilt Angle in the HOD feature)
 
 # Asking user to select the HOD feature
 result = InputHelper.PauseAndGetInput("Choose HOD element")
@@ -151,11 +152,18 @@ if "Type" in dir(current_sel.Items[0]):
                             break
                     if not TiltAxisFound:
                         Display = MessageBox.Show(
-                            "Tilt axis can't be found, please select it manually and set the rotation values"
+                            "Tilt axis can't be found, please select it manually"
                         )
                         ApplicationHelper.ReportWarning(
-                            "Tilt axis can't be found, please select it manually and set the rotation values"
+                            "Tilt axis can't be found, please select it manually"
                         )
+                    n = 0
+                    while n < eyebox_number:
+                        AdvancedParameterName = "[" + hod_name + "]" + "_Tilt Angle " + hodObject.EBConfigurations[
+                            n].EBConfigName
+                        hoaSim.Eyebox.EBConfigurations[n].TiltAngle = hodObject.AdvancedParameters[
+                            AdvancedParameterName]
+                        n = n + 1
 
             # PGU
             # PGU Center
@@ -208,11 +216,9 @@ if "Type" in dir(current_sel.Items[0]):
             if MultiTicked:
                 Display = MessageBox.Show(
                     "HOA simulation created, do not forget to add warping, report and windshield outer face if needed. "
-                    "Please set the mirrors rotation angle values"
                 )
                 ApplicationHelper.ReportInformation(
                     "HOA simulation created, do not forget to add warping, report and windshield outer face if needed. "
-                    "Please set the mirrors rotation angle values"
                 )
             # Warping, report and windshield outer face doesn't exist in HOD feature so can't be retrieve
             else:
