@@ -1,58 +1,33 @@
-# ======================================================================
-# Purpose:
-#   From the current SpaceClaim selection, this script:
-#       - Collects all selected Coordinate Systems.
-#       - Collects exactly ONE support body (DesignBody) to be used as support.
-#       - Optionally collects one special Coordinate System named "Target".
-#       - Creates one Speos Rectangular Surface (reflector) per Coordinate System
-#         EXCEPT for the one named "Target".
-#
-#   Geometry logic:
-#       - Source Point:
-#           * For each reflector, the SourcePoint is the current Coordinate System.
-#
-#       - Target axis & orientation:
-#           * A global axis system named "Target" is used for ALL reflectors.
-#             - TargetAxis        = Target.Axes[0]
-#             - TargetOrientation = Target.Axes[1]
-#           * No reflector is created on the "Target" axis system itself.
-#
-#       - Style axis & orientation:
-#           * For each reflector:
-#               - StyleAxis        = current CS.Axes[0]
-#               - StyleOrientation = current CS.Axes[1]
-#
-#       - Support:
-#           * The first face of the selected support body is used as the support surface.
-#
-#   UX:
-#       A Windows Forms GUI lets the user specify:
-#
-#       SECTION "Styling"
-#           XStart, XEnd, YStart, YEnd, XSize, YSize
-#
-#       SECTION "Pillow Definition"
-#           - Radii:
-#               GroupType = "Radii"
-#               XRadius, YRadius
-#           - Freeform:
-#               GroupType = "ReflectFreeform"
-#               XStart, XEnd, YStart, YEnd   (group-level)
-#
-#   If the UX is disabled (ENABLE_GUI = False), default values are used.
-#
-# Selection rules:
-#   - Exactly ONE DesignBody must be selected (support).
-#   - One or more CoordinateSystems must be selected.
-#   - Among the selected CoordinateSystems, one must be named "Target".
-#     This "Target" CS is used only as a reference; no reflector is built on it.
-#   - If more than one body ("surface") is selected, a popup is shown and
-#     the script stops.
-#
-# Notes:
-#   - This script is written for IronPython inside SpaceClaim / Speos.
-#   - Comments are intentionally verbose to explain each step.
-# ======================================================================
+"""
+Create Speos rectangular reflectors from SpaceClaim coordinate systems.
+
+This script runs inside Ansys Speos (IronPython). From the current
+SpaceClaim selection, it builds one rectangular surface (reflector)
+per selected coordinate system, using a single support body and a
+special coordinate system used as global target axis system.
+
+How it works
+------------
+- The user selects:
+  * One body that will act as a freeform support.
+  * Several coordinate systems.
+  * Among those coordinate systems, one must have the name given by
+    ``DEFAULT_TARGET_CS_NAME`` (by default ``"target"``).
+- The script uses:
+  * Each coordinate system origin as the focal point.
+  * Each coordinate system X / Y axes for the local style axis system.
+  * The target CS X / Y axes for the global target axis and orientation.
+- A Windows Forms dialog lets the user define:
+  * Styling parameters (XStart, XEnd, YStart, YEnd, XSize, YSize).
+  * Pillow definition (radii or freeform group).
+
+Notes
+-----
+- Requires the SpaceClaim and Speos .NET assemblies to be available
+  in the IronPython environment.
+- The script assumes ``GetRootPart``, ``Selection``, ``FaceSelection``
+  and ``SpeosDes`` are provided by the Speos scripting context.
+"""
 
 import ctypes
 
@@ -63,7 +38,7 @@ clr.AddReference("System.Windows.Forms")
 clr.AddReference("System.Drawing")
 
 from SpaceClaim.Api.V252 import CoordinateSystem
-from SpaceClaim.Api.V252 import DesignBody
+from SpaceClaim.Api.V252 import DesignBody  # TO UPDATE with your version if needed
 from System.Drawing import Font
 from System.Drawing import FontStyle
 from System.Drawing import Point
@@ -79,11 +54,13 @@ from System.Windows.Forms import TextBox
 
 # GetRootPart, Selection, FaceSelection, SpeosDes are provided by the environment.
 
-
 # -----------------------------------------------------------
 # CONFIGURATION FLAGS & DEFAULTS
 # -----------------------------------------------------------
 ENABLE_GUI = True  # Set to False if you want to bypass the GUI and use defaults
+
+# Name of the Coordinate System used as global target
+DEFAULT_TARGET_CS_NAME = "target"
 
 # Default "Styling" parameters
 DEFAULT_STYLE_XSTART = -10.0
@@ -98,8 +75,8 @@ DEFAULT_STYLE_YSIZE = 2.0
 DEFAULT_PILLOW_MODE = "Radii"
 
 # Defaults if mode == "Radii"
-DEFAULT_RADII_XRADIUS = 10
-DEFAULT_RADII_YRADIUS = 10
+DEFAULT_RADII_XRADIUS = 10.0
+DEFAULT_RADII_YRADIUS = 10.0
 
 # Defaults if mode == "Freeform"
 DEFAULT_FREEFORM_XSTART = -10.0
@@ -116,42 +93,69 @@ MB_TOPMOST = 0x00040000
 
 
 def get_foreground_hwnd():
-    """Return handle to the current foreground window."""
+    """Return the handle to the current foreground window.
+
+    Returns
+    -------
+    int
+        Win32 window handle (HWND) of the current foreground window.
+    """
     return ctypes.windll.user32.GetForegroundWindow()
 
 
 def show_message(message, title="Message"):
-    """Show a simple topmost MessageBox with the given text and title."""
+    """Show a simple topmost message box.
+
+    Parameters
+    ----------
+    message : str
+        Text to display in the message box.
+    title : str, optional
+        Title of the message box window, by default ``"Message"``.
+    """
     hwnd = get_foreground_hwnd()
-    ctypes.windll.user32.MessageBoxW(hwnd, message, title, MB_OK | MB_ICONINFORMATION | MB_TOPMOST)
+    ctypes.windll.user32.MessageBoxW(
+        hwnd,
+        message,
+        title,
+        MB_OK | MB_ICONINFORMATION | MB_TOPMOST,
+    )
 
 
 # -----------------------------------------------------------
 # UX for "Styling" + "Pillow Definition"
 # -----------------------------------------------------------
 class RectangularParametersForm(Form):
-    """
-    UX with two sections:
+    """Dialog to edit styling and pillow parameters for rectangular surfaces.
 
-    1) "Styling"
-        XStart, XEnd, YStart, YEnd, XSize, YSize
+    The form exposes two logical sections.
 
-    2) "Pillow Definition"
-        - Radii:
-            XRadius, YRadius
-        - Freeform:
-            XStart, XEnd, YStart, YEnd  (group-specific)
+    Styling
+        Global rectangular styling parameters:
+        ``XStart``, ``XEnd``, ``YStart``, ``YEnd``, ``XSize``, ``YSize``.
 
-    After DialogResult.OK, the parsed values are available as:
-        self.Style_XStart, self.Style_XEnd, self.Style_YStart, self.Style_YEnd,
-        self.Style_XSize, self.Style_YSize
+    Pillow Definition
+        Choice between:
 
-        self.PillowMode = "Radii" or "Freeform"
+        * Radii: ``XRadius``, ``YRadius``.
+        * Freeform group: ``Group XStart``, ``Group XEnd``,
+          ``Group YStart``, ``Group YEnd``.
 
-        if Radii:
-            self.Radii_XRadius, self.Radii_YRadius
-        if Freeform:
-            self.Free_XStart, self.Free_XEnd, self.Free_YStart, self.Free_YEnd
+    After a successful ``Compute`` (``DialogResult.OK``), the parsed values
+    are available as instance attributes.
+
+    Attributes
+    ----------
+    Style_XStart, Style_XEnd, Style_YStart, Style_YEnd : float
+        Global rectangular styling bounds.
+    Style_XSize, Style_YSize : float
+        Pillow size parameters in X and Y.
+    PillowMode : {"Radii", "Freeform"}
+        Selected pillow definition mode.
+    Radii_XRadius, Radii_YRadius : float
+        Pillow radii values (only valid when ``PillowMode == "Radii"``).
+    Free_XStart, Free_XEnd, Free_YStart, Free_YEnd : float
+        Group bounds (only valid when ``PillowMode == "Freeform"``).
     """
 
     def __init__(self):
@@ -251,7 +255,14 @@ class RectangularParametersForm(Form):
     # ------------- Layout helpers -------------
 
     def _build_styling_layout(self, top_y):
-        """Create labels and place TextBoxes for the Styling section."""
+        """Create labels and place TextBoxes for the Styling section.
+
+        Parameters
+        ----------
+        top_y : int
+            Vertical offset (in pixels) from the top of the form where
+            the styling controls should start.
+        """
         labels = [
             ("XStart", self.tb_style_xstart),
             ("XEnd", self.tb_style_xend),
@@ -276,13 +287,13 @@ class RectangularParametersForm(Form):
             self.Controls.Add(tb)
 
     def _build_pillow_layout(self, top_y):
-        """
-        Create labels and place TextBoxes for the Pillow Definition section.
+        """Create and position controls for the Pillow Definition section.
 
-        There are two sets of controls:
-            - Radii: XRadius, YRadius
-            - Freeform: XStart, XEnd, YStart, YEnd (group)
-        They will be enabled/disabled depending on the selected mode.
+        Parameters
+        ----------
+        top_y : int
+            Vertical offset (in pixels) from the top of the form where
+            the pillow controls should start.
         """
         # Radii controls
         lbl_rx = Label()
@@ -355,11 +366,7 @@ class RectangularParametersForm(Form):
         self.update_pillow_controls()
 
     def update_pillow_controls(self):
-        """
-        Enable Radii controls only if Radii mode is active.
-
-        Enable Freeform controls only if Freeform mode is active.
-        """
+        """Enable or disable controls depending on the active pillow mode."""
         is_radii = self.rb_radii.Checked
         is_free = self.rb_freeform.Checked
 
@@ -376,10 +383,9 @@ class RectangularParametersForm(Form):
     # ------------- OK / Cancel -------------
 
     def on_ok(self, sender, event):
-        """
-        Parse all user inputs and store them in attributes.
+        """Parse all user inputs and store them in attributes.
 
-        If some value is invalid, show an error and stay open.
+        If some value is invalid, an error is shown and the form remains open.
         """
         try:
             # Styling
@@ -402,7 +408,10 @@ class RectangularParametersForm(Form):
                 self.Free_YStart = float(self.tb_free_ystart.Text)
                 self.Free_YEnd = float(self.tb_free_yend.Text)
             else:
-                show_message("Please select a Pillow Definition mode (Radii or Freeform).", "Input Error")
+                show_message(
+                    "Please select a Pillow Definition mode (Radii or Freeform).",
+                    "Input Error",
+                )
                 return
 
         except Exception:
@@ -413,7 +422,7 @@ class RectangularParametersForm(Form):
         self.Close()
 
     def on_cancel(self, sender, event):
-        """User cancels the operation."""
+        """Handle user cancellation."""
         self.DialogResult = DialogResult.Cancel
         self.Close()
 
@@ -422,16 +431,25 @@ class RectangularParametersForm(Form):
 # Helper: get all parameters (Styling + Pillow Definition)
 # -----------------------------------------------------------
 def get_all_parameters():
-    """
-    Return a dictionary with all user-defined parameters.
+    """Return all styling and pillow parameters.
 
-    Structure:
-      {
-        "style":   (x_start, x_end, y_start, y_end, x_size, y_size),
-        "pillow_mode": "Radii" or "Freeform",
-        "radii":   (x_radius, y_radius),
-        "freeform":(gx_start, gx_end, gy_start, gy_end),
-      }
+    The values are taken either from the GUI (when ``ENABLE_GUI`` is True)
+    or from the default constants defined at module level.
+
+    Returns
+    -------
+    dict
+        Dictionary with the following keys:
+
+        ``"style"`` : tuple of float
+            ``(x_start, x_end, y_start, y_end, x_size, y_size)``.
+        ``"pillow_mode"`` : {"Radii", "Freeform"}
+            Selected pillow definition mode.
+        ``"radii"`` : tuple of float
+            ``(x_radius, y_radius)`` for radii-based pillows.
+        ``"freeform"`` : tuple of float
+            ``(group_x_start, group_x_end, group_y_start, group_y_end)``
+            for freeform group pillows.
     """
     if not ENABLE_GUI:
         # GUI disabled -> direct defaults
@@ -517,8 +535,8 @@ try:
 
     if len(selected_items) == 0:
         show_message(
-            "No selection found. Please select one support body and one or more coordinate systems "
-            "(including one named 'Target').",
+            "No selection found. Please select one support body and one or more "
+            "coordinate systems (including one named '{0}').".format(DEFAULT_TARGET_CS_NAME),
             "Selection Error",
         )
         raise SystemExit
@@ -552,16 +570,25 @@ try:
     if len(coord_systems) == 0:
         show_message(
             "No Coordinate Systems found in the selection.\n"
-            "Please select at least one Coordinate System plus 'Target'.",
+            "Please select at least one Coordinate System plus '{0}'.".format(DEFAULT_TARGET_CS_NAME),
             "Selection Error",
         )
         raise SystemExit
 
-    # Find the "Target" Coordinate System
+    if len(coord_systems) < 2:
+        show_message(
+            "At least two Coordinate Systems are required:\n"
+            "- One '{0}' Coordinate System.\n"
+            "- At least one additional reflector Coordinate System.".format(DEFAULT_TARGET_CS_NAME),
+            "Selection Error",
+        )
+        raise SystemExit
+
+    # Find the target Coordinate System
     target_cs = None
     for cs in coord_systems:
         try:
-            if cs.Name and cs.Name.lower() == "target":
+            if cs.Name and cs.Name.lower() == DEFAULT_TARGET_CS_NAME.lower():
                 target_cs = cs
                 break
         except Exception:
@@ -570,19 +597,21 @@ try:
 
     if target_cs is None:
         show_message(
-            "No Coordinate System named 'Target' was found in the selection.\n"
-            "Please create/select a CS called 'Target' to define the common target axes.",
+            "No Coordinate System named '{0}' was found in the selection.\n"
+            "Please create/select a CS called '{0}' to define the common target axes.".format(DEFAULT_TARGET_CS_NAME),
             "Target CS Not Found",
         )
         raise SystemExit
 
-    # Reflector coordinate systems = all CS except "Target"
+    # Reflector coordinate systems = all CS except target CS
     reflector_coord_systems = [cs for cs in coord_systems if cs is not target_cs]
 
     if len(reflector_coord_systems) == 0:
         show_message(
-            "Only the 'Target' Coordinate System is selected.\n"
-            "Please select at least one additional Coordinate System to create reflectors.",
+            "Only the '{0}' Coordinate System is selected.\n"
+            "Please select at least one additional Coordinate System to create reflectors.".format(
+                DEFAULT_TARGET_CS_NAME
+            ),
             "No Reflector CS Found",
         )
         raise SystemExit
@@ -621,7 +650,7 @@ try:
         "Global Target CS: {1}\n"
         "Pillow mode: {2}".format(
             len(reflector_coord_systems),
-            getattr(target_cs, "Name", "Target"),
+            getattr(target_cs, "Name", DEFAULT_TARGET_CS_NAME),
             pillow_mode,
         ),
         "Processing",
@@ -630,7 +659,7 @@ try:
     root_part = GetRootPart()
     created_count = 0
 
-    # Pre-build selections for the global Target axis system
+    # Pre-build selections for the global target axis system
     target_axis_selection = Selection.Create(target_cs.Axes[0])
     target_orientation_selection = Selection.Create(target_cs.Axes[1])
 
@@ -653,7 +682,7 @@ try:
         face_selection = FaceSelection.Create(support_face)
         optical_surface_rectangular.General.SupportBody.Set(face_selection.Items)
 
-        # General / TargetAxis and TargetOrientation -> global "Target" CS
+        # General / TargetAxis and TargetOrientation -> global target CS
         optical_surface_rectangular.General.TargetAxis.Set(target_axis_selection.Items)
         optical_surface_rectangular.General.TargetOrientation.Set(target_orientation_selection.Items)
 
@@ -705,11 +734,11 @@ try:
         "Global Target CS: {1}\n"
         "Pillow mode: {2}".format(
             created_count,
-            getattr(target_cs, "Name", "Target"),
+            getattr(target_cs, "Name", DEFAULT_TARGET_CS_NAME),
             pillow_mode,
         ),
         "Done",
     )
 
-except Exception as e:  # noqa: BLE001  (flake8 bare except, if you have that rule)
+except Exception as e:  # noqa: BLE001
     show_message("Unexpected error: {0}".format(str(e)), "Script Error")
