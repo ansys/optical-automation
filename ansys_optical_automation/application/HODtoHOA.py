@@ -8,6 +8,10 @@ Recreate an HOA simulation from an HUD Design
 # Script only runs from Speos
 # Works from 26R1 (request the display of Tilt Angle in the HOD feature)
 
+version = int(dir(SpaceClaim.Api)[0][1:])
+if not version >= 261:
+    raise TypeError("this example does not support running in version before 26R1")
+
 # Asking user to select the HOD feature
 result = InputHelper.PauseAndGetInput("Choose HOD element")
 current_sel = result.PrimarySelection
