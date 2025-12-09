@@ -151,12 +151,8 @@ if "Type" in dir(current_sel.Items[0]):
                             TiltAxisFound = True
                             break
                     if not TiltAxisFound:
-                        Display = MessageBox.Show(
-                            "Tilt axis can't be found, please select it manually"
-                        )
-                        ApplicationHelper.ReportWarning(
-                            "Tilt axis can't be found, please select it manually"
-                        )
+                        Display = MessageBox.Show("Tilt axis can't be found, please select it manually")
+                        ApplicationHelper.ReportWarning("Tilt axis can't be found, please select it manually")
                     n = 0
                     while n < eyebox_number:
                         AdvancedParameterName = "[" + hod_name + "]" + "_Tilt Angle " + hodObject.EBConfigurations[
