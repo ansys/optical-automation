@@ -155,10 +155,12 @@ if "Type" in dir(current_sel.Items[0]):
                         ApplicationHelper.ReportWarning("Tilt axis can't be found, please select it manually")
                     n = 0
                     while n < eyebox_number:
-                        AdvancedParameterName = "[" + hod_name + "]" + "_Tilt Angle " + hodObject.EBConfigurations[
-                            n].EBConfigName
+                        AdvancedParameterName = (
++                            "[" + hod_name + "]" + "_Tilt Angle " + hodObject.EBConfigurations[n].EBConfigName
++                        )
                         hoaSim.Eyebox.EBConfigurations[n].TiltAngle = hodObject.AdvancedParameters[
-                            AdvancedParameterName]
+                            AdvancedParameterName
++                        ]
                         n = n + 1
 
             # PGU
