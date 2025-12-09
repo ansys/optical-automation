@@ -160,11 +160,11 @@ if "Type" in dir(current_sel.Items[0]):
                     n = 0
                     while n < eyebox_number:
                         AdvancedParameterName = (
-+                            "[" + hod_name + "]" + "_Tilt Angle " + hodObject.EBConfigurations[n].EBConfigName
-+                        )
+                            "[" + hod_name + "]" + "_Tilt Angle " + hodObject.EBConfigurations[n].EBConfigName
+                        )
                         hoaSim.Eyebox.EBConfigurations[n].TiltAngle = hodObject.AdvancedParameters[
                             AdvancedParameterName
-+                        ]
+                        ]
                         n = n + 1
 
             # PGU
