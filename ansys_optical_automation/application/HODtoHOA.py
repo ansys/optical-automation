@@ -156,10 +156,14 @@ if "Type" in dir(current_sel.Items[0]):
 
                     version = int(dir(SpaceClaim.Api)[0][1:])
                     if not version >= 261:
-                        Display = MessageBox.Show("Speos version is older than 2026R1, Tilt angles can't be retrieved,"
-                                                  " please add them manually")
-                        ApplicationHelper.ReportWarning("Speos version is older than 2026R1, Tilt angles can't be "
-                                                        "retrieved, please add them manually")
+                        Display = MessageBox.Show(
+                            "Speos version is older than 2026R1, Tilt angles can't be retrieved,"
+                            " please add them manually"
+                        )
+                        ApplicationHelper.ReportWarning(
+                            "Speos version is older than 2026R1, Tilt angles can't be "
+                            "retrieved, please add them manually"
+                        )
                     else:
                         n = 0
                         while n < eyebox_number:
