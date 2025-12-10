@@ -6,11 +6,7 @@ Recreate an HOA simulation from an HUD Design
 # Limits :
 # Works only if the HOD feature is located in the main assembly
 # Script only runs from Speos
-# Works from 26R1 (request the display of Tilt Angle in the HOD feature)
-
-version = int(dir(SpaceClaim.Api)[0][1:])
-if not version >= 261:
-    raise TypeError("this example does not support running in version before 26R1")
+# Tilt angle function works from 26R1 (request the display of Tilt Angle in the HOD feature)
 
 # Asking user to select the HOD feature
 result = InputHelper.PauseAndGetInput("Choose HOD element")
@@ -157,15 +153,23 @@ if "Type" in dir(current_sel.Items[0]):
                     if not TiltAxisFound:
                         Display = MessageBox.Show("Tilt axis can't be found, please select it manually")
                         ApplicationHelper.ReportWarning("Tilt axis can't be found, please select it manually")
-                    n = 0
-                    while n < eyebox_number:
-                        AdvancedParameterName = (
-                            "[" + hod_name + "]" + "_Tilt Angle " + hodObject.EBConfigurations[n].EBConfigName
-                        )
-                        hoaSim.Eyebox.EBConfigurations[n].TiltAngle = hodObject.AdvancedParameters[
-                            AdvancedParameterName
-                        ]
-                        n = n + 1
+
+                    version = int(dir(SpaceClaim.Api)[0][1:])
+                    if not version >= 261:
+                        Display = MessageBox.Show("Speos version is older than 2026R1, Tilt angles can't be retrieved,"
+                                                  " please add them manually")
+                        ApplicationHelper.ReportWarning("Speos version is older than 2026R1, Tilt angles can't be "
+                                                        "retrieved, please add them manually")
+                    else:
+                        n = 0
+                        while n < eyebox_number:
+                            AdvancedParameterName = (
+                                "[" + hod_name + "]" + "_Tilt Angle " + hodObject.EBConfigurations[n].EBConfigName
+                            )
+                            hoaSim.Eyebox.EBConfigurations[n].TiltAngle = hodObject.AdvancedParameters[
+                                AdvancedParameterName
+                            ]
+                            n = n + 1
 
             # PGU
             # PGU Center
@@ -213,23 +217,13 @@ if "Type" in dir(current_sel.Items[0]):
                 hoaSim.PGU.PGUHorizontalSize = hodObject.PGUHorizontalSize
                 hoaSim.PGU.PGUVerticalSize = hodObject.PGUVerticalSize
 
-            # in case of multieyebox mirrors, the tilt angle can't be retrieve from HOD feature,
-            # manual operation mandatory
-            if MultiTicked:
-                Display = MessageBox.Show(
-                    "HOA simulation created, do not forget to add warping, report and windshield outer face if needed. "
-                )
-                ApplicationHelper.ReportInformation(
-                    "HOA simulation created, do not forget to add warping, report and windshield outer face if needed. "
-                )
             # Warping, report and windshield outer face doesn't exist in HOD feature so can't be retrieve
-            else:
-                Display = MessageBox.Show(
-                    "HOA simulation created, do not forget to add warping, report and windshield outer face if needed"
-                )
-                ApplicationHelper.ReportInformation(
-                    "HOA simulation created, do not forget to add warping, report and windshield outer face if needed"
-                )
+            Display = MessageBox.Show(
+                "HOA simulation created, do not forget to add warping, report and windshield outer face if needed"
+            )
+            ApplicationHelper.ReportInformation(
+                "HOA simulation created, do not forget to add warping, report and windshield outer face if needed"
+            )
         else:
             Display = MessageBox.Show("Please select a HOD feature")
             ApplicationHelper.ReportError("Please select a HOD feature")
