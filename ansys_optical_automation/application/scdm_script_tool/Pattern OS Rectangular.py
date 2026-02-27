@@ -37,9 +37,8 @@ import clr
 clr.AddReference("System.Windows.Forms")
 clr.AddReference("System.Drawing")
 
-from SpaceClaim.Api.V252 import (
-    CoordinateSystem,  # TO UPDATE with your version if needed
-)
+# TO UPDATE with your SpaceClaim API version if needed
+from SpaceClaim.Api.V252 import CoordinateSystem
 from SpaceClaim.Api.V252 import DesignBody
 from System.Drawing import Font
 from System.Drawing import FontStyle
