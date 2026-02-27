@@ -37,8 +37,10 @@ import clr
 clr.AddReference("System.Windows.Forms")
 clr.AddReference("System.Drawing")
 
-from SpaceClaim.Api.V252 import CoordinateSystem
-from SpaceClaim.Api.V252 import DesignBody  # TO UPDATE with your version if needed
+from SpaceClaim.Api.V252 import (
+    CoordinateSystem,  # TO UPDATE with your version if needed
+)
+from SpaceClaim.Api.V252 import DesignBody
 from System.Drawing import Font
 from System.Drawing import FontStyle
 from System.Drawing import Point
@@ -362,11 +364,43 @@ class RectangularParametersForm(Form):
     # ------------- Pillow mode handling -------------
 
     def on_mode_changed(self, sender, event):
-        """Update controls when Radii/Freeform selection changes."""
+        """Handle pillow-mode toggle events (Radii vs Freeform).
+
+        This event handler is called when the user changes the selected pillow
+        definition mode via the radio buttons. It refreshes the enabled/disabled
+        state of the input fields so that only the controls relevant to the active
+        mode can be edited.
+
+        Parameters
+        ----------
+        sender : object
+            The UI control that triggered the event (typically a ``RadioButton``).
+        event : object
+            Event arguments provided by Windows Forms.
+
+        See Also
+        --------
+        update_pillow_controls :
+            Applies the enable/disable logic to the pillow-related text boxes.
+        """
         self.update_pillow_controls()
 
     def update_pillow_controls(self):
-        """Enable or disable controls depending on the active pillow mode."""
+        """Enable or disable pillow input controls based on the selected mode.
+
+        When the "Radii" mode is active, only the radius text boxes are enabled.
+        When the "Freeform" mode is active, only the freeform group bound text
+        boxes are enabled.
+
+        Notes
+        -----
+        This method reads the state of:
+
+        - ``self.rb_radii.Checked``
+        - ``self.rb_freeform.Checked``
+
+        and updates the ``Enabled`` property of the corresponding text boxes.
+        """
         is_radii = self.rb_radii.Checked
         is_free = self.rb_freeform.Checked
 
@@ -383,9 +417,42 @@ class RectangularParametersForm(Form):
     # ------------- OK / Cancel -------------
 
     def on_ok(self, sender, event):
-        """Parse all user inputs and store them in attributes.
+        """Validate user inputs, store parsed values, and close the dialog.
 
-        If some value is invalid, an error is shown and the form remains open.
+        This method parses all numeric fields from the dialog and stores
+        them as instance attributes (e.g. ``Style_XStart``, ``PillowMode``).
+        If a parsing error occurs or if no pillow mode is selected, an
+        error message is shown and the dialog remains open.
+
+        Parameters
+        ----------
+        sender : object
+            The UI control that triggered the event (typically the
+            "Compute" button).
+        event : object
+            Event arguments provided by Windows Forms.
+
+        Attributes
+        ----------
+        Style_XStart, Style_XEnd, Style_YStart, Style_YEnd : float
+            Global rectangular styling bounds.
+        Style_XSize, Style_YSize : float
+            Pillow size parameters in X and Y.
+        PillowMode : {"Radii", "Freeform"}
+            Selected pillow definition mode.
+        Radii_XRadius, Radii_YRadius : float
+            Pillow radii values (only when ``PillowMode == "Radii"``).
+        Free_XStart, Free_XEnd, Free_YStart, Free_YEnd : float
+            Group bounds (only when ``PillowMode == "Freeform"``).
+
+        Notes
+        -----
+        On success, this method sets ``self.DialogResult`` to
+        ``DialogResult.OK`` and closes the form. On failure, it shows
+        an error message via ``show_message`` and keeps the dialog open.
+
+        Any exception during numeric parsing is treated as an input error
+        and triggers a generic "Invalid numeric input" message.
         """
         try:
             # Styling
@@ -422,7 +489,25 @@ class RectangularParametersForm(Form):
         self.Close()
 
     def on_cancel(self, sender, event):
-        """Handle user cancellation."""
+        """Cancel the dialog without applying changes.
+
+        This method is called when the user clicks the "Cancel" button.
+        It sets the dialog result to ``DialogResult.Cancel`` and closes
+        the form.
+
+        Parameters
+        ----------
+        sender : object
+            The UI control that triggered the event (typically the "Cancel"
+            button).
+        event : object
+            Event arguments provided by Windows Forms.
+
+        Notes
+        -----
+        This method sets ``self.DialogResult`` to ``DialogResult.Cancel`` and
+        closes the form via ``self.Close()``.
+        """
         self.DialogResult = DialogResult.Cancel
         self.Close()
 
