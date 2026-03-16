@@ -1,0 +1,47 @@
+{
+  "VDI12": {
+    "FOP": "Optical_Property/surface_optical_properties/rough/unpolished_agiecharmilles_vdi-chemical_etching/AgieCharmillesVDI_Chemical-Etching-12.unpolished"
+  },
+  "VDI15": {
+    "FOP": "Optical_Property/surface_optical_properties/rough/unpolished_agiecharmilles_vdi-chemical_etching/AgieCharmillesVDI_Chemical-Etching-15.unpolished"
+  },
+  "VDI18": {
+    "FOP": "Optical_Property/surface_optical_properties/rough/unpolished_agiecharmilles_vdi-chemical_etching/AgieCharmillesVDI_Chemical-Etching-18.unpolished"
+  },
+  "VDI21": {
+    "FOP": "Optical_Property/surface_optical_properties/rough/unpolished_agiecharmilles_vdi-chemical_etching/AgieCharmillesVDI_Chemical-Etching-21.unpolished"
+  },
+  "VDI24": {
+    "FOP": "Optical_Property/surface_optical_properties/rough/unpolished_agiecharmilles_vdi-chemical_etching/AgieCharmillesVDI_Chemical-Etching-24.unpolished"
+  },
+  "VDI27": {
+    "FOP": "Optical_Property/surface_optical_properties/rough/unpolished_agiecharmilles_vdi-chemical_etching/AgieCharmillesVDI_Chemical-Etching-27.unpolished"
+  },
+  "VDI30": {
+    "FOP": "Optical_Property/surface_optical_properties/rough/unpolished_agiecharmilles_vdi-chemical_etching/AgieCharmillesVDI_Chemical-Etching-30.unpolished"
+  },
+  "VDI33": {
+    "FOP": "Optical_Property/surface_optical_properties/rough/unpolished_agiecharmilles_vdi-chemical_etching/AgieCharmillesVDI_Chemical-Etching-33.unpolished"
+  },
+  "VDI36": {
+    "FOP": "Optical_Property/surface_optical_properties/rough/unpolished_agiecharmilles_vdi-chemical_etching/AgieCharmillesVDI_Chemical-Etching-36.unpolished"
+  },
+  "VDI38": {
+    "FOP": "Optical_Property/surface_optical_properties/rough/unpolished_agiecharmilles_vdi-chemical_etching/AgieCharmillesVDI_Chemical-Etching-38.unpolished"
+  },
+  "VDI42": {
+    "FOP": "Optical_Property/surface_optical_properties/rough/unpolished_agiecharmilles_vdi-chemical_etching/AgieCharmillesVDI_Chemical-Etching-42.unpolished"
+  },
+  "VDI45": {
+    "FOP": "Optical_Property/surface_optical_properties/rough/unpolished_agiecharmilles_vdi-chemical_etching/AgieCharmillesVDI_Chemical-Etching-45.unpolished"
+  },
+  "VDI31": {
+    "FOP": "Optical_Property/surface_optical_properties/rough/unpolished_agiecharmilles_vdi_edm/AgieCharmillesVDI_EDM-31.unpolished"
+  },
+  "VDI33_2": {
+    "FOP": "Optical_Property/surface_optical_properties/rough/unpolished_agiecharmilles_vdi_edm/AgieCharmillesVDI_EDM-33.unpolished"
+  },
+  "VDI35": {
+    "FOP": "Optical_Property/surface_optical_properties/rough/unpolished_agiecharmilles_vdi_edm/AgieCharmillesVDI_EDM-35.unpolished"
+  }
+}
