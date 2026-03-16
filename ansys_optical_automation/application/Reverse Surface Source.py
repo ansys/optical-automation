@@ -1,21 +1,20 @@
 # ----------------------------------------------------------------------------------------
 # Script Description:
 #
-# This script allows users to **invert the orientation of the emissive faces** 
+# This script allows users to **invert the orientation of the emissive faces**
 # associated with selected Speos surface light sources.
 #
-# This is especially useful after using the **"Create Sources from Data"** tool, 
-# where light sources are created based on geometry name matching, but their 
+# This is especially useful after using the **"Create Sources from Data"** tool,
+# where light sources are created based on geometry name matching, but their
 # right **emissive face orientation cannot be predicted** reliably during import.
 # ----------------------------------------------------------------------------------------
-import clr
 import ctypes
-from ctypes import wintypes
 
 # MessageBox flags
 MB_OK = 0x00000000
 MB_ICONERROR = 0x00000010
 MB_TOPMOST = 0x00040000
+
 
 # Get handle to foreground window
 def get_foreground_hwnd():
@@ -31,6 +30,7 @@ def get_foreground_hwnd():
         Handle (HWND) of the foreground window.
     """
     return ctypes.windll.user32.GetForegroundWindow()
+
 
 # Show error message box
 def show_error(message, title="Error"):
@@ -54,6 +54,7 @@ def show_error(message, title="Error"):
     """
     hwnd = get_foreground_hwnd()
     ctypes.windll.user32.MessageBoxW(hwnd, message, title, MB_OK | MB_ICONERROR | MB_TOPMOST)
+
 
 # Get selected items
 source_selections = Selection.GetActive().Items
