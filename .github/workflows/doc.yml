@@ -35,7 +35,7 @@ jobs:
           retention-days: 7
       
     - name: Deploy
-      uses: JamesIves/github-pages-deploy-action@v4.4.1
+      uses: JamesIves/github-pages-deploy-action@v4.5.0
       with:
           branch: gh-pages
           folder: doc/_build/html
