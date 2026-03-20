@@ -41,6 +41,7 @@ class BaseZOS:
         import ZOSAPI_NetHelper
 
         # Find the installed version of OpticStudio
+        # path = "C:\Program Files\Ansys Zemax OpticStudio 2023 R2.01"
         if path is None:
             is_initialized = ZOSAPI_NetHelper.ZOSAPI_Initializer.Initialize()
         else:
