@@ -101,8 +101,8 @@ def ensure_body_docobject(dobj):
                         return bd
                 if hasattr(b, "IsVisible") and hasattr(b, "GetName"):
                     return b
-        except:
-            pass
+        except Exception as e: 
+    print("Exception found: " + str(e))
 
     # Fallback: return as-is
     return dobj
