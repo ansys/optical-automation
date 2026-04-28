@@ -87,8 +87,8 @@ def ensure_body_docobject(dobj):
                 bdoc = root.GetDocObject()
                 if bdoc is not None and hasattr(bdoc, "IsVisible") and hasattr(bdoc, "GetName"):
                     return bdoc
-            except:
-                pass
+            except Exception as e: 
+    print("Exception found: " + str(e))
 
     # 4) Try GetBody() fallback
     if hasattr(dobj, "GetBody"):
