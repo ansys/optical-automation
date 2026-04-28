@@ -74,8 +74,8 @@ def ensure_body_docobject(dobj):
                 root = getattr(doc, "Root", None)
                 if root is not None and hasattr(root, "IsVisible") and hasattr(root, "GetName"):
                     return root
-        except:
-            pass
+        except Exception as e: 
+    print("Exception found: " + str(e))
 
     # 3) Try Root directly
     root = getattr(dobj, "Root", None)
