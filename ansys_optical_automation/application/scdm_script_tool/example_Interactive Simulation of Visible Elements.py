@@ -185,7 +185,7 @@ def is_visible_safe(dobj):
         return True  # Be permissive if uncertain
 
 
-def assign_unique_name(target_obj, base_name, max_seq=100):
+#def assign_unique_name(target_obj, base_name, max_seq=100):
     """
     Assign a unique name to a Speos/SpaceClaim object.
 
@@ -338,8 +338,8 @@ for obj in visible_source_docobjects:
 # 6) Build and configure Interactive Simulation (with guaranteed unique name)
 base_sim_name = "Raytracing of Visible Elements"
 interactive = SpeosSim.SimulationInteractive.Create()
-final_name = assign_unique_name(interactive, base_sim_name)
-print("Created simulation with name:", final_name)
+# final_name = assign_unique_name(interactive, base_sim_name)
+# print("Created simulation with name:", final_name)
 
 if len(unique_doc_bodies) > 0:
     sel_geos = Selection.Create(unique_doc_bodies)
