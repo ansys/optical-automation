@@ -1,5 +1,6 @@
-# Python Script, API Version = V252
+# Python Script, API Version = V261
 from __future__ import print_function
+
 
 """
 Script overview
@@ -16,10 +17,12 @@ This script prepares a Speos Interactive Simulation by:
    suffix to avoid conflicts.
 """
 
+
 # =============================================================================
 # Configuration
 # =============================================================================
 REQUIRE_VISIBLE = False  # Set to True to include only visible bodies
+
 
 # =============================================================================
 # Helper Functions
@@ -47,7 +50,7 @@ def ensure_body_docobject(dobj):
     Notes
     -----
     - Speos materials often reference faces or features instead of full bodies.
-      Passing those directly to the simulation can create anonymous “Solid”
+      Passing those directly to the simulation can create anonymous "Solid"
       entries or duplicate geometry.
     - This function uses several fallback strategies (.Root, .GetDocObject(),
       .GetBody()) to climb back to the owning DesignBody.
@@ -56,8 +59,8 @@ def ensure_body_docobject(dobj):
 
     Examples
     --------
-    >>> body = ensure_body_docobject(face_stub)
-    >>> print(body.GetName())
+>>> body = ensure_body_docobject(face_stub)
+>>> print(body.GetName())
     'Body - Light Guide'
     """
     # 1) Already a body-level docobject
@@ -74,8 +77,9 @@ def ensure_body_docobject(dobj):
                 root = getattr(doc, "Root", None)
                 if root is not None and hasattr(root, "IsVisible") and hasattr(root, "GetName"):
                     return root
-        except Exception as e: 
-    print("Exception found: " + str(e))
+
+        except Exception as e:
+            print("Exception found: " + str(e))
 
     # 3) Try Root directly
     root = getattr(dobj, "Root", None)
@@ -87,8 +91,9 @@ def ensure_body_docobject(dobj):
                 bdoc = root.GetDocObject()
                 if bdoc is not None and hasattr(bdoc, "IsVisible") and hasattr(bdoc, "GetName"):
                     return bdoc
+
             except Exception as e:
-        print("Exception found: " + str(e))
+                print("Exception found: " + str(e))
 
     # 4) Try GetBody() fallback
     if hasattr(dobj, "GetBody"):
@@ -101,11 +106,14 @@ def ensure_body_docobject(dobj):
                         return bd
                 if hasattr(b, "IsVisible") and hasattr(b, "GetName"):
                     return b
+
         except Exception as e:
-        print("Exception found: " + str(e))
+            print("Exception found: " + str(e))
 
     # Fallback: return as-is
     return dobj
+
+
 
 
 def docobject_idkey(dobj):
@@ -133,8 +141,8 @@ def docobject_idkey(dobj):
 
     Examples
     --------
-    >>> key = docobject_idkey(my_body)
-    >>> print(key)
+>>> key = docobject_idkey(my_body)
+>>> print(key)
     ('ref', '123456')
     """
     rid = getattr(dobj, "ReferenceId", None)
@@ -147,6 +155,8 @@ def docobject_idkey(dobj):
         return ("name", dobj.GetName())
     except:
         return ("obj", repr(dobj))
+
+
 
 
 def is_visible_safe(dobj):
@@ -176,7 +186,7 @@ def is_visible_safe(dobj):
 
     Examples
     --------
-    >>> is_visible_safe(body)
+>>> is_visible_safe(body)
     True
     """
     try:
@@ -185,7 +195,9 @@ def is_visible_safe(dobj):
         return True  # Be permissive if uncertain
 
 
-#def assign_unique_name(target_obj, base_name, max_seq=100):
+
+
+def assign_unique_name(target_obj, base_name, max_seq=100):
     """
     Assign a unique name to a Speos/SpaceClaim object.
 
@@ -216,16 +228,17 @@ def is_visible_safe(dobj):
 
     Examples
     --------
-    >>> name = assign_unique_name(interactive, "Raytracing of Visible Elements")
-    >>> print(name)
+>>> name = assign_unique_name(interactive, "Raytracing of Visible Elements")
+>>> print(name)
     'Raytracing of Visible Elements_2'
     """
     # 1) Try the base name directly
     try:
         target_obj.Name = base_name
         return target_obj.Name
-    except:
-        pass
+
+    except Exception as e:
+        print("Exception found: " + str(e))
 
     # 2) Try numbered suffixes
     i = 1
@@ -253,6 +266,8 @@ def is_visible_safe(dobj):
                 return target_obj.Name
             except:
                 j += 1
+
+
 
 
 # =============================================================================
@@ -332,14 +347,15 @@ print("\nVisible surface sources (count):", len(visible_source_docobjects))
 for obj in visible_source_docobjects:
     try:
         print(" -", obj.GetName())
-    except:
-        pass
+
+    except Exception as e:
+        print("Exception found: " + str(e))
 
 # 6) Build and configure Interactive Simulation (with guaranteed unique name)
 base_sim_name = "Raytracing of Visible Elements"
 interactive = SpeosSim.SimulationInteractive.Create()
-# final_name = assign_unique_name(interactive, base_sim_name)
-# print("Created simulation with name:", final_name)
+final_name = assign_unique_name(interactive, base_sim_name)
+print("Created simulation with name:", final_name)
 
 if len(unique_doc_bodies) > 0:
     sel_geos = Selection.Create(unique_doc_bodies)
@@ -359,3 +375,11 @@ else:
 # interactive.Compute()
 
 print("\nInteractive simulation prepared:", interactive.Name)
+
+# Get object 'Raytracing of Visible Elements'
+raytracingofVisibleElements = SpeosSim.SimulationInteractive.Find("Raytracing of Visible Elements")
+# EndBlock
+
+# Get object 'Raytracing of Visible Elements_1'
+raytracingofVisibleElements = SpeosSim.SimulationInteractive.Find("Raytracing of Visible Elements_1")
+# EndBlock
