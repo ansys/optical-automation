@@ -40,7 +40,9 @@ def find_awp_root(version=""):
             # If version is specified, return the path for that version
             awp_root_path = os.environ.get(f"AWP_ROOT{version}", "")
             if not awp_root_path:
-                raise ValueError(f"AWP_ROOT path for version {version} not found in the environment variables.")
+                raise ValueError(
+                    f"AWP_ROOT path for version {version} not found in the environment variables."
+                )
         else:
             # If no version is specified, find the latest version
             last_version = "000"
@@ -50,15 +52,14 @@ def find_awp_root(version=""):
 
             awp_root_path = os.environ.get(f"AWP_ROOT{last_version}", "")
             if not awp_root_path:
-                raise ValueError("AWP_ROOT path for the latest version not found in the environment variables.")
+                raise ValueError(
+                    "AWP_ROOT path for the latest version not found in the environment variables."
+                )
 
         return awp_root_path
 
     except Exception as e:
         raise ValueError(f"An error occurred while finding the AWP_ROOT path: {str(e)}")
-
-
-print(find_awp_root("242"))
 
 
 def get_scdm_install_location(version=""):
@@ -96,10 +97,9 @@ def get_scdm_install_location(version=""):
         scdm_install_dir = os.path.join(ansys_install_dir, "scdm")
         return scdm_install_dir
     except ValueError as e:
-        raise ValueError(f"Error while getting the SpaceClaim installation path: {str(e)}")
-
-
-print("####", get_scdm_install_location("242"))
+        raise ValueError(
+            f"Error while getting the SpaceClaim installation path: {str(e)}"
+        )
 
 
 def get_speos_core(version):
@@ -117,7 +117,9 @@ def get_speos_core(version):
 
     """
     ansys_install_dir = os.environ["AWP_ROOT{}".format(version)]
-    speos_core_dir = os.path.join(ansys_install_dir, r"Optical Products", r"Viewers", r"SPEOSCore.exe")
+    speos_core_dir = os.path.join(
+        ansys_install_dir, r"Optical Products", r"Viewers", r"SPEOSCore.exe"
+    )
     return speos_core_dir
 
 
@@ -137,19 +139,27 @@ def run_scdm_batch(scdm_version, api_version, script_file):
     scdm_install_dir = get_scdm_install_location(scdm_version)
     scdm_exe = os.path.join(scdm_install_dir, "SpaceClaim.exe")
     speos_path = os.path.join(
-        os.path.dirname(scdm_install_dir), "Optical Products", "Speos", "Bin", "SpeosSC.Manifest.xml"
+        os.path.dirname(scdm_install_dir),
+        "Optical Products",
+        "Speos",
+        "Bin",
+        "SpeosSC.Manifest.xml",
+    )
+    env = os.environ.copy()
+    env["AWP_ROOT_API_SERVER"] = os.path.join(
+        os.path.dirname(scdm_install_dir), "Optical Products", "Speos", "Addins"
     )
     command = [
         scdm_exe,
         r"/AddInManifestFile={}".format(speos_path),
         r"/RunScript={}".format(script_file),
-        r"/Headless=True",
+        r"/Headless=False",
         r"/Splash=False",
         r"/Welcome=False",
         r"/ExitAfterScript=True",
         r"/ScriptAPI={}".format(api_version),
     ]
-    subprocess.call(command)
+    subprocess.call(command, env=env)
 
 
 def vector_len(vector):
